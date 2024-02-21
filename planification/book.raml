@@ -1,0 +1,139 @@
+#%RAML 1.0
+title: e-BookMobile API
+baseUri: "http://api.e-bookmobile/{version}"
+version: v1
+
+/users:
+    get:
+    post:
+    /{user_id}:
+        get:
+        put:
+        delete:
+        /FavouritBooks:
+            get:
+            post:
+            put:
+        /FavouritAuthors:
+            get:
+            post:
+            put:
+        /booksRead:
+            get:
+            post:
+            put:
+        /ToBeRead:
+            get:
+            post:
+            put:
+
+
+/authors:
+    get:
+        queryParameters:
+            name:
+            Nation:
+            Profession:
+            BestsellingBook:
+    post:
+    put:
+        queryParameters:
+            access_token:
+    /{AuthorId}:
+        get:
+            queryParameters:
+                name:
+                adress:
+                birthdate:
+                
+        put:
+            queryParameters:
+                access_token:
+        delete:
+        /BooksWritten:
+            get:
+                queryParameters:
+                    bookTitle:
+                    rating:
+                    publicationYear:
+                    isbn:
+            put:
+                queryParameters:
+                    access_token:
+            post:
+                queryParameters:
+                    access_token:
+/books:
+    get:
+        queryParameters:
+            author:
+            publicationYear:
+            rating:
+            isbn:
+    put:
+        queryParameters:
+            access_token:
+
+    post:
+    /{bookTitle}:
+        get:
+            description: retreive a specific book title
+            
+            responses:
+                200:
+                    body:
+                        application/json:
+                            example:
+                                {
+                                    "data" : {
+                                        "id": "SbBGk",
+                                        "title": "Stiff: The Curious Lives of Human Cadavers",
+                                        "description": null,
+                                        "datetime": 1341533193,
+                                        "genre": "science",
+                                        "author": "Mary Roach",
+                                        "link": "http://e-bookmobile.com/books/Stiff"
+                                    },
+                                    "success": true,
+                                    "statur": 200
+                                }
+
+            queryParameters:
+                author:
+                    displayName: Author
+                    type: string
+                    description: An author's full name
+                    example: Mary Roach
+                    required: false
+                publicationYear:
+                    displayName: Pub Year 
+                    type: number
+                    description: the year released for the first time 
+                    example: 1984
+                    required: true
+                rating:
+                    displayName: Rating
+                    type: number
+                    description: Average rating (1-5) submitted by users
+                    example: 3.14
+                    required: false
+                isbn:
+                    displayName: ISBN
+                    type: string
+                    minLength: 10
+                    example: "0321736079"
+                    required : true
+                else:
+        put:
+            queryParameters:
+                access_token:
+                    displayName: Access Token
+                    type: string
+                    description: Token giving you permission to make call
+                    required: true
+        delete:
+        /author:
+            get:
+        /publisher:
+            get:
+             
