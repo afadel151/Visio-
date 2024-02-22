@@ -13,5 +13,9 @@ class Week extends Model
     {
         return $this->belongsTo(WeekType::class);// one-to-one relationship
     }
+    public function Sessions()
+    {
+        return $this->hasMany(Session::class);
+    }
     //belongsto type
 }

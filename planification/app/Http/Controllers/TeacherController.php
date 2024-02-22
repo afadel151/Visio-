@@ -25,9 +25,10 @@ class TeacherController extends Controller
     }
     public function store()
     {}
-    public function show()
+    public function show($id)
     {
-        
+        $teacher = Teacher::find($id);
+        return view('teachers.show',['teacher'=>$teacher]);
     }
     public function update()
     {}

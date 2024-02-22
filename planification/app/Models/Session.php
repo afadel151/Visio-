@@ -36,7 +36,7 @@ class Session extends Model
     }
     public function week()
     {
-        return $this->belongsTo(Week::class);
+        return $this->belongsTo(Week::class,'week_id');
     }
     //belongsto additional 
 }
