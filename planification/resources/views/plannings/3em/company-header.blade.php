@@ -4,6 +4,7 @@
         <td colspan="{{ $company->sections->count() }}" class="text-center  bg-slate-300">
         
             {{ $company->company }}
+
         </td>
     </tr>
     <tr>

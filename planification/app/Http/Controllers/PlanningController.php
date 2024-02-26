@@ -5,6 +5,7 @@ use App\Models\Absence;
 use App\Models\Battalion;
 use App\Models\Teacher;
 use App\Models\Module;
+use App\Models\Session;
 use App\Models\Company;
 use App\Models\Week;
 use App\Models\Timing;
@@ -17,9 +18,10 @@ class PlanningController extends Controller
     {
         $battalion = Battalion::find($battalion_id);
         $week = Week::find($week_id);
-        $modules = Module::where('battalion_id',$battalion->id)->get();
+        $sessions = Session::where('week_id',$week_id)->get();
+        // $modules = Module::where('battalion_id',$battalion->id)->get();
         $timings = Timing::all();
-        return view('plannings.3em.create', compact('battalion', 'week','modules','timings'));
+        return view('plannings.3em.create', compact('battalion', 'week','timings','sessions'));
     }
     // public function create($battalion_id,$week_id)
     // {

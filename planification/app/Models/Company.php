@@ -14,9 +14,9 @@ class Company extends Model
     {
         return $this->belongsTo(Battalion::class);
     }
-    public function sessions()
+    public function sessions($week_id)
     {
-        return $this->belongsToMany(Session::class);
+        return $this->belongsToMany(Session::class,'session_companies')->where('week_id',$week_id);
     }
     public function sections()
     {

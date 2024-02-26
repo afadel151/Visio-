@@ -19,7 +19,7 @@ class WeekSeeder extends Seeder
         $schoolyears = DB::table('schoolyears')->pluck('id')->toArray();
         $data = [];
 
-        for ($i=0; $i < 84; $i++) { 
+        for ($i=0; $i < 5; $i++) { 
             # code...
             array_push($data,[
                 'battalion_id' => $faker->randomElement($batallions),

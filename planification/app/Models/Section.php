@@ -17,7 +17,7 @@ class Section extends Model
     }
     public function sessions()
     {
-        return $this->belongsToMany(Session::class);
+        return $this->belongsToMany(Session::class,'session_sections');
     }
     public function battalion()
     {

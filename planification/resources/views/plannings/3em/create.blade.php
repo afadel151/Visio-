@@ -26,14 +26,14 @@
                     $companies = $battalion->companies_ST;
                     $domaine = 'ST';
                 @endphp
-                @include('plannings.3em.domaine', ['companies' => $companies, 'domaine' => $domaine])
+                @include('plannings.3em.domaine', ['companies' => $companies, 'domaine' => $domaine, 'week_id'=>$week->id])
             </td>
             <td class="border-2 p-0">
                 @php
                     $companies = $battalion->companies_MI;
                     $domaine = 'MI';
                 @endphp
-                @include('plannings.3em.domaine', ['companies' => $companies, 'domaine' => $domaine])
+                @include('plannings.3em.domaine', ['companies' => $companies, 'domaine' => $domaine, 'week_id'=>$week->id])
             </td>
         </tr>
         @php
@@ -58,6 +58,7 @@
                         'companies' => $companies,
                         'timings' => $timings,
                         'date' => $date,
+                        'week_id' => $week->id,
                     ])
                 </td>
 
@@ -69,6 +70,7 @@
                         'companies' => $companies,
                         'timings' => $timings,
                         'date' => $date,
+                        'week_id' => $week->id,
                     ])
                 </td>
             </tr>

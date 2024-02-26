@@ -7,7 +7,8 @@
     <tr>
         @foreach ($sections as $section)
            <td class="text-center">
-                    <button class="h-[30px] w-[60px] rounded-lg hover:bg-indigo-600 bg-indigo-300 toggle-form" >Ajouter</button>
+                    {{-- {{ $section->sessions->where('week_id',$week_id)->where('timing_id',$timing->id) }} --}}
+                    <button class="h-10 w-20 bg-indigo-400">Add</button>
             </td>
         @endforeach
     </tr>
