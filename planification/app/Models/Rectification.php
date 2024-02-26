@@ -9,7 +9,6 @@ class Rectification extends Model
 {
     
     use HasFactory;
-    protected $primaryKey = 'rectification_id';
     
     //has to teacher
     public function teacher()

@@ -16,7 +16,7 @@ class AbscenceSeeder extends Seeder
     public function run(): void
     {
         $faker = Faker::create();
-        $sessions = Session::where('absented',true)->pluck('session_id')->toArray();
+        $sessions = Session::where('absented',true)->pluck('id')->toArray();
         // $add = Additive::where('absented',true)->pluck()
         
         $data = [];

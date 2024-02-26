@@ -20,7 +20,7 @@ class TeacherSeeder extends Seeder
     public function run(): void
     {
         $faker = Faker::create();
-        $departments = Department::pluck('department_id')->toArray();
+        $departments = Department::pluck('id')->toArray();
         $teachers = [];
         
         for ($i=0; $i < 40; $i++) { 
@@ -35,10 +35,10 @@ class TeacherSeeder extends Seeder
         }
         Teacher::insert($teachers);
         
-        $teachers = Teacher::pluck('teacher_id')->toArray();
+        $teachers = Teacher::pluck('id')->toArray();
         $available_hours = [];
-        $timings = Timing::pluck('timing_id')->toArray();
-        $days = Day::pluck('day_id')->toArray();
+        $timings = Timing::pluck('id')->toArray();
+        $days = Day::pluck('id')->toArray();
         for ($i=0; $i < 300; $i++)
         { 
             array_push($available_hours,[

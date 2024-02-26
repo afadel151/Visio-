@@ -15,14 +15,21 @@ class CompanySeeder extends Seeder
     public function run(): void
     {
         $faker = Faker::create();
-        $batallions = Battalion::pluck('battalion_id')->toArray();
-        $rooms = Room::where('room_type','Amphi')->pluck('room_id')->toArray();
+        $batallions = Battalion::pluck('id')->toArray();
+        $rooms = Room::pluck('id')->toArray();
         $data = [];
         for ($i=0; $i < 15; $i++) { 
             # code...
+              $battalion_id = $faker->randomElement($batallions);
+              if ($battalion_id == 1) {
+                $sector = 'PR';
+              }
+              else {
+                $sector = $faker->randomElement(['ST','MI']);
+              }
             array_push($data,[
-                'battalion_id' => $faker->randomElement($batallions),
-                'sector' => $faker->randomElement(['ST','MI','PR']),
+                'battalion_id' => $battalion_id,
+                'sector' => $sector,
                 'company' => $faker->randomDigit(),
                 'default_room_id' => $faker->randomElement($rooms),
             ]);

@@ -3,6 +3,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Company;
 use App\Models\Timing;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -11,8 +12,9 @@ use App\Models\Module;
 use App\Models\Teacher;
 use App\Models\Session;
 use App\Models\Room;
-use App\Models\Timning;
+use Illuminate\Support\Facades\DB;
 use App\Models\Week;
+use App\Models\Section;
 
 class SessionSeeder extends Seeder
 {
@@ -23,13 +25,14 @@ class SessionSeeder extends Seeder
     {
        $faker = faker::create();
        $data = [];
-       $timings = Timing::pluck('timing_id')->toArray();
-       $teachers = Teacher::pluck('teacher_id')->toArray();
-       $rooms = Room::pluck('room_id')->toArray();
-       $modules = Module::pluck('module_id')->toArray();
-       $weeks = Week::pluck('week_id')->toArray();
+       $timings = Timing::pluck('id')->toArray();
+       $teachers = Teacher::pluck('id')->toArray();
+       $rooms = Room::pluck('id')->toArray();
+       $modules = Module::pluck('id')->toArray();
+       $weeks = Week::pluck('id')->toArray();
+       
         
-        for ($i=0; $i < 300; $i++) { 
+        for ($i=0; $i < 1200; $i++) { 
             array_push($data ,[
                 'session_date' => $faker->date(),
                 'timing_id' => $faker->randomElement($timings),
@@ -42,6 +45,25 @@ class SessionSeeder extends Seeder
             ]);
         }
         Session::insert($data);
+        $data = [];
+        $sessions = Session::pluck('id')->toArray();
+        $sections = Section::pluck('id')->toArray();
+        for ($i=0; $i < 1000; $i++) { 
+            array_push($data,[
+                'session_id' => $faker->unique()->randomElement($sessions),
+                'section_id' => $faker->randomElement($sections),
+            ]);
+        }
+        DB::table('session_sections')->insert($data);
+        $data = [];
+        $companies = Company::pluck('id')->toArray();
+        for ($i=0; $i < 200; $i++) { 
+            array_push($data,[
+                'session_id' => $faker->unique()->randomElement($sessions),
+                'company_id' => $faker->randomElement($companies),
+            ]);
+        }
+        DB::table('session_companies')->insert($data);
     }
 }
 

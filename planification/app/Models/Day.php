@@ -9,7 +9,6 @@ class Day extends Model
 {
     use HasFactory;
     
-    protected $primaryKey = 'day_id';
     
 
 }

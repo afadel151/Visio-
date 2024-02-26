@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('absences', function (Blueprint $table)
         {
-            $table->increments('absence_id');
+            $table->id();
             //session (teacher,Module,section,company,day,timing,sessionType)
             
-            $table->unsignedInteger('session_id');
-            $table->foreign('session_id')->references('session_id')->on('sessions');
+            $table->unsignedBigInteger('session_id');
+            $table->foreign('session_id')->references('id')->on('sessions');
             
             $table->boolean('rectified');
             $table->timestamps();

@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Session extends Model
 {
     use HasFactory;
-    protected $primaryKey = 'session_id';
     //belongsto module
     public function module(){
         return $this->belongsTo(Module::class);
@@ -36,7 +35,7 @@ class Session extends Model
     }
     public function week()
     {
-        return $this->belongsTo(Week::class);
+        return $this->belongsTo(Week::class,'week_id');
     }
     //belongsto additional 
 }

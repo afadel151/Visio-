@@ -13,12 +13,10 @@ return new class extends Migration
     {
         Schema::create('rooms', function (Blueprint $table) {
             //nom 
-            $table->increments('room_id');
+            $table->id();
             $table->string('room'); //A3 A14
-            //type
-            // $table->unsignedInteger('room_type_id');
-            // $table->foreign('room_type_id')->references('room_type_id')->on('room_types');
-            $table->string('room_type');
+            $table->integer('capacity_exams');
+            $table->integer('capacity_teaching');
         });
         
     }

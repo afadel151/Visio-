@@ -24,12 +24,12 @@ class RectificationSeeder extends Seeder
     public function run(): void
     {
         $faker = Faker::create();
-        $timings = Timing::pluck('timing_id')->toArray();
-        $absences = Absence::where('rectified',false)->pluck('absence_id')->toArray();
-        $teachers = Teacher::pluck('teacher_id')->toArray();
-        $rooms = Room::pluck('room_id')->toArray();
-        $modules = Module::pluck('module_id')->toArray();
-        $weeks = Week::pluck('week_id')->toArray();
+        $timings = Timing::pluck('id')->toArray();
+        $absences = Absence::where('rectified',false)->pluck('id')->toArray();
+        $teachers = Teacher::pluck('id')->toArray();
+        $rooms = Room::pluck('id')->toArray();
+        $modules = Module::pluck('id')->toArray();
+        $weeks = Week::pluck('id')->toArray();
 
         $data = [];
         for ($i = 0; $i < 10; $i++) {

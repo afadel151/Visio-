@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
         $this->call(TimingSeeder::class);
         $this->call(TeacherSeeder::class);
         $this->call(ModuleSeeder::class);
+        $this->call(SchoolyearSeeder::class);
         $this->call(WeekSeeder::class);
         $this->call(SessionSeeder::class);
         $this->call(AbscenceSeeder::class);

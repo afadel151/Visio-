@@ -9,7 +9,6 @@ class Absence extends Model
 {
     
     use HasFactory;
-    protected $primaryKey = 'absence_id';
     
     //has to teacher
     public function session()

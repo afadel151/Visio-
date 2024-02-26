@@ -12,14 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('modules', function (Blueprint $table) {
-            $table->increments('module_id');
+            $table->id();
             $table->string('module');
-            $table->unsignedInteger('department_id');
-            $table->foreign('department_id')->references('department_id')->on('departments');
-            $table->unsignedInteger('module_head_id');
-            $table->foreign('module_head_id')->references('teacher_id')->on('teachers');
-            $table->unsignedInteger('battalion_id');
-            $table->foreign('battalion_id')->references('battalion_id')->on('battalions');
+            $table->unsignedBigInteger('department_id');
+            $table->foreign('department_id')->references('id')->on('departments');
+            $table->unsignedBigInteger('module_head_id');
+            $table->foreign('module_head_id')->references('id')->on('teachers');
+            $table->unsignedBigInteger('battalion_id');
+            $table->foreign('battalion_id')->references('id')->on('battalions');
             
             $table->char('module_sector',2);
             
@@ -27,10 +27,10 @@ return new class extends Migration
         });
         Schema::create('teachers_modules', function (Blueprint $table) {
             //do we need to add ID to this table  
-            $table->unsignedInteger('teacher_id');
-            $table->foreign('teacher_id')->references('teacher_id')->on('teachers');
-            $table->unsignedInteger('module_id');
-            $table->foreign('module_id')->references('module_id')->on('modules');
+            $table->unsignedBigInteger('teacher_id');
+            $table->foreign('teacher_id')->references('id')->on('teachers');
+            $table->unsignedBigInteger('module_id');
+            $table->foreign('module_id')->references('id')->on('modules');
         });
        
     }

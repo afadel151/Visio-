@@ -12,10 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('weeks', function (Blueprint $table) {
-            $table->increments('week_id');
-            $table->unsignedInteger('battalion_id');
+            $table->id();
+            $table->unsignedBigInteger('schoolyear_id');
             
-            $table->foreign('battalion_id')->references('battalion_id')->on('battalions');
+            $table->foreign('schoolyear_id')->references('id')->on('schoolyears');
+            $table->integer('week_number');
+            $table->unsignedBigInteger('battalion_id');
+            
+            $table->foreign('battalion_id')->references('id')->on('battalions');
             $table->date('start_week_date');
             $table->date('end_week_date');
             

@@ -12,13 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('events', function (Blueprint $table) {
-            $table->increments('event_id');
+            $table->id();
             //nom
             $table->string('event');
             //date debut
             $table->dateTime('event_date');
-            $table->unsignedInteger('week_id');
-            $table->foreign('week_id')->references('week_id')->on('weeks');
+            $table->unsignedBigInteger('week_id');
+            $table->foreign('week_id')->references('id')->on('weeks');
             //date fin
             
         });

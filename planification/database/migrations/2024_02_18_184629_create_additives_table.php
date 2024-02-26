@@ -16,20 +16,20 @@ return new class extends Migration
             // $table->unsignedInteger('day_id');
             // $table->foreign('day_id')->references('day_id')->on('days');
             $table->date('additive_date');
-            $table->unsignedInteger('timing_id');
-            $table->foreign('timing_id')->references('timing_id')->on('timings');
+            $table->unsignedBigInteger('timing_id');
+            $table->foreign('timing_id')->references('id')->on('timings');
             //module (...,,EPS)
-            $table->unsignedInteger('module_id');
-            $table->foreign('module_id')->references('module_id')->on('modules');
+            $table->unsignedBigInteger('module_id');
+            $table->foreign('module_id')->references('id')->on('modules');
             //prof
-            $table->unsignedInteger('room_id');
-            $table->foreign('room_id')->references('room_id')->on('rooms');
+            $table->unsignedBigInteger('room_id');
+            $table->foreign('room_id')->references('id')->on('rooms');
             
-            $table->unsignedInteger('teacher_id');
-            $table->foreign('teacher_id')->references('teacher_id')->on('teachers');
+            $table->unsignedBigInteger('teacher_id');
+            $table->foreign('teacher_id')->references('id')->on('teachers');
             //section Nullable
-            $table->unsignedInteger('week_id');
-            $table->foreign('week_id')->references('week_id')->on('weeks');
+            $table->unsignedBigInteger('week_id');
+            $table->foreign('week_id')->references('id')->on('weeks');
             
             // $table->unsignedInteger('section_id');
             // $table->foreign('section_id')->references('section_id')->on('sections');
