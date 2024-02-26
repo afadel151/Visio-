@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('timings', function (Blueprint $table) {
-            $table->increments('timing_id');
+            $table->id();
             //session number
             $table->time('session_start');
             //heur de fin

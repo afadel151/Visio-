@@ -10,5 +10,4 @@ class Event extends Model
     
     
     use HasFactory;
-    protected $primarykey = 'event_id';
 }

@@ -12,24 +12,23 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('teachers', function (Blueprint $table) {
-            $table->increments('teacher_id');
+            $table->id();
             $table->string('teacher_name');
             $table->string('teacher_grade');
-            $table->foreign('teacher_type_id')->references('teacher_type_id')->on('teacher_types');
             $table->string('teacher_type');
             
-            $table->unsignedInteger('department_id');
-            $table->foreign('department_id')->references('department_id')->on('departments');
+            $table->unsignedBigInteger('department_id');
+            $table->foreign('department_id')->references('id')->on('departments');
 
         });
         
         Schema::create('teacher_available_hours', function (Blueprint $table) {
             
-            $table->unsignedInteger('teacher_id');
-            $table->foreign('teacher_id')->references('teacher_id')->on('teachers');
+            $table->unsignedBigInteger('teacher_id');
+            $table->foreign('teacher_id')->references('id')->on('teachers');
             $table->string('day');
-            $table->unsignedInteger('timing_id');
-            $table->foreign('timing_id')->references('timing_id')->on('timings');
+            $table->unsignedBigInteger('timing_id');
+            $table->foreign('timing_id')->references('id')->on('timings');
         });
     }
 
@@ -39,7 +38,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('teachers');
-        Schema::dropIfExists('teachers_modules');
+        
         Schema::dropIfExists('teacher_available_hours');
         //drop teachers modules
     }

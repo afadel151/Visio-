@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Session extends Model
 {
     use HasFactory;
-    protected $primaryKey = 'session_id';
     //belongsto module
     public function module(){
         return $this->belongsTo(Module::class);

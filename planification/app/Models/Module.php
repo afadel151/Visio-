@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Module extends Model
 {
     use HasFactory;
-    protected $primaryKey = 'module_id';
     //belongs to department
     public function teachers()
     {

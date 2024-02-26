@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Teacher extends Model
 {
     use HasFactory;
-    protected $primaryKey = 'teacher_id';
+    
     public function scopeSearch($query)
     {
         $q = request('q');
@@ -20,19 +20,23 @@ class Teacher extends Model
     {
         return $this->belongsToMany(Module::class,'teachers_modules');
     }
-    public function abscences()//Sure
+    public function absences()//Sure
     {
         return $this->hasManyThrough(Absence::class,Session::class);
     }
+    public function nb_absences()//Sure
+    {
+        return $this->hasManyThrough(Absence::class,Session::class)->count();
+    }
     public function department()//true
     {
-        return $this->belongsTo(Department::class)->withDefault();
+        return $this->belongsTo(Department::class);
     }
     public function sessions()//true 
     {
         return $this->hasMany(Session::class);
     }
-    public function Cours_S1()
+    public function nb_Cours_S1()
     {
         return $this->hasMany(Session::class, 'teacher_id')
                     ->where('session_type', 'Cour')
@@ -40,7 +44,7 @@ class Teacher extends Model
                         $query->where('semester', '1');
                     });
     }
-    public function Cours_S2()
+    public function nb_Cours_S2()
     {
         return $this->hasMany(Session::class, 'teacher_id')
                     ->where('session_type', 'Cour')
@@ -48,7 +52,7 @@ class Teacher extends Model
                         $query->where('semester', '2');
                     });
     }
-    public function Tds_S1()
+    public function nb_Tds_S1()
     {
         return $this->hasMany(Session::class, 'teacher_id')
                     ->where('session_type', 'Td')

@@ -12,14 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('sections', function (Blueprint $table) {
-            $table->increments('section_id');
+            $table->id();
             $table->unsignedInteger('section');
             //company
-            $table->unsignedInteger('company_id');
-            $table->foreign('company_id')->references('company_id')->on('companies');
+            $table->unsignedBigInteger('company_id');
+            $table->foreign('company_id')->references('id')->on('companies');
             //default room
-            $table->unsignedInteger('default_room_id');
-            $table->foreign('default_room_id')->references('room_id')->on('rooms');
+            $table->unsignedBigInteger('default_room_id');
+            $table->foreign('default_room_id')->references('id')->on('rooms');
         });
     }
 

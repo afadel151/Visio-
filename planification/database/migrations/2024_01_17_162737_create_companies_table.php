@@ -13,19 +13,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('companies', function (Blueprint $table) {
-            $table->increments('company_id');
+            $table->id();
             $table->integer('company');
 
             //batallion id
-            $table->unsignedInteger('battalion_id');
+            $table->unsignedBigInteger('battalion_id');
             //filiere id
             $table->string('sector');
             //default amphitetre
-            $table->unsignedInteger('default_room_id');            
+            $table->unsignedBigInteger('default_room_id');            
 
             // foreign keys
-            $table->foreign('battalion_id')->references('battalion_id')->on('battalions');
-            $table->foreign('default_room_id')->references('room_id')->on('rooms');
+            $table->foreign('battalion_id')->references('id')->on('battalions');
+            $table->foreign('default_room_id')->references('id')->on('rooms');
             
         });
     }

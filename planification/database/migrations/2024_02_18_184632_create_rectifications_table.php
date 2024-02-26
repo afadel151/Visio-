@@ -12,17 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('rectifications', function (Blueprint $table) {
-            $table->increments('rectification_id');
+            $table->id();
             //nom
-            $table->unsignedInteger('absence_id');
-            $table->foreign('absence_id')->references('absence_id')->on('absences');
+            $table->unsignedBigInteger('absence_id');
+            $table->foreign('absence_id')->references('id')->on('absences');
             //date debut
             $table->date('rectification_date');
 
-            $table->unsignedInteger('timing_id');
-            $table->foreign('timing_id')->references('timing_id')->on('timings');
-            $table->unsignedInteger('room_id');
-            $table->foreign('room_id')->references('room_id')->on('rooms');
+            $table->unsignedBigInteger('timing_id');
+            $table->foreign('timing_id')->references('id')->on('timings');
+            $table->unsignedBigInteger('room_id');
+            $table->foreign('room_id')->references('id')->on('rooms');
 
             //date fin
             

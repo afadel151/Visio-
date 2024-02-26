@@ -15,8 +15,8 @@ class EventSeeder extends Seeder
     public function run(): void
     {
         $faker = Faker::create();
-        $batallions = Battalion::pluck('battalion_id')->toArray();
-        $weeks  = Week::pluck('week_id')->toArray();
+        $batallions = Battalion::pluck('id')->toArray();
+        $weeks  = Week::pluck('id')->toArray();
         
         $data = [];
         for ($i=0; $i < 10; $i++) { 

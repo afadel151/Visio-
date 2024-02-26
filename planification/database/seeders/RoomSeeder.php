@@ -19,8 +19,9 @@ class RoomSeeder extends Seeder
         for ($i=0; $i < 40; $i++) { 
             # code...
             array_push($data,[
-                'room_type' => $faker->randomElement(['Td','Amphi','Labo','Bib','Stade','Autre']),
                 'room' => $faker->word(),
+                'capacity_exams' => $faker->randomNumber(),
+                'capacity_teaching' => $faker->randomNumber(),
             ]);
         }
         Room::insert($data);

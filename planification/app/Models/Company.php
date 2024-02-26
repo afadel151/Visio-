@@ -8,23 +8,22 @@ use Illuminate\Database\Eloquent\Model;
 class Company extends Model
 {
     use HasFactory;
-    protected $primaryKey = 'company_id';
     //belongsto section
-    public function sector(){
-        return $this->belongsTo(Sector::class);
-    }
-    public function batallion()
+    
+    public function battalion()
     {
         return $this->belongsTo(Battalion::class);
     }
     public function sessions()
     {
-        return $this->belongsToMany(Session::class,'session_companies');
+        return $this->belongsToMany(Session::class);
     }
     public function sections()
     {
-        return $this->hasMany(Section::class);
+        return $this->hasMany(Section::class)->orderBy('section');
     }
-    
+    public function modules(){
+        return Module::where('sector',$this->sector)->where('battalion_id',$this->battalion_id);
+    }
     
 }

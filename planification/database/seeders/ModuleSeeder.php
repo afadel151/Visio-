@@ -19,9 +19,9 @@ class ModuleSeeder extends Seeder
     {
        $faker = faker::create();
        $data = [];
-       $departments = Department::pluck('department_id')->toArray();
-       $teachers = Teacher::pluck('teacher_id')->toArray();
-       $battalions = Battalion::pluck('battalion_id')->toArray();
+       $departments = Department::pluck('id')->toArray();
+       $teachers = Teacher::pluck('id')->toArray();
+       $battalions = Battalion::pluck('id')->toArray();
         
         for ($i=0; $i < 50; $i++) { 
             array_push($data ,[
@@ -34,8 +34,8 @@ class ModuleSeeder extends Seeder
         }
         Module::insert($data);
         $teachers_modules=[];
-        $teachers = Teacher::pluck('teacher_id')->toArray();
-        $modules = Module::pluck('module_id')->toArray();
+        $teachers = Teacher::pluck('id')->toArray();
+        $modules = Module::pluck('id')->toArray();
         for($i=0; $i < 90; $i++)
         {
             array_push($teachers_modules,[

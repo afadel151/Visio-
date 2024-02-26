@@ -12,22 +12,23 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('sessions', function (Blueprint $table) {
-            $table->increments('session_id');
+            $table->id();
         
-            $table->unsignedInteger('timing_id');
-            $table->foreign('timing_id')->references('timing_id')->on('timings');
-            $table->unsignedInteger('week_id');
-            $table->foreign('week_id')->references('week_id')->on('weeks');
+            $table->unsignedBigInteger('timing_id');
+            $table->foreign('timing_id')->references('id')->on('timings');
+            $table->unsignedBigInteger('week_id');
+            $table->foreign('week_id')->references('id')->on('weeks');
             $table->date('session_date');
-            $table->unsignedInteger('module_id');
-            $table->foreign('module_id')->references('module_id')->on('modules');
-            $table->unsignedInteger('teacher_id');
-            $table->foreign('teacher_id')->references('teacher_id')->on('teachers');
+            $table->unsignedBigInteger('module_id');
+            $table->foreign('module_id')->references('id')->on('modules');
+            $table->unsignedBigInteger('teacher_id');
+            $table->foreign('teacher_id')->references('id')->on('teachers');
             
             $table->string('session_type');
-            $table->unsignedInteger('room_id');
-            $table->foreign('room_id')->references('room_id')->on('rooms');
+            $table->unsignedBigInteger('room_id');
+            $table->foreign('room_id')->references('id')->on('rooms');
             $table->boolean('absented')->default(false);
+            
         });
     }
 
