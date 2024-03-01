@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('schoolyears', function (Blueprint $table) {
-            //nom 
-            $table->increments('schoolyear_id');
-            $table->string('schoolyear');
+        Schema::create('additives', function (Blueprint $table) {
+            $table->id();
+            
+            $table->foreignId('week_id')->constrained('weeks','id');
+            $table->integer('additive_number');
+            $table->timestamps();
         });
-        
     }
 
     /**
@@ -24,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('schoolyears');
+        Schema::dropIfExists('additives');
     }
 };

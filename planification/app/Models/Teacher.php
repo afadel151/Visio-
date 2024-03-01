@@ -32,9 +32,13 @@ class Teacher extends Model
     {
         return $this->belongsTo(Department::class);
     }
-    public function sessions()//true 
+    public function sessionsIfFirst()//true 
     {
-        return $this->hasMany(Session::class);
+        return $this->hasMany(Session::class,'first_teacher_id');
+    }
+    public function sessionsIfSecond()//true 
+    {
+        return $this->hasMany(Session::class,'second_teacher_id');
     }
     public function nb_Cours_S1()
     {

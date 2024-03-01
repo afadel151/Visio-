@@ -12,22 +12,29 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('sessions', function (Blueprint $table) {
-            $table->id();
+            $table->id();//ID
         
             $table->unsignedBigInteger('timing_id');
-            $table->foreign('timing_id')->references('id')->on('timings');
+            $table->foreign('timing_id')->references('id')->on('timings');//TIMING
             $table->unsignedBigInteger('week_id');
-            $table->foreign('week_id')->references('id')->on('weeks');
-            $table->date('session_date');
+            $table->foreign('week_id')->references('id')->on('weeks');//WEEK
+            $table->date('session_date');//DATE
             $table->unsignedBigInteger('module_id');
-            $table->foreign('module_id')->references('id')->on('modules');
-            $table->unsignedBigInteger('teacher_id');
-            $table->foreign('teacher_id')->references('id')->on('teachers');
-            
-            $table->string('session_type');
+            $table->foreign('module_id')->references('id')->on('modules');//MODULE
+            $table->unsignedBigInteger('first_teacher_id');
+            $table->foreign('first_teacher_id')->references('id')->on('teachers');//FIRST TEACHER
+            $table->unsignedBigInteger('second_teacher_id')->default(null);
+            $table->foreign('second_teacher_id')->references('id')->on('teachers');//SECOND TEACHER
+            // $table->string('students_type');
+            $table->string('session_type');// TYPE 
+            $table->string('sessionsable_type');// App\Models\Company or App\Models\Section
+            $table->unsignedBigInteger('sessionable_id');
             $table->unsignedBigInteger('room_id');
-            $table->foreign('room_id')->references('id')->on('rooms');
-            $table->boolean('absented')->default(false);
+            $table->foreign('room_id')->references('id')->on('rooms');// ROOM
+            $table->boolean('absented')->default(false);//ABSENTED
+            $table->boolean('anticipated')->default(false);//Anticipated
+            $table->boolean('caughtup')->default(false);//caughtup
+            $table->boolean('rectified')->default(false);//rectified
             
         });
     }

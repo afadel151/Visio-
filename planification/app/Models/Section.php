@@ -17,7 +17,11 @@ class Section extends Model
     }
     public function sessions()
     {
-        return $this->belongsToMany(Session::class,'session_sections');
+        return $this->morphToMany(Session::class, 'sessionable');
+    }
+    public function additionals()
+    {
+        return $this->morphToMany(Additional::class,'additionables');
     }
     public function battalion()
     {

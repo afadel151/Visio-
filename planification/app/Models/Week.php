@@ -8,10 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Week extends Model
 {
     use HasFactory;
-    // protected $primaryKey= 'week_id';
-    public function week_type()
+    protected $primaryKey= 'id';
+    protected $table  = 'weeks';
+    public function schoolyear()
     {
-        return $this->belongsTo(WeekType::class);// one-to-one relationship
+        return $this->belongsTo(SchoolYear::class,'schoolyear_id');
     }
     public function Sessions()
     {

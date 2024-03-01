@@ -11,28 +11,12 @@ class Absence extends Model
     use HasFactory;
     
     //has to teacher
-    public function session()
+    public function absenceable()
     {
-        return $this->belongsTo(Session::class);
+        return $this->morphTo();
     }
     //has to module
-    public function module()
-    {
-        return $this->belongsTo(Module::class);
-    }
-    public function section()
-    {
-        return $this->belongsTo(Section::class);
-    }
-    public function company()
-    {
-        return $this->belongsTo(Company::class);
-    }
-    public function rectification()
-    {
-        return $this->hasOne(Rectification::class);
-    }
-
+    
     
     //belongs to rectification
 }

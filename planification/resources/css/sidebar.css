@@ -1,22 +1,11 @@
 @import url(https://fonts.googleapis.com/css?family=Inter:100,200,300,regular,500,600,700,800,900);
 /* Reset css */
-*{
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Inter",sans-serif;
-}
-body{
-    background-color: #5b6677;
-}
-.container{
-    width: 100%;
-    min-height: 100vh;
-}
 
-.sidebar{
+
+.sidebarr{
+    float: left;
     position: relative;
-    width: 256px;
+    width: 92px;
     height: 100vh;
     display: flex;
     gap: 20px;
@@ -28,44 +17,24 @@ body{
     /* border-radius: 30px; */
 }
 
-.sidebar .head{
+.sidebarr .head{
     display: flex;
     gap: 20px;
     padding-bottom: 20px;
     border-bottom: 1px solid #f6f6f6;
 }
-/* .sidebar .nav .menu .title{
+/* .sidebarr .navvv .menuu .titlee{
     transition: all 0.3s ease;
 } */
-.user-img{
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    overflow: hidden;
-}
-.user-img img{
-    width: 100%;
-    object-fit: cover;
-}
-.user-details .title ,.sidebar .menu .title
-{
-    font-size: 10px;
-    font-weight: 500px;
-    color: #757575;
-    text-transform: uppercase;
-    margin-bottom: 10px;
-}
 
-.user-details .name{
-    font-size: 14px;
-    font-weight: 500;
-}
-.menu ul li{
+
+.menuu ul li{
+    
     position: relative;
     list-style: none;
     margin-bottom: 5px;
 }
-.menu ul li a{
+.menuu ul li a{
     display: flex;
     align-items: center;
     gap: 10px;
@@ -77,49 +46,49 @@ body{
     border-radius: 8px;
     transition: all 0.3s ease ;
 }
-.menu ul li > a:hover,
-.menu ul li.active > a{
+.menuu ul li > a:hover,
+.menuu ul li.active > a{
     color: #000;
     background-color: #f6f6f6;
-}.menu ul li .icon{
+}.menuu ul li .icon{
     font-size: 20px;
 }
-.menu ul li .text{
+.menuu ul li .text{
     flex: 1;
 }
-.menu ul li .arrow{
+.menuu ul li .arrow{
     font-size: 14px;
     transition: all 0.3s ease;
 }
-.menu ul li.active .arrow{
+.menuu ul li.active .arrow{
     transform: rotate(180deg);
 }
-.menu .sub-menu{
+.menuu .sub-menuu{
     display: none;
     margin-left: 20px;
     padding-left: 20px;
     padding-top: 5px;
     border-left: 1px solid #f6f6f6;
 }
-.menu .sub-menu li a{
+.menuu .sub-menuu li a{
     padding: 10px 8px;
     font-size: 12px;
 }
 
-.menu:not(:last-child) {
+.menuu:not(:last-child) {
     padding-bottom: 10px;
     margin-bottom: 20px;
     border-bottom: 2px solid #f6f6f6;
 }
-.nav{
+.navvv{
     /* overflow-y: scroll; */
     flex: 1;
 }
-.nav::-webkit-scrollbar{
+.navvv::-webkit-scrollbar{
     display: none;
 }
 
-.menu-btn{
+.menuu-btn{
     position:absolute ;
     right: -14px;
     top: 3.5%;
@@ -135,36 +104,36 @@ body{
     background-color: #fff;
 }
 
-.menu-btn:hover i{
+.menuu-btn:hover i{
     color: #000;
 }
 
-.menu-btn i{
+.menuu-btn i{
     transition: all 0.3s;
 }
-/* activ sidebar */
-.sidebar.active{
+/* activ sidebarr */
+.sidebarr.active{
     width: 92px;
 }
-.sidebar.active .menu-btn i{
+.sidebarr.active .menuu-btn i{
     transform: rotate(180deg);
 }
-.sidebar.active .user-details{
+.sidebarr.active .user-details{
     display: none;
 }
-.sidebar.active .menu .title{
+.sidebarr.active .menuu .titlee{
     text-align: center;
 }
-.sidebar.active .menu ul li .arrow{
+.sidebarr.active .menuu ul li .arrow{
     display: none;
 }
-.sidebar.active .menu > ul > li > a{
+.sidebarr.active .menuu > ul > li > a{
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.sidebar.active .menu > ul > li > a .text{
+.sidebarr.active .menuu > ul > li > a .text{
     position: absolute;
     left: 70%;
     top: 50%;
@@ -177,7 +146,7 @@ body{
     visibility: hidden;
     transition: all 0.3s;
 }
-.sidebar.active .menu > ul > li > a .text::after{
+.sidebarr.active .menuu > ul > li > a .text::after{
     content: "";
     position: absolute;
     left: -5px;
@@ -189,12 +158,12 @@ body{
     transform: rotate(45deg);
     z-index: -1;
 }
-.sidebar.active .menu > ul > li > a:hover .text{
+.sidebarr.active .menuu > ul > li > a:hover .text{
     left: 50px;
     opacity: 1;
     visibility: visible;
 }
-.sidebar.active .menu .sub-menu{
+.sidebarr.active .menuu .sub-menuu{
     position: absolute;
     top: 0;
     left: 20px;

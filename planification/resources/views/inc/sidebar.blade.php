@@ -1,42 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- ICONS -->
-  <script src="https://unpkg.com/@phosphor-icons/web"></script>
-  <!-- STYLESHEET -->
-  <link rel="stylesheet" href="sidebar.css" />
-
-  <title>Sidebar</title>
-</head>
-
-<body>
-  <div class="container">
-    <div class="sidebar active">
-      
-      <div class="nav">
-        <div class="menu">
-          <p class="title">Main</p>
+    <div class="sidebarr active">
+      <div class="navvv">
+        <div class="menuu">
+          <p class="titlee">Main</p>
           <ul>
             <li>
-              <a href="#">
-                <i class="icon ph-bold ph-house-simple"></i>
+              <a href="{{ route('home') }}">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><path d="M152,208V160a8,8,0,0,0-8-8H112a8,8,0,0,0-8,8v48a8,8,0,0,1-8,8H48a8,8,0,0,1-8-8V115.54a8,8,0,0,1,2.62-5.92l80-75.54a8,8,0,0,1,10.77,0l80,75.54a8,8,0,0,1,2.62,5.92V208a8,8,0,0,1-8,8H160A8,8,0,0,1,152,208Z" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"/></svg>
                 <span class="text">Dashboard</span>
               </a>
             </li>
             <li>
               <a href="#">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><circle cx="84" cy="108" r="52" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><path d="M10.23,200a88,88,0,0,1,147.54,0" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><path d="M172,160a87.93,87.93,0,0,1,73.77,40" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/><path d="M152.69,59.7A52,52,0,1,1,172,160" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/></svg>
-                <span class="text">Audience</span>
+                <span class="text">Teachers</span>
                 <i class="arrow ph-bold ph-caret-down"></i>
               </a>
-              <ul class="sub-menu">
+              <ul class="sub-menuu">
                 <li>
-                  <a href="#">
-                    <span class="text">User</span>
+                  <a href=" {{ route('teachers.index') }}">
+                    <span class="text">All teachers</span>
                   </a>
                 </li>
                 <li>
@@ -53,14 +35,13 @@
             </li>
             <li class="active">
               <a href="#">
-                <i class="icon ph-bold ph-file-text"></i>
-                <span class="text">Posts</span>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><line x1="32" y1="64" x2="32" y2="144" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"/><path d="M56,216c15.7-24.08,41.11-40,72-40s56.3,15.92,72,40" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"/><polygon points="224 64 128 96 32 64 128 32 224 64" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"/><path d="M169.34,82.22a56,56,0,1,1-82.68,0" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"/></svg>
+                <span class="text">Classes</span>
               </a>
             </li>
             <li>
               <a href="#">
-                <i class="icon ph-bold ph-calendar-blank"></i>
-                <span class="text">schedules</span>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"><rect width="256" height="256" fill="none"/><rect x="40" y="40" width="176" height="176" rx="8" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"/><line x1="176" y1="24" x2="176" y2="52" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"/><line x1="80" y1="24" x2="80" y2="52" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"/><line x1="40" y1="88" x2="216" y2="88" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"/><polyline points="84 132 100 124 100 180" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"/><path d="M138.14,132a16,16,0,1,1,26.64,17.63L136,180h32" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"/></svg>               <span class="text">schedules</span>
               </a>
             </li>
             <li>
@@ -69,7 +50,7 @@
                 <span class="text">Income</span>
                 <i class="arrow ph-bold ph-caret-down"></i>
               </a>
-              <ul class="sub-menu">
+              <ul class="sub-menuu">
                 <li>
                   <a href="#">
                     <span class="text">Eraning</span>
@@ -94,8 +75,8 @@
             </li>
           </ul>
         </div>
-        <div class="menu">
-          <p class="title">Main</p>
+        <div class="menuu">
+          <p class="titlee">Main</p>
           <ul>
             <li>
               <a href="#">
@@ -107,46 +88,8 @@
           </ul>
         </div>
       </div>
-      <div class="menu">
-        <p class="title">Account</p>
-        <ul>
-          <li>
-            <a href="#">
-              <i class="icon ph-bold ph-info"></i>
-              <span class="text">Help</span>
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <i class="icon ph-bold ph-sign-out"></i>
-              <span class="text">Logout</span>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
+      
+ </div>     
   <!-- Jquery -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.js"
-    integrity="sha512-8Z5++K1rB3U+USaLKG6oO8uWWBhdYsM3hmdirnOEWp8h2B1aOikj5zBzlXs8QOrvY9OxEnD2QDkbSKKpfqcIWw=="
-    crossorigin="anonymous"></script>
-  <script>
-    $(".menu > ul > li").click(function (e){
-    // remove avtive from already active 
-    $(this).siblings().removeClass("active");
-    // add active to clicked
-    $(this).toggleClass("active");
-    // if has submenu open it
-    $(this).find("ul").slideToggle();
-    // close other sub menus if any open
-    $(this).siblings().find("ul").slideUp();
-    // remove active class of submenu items
-    $(this).siblings().find("ul").find("li").removeClass("active");
-});
-
-
-
-  </script>
-</body>
-
-</html>
+ 
+  

@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('days', function (Blueprint $table) {
+        Schema::create('global_weeks', function (Blueprint $table) {
             $table->id();
-            $table->string('day');
+            $table->foreignId('schoolyear_id')->constrained('schoolyears');
+            $table->timestamps();
+            $table->date('start_week_date');
+            $table->date('end_week_date');
         });
-        
     }
 
     /**
@@ -23,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('days');
+        Schema::dropIfExists('global_weeks');
     }
 };

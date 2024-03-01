@@ -13,19 +13,10 @@ return new class extends Migration
     {
         Schema::create('rectifications', function (Blueprint $table) {
             $table->id();
-            //nom
-            $table->unsignedBigInteger('absence_id');
-            $table->foreign('absence_id')->references('id')->on('absences');
-            //date debut
-            $table->date('rectification_date');
-
-            $table->unsignedBigInteger('timing_id');
-            $table->foreign('timing_id')->references('id')->on('timings');
-            $table->unsignedBigInteger('room_id');
-            $table->foreign('room_id')->references('id')->on('rooms');
-
-            //date fin
-            
+            $table->foreignId('additive_id')->constrained('additives');
+            $table->timestamps();
+            $table->foreignId('session_id')->constrained('sessions');
+            $table->foreignId('timing_id')->constrained('timings');
         });
     }
 

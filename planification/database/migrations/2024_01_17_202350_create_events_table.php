@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             //nom
             $table->string('event');
-            //date debut
             $table->dateTime('event_date');
-            $table->unsignedBigInteger('week_id');
-            $table->foreign('week_id')->references('id')->on('weeks');
+            // $table->unsignedBigInteger('global_week_id');
+            // $table->foreign('week_id')->references('id')->on('weeks');
             //date fin
+            $table->foreignId('global_week_id')->constrained('global_weeks');
             
         });
     }

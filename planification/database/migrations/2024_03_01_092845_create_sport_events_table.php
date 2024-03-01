@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('session_companies', function (Blueprint $table) {
-            $table->foreignId('session_id')->constrained('sessions','id')->onDelete('CASCADE');
-            $table->foreignId('company_id')->constrained('companies','id')->onDelete('CASCADE');
+        Schema::create('sport_events', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
+            $table->string('sport_event');
+            $table->foreignId('global_week_id')->constrained('global_weeks');
         });
     }
 
@@ -22,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('session_companies');
+        Schema::dropIfExists('sport_events');
     }
 };

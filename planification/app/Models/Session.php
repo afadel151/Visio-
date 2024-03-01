@@ -12,21 +12,22 @@ class Session extends Model
     public function module(){
         return $this->belongsTo(Module::class);
     }
-    public function sections()
-    {
-        return $this->belongsToMany(Section::class,'session_sections');
-    }
-    public function companies()
-    {
-        return $this->belongsToMany(Company::class,'session_companies');
-    }
     
+    public function sessionable()
+    {
+        return $this->morphTo();
+    }
+    public function absence()
+    {
+        return $this->morphOne(Absence::class,'absenceable');
+    }
+    public function anticipation()
+    {
+        return $this->hasOne(Anticipation::class);
+    }
     //belongsto room 
     public function room(){
         return $this->belongsTo(Room::class);
-    }
-    public function teacher(){
-        return $this->belongsTo(Teacher::class);
     }
     //belongsto type
     public function timing()
