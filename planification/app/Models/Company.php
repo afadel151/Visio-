@@ -14,9 +14,9 @@ class Company extends Model
     {
         return $this->belongsTo(Battalion::class);
     }
-    public function sessions($week_id)
+    public function sessions()
     {
-        return $this->belongsToMany(Session::class,'session_companies')->where('week_id',$week_id);
+        return $this->morphToMany(Session::class, 'sessionable');
     }
     public function sections()
     {
@@ -24,6 +24,10 @@ class Company extends Model
     }
     public function modules(){
         return Module::where('sector',$this->sector)->where('battalion_id',$this->battalion_id);
+    }
+    public function additionals()
+    {
+        return $this->morphToMany(Additional::class,'additionables');
     }
     
 }

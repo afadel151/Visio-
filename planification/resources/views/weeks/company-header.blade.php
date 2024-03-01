@@ -10,7 +10,7 @@
     <tr>
         
         @foreach ($company->sections as $section)
-            <td class="text-center border-r-2   bg-slate-500" class="w-[100%]">{{ $section->section }}</td>
+            <td class="text-center   bg-slate-500" class="w-[100%]">{{ $section->section }}</td>
         @endforeach
     </tr>
 </table>

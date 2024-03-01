@@ -15,11 +15,10 @@ return new class extends Migration
         {
             $table->id();
             //session (teacher,Module,section,company,day,timing,sessionType)
-            
-            $table->unsignedBigInteger('session_id');
-            $table->foreign('session_id')->references('id')->on('sessions');
-            
-            $table->boolean('rectified');
+            $table->foreignId('session_id')->constrained('sessions','id');
+            $table->string('absenceable_type');
+            $table->unsignedBigInteger('absenceable_id');
+            $table->boolean('caughtup')->default(false);
             $table->timestamps();
             
         });

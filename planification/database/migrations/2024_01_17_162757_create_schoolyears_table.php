@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('session_sections', function (Blueprint $table) {
-            $table->foreignId('session_id')->constrained('sessions','id')->onDelete('CASCADE');
-            $table->foreignId('section_id')->constrained('sections','id')->onDelete('CASCADE');
+        Schema::create('schoolyears', function (Blueprint $table) {
+            $table->id();
+            $table->string('schoolyear');
+            $table->date('schoolyear_start_date');
         });
     }
 
@@ -22,6 +23,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('session_sections');
+        Schema::dropIfExists('schoolyears');
     }
 };
+
+

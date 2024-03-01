@@ -8,9 +8,11 @@ use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
 use Yajra\DataTables\Html\Button;
 use Yajra\DataTables\Html\Column;
-// use Yajra\DataTables\Html\Editor\Editor;
-// use Yajra\DataTables\Html\Editor\Fields;
-use Yajra\DataTables\Services\DataTable;
+use Yajra\DataTables\Html\Editor\Editor;
+use Yajra\DataTables\Html\Editor\Fields;
+use Yajra\DataTables\Services\DataTable;use App\Models\User;
+
+ 
 class TeacherDataTable extends DataTable
 {
     /**
@@ -21,7 +23,8 @@ class TeacherDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->setRowId('id');
+            ->setRowId('id')
+            ->setRowClass('{{ $id % 2 == 0 ? "bg-indigo-50 " : "alert-warning" }}');
     }
 
     /**
@@ -29,7 +32,7 @@ class TeacherDataTable extends DataTable
      */
     public function query(Teacher $model): QueryBuilder
     {
-        return $model->newQuery();
+        return $model->newQuery()->with('department');
     }
 
     /**
@@ -40,22 +43,27 @@ class TeacherDataTable extends DataTable
         return $this->builder()
                     ->setTableId('teacher-table')
                     ->columns($this->getColumns())
-                    // ->minifiedAjax()
-                    // ->dom('Bfrtip')
-                    // ->orderBy(1)
-                    // ->selectStyleSingle()
-                    // ->buttons([
-                    //     Button::make('add'),
-                    //     Button::make('excel'),
-                    //     Button::make('csv'),
-                    //     Button::make('pdf'),
-                    //     Button::make('print'),
-                    //     Button::make('reset'),
-                    //     Button::make('reload'),
-                    // ])
+                    ->minifiedAjax()
+                    ->dom('Bfrtip')
+                    ->orderBy(1)
+                    ->selectStyleSingle()
+                    ->buttons([
+                        Button::make('add'),
+                        Button::make('excel'),
+                        Button::make('csv'),
+                        Button::make('pdf'),
+                        Button::make('print'),
+                        Button::make('reset'),
+                        Button::make('reload'),
+                    ])
+                    // ->parameters([
+                    //     'buttons'=>['excel'],
+                    // ]);
                     ->parameters([
-                        'buttons'=>['excel'],
+                        'dom'          => 'Bfrtip',
+                        'buttons'      => ['export', 'print', 'reset', 'reload'],
                     ]);
+
     }
 
     /**
@@ -74,7 +82,7 @@ class TeacherDataTable extends DataTable
             Column::make('teacher_name'),
             Column::make('teacher_grade'),
             Column::make('teacher_type'),
-            Column::make('department_id'),
+            Column::make('department.department'),
         ];
     }
 

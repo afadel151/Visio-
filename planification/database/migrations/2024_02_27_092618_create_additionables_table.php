@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('schoolyears', function (Blueprint $table) {
-            $table->id();
-            $table->year('start_year');
+        Schema::create('additionables', function (Blueprint $table) {
+            $table->foreignId('additional_id')->constrained('additionals','id');
+            $table->string('additionable_type');//  App\Models\Company or App\Models\Section.
+            $table->unsignedBigInteger('additionable_id');
+
         });
     }
 
@@ -22,8 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('schoolyears');
+        Schema::dropIfExists('additionables');
     }
 };
-
-

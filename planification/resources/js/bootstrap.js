@@ -1,7 +1,4 @@
 import 'bootstrap';
-import 'datatables.net-bs5';
-import 'datatables.net-buttons-bs5';
-import 'datatables.net-select-bs5';
 
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests

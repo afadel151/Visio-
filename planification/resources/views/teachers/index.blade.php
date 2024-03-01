@@ -20,24 +20,82 @@
             font-family: "Poppins", sans-serif;
         }
     </style> --}}
-@extends('layouts.app')
+@extends('default')
 @section('content')
-    <div class="container">
+    <div class="container flex justify-center items-stretch flex-col w-[100%] h-screen">
+        <div>
+            <p class="text-7xl font-weight-bold mb-20 " style="font-weight: 700">All Teachers </p>
+        </div>
         <div class="card">
             <div class="card-header">Manage Teachers</div>
             <div class="card-body">
-                {{ $dataTable->table() }}
+                {{-- {!! $dataTable->table() !!} --}}
+                <table class="table table-bordered display" id="teachers">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Teacher Name</th>
+                            <th>Teacher Grade</th>
+                            <th>Department </th>
+                            <th>Action </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($teachers as $teacher)
+                            <tr>
+                                <td>{{ $teacher->id }}</td>
+                                <td>{{ $teacher->teacher_name }}</td>
+                                <td>{{ $teacher->teacher_type }}</td>
+                                <td>{{ $teacher->department->department }}</td>
+                                <td>
+                                    <a href="javascript:void(0)" class="edit btn btn-info btn-sm rounded-lg">View</a>
+                                    <a href="javascript:void(0)" class="edit btn btn-primary btn-sm rounded-lg">Edit</a>
+                                    <a href="javascript:void(0)" class="edit btn btn-danger btn-sm rounded-lg">Delete</a>
+                                
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
-    </div>
+        <div class="card">
+            <div class="card-header">Manage Rooms</div>
+            <div class="card-body">
+                {{-- {!! $dataTable->table() !!} --}}
+                <table class="table table-bordered display" id="rooms">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Room</th>
+                            <th>Capacity exams</th>
+                            <th>Capacity teaching</th>
+                            <th>Action </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($rooms as $room)
+                            <tr>
+                                <td>{{ $room->id }}</td>
+                                <td>{{ $room->room }}</td>
+                                <td>{{ $room->capacity_exams }}</td>
+                                <td>{{ $room->capacity_exams }}</td>
+                                <td>
+                                    <a href="javascript:void(0)" class="edit btn btn-info btn-sm rounded-lg">View</a>
+                                    <a href="javascript:void(0)" class="edit btn btn-primary btn-sm rounded-lg">Edit</a>
+                                    <a href="javascript:void(0)" class="edit btn btn-danger btn-sm rounded-lg">Delete</a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div> 
+       </div>  
+
 @endsection
 @push('scripts')
-    {{-- <script src="https://code.jquery.com/jquery-3.7.1.min.js"
-        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <script src="https://cdn.datatables.net/2.0.0/js/dataTables.min.js"dfer></script>
-    {!! $dataTable->table([], true) !!} --}}
-    {{-- {!! $dataTable->table([], true) !!} --}}
-    {{ $dataTable->scripts(attributes: ['type' => 'module']) }}
+
+{{-- {!! $dataTable->scripts() !!} --}}
     
 @endpush
 

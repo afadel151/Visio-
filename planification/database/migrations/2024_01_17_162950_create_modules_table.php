@@ -14,25 +14,22 @@ return new class extends Migration
         Schema::create('modules', function (Blueprint $table) {
             $table->id();
             $table->string('module');
-            $table->unsignedBigInteger('department_id');
-            $table->foreign('department_id')->references('id')->on('departments');
-            $table->unsignedBigInteger('module_head_id');
-            $table->foreign('module_head_id')->references('id')->on('teachers');
-            $table->unsignedBigInteger('battalion_id');
-            $table->foreign('battalion_id')->references('id')->on('battalions');
-            
+            $table->foreignId('department_id')->constrained('departments');
+            $table->foreignId('module_head_id')->constrained('teachers');
+            $table->foreignId('battalion_id')->constrained('battalions');
             $table->char('module_sector',2);
             
             
         });
         Schema::create('teachers_modules', function (Blueprint $table) {
-            //do we need to add ID to this table  
-            $table->unsignedBigInteger('teacher_id');
-            $table->foreign('teacher_id')->references('id')->on('teachers');
-            $table->unsignedBigInteger('module_id');
-            $table->foreign('module_id')->references('id')->on('modules');
+              
+            $table->foreignId('teacher_id')->constrained('teachers');
+            $table->foreignId('module_id')->constrained('modules');
+            $table->foreignId('schoolyear_id')->constrained('schoolyears');
+            $table->boolean('cours');
+            $table->boolean('td');
+            $table->boolean('tp');
         });
-       
     }
     /**
      * Reverse the migrations.
@@ -40,5 +37,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('modules');
+        Schema::dropIfExists('teachers_modules');
+
     }
 };

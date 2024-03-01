@@ -5,15 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Event extends Model
+class SchoolYear extends Model
 {
-    
-    
     use HasFactory;
-    protected $table = 'events';
-
-    public function global_week()
+    protected $table = 'schoolyears';
+    public function weeks()
     {
-        return $this->belongsTo(GlobalWeek::class);
+        return $this->hasMany(Week::class,'schoolyear_id');
     }
 }
