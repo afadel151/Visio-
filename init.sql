@@ -118,6 +118,7 @@ VALUES
 ('D20', 15, 30),
 ('D21', 15, 30),
 ('D22', 15, 30),
+('D23', 15, 30),
 ('Labo de langues', 0, 30),
 ('Labo de physique', 0, 30),
 ('Labo de chimie', 0, 30),
