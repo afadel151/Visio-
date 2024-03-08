@@ -10,7 +10,7 @@
         {{-- foreach company --}}
         @foreach ($companies as $company)
             <td class="text-center  h-[100%] " >
-                @include('weeks.company-header',['company'=>$company,'week_id'=>$week_id])
+                @include('weeks.company-header',['company'=>$company])
             </td>
         @endforeach
     </tr>

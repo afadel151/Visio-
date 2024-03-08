@@ -18,4 +18,8 @@ class GlobalWeek extends Model
     {
         return $this->hasMany(Event::class,'global_week_id');
     }
+    public function weeks()
+    {
+        return $this->hasMany(Week::class,'global_week_id');
+    }
 }

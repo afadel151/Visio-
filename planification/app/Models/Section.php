@@ -15,9 +15,13 @@ class Section extends Model
     {
         return $this->belongsTo(Company::class);
     }
-    public function sessions()
+    public function session($date,$time)
     {
-        return $this->morphToMany(Session::class, 'sessionable');
+        // return $this->morphToMany(Session::class, 'sessionable','sessions','sessionable_id');
+        return Session::where('sessionable_type','App\Models\Section')
+                        ->where('sessionable_id',$this->id)
+                        ->where('session_date',$date)
+                        ->where('timing_id',$time)->first();
     }
     public function additionals()
     {

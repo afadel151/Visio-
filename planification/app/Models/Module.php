@@ -12,7 +12,7 @@ class Module extends Model
     //belongs to department
     public function teachers()
     {
-        return $this->belongsToMany(Teacher::class,'teachers_modules');
+        return $this->belongsToMany(Teacher::class,'teachers_modules')->withPivot(['cours', 'td', 'tp']);
     }
     //belongsto department
     public function department()

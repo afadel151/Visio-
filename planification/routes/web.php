@@ -1,15 +1,17 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\PlanningController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SchoolYear;
+use App\Http\Controllers\SessionController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\WeekController;
 use App\Http\Controllers\GlobalWeekController;
-
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
 use Yajra\DataTables\DataTables;
 
@@ -23,16 +25,18 @@ use Yajra\DataTables\DataTables;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+use App\Livewire\Counter;
+ 
+Route::get('/counter', Counter::class);
+
 
 Route::get('/', function () {
     return view('landing');
 })->name('home');
 // Route::get('/{battalion_id}/{week_id}',[PlanningController::class,'create']);
 
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::post('/sessionadd', [SessionController::class,'store'])->name('sessionadd');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -50,7 +54,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/store',[TeacherController::class,'store'])->name('teachers.store');
             // Route::post('/updatepage',[TeacherController::class,'updatepage'])->name('teachers.updatepage');
             Route::post('/update',[TeacherController::class,'update'])->name('teachers.update');
-            Route::get('/{id}',[TeacherController::class,'show'])->name('teachers.show');
+            Route::get('/{teacher_id}',[TeacherController::class,'show'])->name('teachers.show');
         });
         Route::prefix('modules')->group(function () {
             Route::get('/',[ModuleController::class,'index'])->name('modules.index');
@@ -96,7 +100,7 @@ Route::middleware('auth')->group(function () {
 
     });
 });
-Auth::routes();
+// Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index']);
-Auth::routes();
+
