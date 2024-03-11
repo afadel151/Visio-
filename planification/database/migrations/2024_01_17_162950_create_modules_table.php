@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('modules', function (Blueprint $table) {
             $table->id();
             $table->string('module');
-            
+            $table->timestamps();
             $table->foreignId('department_id')->constrained('departments');
             $table->foreignId('module_head_id')->constrained('teachers');
             $table->unsignedBigInteger('battalion');
@@ -22,7 +22,7 @@ return new class extends Migration
             $table->char('module_sector',2);
         });
         Schema::create('teachers_modules', function (Blueprint $table) {
-              
+            $table->timestamps();
             $table->foreignId('teacher_id')->constrained('teachers');
             $table->foreignId('module_id')->constrained('modules');
             $table->foreignId('schoolyear_id')->constrained('schoolyears');

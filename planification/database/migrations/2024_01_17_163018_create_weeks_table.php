@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('week_type');
             $table->boolean('sport_exam');
             $table->boolean('cc');
+            $table->timestamps();
         });
        
     }

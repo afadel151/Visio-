@@ -14,7 +14,7 @@
     <title>Document</title>
 </head>
 
-<body class=" w-screen  px-10">
+<body class=" w-screen  px-10 overflow-x-hidden">
     <style>
         body {
             font-family: "Poppins", sans-serif;
@@ -35,7 +35,7 @@
            <a href="{{ route('dashboard') }}">
             <button class="text-slate-900 hover:before:bg-red  font-[700]  rounded-xl h-16 w-48 text-xl relative  overflow-hidden border-indigo-500  bg-indigo-500   shadow-2xl transition-all before:absolute before:bottom-0 hover:border-red-500 before:left-0 before:top-0 before:z-0 before:h-full before:w-0 before:bg-red-500 before:transition-all before:duration-500 hover:text-white hover:shadow-red-500 hover:before:left-0 hover:before:h-[100%] hover:before:w-full"><span class="relative z-10">Get started</span></button>
             </a> 
-            <a href="{{ route('dashboard') }}">
+            <a href="#docs">
                 <button class="relative flex h-16 rounded-xl  text-xl border-2 border-slate-700  font-[700] w-48 items-center justify-center overflow-hidden bg-slate-200 text-slate-900 shadow-2xl transition-all before:absolute hover:text-slate-200 before:h-0 before:w-0 before:rounded-full before:bg-slate-600 before:duration-500 before:ease-out hover:shadow-slate-800 hover:before:h-56 hover:before:w-56">
                     <span class="relative z-10">Documentation</span>
                 </button>
@@ -44,10 +44,10 @@
     </div>
     
     <div class="absolute top-20 right-10 h-[200px] w-[300px]">
-        <p class="text-6xl h-[100%] font-[300] text-slate-900"><span id="element"></span></p>
+        <p class="text-6xl h-[100%] font-[700] text-slate-900"><span id="element"></span></p>
     </div >
-    <div class="absolute right-[-5%] top-0 w-[55%] h-screen flex justify-center flex-col">
-        <div class="  animate-[pulse_5s_ease-in-out_infinite]">
+    <div class="absolute right-[-10%] top-0 w-[66%] h-screen flex justify-center flex-col">
+        <div class="  ">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1"
                     viewBox="0 0 1000 1000" xml:space="preserve">
         
@@ -5645,9 +5645,9 @@
             </div>
     </div>
     
-    <div class="w-screen " id="docs"></div>
-        <div class="w-screen h-screen">
-            
+    
+        <div class="w-screen h-screen" id="docs">
+            @include('features')
         </div>
         
     <div

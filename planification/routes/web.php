@@ -1,19 +1,16 @@
 <?php
-
+// use App\Http\Controllers;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\PageController;
+use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\RoomController;
-use App\Http\Controllers\PlanningController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\SchoolYear;
+use App\Http\Controllers\SchoolYearController;
 use App\Http\Controllers\SessionController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\WeekController;
 use App\Http\Controllers\GlobalWeekController;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Route;
-use Yajra\DataTables\DataTables;
 
 /*
 |--------------------------------------------------------------------------
@@ -89,14 +86,22 @@ Route::middleware('auth')->group(function () {
             Route::get('/{id}',[GlobalWeekController::class,'show'])->name('global_weeks.show');
         });
         Route::prefix('schoolyears')->group(function () {
-            Route::get('/',[SchoolYear::class,'index'])->name('schoolyears.index');
-            Route::get('/create',[SchoolYear::class,'index'])->name('schoolyears.create');
-            Route::post('/store',[SchoolYear::class,'store'])->name('schoolyears.store');
-            Route::post('/update',[SchoolYear::class,'update'])->name('schoolyears.update');
-            Route::delete('/delete',[SchoolYear::class,'delete'])->name('schoolyears.delete');
-            Route::get('/{id}',[SchoolYear::class,'show'])->name('schoolyears.show');
+            Route::get('/',[SchoolYearController::class,'index'])->name('schoolyears.index');
+            // Route::get('/create',[SchoolYearController::class,'index'])->name('schoolyears.create');
+            Route::post('/store',[SchoolYearController::class,'store'])->name('schoolyears.store');
+            Route::post('/update',[SchoolYearController::class,'update'])->name('schoolyears.update');
+            // Route::delete('/delete',[SchoolYearController::class,'delete'])->name('schoolyears.delete');
+            Route::get('/{id}',[SchoolYearController::class,'show'])->name('schoolyears.show');
         });
-
+        Route::prefix('settings')->group(function () {
+            Route::get('/',[SettingsController::class,'index'])->name('settings.index');
+            Route::get('/schoolyears',[SettingsController::class,'schoolyears'])->name('settings.schoolyears');
+            Route::get('/teachers',[SettingsController::class,'teachers'])->name('settings.teachers');
+            Route::get('/modules',[SettingsController::class,'modules'])->name('settings.modules');
+            Route::get('/battalions',[SettingsController::class,'battalions'])->name('settings.battalions');
+            Route::get('/sections',[SettingsController::class,'sections'])->name('settings.sections');
+        });
+        
 
     });
 });

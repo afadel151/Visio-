@@ -22,6 +22,7 @@ return new class extends Migration
             $table->foreignId('teacher_id')->constrained('teachers','id');
             $table->string('session_type');
             $table->boolean('absented')->default(false);
+            $table->timestamps();
         });
     }
 

@@ -2,9 +2,9 @@ use planification;
 
 -- schoolyear
 INSERT INTO
-  schoolyears (schoolyear, schoolyear_start_date)
+  schoolyears (schoolyear, schoolyear_start_date,created_at,updated_at)
 VALUES
-  ('2023/2024', '2023-09-15');
+  ('2023/2024', '2023-09-15',NOW(),NOW());
 
 INSERT INTO
   global_weeks (
@@ -19,32 +19,59 @@ VALUES
 
 -- battalions
 INSERT INTO
-  battalions (battalion)
+  battalions (battalion,schoolyear_id)
 VALUES
-  ('1'),
-  ('2'),
-  ('3');
+  ('1',1),
+  ('2',1),
+  ('3',1);
 
 INSERT INTO
   weeks (
     global_week_id,
     week_number,
     battalion_id,
-    start_week_date,
-    end_week_date,
     semester,
-    week_type
+    week_type,
+    sport_exam,
+    cc,
+    updated_at,
+    created_at
   )
 VALUES
   (
     1,
     1,
     3,
-    '2023-09-15',
-    '2023-09-19',
     '1',
-    'Cours Magistreaux'
-  );
+    'Cours Magistreaux',
+    0,
+    1,
+    NOW(),
+    NOW()
+  ),
+  (
+    1,
+    1,
+    2,
+    '1',
+    'Cours',
+    1,
+    1,
+    NOW(),
+    NOW()
+  ),
+  (
+    1,
+    1,
+    1,
+    '1',
+    'Cours',
+    1,
+    0,
+    NOW(),
+    NOW()
+  )
+  ;
 
 -- rooms
 INSERT INTO
@@ -226,9 +253,100 @@ INSERT INTO
     teacher_name,
     teacher_grade,
     teacher_type,
-    department_id
+    department_id,
+    created_at,
+    updated_at
   )
 VALUES
-  ('A. Mahani', 'Maitre A', 'vacataire', 1),
-  ('A. Mahani', 'Maitre A', 'vacataire', 1),
-  ('M. Ouazane', 'Maitre A', 'vacataire', 2);
+ 
+('ZAIUCHE', 'Maitre A', 'ENPEI', 1,NOW(),NOW()),
+('BOULAHIA','Maitre A','EMP','1',NOW(),NOW()),
+('HOSNI', 'Maitre A', 'EMP', 1,NOW(),NOW()),
+('LAMRI', 'Maitre A', 'ENPEI', 1,NOW(),NOW()),
+('MAZARI', 'Maitre A', 'EMP', 1,NOW(),NOW()),
+('BOUSSAHA', 'Maitre A', 'vacataire', 2,NOW(),NOW()),
+('BERANI', 'Maitre A', 'vacataire', 1,NOW(),NOW()),
+('TIKAROUCHINE', 'Maitre A', 'EMP', 2,NOW(),NOW()),
+('HABBOUCHE', 'Maitre A', 'vacataire', 2,NOW(),NOW()),
+('REDJAMIA', 'Maitre A', 'ENPEI', 4,NOW(),NOW()),
+('GUETTAF', 'Maitre A', 'Détaché', 4,NOW(),NOW()),
+('CHOUH', 'Maitre A', 'Détaché',4,NOW(),NOW()),
+('DJELLOULI', 'Maitre A', 'ENPEI',4,NOW(),NOW()),
+('BELMADANI', 'Maitre A', 'ENPEI',4,NOW(),NOW()),
+('LAADJ', 'Maitre A', 'vacataire',4,NOW(),NOW()),
+('KACIMI', 'Maitre A', 'vacataire',4,NOW(),NOW()),
+('MAHOUI', 'Maitre A', 'vacataire',4,NOW(),NOW()),
+('BELGHAZI', 'Maitre A', 'vacataire',4,NOW(),NOW()),
+('BENNANI', 'Maitre A', 'Détaché',4,NOW(),NOW()),
+('BOUZEHHAR', 'Maitre A', 'vacataire',4,NOW(),NOW()),
+('BENCHETTAH', 'Maitre A', 'ENPEI',4,NOW(),NOW()),
+('MAMECHE', 'Maitre A', 'Détaché',4,NOW(),NOW()),
+('SELAMA', 'Maitre A', 'Vacataire',6,NOW(),NOW()),
+('ZIBANI', 'Maitre A', 'ENPEI',1,NOW(),NOW()),
+('ZAGHWANI', 'Maitre A', 'ENPEI',1,NOW(),NOW()),
+('CHERIFI', 'Maitre A', 'EMP',1,NOW(),NOW()),
+('ADDI', 'Maitre A', 'Détaché',2,NOW(),NOW()),
+('YAHIAOUI', 'Maitre A', 'Détaché',2,NOW(),NOW()),
+('CHELLAL', 'Maitre A', 'Détaché',2,NOW(),NOW()),
+('YAHIA', 'Maitre A', 'Détaché',2,NOW(),NOW()),
+('BENAISSA', 'Maitre A', 'ENPEI',2,NOW(),NOW()),
+('TIDMIMT', 'Maitre A', 'Vacataire',6,NOW(),NOW()),
+('TIKOUDANE', 'Maitre A', 'Vacataire',6,NOW(),NOW()),
+('DERRAHI', 'Maitre A', 'Vacataire',6,NOW(),NOW()),
+('SAOUDI', 'Maitre A', 'ENPEI',2,NOW(),NOW()),
+('MERZOUG', 'Maitre A', 'ENPEI',2,NOW(),NOW()),
+('BOUBAKIR', 'Maitre A', 'ENPEI',2,NOW(),NOW()),
+('BOULAHIA', 'Maitre A', 'ENPEI',2,NOW(),NOW()),
+('CHELLALI', 'Maitre A', 'ENPEI',2,NOW(),NOW()),
+('CHAIBI', 'Maitre A', 'ENPEI',2,NOW(),NOW()),
+('RAHIM', 'Maitre A', 'ENPEI',1,NOW(),NOW()),
+('DERBALA', 'Maitre A', 'ENPEI',2,NOW(),NOW()),
+('BOUATELLI', 'Maitre A', 'Détaché',2,NOW(),NOW()),
+('BAHAMIDA', 'Maitre A', 'Vacataire',2,NOW(),NOW()),
+('BENCHERIET', 'Maitre A', 'Vacataire',2,NOW(),NOW()),
+('BACHA', 'Maitre A', 'Détaché',2,NOW(),NOW()),
+('OUATIZERGA', 'Maitre A', 'Vacataire',2,NOW(),NOW()),
+('MEZIANI', 'Maitre A', 'ENPEI',4,NOW(),NOW()),
+('BENMANSOUR', 'Maitre A', 'ENPEI',4,NOW(),NOW()),
+('ZELMATI', 'Maitre A', 'EMP',1,NOW(),NOW()),
+ ('ADDAR', 'Maitre A', 'Détaché',6,NOW(),NOW()),
+ ('MEBREK', 'Maitre A', 'Détaché',4,NOW(),NOW()),
+ ('FELLAH', 'Maitre A', 'Détaché',4,NOW(),NOW()),
+('TALEB', 'Maitre A', 'Vacataire',4,NOW(),NOW()),
+('DJELLOULI', 'Maitre A', 'ENPEI',1,NOW(),NOW()),
+('BOUDANE', 'Maitre A', 'EMP',1,NOW(),NOW()),
+('MAHANI', 'Maitre A', 'Détaché',1,NOW(),NOW()),
+('KECHID', 'Maitre A', 'Détaché',1,NOW(),NOW()),
+('HABBOUCHI', 'Maitre A', 'EMP',1,NOW(),NOW()),
+('OUKID', 'Maitre A', 'EMP',1,NOW(),NOW()),
+('EL YOUSFI', 'Maitre A', 'EMP',4,NOW(),NOW()),
+('BENADDAD', 'Maitre A', 'ENPEI',4,NOW(),NOW()),
+('SEHAKI', 'Maitre A', 'EMP',1,NOW(),NOW()),
+('BOUDERBAL', 'Maitre A', 'ENPEI',1,NOW(),NOW()),
+('HABACHI', 'Maitre A', 'ENPEI',2,NOW(),NOW()),
+('MAACHOU', 'Maitre A', 'Vacataire',4,NOW(),NOW()),
+('ZITOUT', 'Maitre A', 'Vacataire',4,NOW(),NOW()),
+('CHENAIFI', 'Maitre A', 'ENPEI',2,NOW(),NOW()),
+('KIOUS', 'Maitre A', 'ENPEI',2,NOW(),NOW()),
+('ABBOU', 'Maitre A', 'ENPEI',2,NOW(),NOW()),
+('BOUCHEDJRA', 'Maitre A', 'ENPEI',2,NOW(),NOW()),
+('AISSANI', 'Maitre A', 'Détaché',2,NOW(),NOW()),
+('LATRECHE', 'Maitre A', 'ENPEI',2,NOW(),NOW()),
+('HAMADOU', 'Maitre A', 'ENPEI',2,NOW(),NOW()),
+('BEZZIOU', 'Maitre A', 'EMP',2,NOW(),NOW()),
+('BENBOUZID', 'Maitre A', 'EMP',2,NOW(),NOW()),
+('CHEKOUR', 'Maitre A', 'Détaché',2,NOW(),NOW()),
+('ROUALI', 'Maitre A', 'ENPEI',1,NOW(),NOW()),
+('BELAGOUNE', 'Maitre A', 'DSS',1,NOW(),NOW()),
+('TITRI', 'Maitre A', 'ENPEI',2,NOW(),NOW());
+
+
+
+
+
+
+
+
+
+
+

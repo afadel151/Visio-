@@ -29,16 +29,17 @@ class ModuleSeeder extends Seeder
                 'module' => $faker->word(),
                 'department_id' => $faker->randomElement($departments),
                 'module_head_id' => $faker->randomElement($teachers),
-                'battalion_id' => $faker->randomElement($battalions),
+                'battalion' => $faker->randomElement([1,2,3]),
+                'semester' => $faker->randomElement(['1','2']),
                 'module_sector' => $faker->randomElement(['MI','ST','PR'])
             ]);
         }
-        // Module::insert($data);
+        Module::insert($data);
         $teachers_modules=[];
         $teachers = Teacher::pluck('id')->toArray();
         $modules = Module::pluck('id')->toArray();
         $schoolyears = SchoolYear::pluck('id')->toArray();
-        for($i=0; $i < 90; $i++)
+        for($i=0; $i < 150; $i++)
         {
             array_push($teachers_modules,[
                 'teacher_id' => $faker->randomElement($teachers),

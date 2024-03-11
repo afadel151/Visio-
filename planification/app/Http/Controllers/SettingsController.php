@@ -2,17 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\SchoolYear;
 use Illuminate\Http\Request;
 
-class SchoolYear extends Controller
+class SettingsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $schoolyears = \App\Models\SchoolYear::all();
-        return view('schoolyears.index',['schoolyears'=>$schoolyears]);
+        return view('settings.index');
+    }
+    public function schoolyears()
+    {
+        $schoolyears  = SchoolYear::all();
+        return view('settings.schoolyears',['schoolyears'=>$schoolyears]);
+    }
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
     }
 
     /**
@@ -28,8 +40,15 @@ class SchoolYear extends Controller
      */
     public function show(string $id)
     {
-        $schoolyear = \App\Models\SchoolYear::find($id);
-        return view('schoolyears.show',['schoolyear'=>$schoolyear]);
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
+    {
+        //
     }
 
     /**

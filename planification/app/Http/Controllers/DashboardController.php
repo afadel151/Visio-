@@ -13,8 +13,12 @@ class DashboardController extends Controller
     public function index()
     {
         $today = date('Y-m-d');
-        $global_week = GlobalWeek::where('start_week_date','<=',$today)->where('end_week_date','>=',$today)->first();
+        // $global_week = GlobalWeek::where('start_week_date','<=',$today)->where('end_week_date','>=',$today)->first();
+        $global_week = GlobalWeek::find(1);
+        
+
         if ($global_week) {
+       
             $weeks = $global_week->weeks;
             return view('dashboarding', ['global_week' => $global_week]);
         }

@@ -1,19 +1,22 @@
-<table class="h-[100%] z-0 w-[100%]" id="company-day">
+<table class="h-[100%] z-0 w-[100%] table-fixed" id="company-day" >
 
     @php
         $sections = $company->sections;
     @endphp
     @foreach ($timings as $timing)
-        <tr class="w=[100%] relative">
+        <tr class="w-[100%] relative">
             {{-- <livewire:create-session :company="$company" :date="$date" :timing="$timing" :modules="$modules" :teachers="$teachers" :rooms="$rooms"> --}}
                 <!-- Inside your blade file -->
             {{-- <button wire:click:create-session="toggleVisibility">Reload Component</button> --}}
             {{-- <livewire:create-session / --}}
 
             @foreach ($sections as $section)
-                <td class="relative sectionparentofform  text-center  ">
+                <td class=" text-center  w-[103px] ">
+                    <div class="relative sectionparentofform h-[100%] flex justify-center items-center border-2" >
                     <button
-                        class="flex section-button items-center justify-center p-2 w-16 rounded-lg bg-slate-400 hover:bg-yellow-50 z-0">Add</button>
+                        class="flex section-button items-center justify-center p-2 w-10 h-10 rounded-full bg-slate-300 hover:bg-yellow-50 z-0">
+                        <img src="/svg/pen-thin.svg" alt="">
+                    </button>
                     <form action=""
                         class="section-form  bg-slate-50 hidden absolute  rounded-[20px] shadow-lg text-xl w-[300px] h-[300px]"
                         style="top: 50px; left: 50px;z-index: 50;" method="post">
@@ -64,12 +67,12 @@
                         </div>
 
                     </form>
-
+                </div>
                 </td>
             @endforeach
-            <td class="parentofform relative">
+            <td class="parentofform absolute right-2 top-1 z-20">
                 <button
-                    class="absolute company-button z-0  top-4 right-4 cancel-button hover:cursor-pointer bg-slate-400 h-6 w-6 rounded-full"></button>
+                    class="absolute company-button z-0  top-4 right-4 cancel-button hover:cursor-pointer bg-slate-500 h-6 w-6 rounded-full"></button>
                 <form action=""
                     class="hidden rounded-[20px] shadow-lg text-xl w-[300px] h-[300px] bg-white company-form absolute"
                     style="top: 10px; left: 10px;z-index: 50;">

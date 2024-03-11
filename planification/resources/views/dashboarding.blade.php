@@ -12,7 +12,7 @@
             if ($week->battalion->battalion == 3) {
                 $week_3 = $week;
             }
-        }
+        }   
     @endphp
     <div class="grid grid-cols-9 grid-rows-7 gap-6 h-screen py-10" style="width: calc(100% - 92px)">
         <div

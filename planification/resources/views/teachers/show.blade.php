@@ -22,7 +22,7 @@
         </div>
         {{-- {{ $teacher }} --}}
         {{-- {{ $teacher }} --}}
-        <div class="card mt-20 mb-20 w-[70%]">
+        <div class="card mt-20 mb-20 w-[80%]">
             <div class="card-header text-center text-3xl font-bold">Modules</div>
             <div class="card-body">
                 {{-- {!! $dataTable->table() !!} --}}

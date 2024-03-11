@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('schoolyear');
             $table->date('schoolyear_start_date');
+            $table->timestamps();
         });
     }
 
