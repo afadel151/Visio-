@@ -18,6 +18,14 @@ class Week extends Model
     {
         return $this->hasMany(Session::class);
     }
-    
+    public function global_week()
+    {
+        return $this->belongsTo(GlobalWeek::class,'global_week_id');
+    }
+    public function battalion()
+    {
+        return $this->belongsTo(Battalion::class);
+    }
+
     //belongsto type
 }

@@ -16,10 +16,11 @@ return new class extends Migration
             $table->foreignId('global_week_id')->constrained('global_weeks','id');
             $table->integer('week_number');
             $table->foreignId('battalion_id')->constrained('battalions')->onDelete('CASCADE');
-            $table->date('start_week_date');
-            $table->date('end_week_date');
             $table->char('semester',1);
             $table->string('week_type');
+            $table->boolean('sport_exam');
+            $table->boolean('cc');
+            $table->timestamps();
         });
        
     }

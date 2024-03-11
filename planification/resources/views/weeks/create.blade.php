@@ -7,32 +7,41 @@
             <div class="bg-indigo-300 rounded-xl h-20 text-center flex justify-center items-center w-[300px]"> Semaine :
                 {{ $week->week_type }}</div>
             <div class="bg-indigo-300 rounded-xl h-20 text-center flex justify-center items-center w-[300px]">Du
-                {{ $week->start_week_date }} au {{ $week->end_week_date }}</div>
+                {{ $week->global_week->start_week_date }} au {{ $week->global_week->end_week_date }}</div>
         </div>
-        
-        <table class=" w-[100%] z-0 ">
+
+        <table class=" w-[100%] z-0 " style="width: calc({{ $battalion->sections->count() }}*130px)">
             <tr>
                 <td class=" " style="visibility: hidden">Domaine JCP</td>{{-- //vide --}}
-                <td class="">
+                <td class="sticky top-0 z-10 ">
                     @php
-                        $companies = $battalion->companies_ST;
+                        $companies_ST = $battalion->companies_ST;
+                        $modules_ST = $battalion->modules_ST(1);
+                        $teachers_ST = $battalion->teachers_ST(1);
+                        $teachers_ST = collect($teachers_ST)->map(function ($teacher) {
+                            return (object) $teacher;
+                        });
                         $domaine = 'ST';
                     @endphp
                     @include('weeks.domaine', [
-                        'companies' => $companies,
+                        'companies' => $companies_ST,
                         'domaine' => $domaine,
-                        'week_id' => $week->id,
                     ])
                 </td>
-                <td class=" ">
+
+                <td class="sticky top-0 z-10 ">
                     @php
-                        $companies = $battalion->companies_MI;
+                        $companies_MI = $battalion->companies_MI;
+                        $modules_MI = $battalion->modules_MI(1);
+                        $teachers_MI = $battalion->teachers_MI(1);
+                        $teachers_MI = collect($teachers_MI)->map(function ($teacher) {
+                            return (object) $teacher;
+                        });
                         $domaine = 'MI';
                     @endphp
                     @include('weeks.domaine', [
-                        'companies' => $companies,
+                        'companies' => $companies_MI,
                         'domaine' => $domaine,
-                        'week_id' => $week->id,
                     ])
                 </td>
             </tr>
@@ -43,34 +52,38 @@
 
 
             @for ($i = 0; $i < 5; $i++)
-                <tr class="h-[500px]">
+                <tr class="h-[800px]">
                     @php
                         $date = date('Y-m-d', strtotime('+1 days', strtotime($date)));
                     @endphp
-                    <td class="h-[500%] ">
+                    <td class="h-[500%] w-[300px]">
                         @include('weeks.day', ['date' => $date, 'timings' => $timings])
                     </td>
-                    @php
-                        $companies = $battalion->companies_ST;
-                    @endphp
-                    <td class="h-[500px]">
+
+                    <td class="h-[800px]">
                         @include('weeks.domaine-day', [
-                            'companies' => $companies,
+                            'companies' => $companies_ST,
                             'timings' => $timings,
                             'date' => $date,
                             'week_id' => $week->id,
+                            'modules' => $modules_ST,
+                            'teachers' => $teachers_ST,
+                            'rooms' => $rooms,
                         ])
                     </td>
 
                     @php
                         $companies = $battalion->companies_MI;
                     @endphp
-                    <td class="h-[500px] ">
+                    <td class="h-[800px] ">
                         @include('weeks.domaine-day', [
-                            'companies' => $companies,
+                            'companies' => $companies_MI,
                             'timings' => $timings,
                             'date' => $date,
                             'week_id' => $week->id,
+                            'modules' => $modules_MI,
+                            'teachers' => $teachers_MI,
+                            'rooms' => $rooms,
                         ])
                     </td>
                 </tr>

@@ -16,6 +16,7 @@ return new class extends Migration
             //nom
             $table->string('event');
             $table->dateTime('event_date');
+            $table->timestamps();
             // $table->unsignedBigInteger('global_week_id');
             // $table->foreign('week_id')->references('id')->on('weeks');
             //date fin

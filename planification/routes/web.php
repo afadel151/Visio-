@@ -1,17 +1,16 @@
 <?php
-
-use App\Http\Controllers\PageController;
+// use App\Http\Controllers;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\RoomController;
-use App\Http\Controllers\PlanningController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\SchoolYear;
+use App\Http\Controllers\SchoolYearController;
+use App\Http\Controllers\SessionController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\WeekController;
 use App\Http\Controllers\GlobalWeekController;
-
 use Illuminate\Support\Facades\Route;
-use Yajra\DataTables\DataTables;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,16 +22,18 @@ use Yajra\DataTables\DataTables;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+use App\Livewire\Counter;
+ 
+Route::get('/counter', Counter::class);
+
 
 Route::get('/', function () {
     return view('landing');
 })->name('home');
 // Route::get('/{battalion_id}/{week_id}',[PlanningController::class,'create']);
 
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::post('/sessionadd', [SessionController::class,'store'])->name('sessionadd');
+Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -50,7 +51,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/store',[TeacherController::class,'store'])->name('teachers.store');
             // Route::post('/updatepage',[TeacherController::class,'updatepage'])->name('teachers.updatepage');
             Route::post('/update',[TeacherController::class,'update'])->name('teachers.update');
-            Route::get('/{id}',[TeacherController::class,'show'])->name('teachers.show');
+            Route::get('/{teacher_id}',[TeacherController::class,'show'])->name('teachers.show');
         });
         Route::prefix('modules')->group(function () {
             Route::get('/',[ModuleController::class,'index'])->name('modules.index');
@@ -85,18 +86,26 @@ Route::middleware('auth')->group(function () {
             Route::get('/{id}',[GlobalWeekController::class,'show'])->name('global_weeks.show');
         });
         Route::prefix('schoolyears')->group(function () {
-            Route::get('/',[SchoolYear::class,'index'])->name('schoolyears.index');
-            Route::get('/create',[SchoolYear::class,'index'])->name('schoolyears.create');
-            Route::post('/store',[SchoolYear::class,'store'])->name('schoolyears.store');
-            Route::post('/update',[SchoolYear::class,'update'])->name('schoolyears.update');
-            Route::delete('/delete',[SchoolYear::class,'delete'])->name('schoolyears.delete');
-            Route::get('/{id}',[SchoolYear::class,'show'])->name('schoolyears.show');
+            Route::get('/',[SchoolYearController::class,'index'])->name('schoolyears.index');
+            // Route::get('/create',[SchoolYearController::class,'index'])->name('schoolyears.create');
+            Route::post('/store',[SchoolYearController::class,'store'])->name('schoolyears.store');
+            Route::post('/update',[SchoolYearController::class,'update'])->name('schoolyears.update');
+            // Route::delete('/delete',[SchoolYearController::class,'delete'])->name('schoolyears.delete');
+            Route::get('/{id}',[SchoolYearController::class,'show'])->name('schoolyears.show');
         });
-
+        Route::prefix('settings')->group(function () {
+            Route::get('/',[SettingsController::class,'index'])->name('settings.index');
+            Route::get('/schoolyears',[SettingsController::class,'schoolyears'])->name('settings.schoolyears');
+            Route::get('/teachers',[SettingsController::class,'teachers'])->name('settings.teachers');
+            Route::get('/modules',[SettingsController::class,'modules'])->name('settings.modules');
+            Route::get('/battalions',[SettingsController::class,'battalions'])->name('settings.battalions');
+            Route::get('/sections',[SettingsController::class,'sections'])->name('settings.sections');
+        });
+        
 
     });
 });
-Auth::routes();
+// Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index']);
-Auth::routes();
+

@@ -1,4 +1,4 @@
-<table class="w-[100%] h-[500px]" >
+<table class="w-[100%] h-[800px]" >
     <tr class="">
         @php
             $timestamp = strtotime($date);

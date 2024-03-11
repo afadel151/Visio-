@@ -16,9 +16,9 @@ class Teacher extends Model
             ->orWhere('Last_name', 'like', "%$q%");
     }
 
-    public function modules()// 
+    public function modules()
     {
-        return $this->belongsToMany(Module::class,'teachers_modules');
+        return $this->belongsToMany(Module::class,'teachers_modules')->withPivot(['cours', 'td', 'tp']);
     }
     public function absences()//Sure
     {

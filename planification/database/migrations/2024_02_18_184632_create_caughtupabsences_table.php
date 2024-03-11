@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('caughtupabsences', function (Blueprint $table) {
             $table->id();
             //nom
+            $table->timestamps();
             $table->foreignId('additive_id')->constrained('additives');
             $table->foreignId('absence_id')->constrained('absences');
             //date 

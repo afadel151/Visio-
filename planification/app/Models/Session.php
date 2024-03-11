@@ -9,6 +9,17 @@ class Session extends Model
 {
     use HasFactory;
     //belongsto module
+    protected $fillable = [
+                'session_date',
+                'teacher_id',
+                'timing_id',
+                'room_id',
+                'module_id',
+                'week_id',
+                'session_type',
+                'sessionable_type',
+                'sessionable_id',
+    ];
     public function module(){
         return $this->belongsTo(Module::class);
     }
@@ -29,6 +40,10 @@ class Session extends Model
     public function room(){
         return $this->belongsTo(Room::class);
     }
+    public function teacher(){
+        return $this->belongsTo(Teacher::class);
+    }
+
     //belongsto type
     public function timing()
     {

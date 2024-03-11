@@ -15,6 +15,7 @@ return new class extends Migration
             $table->foreignId('additional_id')->constrained('additionals','id');
             $table->string('additionable_type');//  App\Models\Company or App\Models\Section.
             $table->unsignedBigInteger('additionable_id');
+            $table->timestamps();
 
         });
     }
