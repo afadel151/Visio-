@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use App\Models\Module;
+use App\Models\Config;
 use Yajra\DataTables\DataTables;
 
 class ModuleController extends Controller
@@ -34,10 +35,10 @@ class ModuleController extends Controller
                 ->make(true);
 
         }
-        
+        $schoolyear_id = Config::find(1)->schoolyear_id;
         $modules = Module::select('*')->with('department');
 
-        return view('modules.index', ['modules' => $modules]);
+        return view('modules.index', ['modules' => $modules , 'schoolyear_id' =>  $schoolyear_id]);
     }
     public function create()
     {}

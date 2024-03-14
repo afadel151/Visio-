@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Yajra\DataTables\DataTables;
 
 use App\Models\Room;
+use App\Models\Config;
 use Illuminate\Http\Request;
 
 class RoomController extends Controller
@@ -30,7 +31,8 @@ class RoomController extends Controller
                     ->make(true);
             
         }
-        return view('rooms.index');
+        $schoolyear_id = Config::find(1)->schoolyear_id;
+        return view('rooms.index',['schoolyear_id'=>$schoolyear_id]);
     }
 
     /**

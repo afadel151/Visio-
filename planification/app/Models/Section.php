@@ -11,6 +11,10 @@ class Section extends Model
     use HasFactory;
     // protected $primaryKey = 'section_id';
     //belongstocompany
+    public function sessions()
+    {
+        return $this->morphOne(Session::class,'sessionable');
+    }
     public function company()
     {
         return $this->belongsTo(Company::class);

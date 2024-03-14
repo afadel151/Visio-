@@ -6,6 +6,7 @@ use App\Models\Absence;
 use App\Models\Teacher;
 use App\Models\Module;
 use App\Models\Company;
+use App\Models\Config;
 use App\Models\Room;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
@@ -44,12 +45,10 @@ class TeacherController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
 
-        }
-        ;
+        };
         $teachers = Teacher::select('*')->with('department');
-        $rooms = Room::select('*');
-
-        return view('teachers.index', ['teachers' => $teachers, 'rooms' => $rooms]);
+        $schoolyear_id = Config::find(1)->schoolyear_id;
+        return view('teachers.index', ['teachers' => $teachers,'schoolyear_id'=>$schoolyear_id]);
     }
 
     public function store()
@@ -96,8 +95,8 @@ class TeacherController extends Controller
             ->where('teachers_modules.teacher_id', '=', $id)
             ->join('departments', 'modules.department_id', '=', 'departments.id')
             ->get();
-
-        return view('teachers.show', ['modules' => $modules, 'teacher' => $teacher]);
+            $schoolyear_id = Config::find(1)->schoolyear_id;
+        return view('teachers.show', ['modules' => $modules, 'teacher' => $teacher, 'schoolyear_id'=>$schoolyear_id]);
     }
 
     public function showt(int $id, Request $request)
@@ -137,8 +136,7 @@ class TeacherController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
 
-        }
-        ;
+        };
         $teacher = Teacher::join('departments', 'teachers.department_id', '=', 'departments.id')->where('teachers.id', $id)->first();
         // $modules = DB::table('teachers_modules')->select(['module_id', 'module', 'semester', 'departement_id', 'cours'])->join('modules', 'teachers_modules.module_id', '=', 'modules.id')->where('teacher_id', $id);
         $modules = DB::table('teachers_modules')
@@ -156,8 +154,8 @@ class TeacherController extends Controller
             ->where('teachers_modules.teacher_id', '=', $id)
             ->join('departments', 'modules.department_id', '=', 'departments.id')
             ->get();
-
-        return view('teachers.show', ['modules' => $modules, 'teacher' => $teacher]);
+        $schoolyear_id = Config::find(1)->schoolyear_id;
+        return view('teachers.show', ['modules' => $modules, 'teacher' => $teacher,'schoolyear_id'=>$schoolyear_id]);
 
     }
     public function update()

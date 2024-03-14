@@ -47,5 +47,9 @@ class Company extends Model
     {
         return $this->morphToMany(Additional::class,'additionables');
     }
+    public function sessions()
+    {
+        return $this->morphOne(Session::class,'sessionable');
+    }
     
 }

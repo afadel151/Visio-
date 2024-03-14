@@ -14,7 +14,8 @@ class SchoolYear extends Model
     {
         return $this->hasManyThrough(Week::class,GlobalWeek::class);
     }
-    public function global_weeks(){
+    public function global_weeks()
+    {
         return $this->hasMany(GlobalWeek::class,'schoolyear_id');
     }
 }

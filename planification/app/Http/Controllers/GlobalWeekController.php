@@ -43,7 +43,7 @@ class GlobalWeekController extends Controller
         $events = new Event;
         $sportevents = new SportEvent;
         $g = GlobalWeek::create([
-            'start_week_date' => $request->start_week_date,
+            'start_week_date' => $request->start_week_date ,
             'end_week_date' => $request->end_week_date,
             'schoolyear_id' => $request->schoolyear_id,
             'created_at' => Carbon::now(),

@@ -41,7 +41,7 @@ class Session extends Model
         return $this->belongsTo(Room::class);
     }
     public function teacher(){
-        return $this->belongsTo(Teacher::class);
+        return $this->belongsTo(Teacher::class,'teacher_id');
     }
 
     //belongsto type

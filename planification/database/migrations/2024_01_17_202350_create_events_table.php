@@ -20,7 +20,7 @@ return new class extends Migration
             // $table->unsignedBigInteger('global_week_id');
             // $table->foreign('week_id')->references('id')->on('weeks');
             //date fin
-            $table->foreignId('global_week_id')->constrained('global_weeks');
+            $table->foreignId('global_week_id')->constrained('global_weeks')->onDelete('CASCADE');
             
         });
     }

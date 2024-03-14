@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('weeks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('global_week_id')->constrained('global_weeks','id');
+            $table->foreignId('global_week_id')->constrained('global_weeks','id')->onDelete('CASCADE');
             $table->integer('week_number');
             $table->foreignId('battalion_id')->constrained('battalions')->onDelete('CASCADE');
             $table->char('semester',1);

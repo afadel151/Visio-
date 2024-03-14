@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('additionables', function (Blueprint $table) {
-            $table->foreignId('additional_id')->constrained('additionals','id');
+            $table->foreignId('additional_id')->constrained('additionals','id')->onDelete('CASCADE');
             $table->string('additionable_type');//  App\Models\Company or App\Models\Section.
             $table->unsignedBigInteger('additionable_id');
             $table->timestamps();

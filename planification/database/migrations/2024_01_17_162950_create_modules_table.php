@@ -15,16 +15,16 @@ return new class extends Migration
             $table->id();
             $table->string('module');
             $table->timestamps();
-            $table->foreignId('department_id')->constrained('departments');
-            $table->foreignId('module_head_id')->constrained('teachers');
+            $table->foreignId('department_id')->constrained('departments')->onDelete('CASCADE');
+            $table->foreignId('module_head_id')->constrained('teachers')->onDelete('CASCADE');
             $table->unsignedBigInteger('battalion');
             $table->char('semester',1);
             $table->char('module_sector',2);
         });
         Schema::create('teachers_modules', function (Blueprint $table) {
             $table->timestamps();
-            $table->foreignId('teacher_id')->constrained('teachers');
-            $table->foreignId('module_id')->constrained('modules');
+            $table->foreignId('teacher_id')->constrained('teachers')->onDelete('CASCADE');
+            $table->foreignId('module_id')->constrained('modules')->onDelete('CASCADE');
             $table->foreignId('schoolyear_id')->constrained('schoolyears');
             $table->boolean('cours');
             $table->boolean('td');

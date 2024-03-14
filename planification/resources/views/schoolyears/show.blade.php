@@ -4,21 +4,35 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
     <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <script>
+        $(document).ready(function() {
+            $('table.display').DataTable();
+        });
+    </script>
 @endpush
 @section('content')
-    <div class="w-[100%] h-[120vh]  flex flex-col justify-between mt-10 items-center p-8">
-
+    <div class="  h-[130vh] w-[90%]  flex flex-col justify-between mt-10 items-center p-20">
         <div class="flex flex-col justify-center items-center w-[100%]">
             {{-- schoolyars datatable --}}
-            <p class="text-6xl font-bold ">School year : {{ $schoolyear->schoolyear }}</p>
+            <p class="text-6xl font-bold ">School year : {{ $schoolyear->schoolyear }} </p>
+            <div class="card mt-4 rounded-2xl  z-0  mb-20  w-[100%]">
+                <div class="card-header z-0 text-2xl ">Battalions</div>
+                <div class="card-body w-[100%] z-0">
+                    <table class="z-0 display" id="battalions">
+                        <thead>
+                            <th>No</th>
+                            <th>Battalion</th>
+                            <th>Schoolyear id</th>
+                            <th>Action</th>
+                        </thead>
+                    </table>
+                </div>
+            </div>
             <div class="card mt-4  rounded-2xl  z-0  mb-20  w-[100%]">
-                @php
-                    $swd = '';
-                    $ewd = '';
-                @endphp
-                <div class="card-header z-0 ">Manage School Years</div>
-                <div class="card-body w-[90%] z-0">
-                    <table class="z-0" id="global_weeks">
+                
+                <div class="card-header z-0 text-2xl ">Manage School Years</div>
+                <div class="card-body w-[100%] z-0">
+                    <table class="z-0 display" id="global_weeks">
                         <thead>
                             <th>No</th>
                             <th>Start</th>
@@ -49,20 +63,21 @@
                         </tbody>
 
                     </table>
-                    
-
                 </div>
             </div>
-            <div class="relative flex flex-col justify-center items-center w-[100%] ">
+            <div class="relative flex flex-col justify-center items-center mb-20 w-[100%] ">
                 <button class=" bg-slate-400 rounded-lg add-button  p-2 z-0" id="form-button">Add</button>
                 <form action="{{ route('global_weeks.store', ['id' => $schoolyear->id]) }}" enctype="multipart/form-data"
                     method="POST"
-                    class="z-100 p-4 global-week-form  absolute h-fit flex flex-col justify-center items-center  bg-slate-50 top-20 left-[20%]  w-[60%] rounded-3xl shadow-lg">
+                    class="z-100 p-4 global-week-form   absolute h-fit flex flex-col justify-center items-center  bg-slate-50 top-20 left-[10%]  w-[80%] rounded-3xl shadow-lg">
                     @csrf
                     @php
                         $nextstartdate =  date('Y-m-d', strtotime('+7 days', strtotime($maxstartdate)));
                         $nextenddate = date('Y-m-d', strtotime('+4 days', strtotime($nextstartdate)))
                     @endphp
+                    @if (isset($global_weeks))
+                        
+                    @endif
                     <input type="hidden" name="start_week_date" value="{{$nextstartdate}}">
                     <input type="hidden" name="end_week_date" value="{{ $nextenddate }}">
                     <input type="hidden" name="schoolyear_id" value="{{ $schoolyear->id }}">
@@ -187,16 +202,16 @@
                             <div class="flex justify-between space-x-2 items-center">
                                 <label for="ev">Events</label>
                                 <input type="text" name="event" id="ev"
-                                    class="h-10 rounded-lg focus:border-indigo-400 w-30">
+                                    class="h-20 rounded-lg focus:border-indigo-400 w-30">
                             </div>
                             <div class="flex justify-between space-x-2 items-center">
                                 <label for="sev">Sport events</label>
                                 <input type="text" name="sport_event" id="sev"
-                                    class="h-10 rounded-lg focus:border-indigo-400 w-30">
+                                    class="h-20 rounded-lg focus:border-indigo-400 w-30">
                             </div>
                         </div>
                     </div>
-                    <div class=" h-30 w-60 flex justify-center items-center mt-20">
+                    <div class=" h-20 w-60 flex justify-center items-center mt-10">
                         <button
                             class=" bg-indigo-500 h-12 hover:bg-slate-500 hover:text-slate-50 w-24 rounded-xl">INSERT</button>
                     </div>
@@ -210,6 +225,35 @@
         <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+        <script>
+            $(function() {
+                var url = "{{ route('schoolyears.battalions', $schoolyear->id) }}";
+                var table1 = $('#battalions').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: url,
+                    columns: [{
+                            data: 'id',
+                            name: 'id'
+                        },
+                        {
+                            data: 'battalion',
+                            name: 'battalion',
+                            searchable: true,
+                        },
+                        {
+                            data: 'schoolyear_id',
+                            name: 'schoolyear_id'
+                        },
+                        {
+                            data : 'action',
+                            name: 'action'
+                        }
+                    ],
+                });
+            });
+        </script>
+        
         <script>
             $(function() {
                 var url = "{{ route('schoolyears.show', $schoolyear->id) }}";
@@ -261,11 +305,11 @@
                             var ur ='{{ route('weeks.show', ':id') }}'; // Define the route template
                             ur = ur.replace(':id', jsonData.id);
                             return jsonData ?
-                                '<div class="flex justify-around items-center bg-red-50 p-2 rounded-lg">' +
+                                '<div class="flex justify-between text-xl items-center p-2 rounded-lg">' +
                                 jsonData.week_type +
-                                '<button class="bg-green-400 p-1 rounded-lg"><a href="' + ur +
+                                '<button class="bg-green-400 p-1 rounded-lg"><a class="text-none" href="' + ur +
                                 '">View</a></button></div>' :
-                                '';
+                                'Empty';
                         }
                     }]
                 });

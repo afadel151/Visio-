@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('additives', function (Blueprint $table) {
+        Schema::create('configs', function (Blueprint $table) {
             $table->id();
-            
-            $table->foreignId('week_id')->constrained('weeks')->onDelete('CASCADE');
-            $table->integer('additive_number');
             $table->timestamps();
+            $table->unsignedBigInteger('schoolyear_id');
         });
     }
 
@@ -25,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('additives');
+        Schema::dropIfExists('configs');
     }
 };

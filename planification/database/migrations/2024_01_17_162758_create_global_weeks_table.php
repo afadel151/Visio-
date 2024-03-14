@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('global_weeks', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('schoolyear_id')->constrained('schoolyears');
+            $table->foreignId('schoolyear_id')->constrained('schoolyears')->onDelete('CASCADE');
             $table->timestamps();
             $table->date('start_week_date');
             $table->date('end_week_date');// maybe deleted 
