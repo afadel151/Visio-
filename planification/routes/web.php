@@ -1,8 +1,11 @@
 <?php
 // use App\Http\Controllers;
+use App\Http\Controllers\BattalionController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\ModuleController;
+use App\Http\Controllers\Batta;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SchoolYearController;
@@ -53,6 +56,14 @@ Route::middleware('auth')->group(function () {
             Route::post('/update',[TeacherController::class,'update'])->name('teachers.update');
             Route::get('/{teacher_id}',[TeacherController::class,'show'])->name('teachers.show');
         });
+        Route::prefix('sessions')->group(function () {
+            Route::get('/',[SessionController::class,'index'])->name('sessions.index');
+            Route::get('/create',[SessionController::class,'create'])->name('sessions.create');
+            Route::post('/delete/{id}',[SessionController::class, 'delete'])->name('sessions.delete');
+            Route::post('/store',[SessionController::class,'store'])->name('sessions.store');
+            Route::post('/update',[SessionController::class,'update'])->name('sessions.update');
+            Route::get('/{id}',[SessionController::class,'show'])->name('sessions.show');
+        });
         Route::prefix('modules')->group(function () {
             Route::get('/',[ModuleController::class,'index'])->name('modules.index');
             Route::get('/create',[ModuleController::class,'index'])->name('modules.create');
@@ -79,19 +90,31 @@ Route::middleware('auth')->group(function () {
         });
         Route::prefix('global_weeks')->group(function () {
             Route::get('/',[GlobalWeekController::class,'index'])->name('global_weeks.index');
-            Route::get('/create',[GlobalWeekController::class,'index'])->name('global_weeks.create');
+            Route::get('/create',[GlobalWeekController::class,'create'])->name('global_weeks.create');
             Route::post('/store',[GlobalWeekController::class,'store'])->name('global_weeks.store');
             Route::post('/update',[GlobalWeekController::class,'update'])->name('global_weeks.update');
             Route::delete('/delete',[GlobalWeekController::class,'delete'])->name('global_weeks.delete');
             Route::get('/{id}',[GlobalWeekController::class,'show'])->name('global_weeks.show');
         });
+        Route::prefix('battalions')->group(function () {
+            Route::get('/',[BattalionController::class,'index'])->name('battalions.index');
+            Route::get('/create',[BattalionController::class,'create'])->name('battalions.create');
+            Route::post('/store',[BattalionController::class,'store'])->name('battalions.store');
+            Route::post('/update',[BattalionController::class,'update'])->name('battalions.update');
+            Route::delete('/delete',[BattalionController::class,'delete'])->name('battalions.delete');
+            Route::get('/{id}',[BattalionController::class,'show'])->name('battalions.show');
+            Route::get('/{id}/companies',[CompanyController::class,'BattalionCompanies'])->name('battalions.companies');
+            Route::get('/{id}/weeks',[WeekController::class,'BattalionWeeks'])->name('battalions.weeks');
+        });
         Route::prefix('schoolyears')->group(function () {
             Route::get('/',[SchoolYearController::class,'index'])->name('schoolyears.index');
-            // Route::get('/create',[SchoolYearController::class,'index'])->name('schoolyears.create');
+            // Route::get('/battalions',[SchoolYearController::class,'index'])->name('schoolyears.create');
             Route::post('/store',[SchoolYearController::class,'store'])->name('schoolyears.store');
             Route::post('/update',[SchoolYearController::class,'update'])->name('schoolyears.update');
             // Route::delete('/delete',[SchoolYearController::class,'delete'])->name('schoolyears.delete');
-            Route::get('/{id}',[SchoolYearController::class,'show'])->name('schoolyears.show');
+            Route::get('/{id}',[SchoolYearController::class,'showw'])->name('schoolyears.show');
+            Route::get('/{id}/battalions',[BattalionController::class,'SY_battalions'])->name('schoolyears.battalions');
+            Route::get('/current',[SchoolYearController::class,'currentSY'])->name('schoolyears.current');
         });
         Route::prefix('settings')->group(function () {
             Route::get('/',[SettingsController::class,'index'])->name('settings.index');

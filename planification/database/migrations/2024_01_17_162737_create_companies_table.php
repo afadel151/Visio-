@@ -24,7 +24,7 @@ return new class extends Migration
             $table->unsignedBigInteger('default_room_id');            
 
             // foreign keys
-            $table->foreign('battalion_id')->references('id')->on('battalions');
+            $table->foreign('battalion_id')->references('id')->on('battalions')->onDelete('CASCADE');
             $table->foreign('default_room_id')->references('id')->on('rooms');
             
         });

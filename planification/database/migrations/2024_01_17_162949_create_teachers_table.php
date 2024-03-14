@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('teacher_grade');
             $table->string('teacher_type');
             $table->timestamps();
-            $table->foreignId('department_id')->constrained('departments');
+            $table->foreignId('department_id')->constrained('departments')->onDelete('CASCADE');
 
         });
         

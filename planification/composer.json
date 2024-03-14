@@ -15,6 +15,7 @@
         "yajra/laravel-datatables-buttons": "10.0"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.12",
         "fakerphp/faker": "^1.9.1",
         "laravel/breeze": "^1.28",
         "laravel/pint": "^1.0",

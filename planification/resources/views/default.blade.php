@@ -30,9 +30,9 @@
     </style>
     <div class="flex w-screen">
         <div class="w-[92px] h-screen sticky  top-0 z-10 ">
-            @include('inc.sidebar',[ 'schoolyear_id' => $global_week->schoolyear_id])
+            @include('inc.sidebar')
         </div>
-        <div class="w-[110%] z-0 flex justify-center items-center ">
+        <div class="w-[100%] z-0 flex justify-center items-center ">
 
             @yield('content')
         </div>

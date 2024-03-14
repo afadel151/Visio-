@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedInteger('section');
             //company
             $table->unsignedBigInteger('company_id');
-            $table->foreign('company_id')->references('id')->on('companies');
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('CASCADE');
             //default room
             $table->unsignedBigInteger('default_room_id');
             $table->foreign('default_room_id')->references('id')->on('rooms');

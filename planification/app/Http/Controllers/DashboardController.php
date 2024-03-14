@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\GlobalWeek;
+use App\Models\Config;
+use PHPUnit\Framework\Constraint\IsEmpty;
 class DashboardController extends Controller
 {
     /**
@@ -15,12 +17,17 @@ class DashboardController extends Controller
         $today = date('Y-m-d');
         // $global_week = GlobalWeek::where('start_week_date','<=',$today)->where('end_week_date','>=',$today)->first();
         $global_week = GlobalWeek::find(1);
-        
-
+        $schoolyear_id = Config::find(1)->schoolyear_id;
         if ($global_week) {
        
-            $weeks = $global_week->weeks;
-            return view('dashboarding', ['global_week' => $global_week]);
+            $nextgw = GlobalWeek::where('start_week_date','<=',date('Y-m-d', strtotime('+7 days', strtotime($today))))->where('end_week_date','>=',date('Y-m-d', strtotime('+7 days', strtotime($today))))->first();
+            if ($nextgw) {
+                return view('dashboarding', ['global_week' => $global_week, 'schoolyear_id'=>$schoolyear_id, 'next_week' => $nextgw]);
+            }
+            else {
+                $nextgw = "last week of the year";
+                return view('dashboarding', ['global_week' => $global_week, 'schoolyear_id'=>$schoolyear_id, 'next_week' => $nextgw]);
+            }
         }
         else {
             return "the globall week doesn't have weeks ";

@@ -4,6 +4,7 @@
             <td class="">
                 @include('weeks.company-day', [
                     'company' => $company,
+                    'sessions'=>$sessions,
                     'timings' => $timings,
                     'date' => $date,
                     'week_id' => $week_id,

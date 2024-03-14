@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\SchoolYear;
+use App\Models\Config;
 use Illuminate\Http\Request;
 
 class SettingsController extends Controller
@@ -10,14 +11,17 @@ class SettingsController extends Controller
     /**
      * Display a listing of the resource.
      */
+    
     public function index()
     {
+    
         return view('settings.index');
     }
     public function schoolyears()
     {
+        
         $schoolyears  = SchoolYear::all();
-        return view('settings.schoolyears',['schoolyears'=>$schoolyears]);
+        return view('settings.schoolyears',['schoolyears'=>$schoolyears ]);
     }
     /**
      * Show the form for creating a new resource.

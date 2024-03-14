@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->string('sport_event');
-            $table->foreignId('global_week_id')->constrained('global_weeks');
+            $table->foreignId('global_week_id')->constrained('global_weeks')->onDelete('CASCADE');
         });
     }
 

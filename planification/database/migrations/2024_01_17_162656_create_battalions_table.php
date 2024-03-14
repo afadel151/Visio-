@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('battalions', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('battalion');
-            $table->foreignId('schoolyear_id')->constrained('schoolyears');
+            $table->foreignId('schoolyear_id')->constrained('schoolyears')->onDelete('CASCADE');
         });
     }
 

@@ -12,6 +12,10 @@ class Battalion extends Model
     // protected $primaryKey = 'battalion_id';
 
     //hasmany companies
+    public function schoolyear()
+    {
+        return $this->belongsTo(SchoolYear::class,'schoolyear_id');
+    }
     public function companies()
     {
         return $this->hasMany(Company::class)->orderBy('company');
@@ -59,6 +63,7 @@ class Battalion extends Model
             // Retrieve teachers associated with the current module
             $teachers = Teacher::join('teachers_modules', 'teachers.id', '=', 'teachers_modules.teacher_id')
                 ->where('teachers_modules.module_id', $moduleId)
+                ->where('teachers_modules.schoolyear_id','=',$this->schoolyear_id)
                 ->select('teachers.*')
                 ->get();
 
@@ -83,6 +88,7 @@ class Battalion extends Model
             // Retrieve teachers associated with the current module
             $teachers = Teacher::join('teachers_modules', 'teachers.id', '=', 'teachers_modules.teacher_id')
                 ->where('teachers_modules.module_id', $moduleId)
+                ->where('teachers_modules.schoolyear_id','=',$this->schoolyear_id)
                 ->select('teachers.*')
                 ->get();
 
@@ -107,6 +113,7 @@ class Battalion extends Model
             // Retrieve teachers associated with the current module
             $teachers = Teacher::join('teachers_modules', 'teachers.id', '=', 'teachers_modules.teacher_id')
                 ->where('teachers_modules.module_id', $moduleId)
+                ->where('teachers_modules.schoolyear_id','=',$this->schoolyear_id)
                 ->select('teachers.*')
                 ->get();
 

@@ -14,12 +14,12 @@ return new class extends Migration
         //supplementaire (melange de sections ou companies autorise)
         Schema::create('additionals', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('additive_id')->constrained('additives');
+            $table->foreignId('additive_id')->constrained('additives')->onDelete('CASCADE');
             $table->date('additional_date');
-            $table->foreignId('timing_id')->constrained('timings','id');
-            $table->foreignId('module_id')->constrained('modules','id');//prof
-            $table->foreignId('room_id')->constrained('rooms','id');
-            $table->foreignId('teacher_id')->constrained('teachers','id');
+            $table->foreignId('timing_id')->constrained('timings','id')->onDelete('CASCADE');
+            $table->foreignId('module_id')->constrained('modules','id')->onDelete('CASCADE');//prof
+            $table->foreignId('room_id')->constrained('rooms','id')->onDelete('CASCADE');
+            $table->foreignId('teacher_id')->constrained('teachers','id')->onDelete('CASCADE');
             $table->string('session_type');
             $table->boolean('absented')->default(false);
             $table->timestamps();

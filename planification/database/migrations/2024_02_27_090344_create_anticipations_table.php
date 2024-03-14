@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('anticipations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('additive_id')->constrained('additives');
-            $table->foreignId('session_id')->constrained('sessions');
+            $table->foreignId('additive_id')->constrained('additives')->onDelete('CASCADE');
+            $table->foreignId('session_id')->constrained('sessions')->onDelete('CASCADE');
             $table->date('anticipation_date');
-            $table->foreignId('timing_id')->constrained('timings');
+            $table->foreignId('timing_id')->constrained('timings')->onDelete('CASCADE');
             $table->timestamps();
         });
     }
