@@ -15,10 +15,10 @@ return new class extends Migration
         {
             $table->id();
             //session (teacher,Module,section,company,day,timing,sessionType)
-            $table->foreignId('session_id')->constrained('sessions','id')->onDelete('CASCADE');
             $table->string('absenceable_type');
             $table->unsignedBigInteger('absenceable_id');
             $table->boolean('caughtup')->default(false);
+            $table->string('reason');
             $table->timestamps();
             
         });

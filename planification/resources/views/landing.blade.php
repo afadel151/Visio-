@@ -25,7 +25,7 @@
     <div class="flex flex-col w-[50%] h-screen justify-between ml-20">
         <div class="mt-24    text-4xl">NEX<span class="text-xl text-red-500">CET</span></div>
         <div class="mb-30 mt-16">
-            <p class="text-8xl mb-6  text-wrap ">Easy , fast and simple tool to plan your entire <span
+            <p class="text-7xl mb-6  text-wrap ">Easy , fast and simple tool to plan your entire <span
                     class="text-red-700">year !</span> </p>
             <p class="w-[80%] text-xl font-normal">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Expedita
                 eligendi earum ipsa tempora, autem a explicabo aperiam dolorum necessitatibus cumque eveniet magni
