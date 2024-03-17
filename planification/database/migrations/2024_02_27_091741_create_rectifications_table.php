@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('additive_id')->constrained('additives')->onDelete('CASCADE');
             $table->timestamps();
-            $table->foreignId('session_id')->constrained('sessions')->onDelete('CASCADE');
+            $table->foreignId('session_id')->constrained('sessions_table')->onDelete('CASCADE');
             $table->foreignId('timing_id')->constrained('timings')->onDelete('CASCADE');
         });
     }

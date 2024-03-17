@@ -1,5 +1,6 @@
 <?php
 // use App\Http\Controllers;
+use App\Http\Controllers\AdditiveController;
 use App\Http\Controllers\BattalionController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DashboardController;
@@ -54,7 +55,8 @@ Route::middleware('auth')->group(function () {
             Route::post('/store',[TeacherController::class,'store'])->name('teachers.store');
             // Route::post('/updatepage',[TeacherController::class,'updatepage'])->name('teachers.updatepage');
             Route::post('/update',[TeacherController::class,'update'])->name('teachers.update');
-            Route::get('/{teacher_id}',[TeacherController::class,'show'])->name('teachers.show');
+            Route::get('/{id}',[TeacherController::class,'show'])->name('teachers.show');
+            Route::get('/absences/{id}',[TeacherController::class,'absences'])->name('teachers.absences');
         });
         Route::prefix('sessions')->group(function () {
             Route::get('/',[SessionController::class,'index'])->name('sessions.index');
@@ -63,6 +65,8 @@ Route::middleware('auth')->group(function () {
             Route::post('/store',[SessionController::class,'store'])->name('sessions.store');
             Route::post('/update',[SessionController::class,'update'])->name('sessions.update');
             Route::get('/{id}',[SessionController::class,'show'])->name('sessions.show');
+            Route::post('/mark_absence/{id}',[SessionController::class, 'mark_absence'])->name('sessions.mark_absence');
+
         });
         Route::prefix('modules')->group(function () {
             Route::get('/',[ModuleController::class,'index'])->name('modules.index');
@@ -87,6 +91,9 @@ Route::middleware('auth')->group(function () {
             Route::post('/update',[WeekController::class,'update'])->name('weeks.update');
             Route::delete('/delete',[WeekController::class,'delete'])->name('weeks.delete');
             Route::get('/{id}',[WeekController::class,'show'])->name('weeks.show');
+            Route::get('/{id}/additives',[WeekController::class,'additives'])->name('weeks.additives');
+            Route::post('/{id}/additives_add',[WeekController::class,'additives_add'])->name('weeks.additives_add');
+
         });
         Route::prefix('global_weeks')->group(function () {
             Route::get('/',[GlobalWeekController::class,'index'])->name('global_weeks.index');
@@ -123,6 +130,14 @@ Route::middleware('auth')->group(function () {
             Route::get('/modules',[SettingsController::class,'modules'])->name('settings.modules');
             Route::get('/battalions',[SettingsController::class,'battalions'])->name('settings.battalions');
             Route::get('/sections',[SettingsController::class,'sections'])->name('settings.sections');
+        });
+        Route::prefix('additives')->group(function () {
+            Route::get('/',[AdditiveController::class,'index'])->name('additives.index');
+            Route::get('/create',[AdditiveController::class,'create'])->name('additives.create');
+            Route::get('/delete/{id}',[AdditiveController::class, 'delete'])->name('additives.delete');
+            Route::post('/store',[AdditiveController::class,'store'])->name('additives.store');
+            Route::post('/update',[AdditiveController::class,'update'])->name('additives.update');
+            Route::get('/{id}',[AdditiveController::class,'show'])->name('additives.show');
         });
         
 

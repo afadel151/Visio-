@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Absence;
 use App\Models\Session;
 use Illuminate\Http\Request;
 
@@ -42,6 +43,17 @@ class SessionController extends Controller
     public function delete($id)
     {
         Session::destroy($id);
+        return redirect()->back();
+    }
+    public function mark_absence($id){
+        $session = Session::where('id',$id)->first();
+        $session->absented = true;
+        $session->save();
+        $absence =new  Absence;
+        $absence->absenceable_type = 'App\\Models\\Session';
+        $absence->absenceable_id = $id;
+        $absence->reason = 'Absent';
+        $absence->save();
         return redirect()->back();
     }
 }

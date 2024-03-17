@@ -1,7 +1,11 @@
 @extends('default')
 @section('content')
     <div class="w-[100%] z-0 ">
+        
         <div class="h-[100px] flex justify-around items-center  ">
+            <a href="{{route('weeks.additives',['id'=> $week->id])}}">
+                <button class="bg-indigo-300 rounded-xl p-4">Go to Additives</button>
+            </a>
             <div class="bg-indigo-300 rounded-xl h-20 text-center flex justify-center items-center w-[300px]"> Semester :
                 {{ $week->semester }}</div>
             <div class="bg-indigo-300 rounded-xl h-20 text-center flex justify-center items-center w-[300px]"> Semaine :
@@ -106,7 +110,9 @@
             const sectionforms = document.querySelectorAll(".section-form");
             const companyforms = document.querySelectorAll(".company-form");
             const sectioncancels = document.querySelectorAll(".section-cancel-button");
+            const sectionupdatecancels = document.querySelectorAll(".section-update-cancel-button");
             const companycancels = document.querySelectorAll(".company-cancel-button");
+            const companyupdatecancels = document.querySelectorAll(".company-update-cancel-button");
             UpdateForms.forEach(form => {
                 form.classList.add("hidden");
             });
@@ -205,9 +211,23 @@
                     });
                 });
             });
+            sectionupdatecancels.forEach((cancel, index) => {
+                cancel.addEventListener("click", function(event) {
+                    UpdateForms.forEach(form => {
+                        form.classList.add("hidden");
+                    });
+                });
+            });
             companycancels.forEach((cancel, index) => {
                 cancel.addEventListener("click", function(event) {
                     companyforms.forEach(form => {
+                        form.classList.add("hidden");
+                    });
+                });
+            });
+            companyupdatecancels.forEach((cancel, index) => {
+                cancel.addEventListener("click", function(event) {
+                    UpdateForms.forEach(form => {
                         form.classList.add("hidden");
                     });
                 });

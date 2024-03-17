@@ -17,8 +17,10 @@
             <p class="text-7xl font-weight-bold   " style="font-weight: 700">Teacher :
                 <span class="text-red-500">{{ $teacher->teacher_name }}</span>
             </p>
-            <p class="text-4xl font-weight-bold  "> category : <span class="text-green-500"> {{ $teacher->teacher_type }}</span></p>
-            <p class="text-4xl font-weight-bold  "> grade : <span class="text-blue-500"> {{ $teacher->teacher_grade }}</span></p>
+            <p class="text-4xl font-weight-bold  "> category : <span class="text-green-500">
+                    {{ $teacher->teacher_type }}</span></p>
+            <p class="text-4xl font-weight-bold  "> grade : <span class="text-blue-500">
+                    {{ $teacher->teacher_grade }}</span></p>
         </div>
         {{-- {{ $teacher }} --}}
         {{-- {{ $teacher }} --}}
@@ -44,7 +46,7 @@
                                 <td>{{ $module->module }}</td>
                                 <td>{{ $module->semester }}</td>
                                 <td>{{ $module->department }}</td>
-                                <td class="" >
+                                <td class="">
                                     @if ($module->cours == true)
                                         <div class=" bg-green-400 rounded-full text-center">Cours</div>
                                     @endif
@@ -65,72 +67,168 @@
                     </tbody>
                 </table>
             </div>
+
         </div>
-    @endsection
-    @push('scripts')
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
-        <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-        <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
-        <script>
-            $(function() {
-                var url = "{{ route('teachers.show', $teacher->id) }}";
-                var table = $('#modules').DataTable({
-                    processing: true,
-                    serverSide: true,
-                    searching: true,
-                    ajax: url,
-                    columns: [{
-                            data: 'id',
-                            name: 'teachers_modules.module_id'
-                        },
-                        {
-                            data: 'module',
-                            name: 'module',
-                            searchable: true,
-                        },
-                        {
-                            data: 'semester',
-                            name: 'semester',
-                        },
-                        //   {data: 'teacher_grade', name: 'teacher_grade', orderable: true, searchable: true},
-                        {
+        <div class="card mt-20 mb-20 w-[80%]">
+            <div class="card-header text-center text-3xl font-bold">Absences</div>
+            <div class="card-body">
+                {{-- {!! $dataTable->table() !!} --}}
+                <table class="table table-bordered display  table-fixed text-center" id="absences">
+                    <thead class="text-center">
+                        <tr>
+                            <th class="text-center">id</th>
+                            <th class="text-center">Module</th>
+                            <th class="text-center">Room</th>
+                            <th class="text-center">date</th>
+                            <th class="text-center">time </th>
+                            <th class="text-center">Section/Company</th>
+                            <th class="text-center">Caught Up</th>
+                            <th class="text-center">Action </th>
+                        </tr>
+                    </thead>
+                    {{-- <tbody> --}}
+                        {{-- @foreach ($absences as $absence)
+                            <tr>
+                                <td>{{ $absence->id }}</td>
+                                <td>{{ $absence->module }}</td>
+                                <td>{{ $absence->room }}</td>
+                                <td>{{ $absence->date }}</td>
+                                <td>{{ $absence->time }}</td>
+                                <td>{{ $absence->class }}</td>
+                                <td>{{ $absence->caughtup }}</td>
+                                <td>
+                                    <a href="javascript:void(0)" class="edit btn btn-info btn-sm rounded-lg">View</a>
+                                    <a href="javascript:void(0)" class="edit btn btn-primary btn-sm rounded-lg">Edit</a>
+                                    <a href="javascript:void(0)" class="edit btn btn-danger btn-sm rounded-lg">Delete</a>
+                                </td>
+                            </tr>
+                        @endforeach --}}
+                    {{-- </tbody> --}}
+                </table>
+            </div>
+        @endsection
+        @push('scripts')
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
+            <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+            <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+            <script>
+                $(function() {
+                    var url = "{{ route('teachers.show', $teacher->id) }}";
+                    var table = $('#modules').DataTable({
+                        processing: true,
+                        serverSide: true,
+                        searching: true,
+                        ajax: url,
+                        columns: [{
+                                data: 'id',
+                                name: 'teachers_modules.module_id'
+                            },
+                            {
+                                data: 'module',
+                                name: 'module',
+                                searchable: true,
+                            },
+                            {
+                                data: 'semester',
+                                name: 'semester',
+                            },
+                            //   {data: 'teacher_grade', name: 'teacher_grade', orderable: true, searchable: true},
+                            {
 
-                            data: 'department',
-                            name: 'departments.department',
-                            searchable: false,
-                            orderable: true,
+                                data: 'department',
+                                name: 'departments.department',
+                                searchable: false,
+                                orderable: true,
 
-                        },
-                        {
-                            data: 'null',
-                            name: 'Seances',
-                            render: function(data, type, row) {
-                                // Generate the content for the Seances column dynamically based on other data
-                                var seances = '';
-                                if (row.cours == true) {
-                                    seances +=
-                                        '<span class="p-1 bg-green-400 rounded-full text-center">cours</span>';
+                            },
+                            {
+                                data: 'null',
+                                name: 'Seances',
+                                render: function(data, type, row) {
+                                    // Generate the content for the Seances column dynamically based on other data
+                                    var seances = '';
+                                    if (row.cours == true) {
+                                        seances +=
+                                            '<span class="p-1 bg-green-400 rounded-full text-center">cours</span>';
+                                    }
+                                    if (row.td == true) {
+                                        seances +=
+                                            '<span class="p-1 bg-red-400 rounded-full text-center">Td</span>';
+                                    }
+                                    if (row.tp) {
+                                        seances +=
+                                            '<span class="p-1 bg-yellow-200 rounded-full text-center">Tp</span>';
+                                    }
+                                    return seances;
                                 }
-                                if (row.td == true) {
-                                    seances +=
-                                        '<span class="p-1 bg-red-400 rounded-full text-center">Td</span>';
-                                }
-                                if (row.tp) {
-                                    seances +=
-                                        '<span class="p-1 bg-yellow-200 rounded-full text-center">Tp</span>';
-                                }
-                                return seances;
-                            }
-                        },
-                        {
-                            data: 'action',
-                            name: 'action'
-                        },
-                    ]
+                            },
+                            {
+                                data: 'action',
+                                name: 'action'
+                            },
+                        ]
+                    });
+                    // 
+
+
+
                 });
+            </script>
+            <script>
+                $(function() {
+                    var url2 = "{{ route('teachers.absences', $teacher->id) }}";
+                    var table2 = $('#absences').DataTable({
+                        processing: true,
+                        serverSide: true,
+                        searching: true,
+                        ajax: url2,
+                        columns: [
+                            {
+                                data: 'id',
+                                name: 'id'
+                            },
+                            {
+                                data: 'module',
+                                name: 'module',
 
-            });
-        </script>
-    @endpush
+                            },
+                            {
+                                data: 'room',
+                                name: 'room',
+                                searchable: true,
+                            },
+                            {
+
+                                data: 'date',
+                                name: 'date',
+
+                            },
+                            {
+
+                                data: 'time',
+                                name: 'time',
+
+                            },
+                            {
+
+                                data: 'class',
+                                name: 'class',
+
+                            },
+                            {
+
+                                data: 'caughtup',
+                                name: 'caughtup',
+
+                            },
+                            {
+                                data: 'action',
+                                name: 'action'
+                            },
+                        ]
+                    });
+                });
+            </script>
+        @endpush

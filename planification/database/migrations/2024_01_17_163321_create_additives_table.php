@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('additives', function (Blueprint $table) {
             $table->id();
-            
+
             $table->foreignId('week_id')->constrained('weeks')->onDelete('CASCADE');
             $table->integer('additive_number');
             $table->timestamps();
