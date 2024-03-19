@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="card mt-4  rounded-2xl  z-0  mb-20  w-[100%]">
-                
+
                 <div class="card-header z-0 text-2xl ">Manage School Years</div>
                 <div class="card-body w-[100%] z-0">
                     <table class="z-0 display" id="global_weeks">
@@ -45,7 +45,7 @@
 
                         </thead>
                         <tbody class="z-0">
-                          
+
                             @foreach ($global_weeks as $global_week)
                                 <tr>
                                     <td>{{ $global_week->id }}</td>
@@ -72,13 +72,12 @@
                     class="z-100 p-4 global-week-form   absolute h-fit flex flex-col justify-center items-center  bg-slate-50 top-20 left-[10%]  w-[80%] rounded-3xl shadow-lg">
                     @csrf
                     @php
-                        $nextstartdate =  date('Y-m-d', strtotime('+7 days', strtotime($maxstartdate)));
-                        $nextenddate = date('Y-m-d', strtotime('+4 days', strtotime($nextstartdate)))
+                        $nextstartdate = date('Y-m-d', strtotime('+7 days', strtotime($maxstartdate)));
+                        $nextenddate = date('Y-m-d', strtotime('+4 days', strtotime($nextstartdate)));
                     @endphp
                     @if (isset($global_weeks))
-                        
                     @endif
-                    <input type="hidden" name="start_week_date" value="{{$nextstartdate}}">
+                    <input type="hidden" name="start_week_date" value="{{ $nextstartdate }}">
                     <input type="hidden" name="end_week_date" value="{{ $nextenddate }}">
                     <input type="hidden" name="schoolyear_id" value="{{ $schoolyear->id }}">
                     <button class="cancel-button absolute top-6 right-6 font-bold text-3xl">x</button>
@@ -102,7 +101,7 @@
                                 <label for="s1">semester</label>
                                 <select name="semester_1" class="rounded-lg focus:border-indigo-400 h-10" id="s1">
                                     <option value="1">S1</option>
-                                    <option value="2">S1</option>
+                                    <option value="2">S2</option>
                                 </select>
                             </div>
                             <div class="flex justify-between space-x-2 items-center">
@@ -141,7 +140,7 @@
                                 <label for="s2">semester</label>
                                 <select name="semester_2" class="rounded-lg focus:border-indigo-400 h-10" id="s2">
                                     <option value="1">S1</option>
-                                    <option value="2">S1</option>
+                                    <option value="2">S2</option>
                                 </select>
                             </div>
                             <div class="flex justify-between space-x-2 items-center">
@@ -179,7 +178,7 @@
                                 <label for="s3">semester</label>
                                 <select name="semester_3" class="rounded-lg focus:border-indigo-400 h-10" id="s3">
                                     <option value="1">S1</option>
-                                    <option value="2">S1</option>
+                                    <option value="2">S2</option>
                                 </select>
                             </div>
                             <div class="flex justify-between space-x-2 items-center">
@@ -246,14 +245,14 @@
                             name: 'schoolyear_id'
                         },
                         {
-                            data : 'action',
+                            data: 'action',
                             name: 'action'
                         }
                     ],
                 });
             });
         </script>
-        
+
         <script>
             $(function() {
                 var url = "{{ route('schoolyears.show', $schoolyear->id) }}";
@@ -300,16 +299,39 @@
                         render: function(data, type, row, meta) {
                             // Add the div element with class bg-green-400 around the data
                             var jsonData = JSON.parse(data);
-                            
+
                             // var jsonData = JSON.parse(data);
-                            var ur ='{{ route('weeks.show', ':id') }}'; // Define the route template
+                            var ur =
+                                '{{ route('weeks.show', ':id') }}'; // Define the route template
                             ur = ur.replace(':id', jsonData.id);
-                            return jsonData ?
-                                '<div class="flex justify-between text-xl items-center p-2 rounded-lg">' +
-                                jsonData.week_type +
-                                '<button class="bg-green-400 p-1 rounded-lg"><a class="text-none" href="' + ur +
-                                '">View</a></button></div>' :
-                                'Empty';
+                            if (jsonData.week_type == 'Cours') {
+                                var element =
+                                    '<div class="flex justify-between text-xl items-center p-2 rounded-lg">' +
+                                    jsonData.week_type + ' (' + jsonData.week_number + ')';
+                                if (jsonData.cc == 1) {
+                                    element = element +
+                                        '<div class=" bg-blue-400 h-6 w-6 rounded-full"></div>';
+                                }
+                                if (jsonData.sport_exam == 1) {
+                                    element = element +
+                                        '<div class=" bg-yellow-400 h-6 w-6 rounded-full"></div>';
+                                }
+                                return element +
+                                    ' <button class="bg-green-400 p-1 rounded-lg"><a class="text-none" href="' +
+                                    ur +
+                                    '">View</a></button></div>';
+                                    
+                            } else {
+                                return jsonData ?
+
+                                    '<div class="flex justify-between text-xl items-center p-2 rounded-lg">' +
+                                    jsonData.week_type +
+                                    ' <button class="bg-green-400 p-1 rounded-lg"><a class="text-none" href="' +
+                                    ur +
+                                    '">View</a></button></div>' :
+                                    'Empty';
+                            }
+
                         }
                     }]
                 });

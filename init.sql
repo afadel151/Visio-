@@ -366,7 +366,6 @@ INSERT INTO
 VALUES
  
 ('ZAIUCHE', 'Maitre A', 'ENPEI', 1,NOW(),NOW()),
-('BOULAHIA','Maitre A','EMP','1',NOW(),NOW()),
 ('HOSNI', 'Maitre A', 'EMP', 1,NOW(),NOW()),
 ('LAMRI', 'Maitre A', 'ENPEI', 1,NOW(),NOW()),
 ('MAZARI', 'Maitre A', 'EMP', 1,NOW(),NOW()),
@@ -419,7 +418,6 @@ VALUES
  ('MEBREK', 'Maitre A', 'Détaché',4,NOW(),NOW()),
  ('FELLAH', 'Maitre A', 'Détaché',4,NOW(),NOW()),
 ('TALEB', 'Maitre A', 'Vacataire',4,NOW(),NOW()),
-('DJELLOULI', 'Maitre A', 'ENPEI',1,NOW(),NOW()),
 ('BOUDANE', 'Maitre A', 'EMP',1,NOW(),NOW()),
 ('MAHANI', 'Maitre A', 'Détaché',1,NOW(),NOW()),
 ('KECHID', 'Maitre A', 'Détaché',1,NOW(),NOW()),

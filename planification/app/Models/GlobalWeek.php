@@ -28,4 +28,8 @@ class GlobalWeek extends Model
     {
         return $this->hasMany(Week::class, 'global_week_id');
     }
+    public function schoolyear()
+    {
+        return $this->belongsTo(SchoolYear::class,'schoolyear_id');
+    }
 }

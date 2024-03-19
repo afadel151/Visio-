@@ -6,6 +6,12 @@
             <a href="{{route('weeks.additives',['id'=> $week->id])}}">
                 <button class="bg-indigo-300 rounded-xl p-4">Go to Additives</button>
             </a>
+            <a href="{{route('battalions.show',['id'=> $week->battalion->id])}}">
+                <button class="bg-indigo-300 rounded-xl p-4">Go to Battalion</button>
+            </a>
+            <a href="{{route('schoolyears.show',['id'=> $week->schoolyear()->id])}}">
+                <button class="bg-indigo-300 rounded-xl p-4">to School Year</button>
+            </a>
             <div class="bg-indigo-300 rounded-xl h-20 text-center flex justify-center items-center w-[300px]"> Semester :
                 {{ $week->semester }}</div>
             <div class="bg-indigo-300 rounded-xl h-20 text-center flex justify-center items-center w-[300px]"> Semaine :
@@ -20,13 +26,13 @@
                 <td class="sticky top-0 z-10 ">
                     @php
                         $companies_ST = $battalion->companies_ST;
-                        $modules_ST = $battalion->modules_ST($week->semester);
-                        $teachers_ST = $battalion->teachers_ST($week->semester);
+                        $modules_ST = $battalion->modules_ST(1);
+                        $teachers_ST = $battalion->teachers_ST(1);
                         $teachers_ST = collect($teachers_ST)->map(function ($teacher) {
                             return (object) $teacher;
                         });
                         $domaine = 'ST';
-                    @endphp
+                    @endphp 
                     @include('weeks.domaine', [
                         'companies' => $companies_ST,
                         'domaine' => $domaine,
@@ -38,9 +44,9 @@
                         $companies_MI = $battalion->companies_MI;
                         $modules_MI = $battalion->modules_MI(1);
                         $teachers_MI = $battalion->teachers_MI(1);
-                        $teachers_MI = collect($teachers_MI)->map(function ($teacher) {
-                            return (object) $teacher;
-                        });
+                        // $teachers_MI = collect($teachers_MI)->map(function ($teacher) {
+                        //     return (object) $teacher;
+                        // });
                         $domaine = 'MI';
                     @endphp
                     @include('weeks.domaine', [
@@ -76,10 +82,6 @@
                             'rooms' => $rooms,
                         ])
                     </td>
-
-                    @php
-                        $companies = $battalion->companies_MI;
-                    @endphp
                     <td class="h-[800px] ">
                         @include('weeks.domaine-day', [
                             'companies' => $companies_MI,

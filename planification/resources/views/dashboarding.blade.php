@@ -14,7 +14,7 @@
             }
         }
     @endphp
-    <div class=" pl-10 h-screen overflow-scroll" >
+    <div class=" pl-10 w-[100%] h-screen overflow-scroll" >
         <div class=" w-[100%] flex justify-center items-center h-20">
             <p class="text-3xl font-bold">{{ date('Y-m-d') }}</p>
           
@@ -53,7 +53,7 @@
             <div
                 class="col-span-3 p-2  hover:shadow-2xl  hover:border-slate-500 rounded-2xl shadow-xl  bg-slate-100  row-span-3 col-start-4 row-start-1">
                 <div class="flex flex-col justify-start   items-center">
-                    <p class="text-2xl font-bold  ">Next Week</p>
+                    <p class="text-3xl mt-10 mb-5 font-bold  ">Next Week</p>
                     <div class="flex flex-col justify-center items-center  space-y-3   w-[100%]">
                         <div class="flex justify-between px-8 items-center w-[90%] ">
                             <p class="text-2xl font-bold shadow-sm ">3rd Battalion : <span
