@@ -14,7 +14,7 @@ class Battalion extends Model
     //hasmany companies
     public function schoolyear()
     {
-        return $this->belongsTo(SchoolYear::class,'schoolyear_id');
+        return $this->belongsTo(SchoolYear::class, 'schoolyear_id');
     }
     public function companies()
     {
@@ -42,7 +42,7 @@ class Battalion extends Model
     }
     public function modules()
     {
-        return Module::where('battalion', $this->battalion)->get();   
+        return Module::where('battalion', $this->battalion)->get();
     }
     public function modules_PR($semester)
     {
@@ -50,82 +50,40 @@ class Battalion extends Model
     }
     public function teachers_ST($semester)
     {
-        $modules = Module::where('module_sector', 'ST')
-            ->where('battalion', $this->battalion)
-            ->where('semester', $semester)
+        $modules = $this->modules_ST($semester)->pluck('id')->toArray();
+        $teachers = Teacher::join('teachers_modules', 'teachers.id', '=', 'teachers_modules.teacher_id')
+            ->whereIn('teachers_modules.module_id', $modules)
+            ->where('teachers_modules.schoolyear_id', '=', $this->schoolyear_id)
             ->get();
 
-        $allteachers = [];
+        return $teachers;
 
-        foreach ($modules as $module) {
-            $moduleId = $module->id;
-
-            // Retrieve teachers associated with the current module
-            $teachers = Teacher::join('teachers_modules', 'teachers.id', '=', 'teachers_modules.teacher_id')
-                ->where('teachers_modules.module_id', $moduleId)
-                ->where('teachers_modules.schoolyear_id','=',$this->schoolyear_id)
-                ->select('teachers.*')
-                ->get();
-
-            // Merge teachers into the $allteachers array
-            $allteachers = array_merge($allteachers, $teachers->toArray());
-        }
-
-        return $allteachers;
-        
     }
     public function teachers_PR($semester)
     {
-        $modules = Module::where('module_sector', 'PR')
-            ->where('semester', $semester)
+        $modules = $this->modules_PR($semester)->pluck('id')->toArray();
+
+        $teachers = Teacher::join('teachers_modules', 'teachers.id', '=', 'teachers_modules.teacher_id')
+            ->whereIn('teachers_modules.module_id', $modules)
+            ->where('teachers_modules.schoolyear_id', '=', $this->schoolyear_id)
             ->get();
 
-        $allteachers = [];
-
-        foreach ($modules as $module) {
-            $moduleId = $module->id;
-
-            // Retrieve teachers associated with the current module
-            $teachers = Teacher::join('teachers_modules', 'teachers.id', '=', 'teachers_modules.teacher_id')
-                ->where('teachers_modules.module_id', $moduleId)
-                ->where('teachers_modules.schoolyear_id','=',$this->schoolyear_id)
-                ->select('teachers.*')
-                ->get();
-
-            // Merge teachers into the $allteachers array
-            $allteachers = array_merge($allteachers, $teachers->toArray());
-        }
-
-        return $allteachers; 
+        return $teachers;
     }
     public function teachers_MI($semester)
     {
-        $modules = Module::where('module_sector', 'MI')
-            ->where('battalion', $this->battalion)
-            ->where('semester', $semester)
+        $modules = $this->modules_MI($semester)->pluck('id')->toArray();
+
+        $teachers = Teacher::join('teachers_modules', 'teachers.id', '=', 'teachers_modules.teacher_id')
+            ->whereIn('teachers_modules.module_id', $modules)
+            ->where('teachers_modules.schoolyear_id', '=', $this->schoolyear_id)
             ->get();
 
-        $allteachers = [];
-
-        foreach ($modules as $module) {
-            $moduleId = $module->id;
-
-            // Retrieve teachers associated with the current module
-            $teachers = Teacher::join('teachers_modules', 'teachers.id', '=', 'teachers_modules.teacher_id')
-                ->where('teachers_modules.module_id', $moduleId)
-                ->where('teachers_modules.schoolyear_id','=',$this->schoolyear_id)
-                ->select('teachers.*')
-                ->get();
-
-            // Merge teachers into the $allteachers array
-            $allteachers = array_merge($allteachers, $teachers->toArray());
-        }
-
-        return $allteachers;
+        return $teachers;
     }
     public function weeks($schoolyear_id)
     {
-        return $this->hasMany(Week::class)->where('schoolyear_id',$schoolyear_id);
+        return $this->hasMany(Week::class)->where('schoolyear_id', $schoolyear_id);
     }
     public function sections()
     {

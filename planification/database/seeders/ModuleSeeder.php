@@ -25,13 +25,20 @@ class ModuleSeeder extends Seeder
        $battalions = Battalion::pluck('id')->toArray();
         
         for ($i=0; $i < 50; $i++) { 
+            $b = $faker->randomElement([1,2,3]);
+            if ($b == 1) {
+                $sec = 'PR';
+            }
+            else {
+                $sec = $faker->randomElement(['MI','ST']);
+            }
             array_push($data ,[
                 'module' => $faker->word(),
                 'department_id' => $faker->randomElement($departments),
                 'module_head_id' => $faker->randomElement($teachers),
-                'battalion' => $faker->randomElement([1,2,3]),
+                'battalion' => $b,
                 'semester' => $faker->randomElement(['1','2']),
-                'module_sector' => $faker->randomElement(['MI','ST','PR'])
+                'module_sector' => $sec,
             ]);
         }
         Module::insert($data);
@@ -44,7 +51,7 @@ class ModuleSeeder extends Seeder
             array_push($teachers_modules,[
                 'teacher_id' => $faker->randomElement($teachers),
                 'module_id'=> $faker->randomElement($modules),
-                'schoolyear_id'=> $faker->randomElement($schoolyears),
+                'schoolyear_id'=> 1,
                 'cours' => $faker->randomElement([true,false]),
                 'td' => $faker->randomElement([true,false]),
                 'tp' => $faker->randomElement([true,false]),

@@ -12,15 +12,18 @@ class Week extends Model
     protected $table = 'weeks';
     public function schoolyear()
     {
-        return $this->belongsTo(SchoolYear::class, 'schoolyear_id');
+        $glw = GlobalWeek::find($this->global_week_id);
+        $sy = SchoolYear::find($glw->schoolyear_id);
+        return  $sy;
+
     }
-    public function Sessions()
+    public function sessions()
     {
         return $this->hasMany(Session::class);
     }
     public function global_week()
     {
-        return $this->belongsTo(GlobalWeek::class, 'global_week_id');
+        return $this->belongsTo(GlobalWeek::class);
     }
     public function battalion()
     {
