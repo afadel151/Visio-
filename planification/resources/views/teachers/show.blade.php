@@ -14,15 +14,18 @@
 @section('content')
     <div class="container flex justify-center items-center flex-col w-[100%] relative  mt-20">
         <a href="{{ route('teachers.index') }}">
-            <button class="absolute top-5 left-5 bg-slate-500 text-gray-100 border-slate-500 border-2 hover:text-gray-950 rounded-3xl text-xl hover:bg-slate-50 h-20 w-40"> < All teachers</button>
+            <button
+                class="absolute top-5 left-5 bg-slate-500 text-gray-100 border-slate-500 border-2 hover:text-gray-950 rounded-3xl text-xl hover:bg-slate-50 h-20 w-40">
+                < All teachers</button>
         </a>
         <a href="{{ route('settings.teachers') }}">
-            <button class="absolute top-5 right-5 flex flex-col justify-center items-center p-8   text-gray-950  text-2xl hover:text-gray-950 rounded-full  hover:bg-slate-50 ">
+            <button
+                class="absolute top-5 right-5 flex flex-col justify-center items-center p-8   text-gray-950  text-2xl hover:text-gray-950 rounded-full  hover:bg-slate-50 ">
                 <p>modify teacher</p>
                 <img class="h-12 w-12" src="/svg/gear-bold.svg" alt="">
             </button>
         </a>
-        
+
         <div class="flex flex-col justify-center items-center space-y-4 ">
             <p class="text-7xl font-weight-bold   " style="font-weight: 700">Teacher :
                 <span class="text-red-500">{{ $teacher->teacher_name }}</span>
@@ -31,6 +34,23 @@
                     {{ $teacher->teacher_type }}</span></p>
             <p class="text-4xl font-weight-bold  "> grade : <span class="text-blue-500">
                     {{ $teacher->teacher_grade }}</span></p>
+        </div>
+        <div>
+            <form id="teacherClassesForm" onsubmit="fetchClasses(event)"
+                class="flex flex-col justify-center items-center space-y-4 ">
+                @csrf
+                <div>
+                    <p>Min date</p>
+                    <input type="date" name="min_date">
+                </div>
+                <div>
+                    <p>Max date</p>
+                    <input type="date" name="max_date">
+                </div>
+                <input type="submit" value="Submit">
+            </form>
+            <div id="result"></div>
+
         </div>
         {{-- {{ $teacher }} --}}
         {{-- {{ $teacher }} --}}
@@ -122,7 +142,6 @@
                     {{-- </tbody> --}}
                 </table>
             </div>
-            
         @endsection
         @push('scripts')
             <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
@@ -176,7 +195,8 @@
                                 name: 'Seances',
                                 render: function(data, type, row) {
                                     // Generate the content for the Seances column dynamically based on other data
-                                    var seances = '<div class="flex justify-around items-center h-[100%] w-[100%]">';
+                                    var seances =
+                                        '<div class="flex justify-around items-center h-[100%] w-[100%]">';
                                     if (row.cours == true) {
                                         seances +=
                                             '<span class="p-1 bg-green-400 rounded-full text-center">cours</span>';
@@ -216,7 +236,7 @@
                         serverSide: true,
                         searching: true,
                         ajax: url2,
-                        
+
                         columns: [{
                                 data: 'module',
                                 name: 'module',
@@ -267,5 +287,35 @@
                         ]
                     });
                 });
+            </script>
+            <script>
+                function fetchClasses(event) {
+                    event.preventDefault(); // Prevents form from submitting traditionally
+                    const formData = new FormData(document.getElementById('teacherClassesForm'));
+                    // Construct the data object or directly use FormData depending on your backend expectation
+                    const data = {
+                        min_date: formData.get('min_date'),
+                        max_date: formData.get('max_date'),
+                        teacher_id: {{$teacher->id}}, // You should dynamically set this based on your app's needs
+                    };
+
+                    // Update the URL with the correct endpoint
+                    axios.get('http://127.0.0.1:8000/teachers/classes/', {
+                            params: data
+                        })
+                        .then(function(response) {
+                            // Assuming the response is directly the object with Nbcours, Nbtds, Nbtps
+                            const classes = response.data;
+                            document.getElementById('result').innerHTML = `
+                            <p>Nbcours: ${classes.Nbcours}</p>
+                            <p>Nbtds: ${classes.Nbtds}</p>
+                            <p>Nbtps: ${classes.Nbtps}</p>
+                        `;
+                        })
+                        .catch(function(error) {
+                            console.log(error);
+                            document.getElementById('result').innerText = 'Failed to fetch data';
+                        });
+                }
             </script>
         @endpush

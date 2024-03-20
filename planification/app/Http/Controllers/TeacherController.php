@@ -8,6 +8,7 @@ use App\Models\Teacher;
 use App\Models\Module;
 use App\Models\Company;
 use App\Models\Section;
+use App\Models\TeacherClasses;
 use App\Models\Timing;
 use App\Models\Config;
 use App\Models\Room;
@@ -27,7 +28,7 @@ class TeacherController extends Controller
     //     // return $dataTable
     //     // ->render('teachers.index');
 
-    // }
+
     public function index(Request $request)
     {
 
@@ -64,18 +65,18 @@ class TeacherController extends Controller
     {
         if ($request->ajax()) {
             $teacher = Teacher::find($id);
-            $modules = Module::join('teachers_modules','modules.id','=','teachers_modules.module_id')->where('teacher_id',$teacher->id)->join('departments', 'modules.department_id', '=', 'departments.id')
+            $modules = Module::join('teachers_modules', 'modules.id', '=', 'teachers_modules.module_id')->where('teacher_id', $teacher->id)->join('departments', 'modules.department_id', '=', 'departments.id')
                 ->get();
 
             return Datatables::of($modules)
                 ->addIndexColumn()
-                ->addColumn('schoolyear',function($row){
+                ->addColumn('schoolyear', function ($row) {
                     return SchoolYear::find($row->schoolyear_id)->schoolyear;
                 })
                 ->addColumn('action', function ($row) {
                     $btn = '<a href="javascript:void(0)" class="edit btn btn-info btn-sm rounded-lg">View</a>';
                     $btn .= '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm rounded-lg">Edit</a>';
-                    
+
                     return '<div class="flex justify-around items-center">' . $btn . '</div>';
                 })
                 ->rawColumns(['action'])
@@ -85,10 +86,10 @@ class TeacherController extends Controller
         // $teacher = Teacher::join('departments', 'teachers.department_id', '=', 'departments.id')->where('teachers.id', $id)->first();
         $teacher = Teacher::find($id);
 
-        $modules = Module::join('teachers_modules','modules.id','=','teachers_modules.module_id')->where('teacher_id',$teacher->id)->join('departments', 'modules.department_id', '=', 'departments.id')
-                ->get();
+        $modules = Module::join('teachers_modules', 'modules.id', '=', 'teachers_modules.module_id')->where('teacher_id', $teacher->id)->join('departments', 'modules.department_id', '=', 'departments.id')
+            ->get();
         $schoolyear_id = 1;
-        return view('teachers.show', ['modules' => $modules, 'teacher' => $teacher, 'schoolyear_id' => $schoolyear_id ,'id' => $id]);
+        return view('teachers.show', ['modules' => $modules, 'teacher' => $teacher, 'schoolyear_id' => $schoolyear_id, 'id' => $id]);
     }
 
     public function showt(int $id, Request $request)
@@ -155,7 +156,7 @@ class TeacherController extends Controller
     public function absences(int $id, Request $request)
     {
         if ($request->ajax()) {
-            $absences = Session::where('teacher_id',$id)->where('absented', 1)->get();
+            $absences = Session::where('teacher_id', $id)->where('absented', 1)->get();
 
             return Datatables::of($absences)
                 ->addIndexColumn()
@@ -175,15 +176,14 @@ class TeacherController extends Controller
                 ->addColumn('class', function ($row) {
                     if ($row->sessionable_type == 'App\\Models\\Company') {
                         $c = Company::find($row->sessionable_id);
-                        return 'Company '.$c->battalion->battalion . $c->company;
+                        return 'Company ' . $c->battalion->battalion . $c->company;
                     } elseif ($row->sessionable_type == 'App\\Models\\Section') {
                         $s = Section::find($row->sessionable_id);
                         return 'Section ' . $s->section;
                     }
                 })
                 ->addColumn('caughtupp', function ($row) {
-                    if ($row->caughtup == true) 
-                    {
+                    if ($row->caughtup == true) {
                         return '<div class="h-4 w-8 bg-green-400 rounded-lg">OUI</div>';
                     } else {
                         return '<div class="h-4 w-8 bg-red-400 rounded-lg">NON</div>';
@@ -194,6 +194,26 @@ class TeacherController extends Controller
 
 
     }
+    public function classes(Request $request)
+    {
+        $classes = new \stdClass;
+
+        $sessions = Session::where('teacher_id', $request->query('teacher_id'))
+            ->where('session_date', '>=', $request->query('min_date'))
+            ->where('session_date', '<=', $request->query('max_date'))
+            ->get();
+
+        // $classes->Nbcours = $sessions->where('session_type', 'cour')->count();
+        // $classes->Nbtds = $sessions->where('session_type', 'td')->count();
+        // $classes->Nbtps = $sessions->where('session_type', 'tp')->count();
+        $classes->Nbcours = 1;
+        $classes->Nbtds = 1;
+        $classes->Nbtps = 1;
+        return response()->json($classes);
+    }
+
+
+
     public function update()
     {
     }

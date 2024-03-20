@@ -96,7 +96,6 @@ Route::middleware('auth')->group(function () {
             Route::get('/{id}',[WeekController::class,'show'])->name('weeks.show');
             Route::get('/{id}/additives',[WeekController::class,'additives'])->name('weeks.additives');
             Route::post('/{id}/additives_add',[WeekController::class,'additives_add'])->name('weeks.additives_add');
-
         });
         Route::prefix('global_weeks')->group(function () {
             Route::get('/',[GlobalWeekController::class,'index'])->name('global_weeks.index');
@@ -162,3 +161,4 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index']);
 
+Route::get('teachers/classes/',[SessionController::class,'classes']);
