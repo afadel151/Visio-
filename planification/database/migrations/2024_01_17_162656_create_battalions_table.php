@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
+use Carbon\Carbon;
 return new class extends Migration
 {
     /**
@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('battalion');
             $table->foreignId('schoolyear_id')->constrained('schoolyears')->onDelete('CASCADE');
+            $table->timestamps();
         });
     }
 

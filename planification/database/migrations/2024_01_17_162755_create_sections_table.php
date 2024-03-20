@@ -20,6 +20,7 @@ return new class extends Migration
             //default room
             $table->unsignedBigInteger('default_room_id');
             $table->foreign('default_room_id')->references('id')->on('rooms');
+            $table->timestamps();
         });
     }
 

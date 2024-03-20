@@ -1,17 +1,17 @@
-<table class="h-[100%]  w-[100%] p-0 table-fixed" id="company-day">
+<table class="h-[100%]  w-[100%] p-0 table-fixed" style="width: calc({{$company->sections->count()}}*130px);" id="company-day">
 
     @php
         $sections = $company->sections;
         $sectionsC = $sections->count();
     @endphp
-    <tr>
+    <tr style="">
         @for ($i = 0; $i < $sectionsC; $i++)
-            <td class="w-[100%]"></td>
+            <td class="w-[130px]"></td>
         @endfor
 
     </tr>
     @foreach ($timings as $timing)
-        <tr class="relative p-10 w-[100%]">
+        <tr class="relative p-10 " style="width: calc({{$sectionsC}}*130px);">
             @if ($sessions->where('sessionable_type', 'App\\Models\\Company')->where('session_date', $date)->where('timing_id', $timing->id)->where('sessionable_id', $company->id)->isNotEmpty())
                 @php
                     $cour = true;
@@ -29,14 +29,14 @@
                             <div class="flex  hover:border-2 hover:border-slate-800 duration-300  flex-col shadow-lg justify-center ml-[5%]   pt-4  h-[90%] w-[90%] p-4 items-center rounded-xl bg-indigo-100 ">
                     @endif
 
-                    <a href="{{ route('teachers.show',$c->teacher->id) }}"><p class=" text-xl hover:bg-slate-50 hover:shadow-lg  bg-slate-100 px-2 rounded-xl font-bold">{{ $c->teacher->teacher_name }} </p></a>
+                    <a href="{{ route('teachers.show',$c->teacher->id) }}"><p class="btn text-xl hover:bg-slate-50 hover:shadow-lg  bg-slate-100 px-2 rounded-xl font-bold">{{ $c->teacher->teacher_name }} </p></a>
                     
                     <p class=" font-normal">{{ $c->module->module }}</p>
                     <p class= " font-bold">{{ $c->room->room }}</p>
                     <div class="flex updateformparent relative justify-center self-end  items-center space-x-2">
-                        <button class="h-10 border-[2px] update-button rounded-lg border-slate-500  p-2 font-bold w-10 hover:bg-white bg-slate-100"
+                        <button class="h-10 flex justify-center items-center  hover:scale-125 duration-300 border-[2px] shadow-md update-button rounded-lg border-slate-500   font-bold w-10 hover:bg-white bg-slate-100"
                             title="Update this session">
-                            <img src="/svg/pen-thin.svg" alt="">
+                            <img src="/svg/pen-thin.svg" class="h-6 w-6" alt="">
                         </button>
                         <form action="{{ route('sessions.update', ['id' => $c->id]) }}"
                             class="update-form flex flex-col justify-center space-y-4 items-center  text-xl w-[300px] h-[300px] ease-in z-30 hidden absolute bg-white shadow-xl rounded-xl top-10 right-2">
@@ -79,20 +79,20 @@
                                 </select>
                             </div>
                             <input type="submit" name="submit" id="" value="Update"
-                                class="bg-indigo-300 hover:shadow-lg rounded-lg shadow-lg h-10 w-28">
+                                class="bg-indigo-300 btn hover:shadow-lg rounded-lg shadow-lg h-10 w-28">
                         </form>
                         <form action="{{ route('sessions.delete', ['id' => $c->id]) }}" method="POST"
                             enctype="multipart/form-data">
                             @csrf
                             <button type="submit" title="Delete this session"
-                                class="rounded-lg hover:shadow-lg w-10 p-2 border-[2px] border-slate-500 hover:bg-red-300 bg-red-400 h-10">
-                                <img src="/svg/trash.svg" alt="">
+                                class="rounded-lg flex justify-center items-center  hover:scale-125 duration-300 btn hover:shadow-lg w-10  border-[2px] border-slate-500 hover:bg-red-300 bg-red-400 h-10">
+                                <img src="/svg/trash.svg" class="h-6 w-6" alt="">
                             </button>
 
                         </form>
                         @if ($c->absented == 1)
-                            <button type="button" title="Delete this session"
-                                class="rounded-lg hidden hover:shadow-lg w-10 p-2 bg-violet-400 h-10">
+                            <button type="button" title="Delete  this session"
+                                class="rounded-lg hidden btn hover:shadow-lg w-10 p-2 bg-violet-400 h-10">
                                 <img src="/svg/trash.svg" alt="">
                             </button>
                         @else
@@ -100,8 +100,8 @@
                                 enctype="multipart/form-data">
                                 @csrf
                                 <button type="submit" title="Mark as absented"
-                                    class="rounded-lg hover:bg-gray-50 hover:shadow-lg border-[2px] border-slate-500  w-10 p-2 bg-gray-100 h-10">
-                                    <img src="/svg/absence.svg" alt="">
+                                    class="rounded-lg btn flex justify-center items-center  hover:scale-125 duration-300 hover:bg-gray-50 hover:shadow-lg border-[2px] border-slate-500  w-10  bg-gray-100 h-10">
+                                    <img src="/svg/absence.svg" class="h-6 w-6" alt="">
                                 </button>
 
                             </form>
@@ -147,8 +147,8 @@
                             <p class="text-xl font-normal">{{ $s->module->module }}</p>
                             <p class= "text-xl font-bold">{{ $s->room->room }}</p>
                             <div class="flex updateformparent relative justify-center items-center mt-4 space-x-2">
-                                <button class="h-8 update-button rounded-xl hover:bg-slate-50 hover:shadow-lg border-[2px] border-slate-500 p-1 font-bold w-8 bg-slate-200">
-                                    <img src="/svg/pen-thin.svg" alt="">
+                                <button class="h-8 btn flex justify-center items-center  hover:scale-125 duration-300  shadow-md update-button rounded-xl hover:bg-slate-50 hover:shadow-lg border-[2px] border-slate-500 p-1 font-bold w-8 bg-slate-200">
+                                    <img src="/svg/pen-thin.svg"  class="h-6 w-6">
                                 </button>
                                 <form action="{{ route('sessions.update', ['id' => $s->id]) }}"
                                     class="update-form flex flex-col justify-center space-y-4 items-center  text-xl w-[300px] h-[300px] ease-in z-20 hidden absolute bg-white shadow-xl rounded-xl top-10 right-2">
@@ -191,27 +191,22 @@
                                         </select>
                                     </div>
                                     <input type="submit" name="submit" id="" value="Update"
-                                        class="bg-indigo-300 rounded-lg shadow-lg h-10 w-28">
+                                        class="bg-indigo-300 btn rounded-lg btn hover:scale-115 duration-300 shadow-lg h-10 w-32">
                                 </form>
                                 <form action="{{ route('sessions.delete', ['id' => $s->id]) }}" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
-                                    <button type="submit" class="rounded-lg w-8 p-1 hover:bg-rose-400 hover:shadow-lg border-[2px] border-slate-500 bg-red-400 h-8">
-                                        <img src="/svg/trash.svg" alt="">
+                                    <button type="submit" class="rounded-lg btn flex justify-center items-center   w-8  hover:scale-125 duration-300 hover:bg-rose-400 hover:shadow-lg border-[2px] border-slate-500 bg-red-400 h-8">
+                                        <img src="/svg/trash.svg" class="h-6 w-6" alt="">
                                     </button>
                                 </form>
-                                @if ($s->absented == 1)
-                                    <button type="button" title="Delete this session"
-                                        class="rounded-lg w-10 p-2 hidden bg-violet-400 h-10">
-                                        <img src="/svg/trash.svg" alt="">
-                                    </button>
-                                @else
+                                @if ($s->absented == 0)
                                     <form action="{{ route('sessions.mark_absence', ['id' => $s->id]) }}"
                                         method="post" enctype="multipart/form-data">
                                         @csrf
                                         <button type="submit" title="Mark as absented"
-                                            class="rounded-lg hover:bg-gray-100 hover:shadow-lg border-[2px] border-slate-500 w-8 p-2 bg-gray-300 h-8">
-                                            <img src="/svg/absence.svg" alt="">
+                                            class="rounded-lg btn flex justify-center items-center hover:scale-125 duration-300 hover:bg-gray-100 hover:shadow-lg border-[2px] border-slate-500 w-8 p-2 bg-gray-300 h-8">
+                                            <img src="/svg/absence.svg" class="h-4 w-4" alt="">
                                         </button>
 
                                     </form>
@@ -222,8 +217,8 @@
                             <div
                                 class="relative sectionparentofform h-[100%] flex justify-center items-center">
                                 <button
-                                    class="flex section-button items-center justify-center p-2 w-10 h-10 rounded-full bg-slate-300 hover:bg-yellow-50 z-0">
-                                    <img src="/svg/pen-thin.svg" alt="">
+                                    class="flex shadow-md hover:scale-125 duration-300  btn section-button items-center justify-center  w-10 h-10 rounded-full bg-slate-300 hover:bg-yellow-50 z-0">
+                                    <img src="/svg/pen-thin.svg" class="h-6 w-6" alt="">
                                 </button>
 
                                 <form action="{{ route('sessions.store') }}"
@@ -288,7 +283,7 @@
                                         </div>
                                         <div>
                                             <input type="submit" value="submit"
-                                                class="h-10 w-16 rounded-lg bg-slate-300">
+                                                class="h-10 btn  w-16 rounded-lg bg-slate-300">
                                         </div>
                                     </div>
 
@@ -356,7 +351,7 @@
                                 </div>
                             </div>
                             <div>
-                                <input type="submit" value="submit" class="h-10 w-20 rounded-lg bg-slate-300">
+                                <input type="submit" value="submit" class="h-10  btn w-20 rounded-lg bg-slate-300">
                             </div>
                         </div>
                     </form>
