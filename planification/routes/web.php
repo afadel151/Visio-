@@ -63,7 +63,6 @@ Route::middleware('auth')->group(function () {
         });
         Route::prefix('sessions')->group(function () {
             Route::get('/',[SessionController::class,'index'])->name('sessions.index');
-            Route::get('/create',[SessionController::class,'create'])->name('sessions.create');
             Route::post('/delete/{id}',[SessionController::class, 'delete'])->name('sessions.delete');
             Route::post('/store',[SessionController::class,'store'])->name('sessions.store');
             Route::post('/update',[SessionController::class,'update'])->name('sessions.update');
@@ -162,3 +161,4 @@ Route::middleware('auth')->group(function () {
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index']);
 
 Route::get('teachers/classes/{id}',[TeacherController::class,'classes']);
+Route::post('sessions/create',[SessionController::class,'create'])->name('sessions.create');

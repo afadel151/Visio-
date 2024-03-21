@@ -32,9 +32,9 @@
     </style>
     <div id="loading-spinner"
         class="fixed  top-0 will-change-transform z-[300] left-0 w-screen h-screen bg-gray-100  flex items-center justify-center ">
-        <div class="h-20 w-20 ">
-            <p class="text-xl">Please wait</p>
-            <img src="/svg/spinner-3-svgrepo-com.svg" class="animate-spin duration-500" alt="">
+        <div class="h-20 w-32 flex items-center justify-cente flex-col">
+            <p class="text-xl w-30">Please wait</p>
+            <img src="/svg/spinner-3-svgrepo-com.svg" class="animate-spin duration-500 h-20 w-20" alt="">
         </div>
 
     </div>

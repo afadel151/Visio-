@@ -136,6 +136,14 @@ class SchoolYearController extends Controller
                     }
                 
                 })
+                ->addColumn('action', function ($row) {
+                    
+                    $btn ='<a href="/global_week/' . $row->id . '" class="edit btn btn-primary btn-sm rounded-lg">View</a>' ;
+                    $btn = $btn . '<a href="/global_weeks/createafter/' . $row->id . '" class="edit btn btn-info btn-sm rounded-lg">New After this</a>' ;
+                    $btn = $btn .'<a href="/global_weeks/delete/' . $row->id . '" class="edit btn btn-danger btn-sm rounded-lg">Delete</a>' ;
+    
+                    return '<div class="flex justify-around items-center">' . $btn . '</div>';
+                })
                 ->make(true);
 
         };
