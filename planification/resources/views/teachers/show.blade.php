@@ -295,22 +295,19 @@
                     // Construct the data object or directly use FormData depending on your backend expectation
                     const data = {
                         min_date: formData.get('min_date'),
-                        max_date: formData.get('max_date'),
-                        teacher_id: {{$teacher->id}}, // You should dynamically set this based on your app's needs
+                        max_date: formData.get('max_date'), // You should dynamically set this based on your app's needs
                     };
 
                     // Update the URL with the correct endpoint
-                    axios.get('http://127.0.0.1:8000/teachers/classes/', {
-                            params: data
-                        })
+                    axios.get('classes/'+{{ $teacher->id }}, {params: data})
                         .then(function(response) {
-                            // Assuming the response is directly the object with Nbcours, Nbtds, Nbtps
                             const classes = response.data;
                             document.getElementById('result').innerHTML = `
-                            <p>Nbcours: ${classes.Nbcours}</p>
-                            <p>Nbtds: ${classes.Nbtds}</p>
-                            <p>Nbtps: ${classes.Nbtps}</p>
-                        `;
+                                <p>Nbcours: ${classes.Nbcours}</p>
+                                <p>Nbtds: ${classes.Nbtds}</p>
+                                <p>Nbtps: ${classes.Nbtps}</p>
+                                `;
+                            console.log(response);
                         })
                         .catch(function(error) {
                             console.log(error);

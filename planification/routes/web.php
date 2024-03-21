@@ -161,4 +161,4 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index']);
 
-Route::get('teachers/classes/',[SessionController::class,'classes']);
+Route::get('teachers/classes/{id}',[TeacherController::class,'classes']);

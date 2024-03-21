@@ -55,4 +55,4 @@ Route::prefix('schoolyears')->group(function () {
 });
 
 Route::get('/sessions/{id}',[SessionController::class,'show']);
-Route::get('teachers/classes/',[SessionController::class,'classes']);
+Route::get('teachers/classes/{id}',[TeacherController::class,'classes']);

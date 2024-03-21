@@ -28,6 +28,24 @@ class TeacherController extends Controller
     //     // return $dataTable
     //     // ->render('teachers.index');
 
+    public function classes($id,Request $request)
+    {
+        $teacher = Teacher::find($id);
+        $classes = new \stdClass;
+    
+        $sessions = Session::where('teacher_id', $teacher->id)
+                            ->whereDate('session_date', '>=', $request->min_date)
+                            ->whereDate('session_date', '<=', $request->max_date)
+                            ->get();
+
+        $classes->Nbcours = $sessions->where('session_type', 'cour')->count();
+        $classes->Nbtds = $sessions->where('session_type', 'td')->count();
+        $classes->Nbtps = $sessions->where('session_type', 'tp')->count();
+        // $classes->Nbcours = 1;
+        // $classes->Nbtds = 1;
+        // $classes->Nbtps = 1;
+        return $classes;
+    }
 
     public function index(Request $request)
     {
@@ -193,23 +211,6 @@ class TeacherController extends Controller
         }
 
 
-    }
-    public function classes(Request $request)
-    {
-        $classes = new \stdClass;
-
-        $sessions = Session::where('teacher_id', $request->query('teacher_id'))
-            ->where('session_date', '>=', $request->query('min_date'))
-            ->where('session_date', '<=', $request->query('max_date'))
-            ->get();
-
-        // $classes->Nbcours = $sessions->where('session_type', 'cour')->count();
-        // $classes->Nbtds = $sessions->where('session_type', 'td')->count();
-        // $classes->Nbtps = $sessions->where('session_type', 'tp')->count();
-        $classes->Nbcours = 1;
-        $classes->Nbtds = 1;
-        $classes->Nbtps = 1;
-        return response()->json($classes);
     }
 
 
