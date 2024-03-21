@@ -22,22 +22,18 @@
     </style> --}}
 @extends('default')
 @push('header')
-    @livewireStyles
-    {{-- <link rel="stylesheet" href="//cdn.datatables.net/2.0.1/css/dataTables.dataTables.min.css"> --}}
-    {{--   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
-    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet"> --}}
-    {{-- <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet"> --}}
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/2.0.2/css/dataTables.bootstrap5.css" rel="stylesheet">
-    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" /> --}}
+    
+    
 @endpush
 @section('content')
     <div class="container flex justify-center items-center flex-col w-[100%]  mt-20">
         <div>
             <p class="text-7xl font-weight-bold  " style="font-weight: 700">All Teachers </p>
         </div>
-        <div class="card mt-20 w-[80%] mb-20">
-            <div class="card-header ">Manage Teachers</div>
+        <div class="card p-4 mt-20 w-[80%] mb-20">
+            <div class="card-header text-3xl text-center ">Manage Teachers</div>
             <div class="card-body w-[100%]">
                 {{-- {!! $dataTab->table() !!} --}}
                 <table class="table table-bordered w-[100%] display" id="teachers">
@@ -83,9 +79,6 @@
 
                     processing: true,
                     serverSide: true,
-                    buttons: [
-                        'copy', 'excel', 'pdf' // Add buttons for copy, excel, and pdf export
-                    ],
                     ajax: "{{ route('teachers.index') }}",
                     columns: [{
                             data: 'id',
@@ -111,7 +104,10 @@
                             name: 'action'
                         }
 
-                    ]
+                    ],
+                    drawCallback: function(settings) {
+                            $('#teachers tbody tr td').addClass('hover:bg-slate-100 hover:scale-105  duration-500');
+                        }
                 });
 
                 table.on('click', 'tbody tr', function() {
@@ -122,4 +118,5 @@
 
             });
         </script>
+         
     @endpush
