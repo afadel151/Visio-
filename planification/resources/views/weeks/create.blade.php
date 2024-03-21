@@ -1,8 +1,7 @@
 @extends('default')
 @section('content')
-
     <div class="w-[100%] z-0 ">
-        
+
         <div class="h-[100px] flex justify-around items-center  ">
             <a href="{{ route('weeks.additives', ['id' => $week->id]) }}">
                 <button class="bg-indigo-300 rounded-xl p-4">Go to Additives</button>
@@ -103,7 +102,6 @@
 @endsection
 
 @push('scripts')
-   
     <script>
         document.addEventListener("DOMContentLoaded", function() {
 
@@ -239,4 +237,5 @@
             });
         });
     </script>
+   
 @endpush

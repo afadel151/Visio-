@@ -5,15 +5,28 @@ namespace App\Http\Controllers;
 use App\Models\Absence;
 use App\Models\Session;
 use Illuminate\Http\Request;
-
+use Carbon\Carbon;
 class SessionController extends Controller
 {
 
     public function index()
     {
     }
-    public function create()
+    public function create(Request $request)
     {
+        $session = new Session();
+        $session->session_date = $request->input('session_date');
+        $session->timing_id = $request->input('timing_id');
+        $session->week_id = $request->input('week_id');
+        $session->sessionable_type = $request->input('sessionable_type');
+        $session->sessionable_id = $request->input('sessionable_id');
+        $session->session_type = $request->input('session_type');
+        $session->module_id = $request->input('module_id');
+        $session->teacher_id = $request->input('teacher_id');
+        $session->room_id = $request->input('room_id');
+        $session->save();  
+        $session->load('teacher', 'module', 'room');
+        return response()->json($session, 201);
     }
     public function store(Request $request)
     {

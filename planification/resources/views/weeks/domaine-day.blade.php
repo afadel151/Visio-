@@ -2,7 +2,7 @@
     <tr class="w-[100%]">
         @foreach ($companies as $company)
             <td class="">
-                @include('weeks.company-day', [
+                @include('weeks.company-day2', [
                     'company' => $company,
                     'sessions'=>$sessions,
                     'timings' => $timings,

@@ -45,10 +45,8 @@ Route::prefix('battalions')->group(function () {
 
 Route::prefix('schoolyears')->group(function () {
     Route::get('/',[SchoolYearController::class,'index'])->name('schoolyears.index');
-    // Route::get('/battalions',[SchoolYearController::class,'index'])->name('schoolyears.create');
     Route::post('/store',[SchoolYearController::class,'store'])->name('schoolyears.store');
     Route::post('/update',[SchoolYearController::class,'update'])->name('schoolyears.update');
-    // Route::delete('/delete',[SchoolYearController::class,'delete'])->name('schoolyears.delete');
     Route::get('/{id}',[SchoolYearController::class,'showw'])->name('schoolyears.show');
     Route::get('/{id}/battalions',[BattalionController::class,'SY_battalions'])->name('schoolyears.battalions');
     Route::get('/current',[SchoolYearController::class,'currentSY'])->name('schoolyears.current');
@@ -56,3 +54,4 @@ Route::prefix('schoolyears')->group(function () {
 
 Route::get('/sessions/{id}',[SessionController::class,'show']);
 Route::get('teachers/classes/{id}',[TeacherController::class,'classes']);
+Route::post('sessions/create',[SessionController::class,'create'])->name('sessions.create');

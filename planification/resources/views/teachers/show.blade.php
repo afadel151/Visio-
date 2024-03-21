@@ -12,7 +12,7 @@
 @endpush
 
 @section('content')
-    <div class="container flex justify-center items-center flex-col w-[100%] relative  mt-20">
+    <div class="container  flex justify-center items-center flex-col w-[100%] relative  mt-20">
         <a href="{{ route('teachers.index') }}">
             <button
                 class="absolute top-5 left-5 bg-slate-500 text-gray-100 border-slate-500 border-2 hover:text-gray-950 rounded-3xl text-xl hover:bg-slate-50 h-20 w-40">
@@ -37,19 +37,25 @@
         </div>
         <div>
             <form id="teacherClassesForm" onsubmit="fetchClasses(event)"
-                class="flex flex-col justify-center items-center space-y-4 ">
+                class="flex flex-col  justify-center items-center space-y-5 h-72 ">
                 @csrf
-                <div>
-                    <p>Min date</p>
-                    <input type="date" name="min_date">
+                <div class="flex flex-col justify-center items-center">
+                    <p class="text-xl font-bold">Min date</p>
+                    <input type="date" class="rounded-lg hover:scale-110 duration-200 focus:border-blue-400"
+                        name="min_date">
                 </div>
-                <div>
-                    <p>Max date</p>
-                    <input type="date" name="max_date">
+                <div class="flex flex-col justify-center items-center">
+                    <p class="text-xl font-bold">Max date</p>
+                    <input type="date" class="rounded-lg hover:scale-110 duration-200 focus:border-blue-400"
+                        name="max_date">
                 </div>
-                <input type="submit" value="Submit">
+                <input type="submit" value="Submit"
+                    class="w-20 h-10 bg-indigo-500 hover:border-2 hover:border-slate-800 rounded-lg hover:scale-[1.2] duration-300 hover:bg-slate-200 hover:text-slate-950">
             </form>
-            <div id="result"></div>
+            <div id="result"
+                class="flex flex-col hover:scale-110 duration-300 hover:border-slate-600 hover:border-4 justify-center items-center w-[300px] h-[200px] bg-slate-100 shadow-xl rounded-2xl">
+                <p class="text-3xl font-light">Results shows Here</p>
+            </div>
 
         </div>
         {{-- {{ $teacher }} --}}
@@ -111,7 +117,7 @@
             <div class="card-body">
                 {{-- {!! $dataTable->table() !!} --}}
                 <table class="table table-bordered display  table-fixed text-center" id="absences">
-                    <thead class="text-center">
+                    <thead class="text-center ">
                         <tr>
                             <th class="text-center">Module</th>
                             <th class="text-center">Room</th>
@@ -119,27 +125,9 @@
                             <th class="text-center w-32">time </th>
                             <th class="text-center">Class</th>
                             <th class="text-center">Caught Up</th>
-                            {{-- <th class="text-center">Action </th> --}}
                         </tr>
                     </thead>
-                    {{-- <tbody> --}}
-                    {{-- @foreach ($absences as $absence)
-                            <tr>
-                                <td>{{ $absence->id }}</td>
-                                <td>{{ $absence->module }}</td>
-                                <td>{{ $absence->room }}</td>
-                                <td>{{ $absence->date }}</td>
-                                <td>{{ $absence->time }}</td>
-                                <td>{{ $absence->class }}</td>
-                                <td>{{ $absence->caughtup }}</td>
-                                <td>
-                                    <a href="javascript:void(0)" class="edit btn btn-info btn-sm rounded-lg">View</a>
-                                    <a href="javascript:void(0)" class="edit btn btn-primary btn-sm rounded-lg">Edit</a>
-                                    <a href="javascript:void(0)" class="edit btn btn-danger btn-sm rounded-lg">Delete</a>
-                                </td>
-                            </tr>
-                        @endforeach --}}
-                    {{-- </tbody> --}}
+
                 </table>
             </div>
         @endsection
@@ -157,6 +145,7 @@
                         serverSide: true,
                         searching: true,
                         ajax: url,
+
                         columns: [{
                                 data: 'id',
                                 name: 'teachers_modules.module_id'
@@ -216,21 +205,21 @@
                                 data: 'action',
                                 name: 'action'
                             },
-                        ]
+                        ],
+                        drawCallback: function(settings) {
+                            $('#modules tbody tr').addClass('hover:scale-105  duration-500');
+                        }
                     });
-                    //
+
                 });
             </script>
             <script>
                 $(function() {
-                    // var teacherId = {{ $teacher->id }};
                     var teacherId = {{ $id }};
 
 
-                    // Construct the URL with the teacher ID
                     var url2 = "{{ route('teachers.absences', ':teacherId') }}";
                     url2 = url2.replace(':teacherId', teacherId);
-                    // var url2 = "{{ route('teachers.absences', $teacher->id) }}";
                     var table2 = $('#absences').DataTable({
                         processing: true,
                         serverSide: true,
@@ -280,32 +269,31 @@
                                 }
 
                             },
-                            // {
-                            //     data: 'action',
-                            //     name: 'action'
-                            // },
-                        ]
+                        ],
+                        drawCallback: function(settings) {
+                            $('#absences tbody tr').addClass('hover:scale-105  duration-500');
+                        }
                     });
+
                 });
             </script>
             <script>
                 function fetchClasses(event) {
-                    event.preventDefault(); // Prevents form from submitting traditionally
+                    event.preventDefault();
                     const formData = new FormData(document.getElementById('teacherClassesForm'));
-                    // Construct the data object or directly use FormData depending on your backend expectation
                     const data = {
                         min_date: formData.get('min_date'),
-                        max_date: formData.get('max_date'), // You should dynamically set this based on your app's needs
+                        max_date: formData.get('max_date'),
                     };
-
-                    // Update the URL with the correct endpoint
-                    axios.get('classes/'+{{ $teacher->id }}, {params: data})
+                    axios.get('classes/' + {{ $teacher->id }}, {
+                            params: data
+                        })
                         .then(function(response) {
                             const classes = response.data;
                             document.getElementById('result').innerHTML = `
-                                <p>Nbcours: ${classes.Nbcours}</p>
-                                <p>Nbtds: ${classes.Nbtds}</p>
-                                <p>Nbtps: ${classes.Nbtps}</p>
+                                <p class="text-xl ">Nbcours: ${classes.Nbcours}</p>
+                                <p class="text-xl ">Nbtds: ${classes.Nbtds}</p>
+                                <p class="text-xl ">Nbtps: ${classes.Nbtps}</p>
                                 `;
                             console.log(response);
                         })
@@ -314,5 +302,15 @@
                             document.getElementById('result').innerText = 'Failed to fetch data';
                         });
                 }
+            </script>
+            <script>
+                document.addEventListener("DOMContentLoaded", function() {
+
+                    const rows = document.querySelectorAll("tr");
+                    rows.forEach(row => {
+                        row.classList.add("hover:scale-110");
+                        row.classList.add("duration-300");
+                    });
+                });
             </script>
         @endpush

@@ -34,6 +34,7 @@ class TeacherController extends Controller
         $classes = new \stdClass;
     
         $sessions = Session::where('teacher_id', $teacher->id)
+                            ->where('absented',0)
                             ->whereDate('session_date', '>=', $request->min_date)
                             ->whereDate('session_date', '<=', $request->max_date)
                             ->get();
@@ -76,7 +77,7 @@ class TeacherController extends Controller
     public function store()
     {
     }
-    public function show(int $id, Request $request)
+    public function show( $id, Request $request)
     {
         if ($request->ajax()) {
             $teacher = Teacher::find($id);
