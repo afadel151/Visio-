@@ -41,9 +41,6 @@ class TeacherController extends Controller
         $classes->Nbcours = $sessions->where('session_type', 'cour')->count();
         $classes->Nbtds = $sessions->where('session_type', 'td')->count();
         $classes->Nbtps = $sessions->where('session_type', 'tp')->count();
-        // $classes->Nbcours = 1;
-        // $classes->Nbtds = 1;
-        // $classes->Nbtps = 1;
         return $classes;
     }
 
