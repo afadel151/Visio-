@@ -28,8 +28,11 @@ use Illuminate\Support\Facades\Route;
 */
 use App\Livewire\Counter;
  
-Route::get('/counter', Counter::class);
-
+Route::get('get-message', function (){
+    return response()->json([
+        'message' => 'Hello there, it\'s your first response.'
+    ], 200);
+});
 
 Route::get('/', function () {
     return view('landing');
@@ -93,7 +96,6 @@ Route::middleware('auth')->group(function () {
             Route::get('/{id}',[WeekController::class,'show'])->name('weeks.show');
             Route::get('/{id}/additives',[WeekController::class,'additives'])->name('weeks.additives');
             Route::post('/{id}/additives_add',[WeekController::class,'additives_add'])->name('weeks.additives_add');
-
         });
         Route::prefix('global_weeks')->group(function () {
             Route::get('/',[GlobalWeekController::class,'index'])->name('global_weeks.index');
@@ -112,6 +114,18 @@ Route::middleware('auth')->group(function () {
             Route::get('/{id}',[BattalionController::class,'show'])->name('battalions.show');
             Route::get('/{id}/companies',[CompanyController::class,'BattalionCompanies'])->name('battalions.companies');
             Route::get('/{id}/weeks',[WeekController::class,'BattalionWeeks'])->name('battalions.weeks');
+            Route::get('/{id}/store_companies',[BattalionController::class,'StoreCompanies'])->name('battalions.store_companies');
+
+        });
+        Route::prefix('companies')->group(function () {
+            Route::get('/',[CompanyController::class,'index'])->name('companies.index');
+            Route::get('/create',[CompanyController::class,'create'])->name('companies.create');
+            Route::post('/store',[CompanyController::class,'store'])->name('companies.store');
+            Route::post('/update',[CompanyController::class,'update'])->name('companies.update');
+            Route::delete('/delete',[CompanyController::class,'delete'])->name('companies.delete');
+            Route::get('/{id}',[CompanyController::class,'show'])->name('companies.show');
+            // Route::get('/{id}/sections',[SectionContr::class,'BattalionCompanies'])->name('companies.companies');
+            Route::get('/{id}/weeks',[WeekController::class,'BattalionWeeks'])->name('companies.weeks');
         });
         Route::prefix('schoolyears')->group(function () {
             Route::get('/',[SchoolYearController::class,'index'])->name('schoolyears.index');
@@ -147,3 +161,4 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index']);
 
+Route::get('teachers/classes/{id}',[TeacherController::class,'classes']);

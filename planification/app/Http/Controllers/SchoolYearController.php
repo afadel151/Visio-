@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Battalion;
 use App\Models\Config;
 use App\Models\GlobalWeek;
 use Illuminate\Http\Request;
@@ -49,9 +50,26 @@ class SchoolYearController extends Controller
     public function store(Request $request)
     {
         $schoolyear = new SchoolYear;
+        $b1 = new Battalion;
+        $b1->battalion = 1;
+
+        $b2 = new Battalion;
+        $b2->battalion = 2;
+
+        $b3 = new Battalion;
+        $b3->battalion = 3;
+
         $schoolyear->schoolyear = $request->input('schoolyear');
         $schoolyear->schoolyear_start_date = $request->input('schoolyear_start_date');
         $schoolyear->save();
+
+        $b1->schoolyear_id = $schoolyear->id;
+        $b2->schoolyear_id = $schoolyear->id;
+        $b3->schoolyear_id = $schoolyear->id;
+
+        $b1->save();
+        $b2->save();
+        $b3->save();
         return redirect()->back();
     }
 

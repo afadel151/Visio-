@@ -30,8 +30,10 @@ class SessionController extends Controller
         $session->save();
         return redirect()->back();
     }
-    public function show()
+    public function show($id)
     {
+        $session = Session::find($id);
+        return $session;
     }
     public function update(Request $request)
     {

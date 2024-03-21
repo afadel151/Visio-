@@ -47,7 +47,7 @@
         <div class="container flex justify-center items-center flex-col w-[40%] h-44 mb-20  mt-4 border-2 rounded-xl">
             <form action="{{route('weeks.additives_add',['id'=>$week->id])}}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <button class="p-2 hover:bg-slate-50 hover:text-gray-900 hover:border-2  bg-gray-700  text-slate-50 rounded-2xl w-20">Add</button>
+                <button class="p-2 btn hover:bg-slate-50 hover:text-gray-900 hover:border-2  bg-gray-700  text-slate-50 rounded-2xl w-20">Add</button>
             </form>
             
 

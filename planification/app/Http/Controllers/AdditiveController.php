@@ -34,9 +34,11 @@ class AdditiveController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Additive $additive)
+    public function show( $id)
     {
-        //
+        if (request()->ajax()) {
+            // 
+        }
     }
 
     /**

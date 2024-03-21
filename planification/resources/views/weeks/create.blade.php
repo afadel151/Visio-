@@ -1,15 +1,16 @@
 @extends('default')
 @section('content')
+
     <div class="w-[100%] z-0 ">
         
         <div class="h-[100px] flex justify-around items-center  ">
-            <a href="{{route('weeks.additives',['id'=> $week->id])}}">
+            <a href="{{ route('weeks.additives', ['id' => $week->id]) }}">
                 <button class="bg-indigo-300 rounded-xl p-4">Go to Additives</button>
             </a>
-            <a href="{{route('battalions.show',['id'=> $week->battalion->id])}}">
+            <a href="{{ route('battalions.show', ['id' => $week->battalion->id]) }}">
                 <button class="bg-indigo-300 rounded-xl p-4">Go to Battalion</button>
             </a>
-            <a href="{{route('schoolyears.show',['id'=> $week->schoolyear()->id])}}">
+            <a href="{{ route('schoolyears.show', ['id' => $week->schoolyear()->id]) }}">
                 <button class="bg-indigo-300 rounded-xl p-4">to School Year</button>
             </a>
             <div class="bg-indigo-300 rounded-xl h-20 text-center flex justify-center items-center w-[300px]"> Semester :
@@ -32,7 +33,7 @@
                             return (object) $teacher;
                         });
                         $domaine = 'ST';
-                    @endphp 
+                    @endphp
                     @include('weeks.domaine', [
                         'companies' => $companies_ST,
                         'domaine' => $domaine,
@@ -102,8 +103,10 @@
 @endsection
 
 @push('scripts')
+   
     <script>
         document.addEventListener("DOMContentLoaded", function() {
+
 
             const UpdateForms = document.querySelectorAll(".update-form");
             const UpdateButtons = document.querySelectorAll(".update-button");

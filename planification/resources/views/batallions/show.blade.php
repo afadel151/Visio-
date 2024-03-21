@@ -11,7 +11,7 @@
         </script>
     @endpush
     @section('content')
-        <div class=" h-[100vh] w-[80%]  flex flex-col justify-between mt-10 items-center p-20">
+        <div class=" w-[80%]  flex flex-col justify-between mt-10 items-center p-20">
 
             <p class="text-6xl font-bold ">Schoolyear {{ $battalion->schoolyear->schoolyear }} </p>
             <p class="text-6xl font-bold ">Battalion {{ $battalion->battalion }} </p>
@@ -29,7 +29,38 @@
                     </table>
                 </div>
             </div>
-            
+
+            <div class="card w-[50%] h-[70%] p-4 mb-20 rounded-2xl">
+                <div class="card-header bg-white text-center text-4xl z-0   ">Add Company</div>
+                <form action="{{ route('battalions.store_companies', ['id' => $battalion->id]) }}"
+                    class="flex space-y-3 justify-around h-[100%] items-center  flex-col">
+                    @csrf
+                    <div class="w-[50%]  rounded-xl flex flex-col justify-center p-2 items-center">
+                        <label for="sc" class="text-xl ">Company Sector</label>
+                        <select name="sector" id="sc" class="w-[100%] rounded-lg focus:border-2 focus:border-blue-400">
+                            <option value="ST">ST</option>
+                            <option value="MI">MI</option>
+                        </select>
+                    </div>
+                    <div class="w-[50%]  rounded-xl flex flex-col justify-center p-2 items-center">
+                        <label for="nb" class="text-xl ">Number of Sections</label>
+                        <select name="nb_sections" id="nb" class="w-[100%] rounded-lg focus:border-2 focus:border-blue-400">
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                    </div>
+                    <div class="w-[50%]  rounded-xl flex flex-col justify-center p-2 items-center">
+                        <label for="nb" class="text-xl ">Number of Sections</label>
+                        <select name="default_room_id" id="nb" class="w-[100%] rounded-lg focus:border-2 focus:border-blue-400">
+                            @foreach ($rooms as $room)
+                                <option value="{{$room->id}}"> {{$room->room}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <input type="submit" value="Submit" class="h-10 w-40 rounded-xl bg-indigo-400 hover:border-2 hover:border-slate-900 hover:bg-slate-100 hover:scale-[1.2] duration-300 hover:text-gray-950 text-gray-950">
+                </form>
+            </div>
         </div>
     @endsection
 

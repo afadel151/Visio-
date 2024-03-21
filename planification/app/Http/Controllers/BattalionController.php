@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Battalion;
+use App\Models\Company;
+use App\Models\Section;
+use App\Models\Room;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 class BattalionController extends Controller
@@ -39,6 +42,25 @@ class BattalionController extends Controller
     {
         //
     }
+    public function StoreCompanies($id,Request $request){
+        $battalion = Battalion::find($id);
+        $companiesNb = $battalion->companies->count();
+        $c = new Company;
+        $c->company = $companiesNb + 1;
+        $c->sector = $request->sector;
+        $c->battalion_id = $battalion->id;
+        $c->default_room_id = $request->default_room_id;
+        $c->save();
+
+        for ($i=0; $i < $request->nb_sections ; $i++) { 
+            $s = new Section;
+            $s->default_room_id = 1;
+            $s->company_id = $c->id;
+            $s->section = ($battalion->battalion * 100) + ($c->company *10) + $i+1;
+            $s->save();
+        }
+        return redirect()->back();
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -54,7 +76,9 @@ class BattalionController extends Controller
     public function show(int $battalion_id)
     {
         $bat = Battalion::find($battalion_id);
-        return view('batallions.show',['battalion'=>$bat]);
+        $rooms = Room::all();
+
+        return view('batallions.show',['battalion'=>$bat,'rooms'=>$rooms]);
     }
 
     /**
