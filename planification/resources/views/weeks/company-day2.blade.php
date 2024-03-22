@@ -49,7 +49,13 @@
                         <form action="{{ route('sessions.update', ['id' => $c->id]) }}"
                             class="update-form flex flex-col justify-center space-y-4 items-center  text-xl w-[300px] h-[300px] ease-in z-30 hidden absolute bg-white shadow-xl rounded-xl top-10 right-2">
                             @csrf
-
+                            @if ($sector == 'MI')
+                                <div class="sector">MI</div>
+                            @elseif ($sector == 'ST')
+                                <div class="sector">ST</div>
+                            @else
+                                <div class="sector">PR</div>
+                            @endif
                             <a
                                 class="absolute top-2 right-2 hover:cursor-pointer company-update-cancel-button bg-slate-400 h-6 w-6 rounded-full">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
@@ -164,7 +170,7 @@
                                 <form action="{{ route('sessions.update', ['id' => $s->id]) }}"
                                     onsubmit="UpdateSession(event)"
                                     class="update-form flex flex-col justify-center space-y-4 items-center  text-xl w-[300px] h-[300px] ease-in z-20 hidden absolute bg-white shadow-xl rounded-xl top-10 right-2">
-                                    @csrf
+
                                     <a
                                         class="absolute top-4 right-4 section-update-cancel-button hover:cursor-pointer  bg-slate-400 h-6 w-6 rounded-full">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"
@@ -178,7 +184,8 @@
                                         <select name="module_id" id="module" class="w-[150px] h-10 rounded-lg">
                                             {{-- DISPLAY MODULES  --}}
                                             @foreach ($modules as $module)
-                                                <option value="{{ $module->id }}">{{ $module->module }}</option>
+                                                <option value="{{ $module->id }}">{{ $module->module }}
+                                                </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -205,8 +212,8 @@
                                     <input type="submit" name="submit" id="" value="Update"
                                         class="bg-indigo-300 btn rounded-lg btn hover:scale-115 duration-300 shadow-lg h-10 w-32">
                                 </form>
-                                <form onsubmit="DeleteSession(event)" enctype="multipart/form-data"
-                                    class="delete-form">
+                                <form action="{{ route('sessions.delete', ['id' => $s->id]) }}" method="POST"
+                                    enctype="multipart/form-data" class="delete-form">
                                     @csrf
                                     <button type="submit"
                                         class="rounded-lg  btn flex justify-center items-center   w-8  hover:scale-125 duration-300 hover:bg-rose-400 hover:shadow-lg border-[2px] border-slate-500 bg-red-400 h-8">
@@ -214,8 +221,7 @@
                                     </button>
                                 </form>
                                 @if ($s->absented == 0)
-                                    <form onsubmit="MarkAbsented(event)" method="post" enctype="multipart/form-data"
-                                        class="mark-absented-form">
+                                    <form enctype="multipart/form-data" class="mark-absented-form">
                                         @csrf
                                         <button type="submit" title="Mark as absented"
                                             class="rounded-lg btn flex justify-center items-center hover:scale-125 duration-300 hover:bg-gray-100 hover:shadow-lg border-[2px] border-slate-500 w-8 p-2 bg-gray-300 h-8">
@@ -233,7 +239,7 @@
                                     <img src="/svg/pen-thin.svg" class="h-6 w-6" alt="">
                                 </button>
 
-                                <form 
+                                <form
                                     class="section-form  bg-slate-50 hidden absolute  rounded-[20px] shadow-lg text-xl w-[300px] h-[350px] flex flex-col justify-around items-center"
                                     style="top: 50px; left: 50px;z-index: 50;">
                                     @csrf
@@ -243,6 +249,13 @@
                                     <input type="hidden" name="sessionable_type" value="App\Models\Section">
                                     <input type="hidden" name="sessionable_id" value="{{ $section->id }}">
                                     <input type="hidden" name="session_type" value="td">
+                                    @if ($sector == 'MI')
+                                        <div class="sector hidden">MI</div>
+                                    @elseif ($sector == 'ST')
+                                        <div class="sector hidden">ST</div>
+                                    @else
+                                        <div class="sector hidden">PR</div>
+                                    @endif
                                     <div class=" h-[80%] w-[100%] flex  flex-col justify-around items-center">
                                         <a
                                             class="absolute top-4 right-4 section-cancel-button hover:cursor-pointer  bg-slate-400 h-6 w-6 rounded-full">

@@ -1,7 +1,10 @@
 @extends('default')
 @section('content')
     <div class="w-[100%] z-0 ">
-
+        <script>
+            const rooms = @json($rooms);
+            const timings = @json($timings);
+        </script>
         <div class="h-[100px] flex justify-around items-center  ">
             <a href="{{ route('weeks.additives', ['id' => $week->id]) }}">
                 <button class="bg-indigo-300 rounded-xl p-4">Go to Additives</button>
@@ -39,6 +42,10 @@
                     ])
                 </td>
 
+                <script>
+                    const teachers_ST = @json($teachers_ST);
+                    const modules_ST = @json($modules_ST);
+                </script>
                 <td class="sticky top-0 z-10 ">
                     @php
                         $companies_MI = $battalion->companies_MI;
@@ -49,6 +56,10 @@
                         // });
                         $domaine = 'MI';
                     @endphp
+                    <script>
+                        const teachers_MI = @json($teachers_MI);
+                        const modules_MI = @json($modules_MI);
+                    </script>
                     @include('weeks.domaine', [
                         'companies' => $companies_MI,
                         'domaine' => $domaine,
@@ -59,7 +70,7 @@
 
                 $date = $week->start_week_date;
             @endphp
-
+            
 
             @for ($i = 0; $i < 5; $i++)
                 <tr class="h-[800px] ">
@@ -103,11 +114,10 @@
 
 @push('scripts')
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-
-
+        function setupEventListeners() {
             const UpdateForms = document.querySelectorAll(".update-form");
             const UpdateButtons = document.querySelectorAll(".update-button");
+            console.log(UpdateButtons);
             const SectionButtons = document.querySelectorAll(".section-button");
             const CompanyButtons = document.querySelectorAll(".company-button");
             const sectionforms = document.querySelectorAll(".section-form");
@@ -116,15 +126,15 @@
             const sectionupdatecancels = document.querySelectorAll(".section-update-cancel-button");
             const companycancels = document.querySelectorAll(".company-cancel-button");
             const companyupdatecancels = document.querySelectorAll(".company-update-cancel-button");
-            UpdateForms.forEach(form => {
-                form.classList.add("hidden");
-            });
-            sectionforms.forEach(form => {
-                form.classList.add("hidden");
-            });
-            companyforms.forEach(form => {
-                form.classList.add("hidden");
-            });
+            // UpdateForms.forEach(form => {
+            //     form.classList.add("hidden");
+            // });
+            // sectionforms.forEach(form => {
+            //     form.classList.add("hidden");
+            // });
+            // companyforms.forEach(form => {
+            //     form.classList.add("hidden");
+            // });
             UpdateButtons.forEach((Button, index) => {
                 Button.addEventListener("click", function(event) {
                     UpdateForms.forEach(form => {
@@ -140,7 +150,7 @@
                     parents.forEach(parent => {
                         parent.classList.remove("relative");
                     });
-                    const parent = Button.parentElement;
+                    const parent = Button.parentNode;
                     parent.classList.add("relative");
                     const nextElementSibling = Button.nextElementSibling;
                     // Hide all forms
@@ -228,6 +238,7 @@
                     });
                 });
             });
+            console.log("execute");
             companyupdatecancels.forEach((cancel, index) => {
                 cancel.addEventListener("click", function(event) {
                     UpdateForms.forEach(form => {
@@ -235,7 +246,13 @@
                     });
                 });
             });
+
+        }
+        document.addEventListener("DOMContentLoaded", function() {
+            setupEventListeners(); // Initial setup
+
+            // Setup event listeners every 5 seconds
+            setInterval(setupEventListeners, 5000);
         });
     </script>
-   
 @endpush

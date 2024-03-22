@@ -11,6 +11,7 @@
                     'rooms' => $rooms,
                     'teachers' => $teachers,
                     'modules' => $modules,
+                    'sector' => $company->sector,
                 ])
             </td>
         @endforeach
