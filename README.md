@@ -23,4 +23,5 @@ To install and run the project locally, follow these steps:
 Plan the database schema according to your requirements.
 Configure the database connection in the project's configuration files.
 ## Migrate Database:
+```bash
 php artisan migrate
