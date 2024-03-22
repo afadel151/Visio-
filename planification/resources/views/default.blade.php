@@ -19,6 +19,7 @@
     @vite(['resources/css/app.css'])
 
     @vite('resources/css/sidebar.css')
+    @vite('resources/css/insertsession.css')
 
     <title>Document</title>
 </head>

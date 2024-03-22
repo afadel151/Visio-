@@ -113,11 +113,11 @@
 @endsection
 
 @push('scripts')
+    @vite('resources/js/mark-absence.js')
     <script>
         function setupEventListeners() {
             const UpdateForms = document.querySelectorAll(".update-form");
             const UpdateButtons = document.querySelectorAll(".update-button");
-            console.log(UpdateButtons);
             const SectionButtons = document.querySelectorAll(".section-button");
             const CompanyButtons = document.querySelectorAll(".company-button");
             const sectionforms = document.querySelectorAll(".section-form");
@@ -126,15 +126,6 @@
             const sectionupdatecancels = document.querySelectorAll(".section-update-cancel-button");
             const companycancels = document.querySelectorAll(".company-cancel-button");
             const companyupdatecancels = document.querySelectorAll(".company-update-cancel-button");
-            // UpdateForms.forEach(form => {
-            //     form.classList.add("hidden");
-            // });
-            // sectionforms.forEach(form => {
-            //     form.classList.add("hidden");
-            // });
-            // companyforms.forEach(form => {
-            //     form.classList.add("hidden");
-            // });
             UpdateButtons.forEach((Button, index) => {
                 Button.addEventListener("click", function(event) {
                     UpdateForms.forEach(form => {
@@ -249,9 +240,7 @@
 
         }
         document.addEventListener("DOMContentLoaded", function() {
-            setupEventListeners(); // Initial setup
-
-            // Setup event listeners every 5 seconds
+            setupEventListeners(); 
             setInterval(setupEventListeners, 5000);
         });
     </script>

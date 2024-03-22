@@ -23,7 +23,7 @@
                         ->where('sessionable_id', $company->id)
                         ->first();
                 @endphp
-                <td colspan="3" class="box-border  p-[2px]" style="width:100%;">
+                <td colspan="3" class="box-border session  p-[2px]" style="width:100%;">
                     @if ($c->absented == 1)
                         <div
                             class="flex  hover:border-2 hover:border-slate-800 duration-300 flex-col shadow-lg justify-center ml-[5%]   pt-4  h-[90%] w-[90%] p-4 items-center rounded-xl bg-red-50 ">
@@ -136,7 +136,7 @@
                     $td = false;
                 @endphp
                 @foreach ($sections as $section)
-                    <td class=" text-center section-td  hover:z-20 ease-out w-[150px]  h-[160px]  ">
+                    <td class=" text-center section-td session hover:z-20 ease-out w-[150px]  h-[160px]  ">
                         @if ($sessions->where('sessionable_type', 'App\\Models\\Section')->where('session_date', $date)->where('timing_id', $timing->id)->where('sessionable_id', $section->id)->isNotEmpty())
                             @php
                                 $td = true;
@@ -154,8 +154,6 @@
                                     <div
                                         class="h-[150px] shadow-lg      hover:border-2 hover:border-slate-800 flex flex-col border-2 bg-indigo-300 rounded-xl justify-center items-center">
                             @endif
-                            {{ $s->section }}
-
                             <a href="{{ route('teachers.show', $s->teacher->id) }}">
                                 <p class="hover:shadow-lg  hover:bg-slate-50  bg-slate-100 px-2 rounded-xl font-bold">
                                     {{ $s->teacher->teacher_name }} </p>
@@ -212,23 +210,21 @@
                                     <input type="submit" name="submit" id="" value="Update"
                                         class="bg-indigo-300 btn rounded-lg btn hover:scale-115 duration-300 shadow-lg h-10 w-32">
                                 </form>
-                                <form action="{{ route('sessions.delete', ['id' => $s->id]) }}" method="POST"
-                                    enctype="multipart/form-data" class="delete-form">
-                                    @csrf
-                                    <button type="submit"
-                                        class="rounded-lg  btn flex justify-center items-center   w-8  hover:scale-125 duration-300 hover:bg-rose-400 hover:shadow-lg border-[2px] border-slate-500 bg-red-400 h-8">
-                                        <img src="/svg/trash.svg" class="h-6 w-6" alt="">
-                                    </button>
-                                </form>
-                                @if ($s->absented == 0)
-                                    <form enctype="multipart/form-data" class="mark-absented-form">
-                                        @csrf
-                                        <button type="submit" title="Mark as absented"
-                                            class="rounded-lg btn flex justify-center items-center hover:scale-125 duration-300 hover:bg-gray-100 hover:shadow-lg border-[2px] border-slate-500 w-8 p-2 bg-gray-300 h-8">
-                                            <img src="/svg/absence.svg" class="h-4 w-4" alt="">
-                                        </button>
 
-                                    </form>
+                                <button type="button"
+                                    class="rounded-lg delete-td  btn flex justify-center items-center   w-8  hover:scale-125 duration-300 hover:bg-rose-400 hover:shadow-lg border-[2px] border-slate-500 bg-red-400 h-8">
+                                    <div class="hidden section-id"> {{ $s->id }} </div>
+                                    <div class="hidden sector">{{ $sector }}</div>
+                                    <img src="/svg/trash.svg" class="h-6 w-6" alt="">
+                                </button>
+
+                                @if ($s->absented == 0)
+                                    <button type="button" title="Mark as absented"
+                                        class="rounded-lg mark-td-absence btn flex justify-center items-center hover:scale-125 duration-300 hover:bg-gray-100 hover:shadow-lg border-[2px] border-slate-500 w-8 p-2 bg-gray-300 h-8">
+                                        <div class="hidden section-id">{{ $s->id }}</div>
+                                        <div class="hidden sector">{{ $sector }}</div>
+                                        <img src="/svg/absence.svg" class="h-4 w-4" alt="">
+                                    </button>
                                 @endif
                             </div>
                             </div>
@@ -306,9 +302,6 @@
                                                 </select>
                                             </div>
                                         </div>
-
-
-
                                     </div>
                                     <input type="submit" value="submit"
                                         class="h-10 btn submit-td  w-20 rounded-lg bg-slate-300 hover:bg-slate-50 hover:border-2 hover:border-slate-800">
@@ -323,17 +316,22 @@
                         <button
                             class="absolute company-button z-0  top-4 right-4 cancel-button hover:cursor-pointer bg-slate-500 h-6 w-6 rounded-full"></button>
                     @endif
-                    <form onsubmit="StoreTd(event)" enctype="multipart/form-data"
-                        class="hidden rounded-[20px] shadow-lg text-xl w-[300px] h-[300px] bg-white company-form absolute"
-                        style="top: 10px; left: 10px;z-index: 50;" method="post">
-                        @csrf
+                    <form 
+                        class="hidden rounded-[20px] shadow-lg flex flex-col justify-start items-center text-xl w-[300px] h-[300px] bg-white company-form absolute"
+                        style="top: 10px; left: 10px;z-index: 50;" method="POST">
                         <input type="hidden" name="date" value="{{ $date }}">
                         <input type="hidden" name="timing_id" value="{{ $timing->id }}">
                         <input type="hidden" name="week_id" value="{{ $week_id }}">
                         <input type="hidden" name="sessionable_type" value="App\Models\Company">
                         <input type="hidden" name="sessionable_id" value="{{ $company->id }}">
                         <input type="hidden" name="session_type" value="cour">
-
+                        @if ($sector == 'MI')
+                            <div class="sector hidden">MI</div>
+                        @elseif ($sector == 'ST')
+                            <div class="sector hidden">ST</div>
+                        @else
+                            <div class="sector hidden">PR</div>
+                        @endif
                         <div class=" h-[100%] w-[100%] flex  flex-col justify-around items-center">
                             <a
                                 class="absolute top-4 right-4 company-cancel-button hover:cursor-pointer  bg-slate-400 h-6 w-6 rounded-full">
@@ -375,10 +373,11 @@
                                     </select>
                                 </div>
                             </div>
-                            <div>
-                                <input type="submit" value="submit" class="h-10  btn w-20 rounded-lg bg-slate-300">
-                            </div>
+
+
                         </div>
+                        <input type="submit" value="submit"
+                            class="h-10 submit-cour  btn w-20 rounded-lg bg-slate-300">
                     </form>
                 </td>
             @endif
