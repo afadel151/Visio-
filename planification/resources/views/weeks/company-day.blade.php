@@ -28,7 +28,7 @@
                         @else
                             <div class="flex  hover:border-2 hover:border-slate-800 duration-300  flex-col shadow-lg justify-center ml-[5%]   pt-4  h-[90%] w-[90%] p-4 items-center rounded-xl bg-indigo-100 ">
                     @endif
-
+                    
                     <a href="{{ route('teachers.show',$c->teacher->id) }}"><p class="btn text-xl hover:bg-slate-50 hover:shadow-lg  bg-slate-100 px-2 rounded-xl font-bold">{{ $c->teacher->teacher_name }} </p></a>
                     
                     <p class=" font-normal">{{ $c->module->module }}</p>

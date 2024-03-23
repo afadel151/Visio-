@@ -69,6 +69,6 @@ class SessionController extends Controller
         $absence->absenceable_id = $id;
         $absence->reason = 'Absent';
         $absence->save();
-        return redirect()->back();
+        // return redirect()->back();
     }
 }

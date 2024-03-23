@@ -1,4 +1,7 @@
 @extends('default')
+@push('header')
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+@endpush
 @section('content')
     @php
         $weeks = $global_week->weeks;
@@ -9,20 +12,24 @@
             if ($week->battalion->battalion == 2) {
                 $week_2 = $week;
             }
-            if ($week->battalion->battalion == 3) { 
+            if ($week->battalion->battalion == 3) {
                 $week_3 = $week;
             }
         }
     @endphp
-    <div class=" pl-10 w-[100%] h-screen overflow-scroll" >
+    <div class=" pl-10 w-[100%] h-screen overflow-scroll">
         <div class=" w-[100%] flex justify-center items-center h-20">
             <p class="text-3xl font-bold">{{ date('Y-m-d') }}</p>
-          
+
+            @foreach ($absences as $absence)
+                <p>{{ $absence }}</p>
+                <!-- Output other attributes of the GlobalWeek model as needed -->
+            @endforeach
         </div>
-        <div class="grid grid-cols-9 grid-rows-7 gap-6 h-screen w-[100%] mb-10  " style="width: calc(100% - 92px)">
+        <div class="grid grid-cols-9 grid-rows-8 gap-6 h-screen w-[100%] mb-10  " style="width: calc(100% - 92px)">
             <div
-                class="col-span-3  hover:shadow-2xl hover:border-slate-500 px-6 rounded-2xl shadow-2xl bg-slate-100 flex justify-between items-center col-start-1 row-start-2">
-                <div class="text-2xl font-bold w-[50%]">2em AP: <span class="text-red-500">{{ $week_2->week_type }}</span>
+                class="col-span-3 border-4 border-slate-400  hover:shadow-2xl hover:border-slate-500 px-6 rounded-2xl shadow-2xl bg-slate-100 flex justify-between items-center col-start-1 row-start-2">
+                <div class="text-2xl  font-bold w-[50%]">2em AP: <span class="text-red-500">{{ $week_2->week_type }}</span>
                 </div>
                 <div class="flex w-[40%] justify-between items-center">
                     <div class="text-2xl font-bold text-blue-600"> S{{ $week_2->semester }}</div>
@@ -44,14 +51,15 @@
                 </div>
             </div>
             <div
-                class="col-span-5  hover:shadow-2xl hover:border-slate-500 rounded-2xl shadow-xl bg-slate-100 flex justify-center items-center row-span-4 col-start-1 row-start-4">
-                Graph des absences</div>
-            <div
-                class="col-span-3   hover:shadow-2xl hover:border-slate-500 rounded-2xl shadow-xl  bg-slate-100 flex justify-center items-center row-span-3 col-start-7 row-start-1">
-                notes   
+                class="col-span-5 border-slate-400 border-4   hover:shadow-2xl hover:border-slate-500 rounded-2xl shadow-xl bg-slate-100 flex justify-center items-center row-span-5 col-start-1 row-start-4">
+                <canvas id="barChart"></canvas>
             </div>
             <div
-                class="col-span-3 p-2  hover:shadow-2xl  hover:border-slate-500 rounded-2xl shadow-xl  bg-slate-100  row-span-3 col-start-4 row-start-1">
+                class="col-span-3  border-slate-400 border-4   hover:shadow-2xl hover:border-slate-500 rounded-2xl shadow-xl  bg-slate-100 flex justify-center items-center row-span-3 col-start-7 row-start-1">
+                notes
+            </div>
+            <div
+                class="col-span-3 p-2 border-slate-400 border-4   hover:shadow-2xl  hover:border-slate-500 rounded-2xl shadow-xl  bg-slate-100  row-span-3 col-start-4 row-start-1">
                 <div class="flex flex-col justify-start   items-center">
                     <p class="text-3xl mt-10 mb-5 font-bold  ">Next Week</p>
                     <div class="flex flex-col justify-center items-center  space-y-3   w-[100%]">
@@ -82,7 +90,7 @@
                 </div>
             </div>
             <div
-                class="col-span-3  hover:shadow-2xl hover:border-slate-500 px-6 rounded-2xl shadow-2xl bg-slate-100 flex justify-between items-center col-start-1 row-start-1">
+                class="col-span-3 border-slate-400 border-4   hover:shadow-2xl hover:border-slate-500 px-6 rounded-2xl shadow-2xl bg-slate-100 flex justify-between items-center col-start-1 row-start-1">
                 <div class="text-2xl font-bold w-[80%]">3em AP : <span class="text-red-500">{{ $week_3->week_type }}</span>
                 </div>
                 <div class="flex w-[30%]  justify-between items-center">
@@ -105,7 +113,7 @@
                 </div>
             </div>
             <div
-                class="col-span-3  hover:shadow-2xl hover:border-slate-500 px-6 rounded-2xl shadow-2xl bg-slate-100 flex justify-between items-center col-start-1 row-start-3">
+                class="col-span-3 border-slate-400 border-4   hover:shadow-2xl hover:border-slate-500 px-6 rounded-2xl shadow-2xl bg-slate-100 flex justify-between items-center col-start-1 row-start-3">
                 <div class="text-2xl font-bold w-[50%]">1er AP : <span class="text-red-500">{{ $week_1->week_type }}</span>
                 </div>
                 <div class="flex w-[50%] justify-between items-center">
@@ -128,14 +136,70 @@
                 </div>
             </div>
             <div
-                class="col-span-2  hover:shadow-2xl hover:border-slate-500 rounded-2xl shadow-2xl bg-slate-100 flex justify-center items-center row-span-2 col-start-6 row-start-4">
-                25</div>
+                class="col-span-2 border-slate-400 border-4   hover:shadow-2xl hover:border-slate-500 rounded-2xl shadow-2xl bg-slate-100 flex justify-center items-center row-span-3 col-start-6 row-start-4">
+                35</div>
             <div
-                class="col-span-2  hover:shadow-2xl hover:border-slate-500 rounded-2xl shadow-2xl bg-slate-100 flex justify-center items-center row-span-2 col-start-8 row-start-4">
+                class="col-span-2 border-slate-400 border-4   hover:shadow-2xl hover:border-slate-500 rounded-2xl shadow-2xl bg-slate-100 flex justify-center items-center row-span-3 col-start-8 row-start-4">
                 26</div>
             <div
-                class="col-span-4  hover:shadow-2xl hover:border-slate-500 rounded-2xl shadow-2xl bg-slate-100 flex justify-center items-center row-span-2 col-start-6 row-start-6">
+                class="col-span-4 border-slate-400 border-4   hover:shadow-2xl hover:border-slate-500 rounded-2xl shadow-2xl bg-slate-100 flex justify-center items-center row-span-2 col-start-6 row-start-7">
                 Events</div>
         </div>
     </div>
 @endsection
+@push('scripts')
+    <script>
+        var ctx = document.getElementById('barChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: @json($data['labels']),
+                datasets: [{
+                    label: 'Absences',
+                    data: @json($data['data']),
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 5
+                }]
+            },
+            options: {
+                layout: {
+                    padding: 20
+                },
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    },
+                    x: {
+
+                        ticks: {
+                            autoSkip: false,
+                            maxRotation: 45,
+                            minRotation: 45,
+                            font: {
+                                size: 10,
+                                family: 'Poppins',
+                                weight: 'bold',
+                            },
+                        }
+
+
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Absences of this year',
+                        font: {
+                            size: 30,
+                            family: 'Poppins'
+                        },
+                        color: 'indigo',
+                    }
+                }
+            }
+        });
+    </script>
+@endpush
