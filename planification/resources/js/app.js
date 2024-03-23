@@ -16,63 +16,76 @@ const instance = axios.create({
         Accept: "application/json",
     },
 });
+let eventListenerActive = true;
+function stopEventListener() {
+    eventListenerActive = false;
+}
+function startEventListener() {
+    eventListenerActive = true;
+}
 function setupCreateCour() {
     const AllSubmitsOfCours = document.querySelectorAll(".submit-cour");
     AllSubmitsOfCours.forEach((AddCour) => {
-        AddCour.addEventListener("click", function (event) {
-            event.preventDefault();
-            const td = AddCour.parentNode.parentNode;
-            const tr = td.parentNode;
-            const form = td.querySelector("form");
-            const formData = new FormData(form);
-            const sectorDiv = form.querySelector(".sector");
-            const SectorText = sectorDiv.innerText.trim();
-            if (SectorText == "MI") {
-                var teachers = teachers_MI;
-                var modules = modules_MI;
-            } else if (SectorText == "ST") {
-                var teachers = teachers_ST;
-                var modules = modules_ST;
-            } else {
-                var teachers = teahcers_PR;
-                var modules = modules_PR;
-            }
-            const data = {
-                session_date: formData.get("date"),
-                timing_id: formData.get("timing_id"),
-                week_id: formData.get("week_id"),
-                sessionable_type: formData.get("sessionable_type"),
-                sessionable_id: formData.get("sessionable_id"),
-                session_type: formData.get("session_type"),
-                module_id: formData.get("module_id"),
-                teacher_id: formData.get("teacher_id"),
-                room_id: formData.get("room_id"),
-            };
-            axios
-                .post("/sessions/create", data)
-                .then(function (response) {
-                    const session = response.data;
-                    const roomOptions = rooms
-                        .map(
-                            (room) =>
-                                `<option value="${room.id}">${room.room}</option>`
-                        )
-                        .join("");
-                    const teacherOptions = teachers
-                        .map(
-                            (teacher) =>
-                                `<option value="${teacher.id}">${teacher.teacher_name}</option>`
-                        )
-                        .join("");
-                    const moduleOptions = modules
-                        .map(
-                            (module) =>
-                                `<option value="${module.id}">${module.module}</option>`
-                        )
-                        .join("");
+        AddCour.removeEventListener("click", clickHandler);
+        AddCour.addEventListener("click", clickHandler);
+    });
+}
+function clickHandler(event) {
+    event.preventDefault();
+    const AddCour = event.currentTarget;
+    const td = AddCour.parentNode.parentNode;
+    const tr = td.parentNode;
+    const form = td.querySelector("form");
+    const formData = new FormData(form);
+    const sectorDiv = form.querySelector(".sector");
+    const SectorText = sectorDiv.innerText.trim();
+    if (SectorText == "MI") {
+        var teachers = teachers_MI;
+        var modules = modules_MI;
+    } else if (SectorText == "ST") {
+        var teachers = teachers_ST;
+        var modules = modules_ST;
+    } else {
+        var teachers = teahcers_PR;
+        var modules = modules_PR;
+    }
+    const data = {
+        session_date: formData.get("date"),
+        timing_id: formData.get("timing_id"),
+        week_id: formData.get("week_id"),
+        sessionable_type: formData.get("sessionable_type"),
+        sessionable_id: formData.get("sessionable_id"),
+        session_type: formData.get("session_type"),
+        module_id: formData.get("module_id"),
+        teacher_id: formData.get("teacher_id"),
+        room_id: formData.get("room_id"),
+    };
 
-                    tr.innerHTML =
-                        `
+    axios
+        .post("/sessions/create", data)
+        .then(function (response) {
+            const session = response.data;
+            console.log("sent");
+            const roomOptions = rooms
+                .map(
+                    (room) => `<option value="${room.id}">${room.room}</option>`
+                )
+                .join("");
+            const teacherOptions = teachers
+                .map(
+                    (teacher) =>
+                        `<option value="${teacher.id}">${teacher.teacher_name}</option>`
+                )
+                .join("");
+            const moduleOptions = modules
+                .map(
+                    (module) =>
+                        `<option value="${module.id}">${module.module}</option>`
+                )
+                .join("");
+
+            tr.innerHTML =
+                `
             <td colspan="3" class="box-border enter  p-[2px]" style="width:100%;">
                 <div class="flex  hover:border-2 hover:border-slate-800 duration-300  flex-col shadow-lg justify-center ml-[5%]   pt-4  h-[90%] w-[90%] p-4 items-center rounded-xl bg-indigo-100 ">
                     <a href="/teachers/${session.teacher_id}">
@@ -100,24 +113,24 @@ function setupCreateCour() {
                                 <label for="module" class="w-[100px]">Module</label>
                                 <select name="module_id" id="module" class="w-[150px] h-10 rounded-lg">
                                     ` +
-                        moduleOptions +
-                        `
+                moduleOptions +
+                `
                                 </select>
                             </div>
                             <div class="flex justify-center items-center w-[100%]">
                                 <label for="room" class="w-[100px]">Teacher</label>
                                 <select name="teacher_id" id="room" class="w-[150px] h-10 rounded-lg">
                                 ` +
-                        teacherOptions +
-                        `
+                teacherOptions +
+                `
                                 </select>
                             </div>
                             <div class="flex justify-center items-center w-[100%]">
                                 <label for="room" class="w-[100px]">Room</label>
                                 <select name="room_id" id="room" class="w-[150px] h-10 rounded-lg">
                                 ` +
-                        roomOptions +
-                        `
+                roomOptions +
+                `
                                 </select>
                             </div>
                             <input type="submit" name="submit" id="" value="Update"
@@ -139,79 +152,85 @@ function setupCreateCour() {
                             
                 </div>
             </td>`;
-               
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
+            var td = tr.querySelector("td div");
+            td.classList.remove("leave");
+            td.classList.add("enter");
+        })
+        .catch(function (error) {
+            console.log(error);
         });
-    });
 }
 document.addEventListener("DOMContentLoaded", function () {
     setupCreateCour();
     setInterval(setupCreateCour, 10000);
 });
 function setupCreateTp() {}
+
 function setupCreateTd() {
     const AllSubmitsOfTds = document.querySelectorAll(".submit-td");
-
-    AllSubmitsOfTds.forEach((submit) => {
-        submit.addEventListener("click", function (event) {
-            event.preventDefault();
-            const grandparent = submit.parentNode.parentNode;
-            const tr = grandparent.parentNode.parentNode;
-            console.log(tr);
-            const form = grandparent.querySelector("form");
-            const formData = new FormData(form);
-            const sectorDiv = form.querySelector(".sector");
-            const sectorText = sectorDiv.innerText.trim();
-            if (sectorText == "MI") {
-                var teachers = teachers_MI;
-                var modules = modules_MI;
-            } else if (sectorText == "ST") {
-                var teachers = teachers_ST;
-                var modules = modules_ST;
-            } else {
-                var teachers = teahcers_PR;
-                var modules = modules_PR;
-            }
-            const data = {
-                session_date: formData.get("date"),
-                timing_id: formData.get("timing_id"),
-                week_id: formData.get("week_id"),
-                sessionable_type: formData.get("sessionable_type"),
-                sessionable_id: formData.get("sessionable_id"),
-                session_type: formData.get("session_type"),
-                module_id: formData.get("module_id"),
-                teacher_id: formData.get("teacher_id"),
-                room_id: formData.get("room_id"),
-            };
-
-            axios
-                .post("/sessions/create", data)
-                .then(function (response) {
-                    const session = response.data;
-                    const td = grandparent.parentNode;
-                    const roomOptions = rooms
-                        .map(
-                            (room) =>
-                                `<option value="${room.id}">${room.room}</option>`
-                        )
-                        .join("");
-                    const teacherOptions = teachers
-                        .map(
-                            (teacher) =>
-                                `<option value="${teacher.id}">${teacher.teacher_name}</option>`
-                        )
-                        .join("");
-                    const moduleOptions = modules
-                        .map(
-                            (module) =>
-                                `<option value="${module.id}">${module.module}</option>`
-                        )
-                        .join("");
-                    td.innerHTML =
-                        `<div class="h-[150px] shadow-lg hover:border-2 hover:border-slate-800 flex flex-col border-2 bg-indigo-300 rounded-xl justify-center items-center">
+    AllSubmitsOfTds.forEach((Addtd) => {
+        Addtd.removeEventListener("click", ClickH);
+        Addtd.addEventListener("click", ClickH);
+    });
+}
+function ClickH(event) {
+    event.preventDefault();
+    const submit = event.currentTarget;
+    const grandparent = submit.parentNode.parentNode;
+    const tr = grandparent.parentNode.parentNode;
+    console.log(tr);
+    const form = grandparent.querySelector("form");
+    const formData = new FormData(form);
+    const sectorDiv = form.querySelector(".sector");
+    const sectorText = sectorDiv.innerText.trim();
+    if (sectorText == "MI") {
+        var teachers = teachers_MI;
+        var modules = modules_MI;
+    } else if (sectorText == "ST") {
+        var teachers = teachers_ST;
+        var modules = modules_ST;
+    } else {
+        var teachers = teahcers_PR;
+        var modules = modules_PR;
+    }
+    const data = {
+        session_date: formData.get("date"),
+        timing_id: formData.get("timing_id"),
+        week_id: formData.get("week_id"),
+        sessionable_type: formData.get("sessionable_type"),
+        sessionable_id: formData.get("sessionable_id"),
+        session_type: formData.get("session_type"),
+        module_id: formData.get("module_id"),
+        teacher_id: formData.get("teacher_id"),
+        room_id: formData.get("room_id"),
+    };
+    let isCalled = false;
+    if (isCalled == false) {
+        axios
+            .post("/sessions/create", data)
+            .then(function (response) {
+                const session = response.data;
+                const td = grandparent.parentNode;
+                const roomOptions = rooms
+                    .map(
+                        (room) =>
+                            `<option value="${room.id}">${room.room}</option>`
+                    )
+                    .join("");
+                const teacherOptions = teachers
+                    .map(
+                        (teacher) =>
+                            `<option value="${teacher.id}">${teacher.teacher_name}</option>`
+                    )
+                    .join("");
+                const moduleOptions = modules
+                    .map(
+                        (module) =>
+                            `<option value="${module.id}">${module.module}</option>`
+                    )
+                    .join("");
+                td.innerHTML =
+                    `<div class="h-[150px] shadow-lg hover:border-2 hover:border-slate-800 flex flex-col border-2 bg-indigo-300 rounded-xl justify-center items-center">
                             <a href="/teachers/${session.teacher_id}">
                                 <p class="hover:shadow-lg  hover:bg-slate-50  bg-slate-100 px-2 rounded-xl font-bold">
                                 ${session.teacher.teacher_name}</p>  
@@ -240,8 +259,8 @@ function setupCreateTd() {
                                         <select name="module_id" id="module" class="w-[150px] h-10 rounded-lg">
                                             
                                             ` +
-                        moduleOptions +
-                        `
+                    moduleOptions +
+                    `
                                         </select>
                                     </div>
                                     <div class="flex justify-center items-center w-[100%]">
@@ -249,16 +268,16 @@ function setupCreateTd() {
                                         <select name="teacher_id" id="room" class="w-[150px] h-10 rounded-lg">
                                            
                                             ` +
-                        teacherOptions +
-                        `
+                    teacherOptions +
+                    `
                                         </select>
                                     </div>
                                     <div class="flex justify-center items-center w-[100%]">
                                         <label for="room" class="w-[100px]">Room</label>
                                         <select name="room_id" id="room" class="w-[150px] h-10 rounded-lg">
                                             ` +
-                        roomOptions +
-                        `
+                    roomOptions +
+                    `
                                         </select>
                                     </div>
                                     <input type="submit" name="submit" id="" value="Update"
@@ -277,18 +296,18 @@ function setupCreateTd() {
                                 </button>
                             </div>
                     </div>`;
-                    td.classList.remove('leave');
-                    td.classList.add('enter');
-                    const CourButton = tr.querySelector("td .company-button");
-                    if (CourButton) {
-                        CourButton.classList.add("hidden");
-                    }
-                })
-                .catch(function (error) {
-                    console.log(error);
-                });
-        });
-    });
+                td.classList.remove("leave");
+                td.classList.add("enter");
+                const CourButton = tr.querySelector("td .company-button");
+                if (CourButton) {
+                    CourButton.classList.add("hidden");
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        isCalled = true;
+    }
 }
 
 document.addEventListener("DOMContentLoaded", function () {

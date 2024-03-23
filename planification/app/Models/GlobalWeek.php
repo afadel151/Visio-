@@ -28,8 +28,28 @@ class GlobalWeek extends Model
     {
         return $this->hasMany(Week::class, 'global_week_id');
     }
+
+    public function sessions()
+    {
+        return $this->hasManyThrough(Session::class, Week::class);
+    }
     public function schoolyear()
     {
-        return $this->belongsTo(SchoolYear::class,'schoolyear_id');
+        return $this->belongsTo(SchoolYear::class, 'schoolyear_id');
+    }
+    // public function absences()
+    // {
+    //     return Absence::join('sessions_table', 'absences.absenceable_id', '=', 'sessions_table.id')
+    //         ->join('weeks', 'sessions_table.week_id', '=', 'weeks.id')
+    //         ->join('global_weeks', 'weeks.global_week_id', '=', 'global_weeks.id')
+    //         ->where('global_weeks.id', $this->id)
+    //         ->get();
+    // }
+    public function absences()
+    {
+        return Absence::join('sessions_table', 'absences.absenceable_id', '=', 'sessions_table.id')
+            ->join('weeks', 'sessions_table.week_id', '=', 'weeks.id')
+            ->where('weeks.global_week_id', $this->id)
+            ->get();
     }
 }

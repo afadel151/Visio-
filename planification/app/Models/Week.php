@@ -23,16 +23,20 @@ class Week extends Model
     }
     public function global_week()
     {
-        return $this->belongsTo(GlobalWeek::class);
+        return $this->belongsTo(GlobalWeek::class, 'global_week_id');
     }
     public function battalion()
     {
         return $this->belongsTo(Battalion::class);
     }
-
+    public function absences()
+    {
+        return $this->hasManyThrough(Absence::class,Session::class,'week_id','absenceable_id');
+    }
     public function additives()
     {
         return $this->hasMany(Additive::class);
     }
+   
     //belongsto type
 }

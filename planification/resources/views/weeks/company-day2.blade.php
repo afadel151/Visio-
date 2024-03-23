@@ -235,7 +235,7 @@
                                     <img src="/svg/pen-thin.svg" class="h-6 w-6" alt="">
                                 </button>
 
-                                <form
+                                <form @submit.prevent="submit"
                                     class="section-form  bg-slate-50 hidden absolute  rounded-[20px] shadow-lg text-xl w-[300px] h-[350px] flex flex-col justify-around items-center"
                                     style="top: 50px; left: 50px;z-index: 50;">
                                     @csrf
@@ -316,7 +316,7 @@
                         <button
                             class="absolute company-button z-0  top-4 right-4 cancel-button hover:cursor-pointer bg-slate-500 h-6 w-6 rounded-full"></button>
                     @endif
-                    <form 
+                    <form @submit.prevent="submit"
                         class="hidden rounded-[20px] shadow-lg flex flex-col justify-start items-center text-xl w-[300px] h-[300px] bg-white company-form absolute"
                         style="top: 10px; left: 10px;z-index: 50;" method="POST">
                         <input type="hidden" name="date" value="{{ $date }}">
