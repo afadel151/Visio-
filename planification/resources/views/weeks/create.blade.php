@@ -68,7 +68,7 @@
             </tr>
             @php
 
-                $date = $week->start_week_date;
+                $date = $week->global_week->start_week_date;
             @endphp
             
 
