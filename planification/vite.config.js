@@ -8,6 +8,7 @@ export default defineConfig({
                 'resources/css/app.css',
                 'resources/js/app.js',
                 'resource/js/mark-absence.js',
+                'resource/js/dashboard.js',
                 'resources/css/insertsession.css'
             ],
             refresh: true,

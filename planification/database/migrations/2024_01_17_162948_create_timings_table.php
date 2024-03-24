@@ -13,9 +13,7 @@ return new class extends Migration
     {
         Schema::create('timings', function (Blueprint $table) {
             $table->id();
-            //session number
             $table->time('session_start');
-            //heur de fin
             $table->time('session_finish');
         });
     }

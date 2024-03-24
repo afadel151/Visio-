@@ -55,3 +55,5 @@ Route::prefix('schoolyears')->group(function () {
 Route::get('/sessions/{id}',[SessionController::class,'show']);
 Route::get('teachers/classes/{id}',[TeacherController::class,'classes']);
 Route::post('sessions/create',[SessionController::class,'create'])->name('sessions.create');
+
+// Route::get('rooms/available',[RoomController::class,'available']);

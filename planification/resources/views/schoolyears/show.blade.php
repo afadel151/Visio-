@@ -85,7 +85,6 @@
                         <div class="flex flex-col justify-around items-stretch space-y-4">
                             <p class="text-2xl font-bold text-center">1st Battalion</p>
                             <div class="flex justify-between space-x-2 items-center">
-
                                 <label for="1">type</label>
                                 <select name="type_1" id="1" class="h-10 rounded-lg focus:border-indigo-400 w-30">
                                     <option value="Cours magistreau">Cours magistreau</option>
@@ -104,11 +103,7 @@
                                     <option value="2">S2</option>
                                 </select>
                             </div>
-                            <div class="flex justify-between space-x-2 items-center">
-                                <label for="n1">Week number</label>
-                                <input type="text" name="number_1" id="n1"
-                                    class="w-24 rounded-lg focus:border-indigo-400 h-8">
-                            </div>
+                           
                             <div class="flex justify-between space-x-2 items-center">
                                 <label for="cc1">Control Continue</label>
                                 <input type="checkbox" name="cc_1" value="true"
@@ -143,11 +138,7 @@
                                     <option value="2">S2</option>
                                 </select>
                             </div>
-                            <div class="flex justify-between space-x-2 items-center">
-                                <label for="n2">Week number</label>
-                                <input type="text" name="number_2" id="n2"
-                                    class="w-24 rounded-lg focus:border-indigo-400 h-8" pattern="{1,2}">
-                            </div>
+                            
                             <div class="flex justify-between space-x-2 items-center">
                                 <label for="cc2">Control Continue </label>
                                 <input type="checkbox" name="cc_2" class="rounded-lg focus:border-indigo-400"
@@ -181,11 +172,7 @@
                                     <option value="2">S2</option>
                                 </select>
                             </div>
-                            <div class="flex justify-between space-x-2 items-center">
-                                <label for="n3">Week number</label>
-                                <input type="text" class="w-24 rounded-lg focus:border-indigo-400 h-8" name="number_3"
-                                    id="n3">
-                            </div>
+                            
                             <div class="flex justify-between space-x-2 items-center">
                                 <label for="cc3">Control Continue</label>
                                 <input type="checkbox" name="cc_3" value="true"
@@ -316,19 +303,19 @@
                                     element = element +
                                         '<div class=" bg-yellow-400 h-6 w-6 rounded-full"></div>';
                                 }
-                                return element +
-                                    ' <button class="bg-green-400 p-1 rounded-lg"><a class="text-none" href="' +
+                                return element + '<div class="flex space-x-4"><p class="text-red font-bold">'+ jsonData.semester +
+                                         '</p><button class="bg-green-400 p-1 rounded-lg"><a class="text-none" href="' +
                                     ur +
-                                    '">View</a></button></div>';
+                                    '">View</a></button></div></div>';
                                     
                             } else {
                                 return jsonData ?
 
                                     '<div class="flex justify-between text-xl items-center p-2 rounded-lg">' +
-                                    jsonData.week_type +
-                                    ' <button class="bg-green-400 p-1 rounded-lg"><a class="text-none" href="' +
+                                    jsonData.week_type  + '<div class="flex space-x-4 "><p class="text-red font-bold">'+ jsonData.semester +
+                                         '</p><button class="bg-green-400 p-1 rounded-lg"><a class="text-none" href="' +
                                     ur +
-                                    '">View</a></button></div>' :
+                                    '">View</a></button></div></div>' :
                                     'Empty';
                             }
 

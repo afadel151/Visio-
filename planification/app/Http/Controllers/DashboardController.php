@@ -21,38 +21,40 @@ class DashboardController extends Controller
         $global_week = GlobalWeek::find(1);
         $schoolyear_id = SchoolYear::find(1)->id;
         if ($global_week) {
-
             $nextgw = GlobalWeek::where('start_week_date', '<=', date('Y-m-d', strtotime('+7 days', strtotime($today))))->where('end_week_date', '>=', date('Y-m-d', strtotime('+7 days', strtotime($today))))->first();
-            if ($nextgw) {
-                return view('dashboarding', ['global_week' => $global_week, 'schoolyear_id' => $schoolyear_id, 'next_week' => $nextgw]);
-            } else {
+
                 $nextgw = "last week of the year";
                 $weeks = GlobalWeek::where('schoolyear_id', 1)->get();
-                $GWS = GlobalWeek::where('schoolyear_id', 1)->pluck('start_week_date')->toArray();
-                $GWE = GlobalWeek::where('schoolyear_id', 1)->pluck('end_week_date')->toArray();
+                $GWS = $weeks->pluck('start_week_date')->toArray();
+                $GWE = $weeks->pluck('end_week_date')->toArray();
                 $globalweeks = [];
                 $length = count($GWE);
-                 
-                for ($i=0; $i < $length ; $i++) { 
+
+                for ($i = 0; $i < $length; $i++) {
                     $date = $GWS[$i] . '->' . $GWE[$i];
-                    array_push($globalweeks,$date);
+                    array_push($globalweeks, $date);
                 }
                 $absences = [];
                 foreach ($weeks as $week) {
-                    $nb = $week->absences()->count();
+                    $nb = $week->absences()->count() ;
                     array_push($absences, $nb);
                 }
                 $data = [
                     'labels' => $globalweeks,
                     'data' => $absences,
                 ];
-                return view('dashboarding', ['global_week' => $global_week,
-                 'schoolyear_id' => $schoolyear_id,
-                  'next_week' => $nextgw,
-                   'data' => $data,
-                    'globalweeks'=>$globalweeks,
-                    'absences'=> $absences]);
-            }
+                return view(
+                    'dashboarding',
+                    [
+                        'global_week' => $global_week,
+                        'schoolyear_id' => $schoolyear_id,
+                        'next_week' => $nextgw,
+                        'data' => $data,
+                        'globalweeks' => $globalweeks,
+                        'absences' => $absences,
+                    ]
+                );
+            
         } else {
             return "the globall week doesn't have weeks ";
         }

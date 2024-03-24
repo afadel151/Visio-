@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Additional extends Model
 {
     use HasFactory;
+    protected $table = 'additionals';
     public function absence()
     {
         return $this->morphOne(Absence::class,'absenceable');
