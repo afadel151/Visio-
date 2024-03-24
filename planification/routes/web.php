@@ -26,7 +26,6 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-use App\Livewire\Counter;
  
 Route::get('get-message', function (){
     return response()->json([
@@ -80,11 +79,12 @@ Route::middleware('auth')->group(function () {
         });
         Route::prefix('rooms')->group(function () {
             Route::get('/',[RoomController::class,'index'])->name('rooms.index');
-            Route::get('/create',[RoomController::class,'index'])->name('rooms.create');
+            Route::get('/create',[RoomController::class,'create'])->name('rooms.create');
             Route::post('/store',[RoomController::class,'store'])->name('rooms.store');
             Route::post('/update',[RoomController::class,'update'])->name('rooms.update');
             Route::delete('/delete',[RoomController::class,'delete'])->name('rooms.delete');
-            Route::get('/{id}',[RoomController::class,'show'])->name('rooms.show');
+            // Route::get('/{id}',[RoomController::class,'show'])->name('rooms.show');
+            Route::get('/available',[RoomController::class,'available'])->name('rooms.available');
         });
         Route::prefix('weeks')->group(function () {
             Route::get('/',[WeekController::class,'index'])->name('weeks.index');
@@ -162,3 +162,4 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index']);
 
 Route::get('teachers/classes/{id}',[TeacherController::class,'classes']);
 Route::post('sessions/create',[SessionController::class,'create'])->name('sessions.create');
+// Route::post('/rooms/available', [RoomController::class, 'available']);

@@ -1,6 +1,6 @@
 @extends('default')
 @push('header')
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> --}}
 @endpush
 @section('content')
     @php
@@ -18,14 +18,7 @@
         }
     @endphp
     <div class=" pl-10 w-[100%] h-screen overflow-scroll">
-        <div class=" w-[100%] flex justify-center items-center h-20">
-            <p class="text-3xl font-bold">{{ date('Y-m-d') }}</p>
-
-            @foreach ($absences as $absence)
-                <p>{{ $absence }}</p>
-                <!-- Output other attributes of the GlobalWeek model as needed -->
-            @endforeach
-        </div>
+        
         <div class="grid grid-cols-9 grid-rows-8 gap-6 h-screen w-[100%] mb-10  " style="width: calc(100% - 92px)">
             <div
                 class="col-span-3 border-4 border-slate-400  hover:shadow-2xl hover:border-slate-500 px-6 rounded-2xl shadow-2xl bg-slate-100 flex justify-between items-center col-start-1 row-start-2">
@@ -148,6 +141,8 @@
     </div>
 @endsection
 @push('scripts')
+    
+    <script src="chart.js\dist\chart.umd.js"></script>
     <script>
         var ctx = document.getElementById('barChart').getContext('2d');
         var myChart = new Chart(ctx, {
@@ -179,7 +174,7 @@
                             maxRotation: 45,
                             minRotation: 45,
                             font: {
-                                size: 10,
+                                size: 12,
                                 family: 'Poppins',
                                 weight: 'bold',
                             },
@@ -201,5 +196,6 @@
                 }
             }
         });
+
     </script>
 @endpush

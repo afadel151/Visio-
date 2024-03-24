@@ -42,7 +42,7 @@
                     <p class= " font-bold">{{ $c->room->room }}</p>
                     <div class="flex updateformparent relative justify-center self-end  items-center space-x-2">
                         <button
-                            class="h-10 flex justify-center items-center  hover:scale-125 duration-300 border-[2px] shadow-md update-button rounded-lg border-slate-500   font-bold w-10 hover:bg-white bg-slate-100"
+                            class="h-10 flex form-display-button justify-center items-center  hover:scale-125 duration-300 border-[2px] shadow-md update-button rounded-lg border-slate-500   font-bold w-10 hover:bg-white bg-slate-100"
                             title="Update this session">
                             <img src="/svg/pen-thin.svg" class="h-6 w-6" alt="">
                         </button>
@@ -63,34 +63,34 @@
                                         d="M208.49,191.51a12,12,0,0,1-17,17L128,145,64.49,208.49a12,12,0,0,1-17-17L111,128,47.51,64.49a12,12,0,0,1,17-17L128,111l63.51-63.52a12,12,0,0,1,17,17L145,128Z" />
                                 </svg>
                             </a>
-                            <div class="flex justify-center items-center w-[100%]">
-                                <label for="module" class="w-[100px]">Module</label>
-                                <select name="module_id" id="module" class="w-[150px] h-10 rounded-lg">
-                                    {{-- DISPLAY MODULES  --}}
-                                    @foreach ($modules as $module)
-                                        <option value="{{ $module->id }}">{{ $module->module }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="flex justify-center items-center w-[100%]">
-                                <label for="room" class="w-[100px]">Teacher</label>
-                                <select name="teacher_id" id="room" class="w-[150px] h-10 rounded-lg">
-                                    {{-- DISPLAY TEACHERS ACCORDING TO THE MOODULE --}}
-                                    @foreach ($teachers as $teacher)
-                                        <option value="{{ $teacher->id }}">
-                                            {{ $teacher->teacher_name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="flex justify-center items-center w-[100%]">
-                                <label for="room" class="w-[100px]">Room</label>
-                                <select name="room_id" id="room" class="w-[150px] h-10 rounded-lg">
-                                    {{-- DISPLAY ROOMS THAT ARE AVAILABLE --}}
-                                    @foreach ($rooms as $room)
-                                        <option value="{{ $room->id }}">{{ $room->room }}</option>
-                                    @endforeach
-                                </select>
+                            <div class="form-section">
+                                <div class="selects">
+                                    <div class="flex justify-center items-center w-[100%]">
+                                        <label for="module" class="w-[100px]">Module</label>
+                                        <select name="module_id" id="module" class="w-[150px] h-10 rounded-lg">
+                                            {{-- DISPLAY MODULES  --}}
+                                            @foreach ($modules as $module)
+                                                <option value="{{ $module->id }}">{{ $module->module }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="flex justify-center items-center w-[100%]">
+                                        <label for="room" class="w-[100px]">Teacher</label>
+                                        <select name="teacher_id" id="room" class="w-[150px] h-10 rounded-lg">
+                                            {{-- DISPLAY TEACHERS ACCORDING TO THE MOODULE --}}
+                                            @foreach ($teachers as $teacher)
+                                                <option value="{{ $teacher->id }}">
+                                                    {{ $teacher->teacher_name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="flex available-rooms justify-center items-center w-[100%]">
+                                        <div class="session_date hidden"> {{ $date }}</div>
+                                        <div class="timing_id hidden">{{ $timing->id}}</div> 
+                                        <img src="/svg/3-dots-fade.svg" alt="">             
+                                    </div>    
+                                </div>
                             </div>
                             <input type="submit" name="submit" id="" value="Update"
                                 class="bg-indigo-300 btn hover:shadow-lg rounded-lg shadow-lg h-10 w-28">
@@ -104,24 +104,17 @@
                             </button>
 
                         </form>
-                        @if ($c->absented == 1)
-                            <button type="button" title="Delete  this session"
-                                class="rounded-lg hidden btn hover:shadow-lg w-10 p-2 bg-violet-400 h-10">
-                                <img src="/svg/trash.svg" alt="">
+                        <button type="button" title="Delete  this session"
+                            class="rounded-lg hidden btn hover:shadow-lg w-10 p-2 bg-violet-400 h-10">
+                            <img src="/svg/trash.svg" alt="">
+                        </button>
+                        @if ($c->absented == 0)
+                            <button type="submit" title="Mark as absented"
+                                class="rounded-lg btn mark-cour-absence flex justify-center items-center  hover:scale-125 duration-300 hover:bg-gray-50 hover:shadow-lg border-[2px] border-slate-500  w-10  bg-gray-100 h-10">
+                                <div class="company-id hidden">{{ $c->id }}</div>
+                                <img src="/svg/absence.svg" class="h-6 w-6" alt="">
                             </button>
-                        @else
-                            <form action="{{ route('sessions.mark_absence', ['id' => $c->id]) }}" method="post"
-                                enctype="multipart/form-data">
-                                @csrf
-                                <button type="submit" title="Mark as absented"
-                                    class="rounded-lg btn flex justify-center items-center  hover:scale-125 duration-300 hover:bg-gray-50 hover:shadow-lg border-[2px] border-slate-500  w-10  bg-gray-100 h-10">
-                                    <img src="/svg/absence.svg" class="h-6 w-6" alt="">
-                                </button>
-
-                            </form>
                         @endif
-
-
                     </div>
                     </div>
 
@@ -162,7 +155,7 @@
                             <p class= "text-xl font-bold">{{ $s->room->room }}</p>
                             <div class="flex updateformparent relative justify-center items-center mt-4 space-x-2">
                                 <button
-                                    class="h-8 btn flex justify-center items-center  hover:scale-125 duration-300  shadow-md update-button rounded-xl hover:bg-slate-50 hover:shadow-lg border-[2px] border-slate-500 p-1 font-bold w-8 bg-slate-200">
+                                    class="h-8 btn flex form-display-button justify-center items-center  hover:scale-125 duration-300  shadow-md update-button rounded-xl hover:bg-slate-50 hover:shadow-lg border-[2px] border-slate-500 p-1 font-bold w-8 bg-slate-200">
                                     <img src="/svg/pen-thin.svg" class="h-6 w-6">
                                 </button>
                                 <form action="{{ route('sessions.update', ['id' => $s->id]) }}"
@@ -177,35 +170,35 @@
                                                 d="M208.49,191.51a12,12,0,0,1-17,17L128,145,64.49,208.49a12,12,0,0,1-17-17L111,128,47.51,64.49a12,12,0,0,1,17-17L128,111l63.51-63.52a12,12,0,0,1,17,17L145,128Z" />
                                         </svg>
                                     </a>
-                                    <div class="flex justify-center items-center w-[100%]">
-                                        <label for="module" class="w-[100px]">Module</label>
-                                        <select name="module_id" id="module" class="w-[150px] h-10 rounded-lg">
-                                            {{-- DISPLAY MODULES  --}}
-                                            @foreach ($modules as $module)
-                                                <option value="{{ $module->id }}">{{ $module->module }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="flex justify-center items-center w-[100%]">
-                                        <label for="room" class="w-[100px]">Teacher</label>
-                                        <select name="teacher_id" id="room" class="w-[150px] h-10 rounded-lg">
-                                            {{-- DISPLAY TEACHERS ACCORDING TO THE MOODULE --}}
-                                            @foreach ($teachers as $teacher)
-                                                <option value="{{ $teacher->id }}">
-                                                    {{ $teacher->teacher_name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="flex justify-center items-center w-[100%]">
-                                        <label for="room" class="w-[100px]">Room</label>
-                                        <select name="room_id" id="room" class="w-[150px] h-10 rounded-lg">
-                                            {{-- DISPLAY ROOMS THAT ARE AVAILABLE --}}
-                                            @foreach ($rooms as $room)
-                                                <option value="{{ $room->id }}">{{ $room->room }}</option>
-                                            @endforeach
-                                        </select>
+                                    <div class="form-section">
+                                        <div class="selects">
+                                            <div class="flex justify-center items-center w-[100%]">
+                                                <label for="module" class="w-[100px]">Module</label>
+                                                <select name="module_id" id="module" class="w-[150px] h-10 rounded-lg">
+                                                    {{-- DISPLAY MODULES  --}}
+                                                    @foreach ($modules as $module)
+                                                        <option value="{{ $module->id }}">{{ $module->module }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="flex justify-center items-center w-[100%]">
+                                                <label for="room" class="w-[100px]">Teacher</label>
+                                                <select name="teacher_id" id="room" class="w-[150px] h-10 rounded-lg">
+                                                    {{-- DISPLAY TEACHERS ACCORDING TO THE MOODULE --}}
+                                                    @foreach ($teachers as $teacher)
+                                                        <option value="{{ $teacher->id }}">
+                                                            {{ $teacher->teacher_name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="flex available-rooms justify-center items-center w-[100%]">
+                                                <div class="session_date hidden"> {{ $date }}</div>
+                                                <div class="timing_id hidden"> {{ $timing->id}}</div>
+                                                <img src="/svg/3-dots-fade.svg" alt=""> 
+                                            </div>
+                                        </div>
                                     </div>
                                     <input type="submit" name="submit" id="" value="Update"
                                         class="bg-indigo-300 btn rounded-lg btn hover:scale-115 duration-300 shadow-lg h-10 w-32">
@@ -231,7 +224,7 @@
                         @else
                             <div class="relative sectionparentofform h-[100%] flex justify-center items-center">
                                 <button
-                                    class="flex shadow-md hover:scale-125 duration-300  btn section-button items-center justify-center  w-10 h-10 rounded-full bg-slate-300 hover:bg-yellow-50 z-0">
+                                    class="flex form-display-button shadow-md hover:scale-125 duration-300  btn section-button items-center justify-center  w-10 h-10 rounded-full bg-slate-300 hover:bg-yellow-50 z-0">
                                     <img src="/svg/pen-thin.svg" class="h-6 w-6" alt="">
                                 </button>
 
@@ -252,7 +245,7 @@
                                     @else
                                         <div class="sector hidden">PR</div>
                                     @endif
-                                    <div class=" h-[80%] w-[100%] flex  flex-col justify-around items-center">
+                                    <div class=" form-section h-[80%] w-[100%] flex  flex-col justify-around items-center">
                                         <a
                                             class="absolute top-4 right-4 section-cancel-button hover:cursor-pointer  bg-slate-400 h-6 w-6 rounded-full">
                                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"
@@ -266,7 +259,7 @@
                                             <h2> {{ $date }}</h2>
                                             <h2> {{ $timing->session_start }} -> {{ $timing->session_finish }}</h2>
                                         </div>
-                                        <div class="mb-4">
+                                        <div class="mb-4 selects">
                                             <div class="flex justify-center items-center w-[100%]">
                                                 <label for="module" class="w-[100px]">Module</label>
                                                 <select name="module_id" id="module"
@@ -290,16 +283,10 @@
                                                     @endforeach
                                                 </select>
                                             </div>
-                                            <div class="flex justify-center items-center w-[100%]">
-                                                <label for="room" class="w-[100px]">Room</label>
-                                                <select name="room_id" id="room"
-                                                    class="w-[100px] h-6 rounded-lg">
-                                                    {{-- DISPLAY ROOMS THAT ARE AVAILABLE --}}
-                                                    @foreach ($rooms as $room)
-                                                        <option value="{{ $room->id }}">{{ $room->room }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
+                                            <div class="flex available-rooms justify-center items-center w-[100%]">
+                                                <div class="session_date hidden"> {{ $date }}</div>
+                                                <div class="timing_id hidden"> {{ $timing->id}}</div> 
+                                                <img src="/svg/3-dots-fade.svg" alt="">              
                                             </div>
                                         </div>
                                     </div>
@@ -314,71 +301,67 @@
                 <td class="parentofform absolute w-0 h-0  right-2 top-1 z-20">
                     @if ($td == false)
                         <button
-                            class="absolute company-button z-0  top-4 right-4 cancel-button hover:cursor-pointer bg-slate-500 h-6 w-6 rounded-full"></button>
+                            class="absolute form-display-button company-button z-0  top-4 right-4 cancel-button hover:cursor-pointer bg-slate-500 h-6 w-6 rounded-full">
+                        </button>
                     @endif
-                    <form @submit.prevent="submit"
-                        class="hidden rounded-[20px] shadow-lg flex flex-col justify-start items-center text-xl w-[300px] h-[300px] bg-white company-form absolute"
-                        style="top: 10px; left: 10px;z-index: 50;" method="POST">
-                        <input type="hidden" name="date" value="{{ $date }}">
-                        <input type="hidden" name="timing_id" value="{{ $timing->id }}">
-                        <input type="hidden" name="week_id" value="{{ $week_id }}">
-                        <input type="hidden" name="sessionable_type" value="App\Models\Company">
-                        <input type="hidden" name="sessionable_id" value="{{ $company->id }}">
-                        <input type="hidden" name="session_type" value="cour">
-                        @if ($sector == 'MI')
-                            <div class="sector hidden">MI</div>
-                        @elseif ($sector == 'ST')
-                            <div class="sector hidden">ST</div>
-                        @else
-                            <div class="sector hidden">PR</div>
-                        @endif
-                        <div class=" h-[100%] w-[100%] flex  flex-col justify-around items-center">
-                            <a
-                                class="absolute top-4 right-4 company-cancel-button hover:cursor-pointer  bg-slate-400 h-6 w-6 rounded-full">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
-                                    <path
-                                        d="M208.49,191.51a12,12,0,0,1-17,17L128,145,64.49,208.49a12,12,0,0,1-17-17L111,128,47.51,64.49a12,12,0,0,1,17-17L128,111l63.51-63.52a12,12,0,0,1,17,17L145,128Z" />
-                                </svg>
-                            </a>
-                            <div>
-                                <h2 class="">Company : {{ $company->company }} </h2>
-                                <h2> {{ $date }}</h2>
-                                <h2> {{ $timing->session_start }} -> {{ $timing->session_finish }}</h2>
-                            </div>
-                            <div class="mb-4">
-                                <div class="flex justify-center items-center w-[100%]">
-                                    <label for="room" class="w-[100px]">Module</label>
-                                    <select name="module_id" id="room" class="w-[100px] h-6 rounded-lg">
-                                        @foreach ($modules as $module)
-                                            <option value="{{ $module->id }}">{{ $module->module }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="flex justify-center items-center w-[100%]">
-                                    <label for="room" class="w-[100px]">Teacher</label>
-                                    <select name="teacher_id" id="room" class="w-[100px] h-6 rounded-lg">
-                                        @foreach ($teachers as $teacher)
-                                            <option value="{{ $teacher->id }}">
-                                                {{ $teacher->teacher_name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="flex justify-center items-center w-[100%]">
-                                    <label for="room" class="w-[100px]">Room</label>
-                                    <select name="room_id" id="room" class="w-[100px] h-6 rounded-lg">
-                                        @foreach ($rooms as $room)
-                                            <option value="{{ $room->id }}">{{ $room->room }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-
-
-                        </div>
-                        <input type="submit" value="submit"
-                            class="h-10 submit-cour  btn w-20 rounded-lg bg-slate-300">
-                    </form>
+                                <form @submit.prevent="submit"
+                                    class="hidden rounded-[20px] shadow-lg flex flex-col justify-start items-center text-xl w-[300px] h-[300px] bg-white company-form absolute"
+                                    style="top: 10px; left: 10px;z-index: 50;" method="POST">
+                                    <input type="hidden" name="date" value="{{ $date }}">
+                                    <input type="hidden" name="timing_id" value="{{ $timing->id }}">
+                                    <input type="hidden" name="week_id" value="{{ $week_id }}">
+                                    <input type="hidden" name="sessionable_type" value="App\Models\Company">
+                                    <input type="hidden" name="sessionable_id" value="{{ $company->id }}">
+                                    <input type="hidden" name="session_type" value="cour">
+                                    @if ($sector == 'MI')
+                                        <div class="sector hidden">MI</div>
+                                    @elseif ($sector == 'ST')
+                                        <div class="sector hidden">ST</div>
+                                    @else
+                                        <div class="sector hidden">PR</div>
+                                    @endif
+                                    <div class="form-section h-[100%] w-[100%] flex  flex-col justify-around items-center">
+                                        <a
+                                            class="absolute top-4 right-4 company-cancel-button hover:cursor-pointer  bg-slate-400 h-6 w-6 rounded-full">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                                                <path
+                                                    d="M208.49,191.51a12,12,0,0,1-17,17L128,145,64.49,208.49a12,12,0,0,1-17-17L111,128,47.51,64.49a12,12,0,0,1,17-17L128,111l63.51-63.52a12,12,0,0,1,17,17L145,128Z" />
+                                            </svg>
+                                        </a>
+                                        <div>
+                                            <h2 class="">Company : {{ $company->company }} </h2>
+                                            <h2> {{ $date }}</h2>
+                                            <h2> {{ $timing->session_start }} -> {{ $timing->session_finish }}</h2>
+                                        </div>
+                                        <div class="selects mb-4">
+                                            <div class="flex justify-center items-center w-[100%]">
+                                                <label for="room" class="w-[100px]">Module</label>
+                                                <select name="module_id" id="room" class="w-[100px] h-6 rounded-lg">
+                                                    @foreach ($modules as $module)
+                                                        <option value="{{ $module->id }}">{{ $module->module }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="flex justify-center items-center w-[100%]">
+                                                <label for="room" class="w-[100px]">Teacher</label>
+                                                <select name="teacher_id" id="room" class="w-[100px] h-6 rounded-lg">
+                                                    @foreach ($teachers as $teacher)
+                                                        <option value="{{ $teacher->id }}">
+                                                            {{ $teacher->teacher_name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="flex justify-center available-rooms items-center w-[100%]">
+                                                <div class="session_date hidden">{{ $date }}</div>
+                                                <div class="timing_id hidden">{{ $timing->id}}</div>
+                                                <img src="/svg/3-dots-fade.svg" class="w-20 h-10" alt="">  
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input type="submit" value="submit"
+                                        class="h-10 submit-cour  btn w-20 rounded-lg bg-slate-300">
+                                </form>
                 </td>
             @endif
         </tr>
