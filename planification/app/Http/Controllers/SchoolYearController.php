@@ -19,8 +19,6 @@ class SchoolYearController extends Controller
      */
     public function index(Request $request)
     {
-
-
         if ($request->ajax()) {
             $schoolyears = SchoolYear::all();
 
@@ -84,7 +82,6 @@ class SchoolYearController extends Controller
             $schoolyear = SchoolYear::where('id',$id)->first();
             $global_weeks = $schoolyear->global_weeks;
             return Datatables::of($global_weeks)
-             
                 ->addColumn('battalion_1', function ($global_week) {
                     $week = new Week();
                     $week = $global_week->weeks->first(function ($week) {
