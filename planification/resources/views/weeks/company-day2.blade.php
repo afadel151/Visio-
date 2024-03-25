@@ -247,8 +247,8 @@
                                     @endif
                                     <div class=" form-section h-[80%] w-[100%] flex  flex-col justify-around items-center">
                                         <a
-                                            class="absolute top-4 right-4 section-cancel-button hover:cursor-pointer  bg-slate-400 h-6 w-6 rounded-full">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256"
+                                            class="absolute top-4 right-4 section-cancel-button hover:cursor-pointer hover:scale-125 duration-200  h-6 w-6 rounded-full">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="hover:shadow-lg" viewBox="0 0 256 256"
                                                 fill="currentColor">
                                                 <path
                                                     d="M208.49,191.51a12,12,0,0,1-17,17L128,145,64.49,208.49a12,12,0,0,1-17-17L111,128,47.51,64.49a12,12,0,0,1,17-17L128,111l63.51-63.52a12,12,0,0,1,17,17L145,128Z" />
@@ -259,11 +259,11 @@
                                             <h2> {{ $date }}</h2>
                                             <h2> {{ $timing->session_start }} -> {{ $timing->session_finish }}</h2>
                                         </div>
-                                        <div class="mb-4 selects">
+                                        <div class="mb-4 selects space-y-2">
                                             <div class="flex justify-center items-center w-[100%]">
                                                 <label for="module" class="w-[100px]">Module</label>
                                                 <select name="module_id" id="module"
-                                                    class="w-[100px] h-6 rounded-lg">
+                                                    class="w-[150px] h-10 rounded-lg">
                                                     {{-- DISPLAY MODULES  --}}
                                                     @foreach ($modules as $module)
                                                         <option value="{{ $module->id }}">{{ $module->module }}
@@ -274,7 +274,7 @@
                                             <div class="flex justify-center items-center w-[100%]">
                                                 <label for="room" class="w-[100px]">Teacher</label>
                                                 <select name="teacher_id" id="room"
-                                                    class="w-[100px] h-6 rounded-lg">
+                                                    class="w-[150px] h-10 rounded-lg">
                                                     {{-- DISPLAY TEACHERS ACCORDING TO THE MOODULE --}}
                                                     @foreach ($teachers as $teacher)
                                                         <option value="{{ $teacher->id }}">
@@ -291,7 +291,7 @@
                                         </div>
                                     </div>
                                     <input type="submit" value="submit"
-                                        class="h-10 btn submit-td  w-20 rounded-lg bg-slate-300 hover:bg-slate-50 hover:border-2 hover:border-slate-800">
+                                        class="h-10 btn submit-td  w-20 rounded-lg  bg-slate-300 hover:bg-slate-50 hover:text-slate-800 hover:scale-110 duration-200 hover:border-slate-300 hover:cursor-pointer hover:border-2">
                                 </form>
 
                             </div>
@@ -305,7 +305,7 @@
                         </button>
                     @endif
                                 <form @submit.prevent="submit"
-                                    class="hidden rounded-[20px] shadow-lg flex flex-col justify-start items-center text-xl w-[300px] h-[300px] bg-white company-form absolute"
+                                    class="hidden rounded-[20px] shadow-lg flex flex-col space-y-3 pb-4 justify-start items-center text-xl w-[300px] h-[300px] bg-white company-form absolute"
                                     style="top: 10px; left: 10px;z-index: 50;" method="POST">
                                     <input type="hidden" name="date" value="{{ $date }}">
                                     <input type="hidden" name="timing_id" value="{{ $timing->id }}">
@@ -322,8 +322,8 @@
                                     @endif
                                     <div class="form-section h-[100%] w-[100%] flex  flex-col justify-around items-center">
                                         <a
-                                            class="absolute top-4 right-4 company-cancel-button hover:cursor-pointer  bg-slate-400 h-6 w-6 rounded-full">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor">
+                                            class="absolute top-4 right-4 company-cancel-button font-bold hover:cursor-pointer   hover:scale-125 duration-200 h-6 w-6 rounded-full">
+                                            <svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 256 256" class="hover:shadow-xl" fill="currentColor">
                                                 <path
                                                     d="M208.49,191.51a12,12,0,0,1-17,17L128,145,64.49,208.49a12,12,0,0,1-17-17L111,128,47.51,64.49a12,12,0,0,1,17-17L128,111l63.51-63.52a12,12,0,0,1,17,17L145,128Z" />
                                             </svg>
@@ -333,10 +333,10 @@
                                             <h2> {{ $date }}</h2>
                                             <h2> {{ $timing->session_start }} -> {{ $timing->session_finish }}</h2>
                                         </div>
-                                        <div class="selects mb-4">
+                                        <div class="selects mb-4 space-y-2">
                                             <div class="flex justify-center items-center w-[100%]">
                                                 <label for="room" class="w-[100px]">Module</label>
-                                                <select name="module_id" id="room" class="w-[100px] h-6 rounded-lg">
+                                                <select name="module_id" id="room" class="w-[150px] h-10 rounded-lg">
                                                     @foreach ($modules as $module)
                                                         <option value="{{ $module->id }}">{{ $module->module }}</option>
                                                     @endforeach
@@ -344,7 +344,7 @@
                                             </div>
                                             <div class="flex justify-center items-center w-[100%]">
                                                 <label for="room" class="w-[100px]">Teacher</label>
-                                                <select name="teacher_id" id="room" class="w-[100px] h-6 rounded-lg">
+                                                <select name="teacher_id" id="room" class="w-[150px] h-10 rounded-lg">
                                                     @foreach ($teachers as $teacher)
                                                         <option value="{{ $teacher->id }}">
                                                             {{ $teacher->teacher_name }}
@@ -360,7 +360,7 @@
                                         </div>
                                     </div>
                                     <input type="submit" value="submit"
-                                        class="h-10 submit-cour  btn w-20 rounded-lg bg-slate-300">
+                                        class="h-10 submit-cour  btn w-20 rounded-lg bg-slate-300 hover:bg-slate-50 hover:text-slate-800 hover:scale-110 duration-200 hover:border-slate-300 hover:cursor-pointer hover:border-2">
                                 </form>
                 </td>
             @endif

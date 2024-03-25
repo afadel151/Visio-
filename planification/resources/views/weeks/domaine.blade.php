@@ -1,4 +1,4 @@
-<table class="w-[100%]">
+<table class="w-[100%] " style="z-index:60">
     <tr>
         @if ($domaine == 'ST')
             <td class="text-center  bg-slate-200" colspan="{{ $companies->where('sector','ST')->count() }}">Domaine Scientifique</td>

@@ -48,6 +48,19 @@ class SessionController extends Controller
         $session = Session::find($id);
         return $session;
     }
+    //    ,
+    public function get_to_rectify(Request $request)
+    {
+        \Log::info('Request Parameters - session_date: ' . $request->query('session_date') . ', timing_id: ' .$request->query('timing_id') );
+        $sessions = Session::where('session_date',$request->query('session_date'))
+                    ->where('timing_id',$request->query('timing_id'))
+                    ->where('week_id',$request->query('week_id'))
+                    ->with('teacher','module','room','sessionable')
+                    ->get();
+        // \Log::info('Request Parameters - sessions :' .$sessions);
+        
+        return $sessions;
+    }
     public function update(Request $request)
     {
 
