@@ -1,6 +1,7 @@
 @extends('default')
 
 @section('content')
+    <div class="hidden" id="additive_id">{{ $additive->id}}</div>
     <div class="h-[100%] w-[100%] flex flex-col justify-start p-6 items-center">
         <div class="headers  font-bold flex flex-col justify-center space-y-2 items-center">
             <h1 class="text-4xl">Battalion : <span class="text-red-600"> {{ $battalion->battalion }}</span></h1>
@@ -11,7 +12,7 @@
             <h1 class="text-2xl">Semester : <span class="text-red-600"> {{ $week->semester }}</span></h1>
             <h1 class="text-4xl">Additive Number : <span class="text-red-600">{{ $additive->additive_number }}</span></h1>
         </div>
-
+        {{-- RECTIFICATIONS --}}
         <div
             class="relative overflow-x-auto mt-20 sm:rounded-lg w-[80%] pb-10 px-4 flex flex-col space-y-4 justify-center items-center">
             <p class="font-bold text-5xl">Rectifications</p>
@@ -29,7 +30,7 @@
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="rectifications-tbody">
                     @foreach ($additive->rectifications as $rect)
                         @php
                             // $session = $rect->session->with('timing','teacher','module','room','class');
@@ -56,14 +57,16 @@
                 </tbody>
             </table>
         </div>
-        <div class="h-[400px] w-[50%] bg-slate-50 rounded-xl flex flex-col justify-center items-center">
+        <p class="text-5xl text-center mb-4">Add Rectification</p>
+        <div id="parent-of-rectify" class="p-4 border-[3px] w-[50%] bg-slate-50 rounded-xl flex flex-col justify-center items-center">
+            
             <div class="flex flex-col justify-center items-center space-y-4" id="get-date-time">
                 <form action="" id="select-rectified-session-form">
                     <input type="hidden" id="week_id" name="week_id" value="{{ $week->id }}">
                     <div class="flex space-x-3 ">
                         <div class="flex flex-col justify-center items-center">
                             <p class="text-2xl">Select Date</p>
-                            <input type="date" name="session_date"
+                            <input type="date" name="session_date" id="rectify-date"
                                 class="w-[300px] focus:border-blue-400 focus:border-2 rounded-xl hover:scale-110 duration-150">
                         </div>
                         <div class="flex flex-col justify-center items-center">
@@ -78,13 +81,15 @@
                         </div>
                     </div>
                 </form>
-                <button id="rectification-select-session"
+                <button id="rectification-search-session"
                     class="bg-indigo-500 rounded-xl w-40 h-12 text-slate-50 text-xl hover:bg-slate-200 hover:text-gray-900 hover:border-2 hover:border-slate-900 hover:scale-110 duration-300">Search</button>
             </div>
-            <div id="select-session"
-                class="w-[300px] focus:border-blue-400 focus:border-2 rounded-xl hover:scale-110 duration-150">
+            <div id="insert-rectification"
+                class="w-[400px]  focus:border-blue-400 flex  flex-col justify-center items-center space-y-4 focus:border-2 rounded-xl ">
             </div>
         </div>
+        {{-- END OF RECTIFICATIONS --}}
+        {{-- CATCHUP ABSENCES --}}
     </div>
 @endsection
 @push('scripts')

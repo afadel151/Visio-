@@ -21,6 +21,19 @@ class Session extends Model
         'sessionable_type',
         'sessionable_id',
     ];
+
+    public function rectification()
+    {
+        return $this->hasOne(Rectification::class);
+    }
+    public function rectificationRoom()
+    {
+        return $this->rectification()->belongsTo(Room::class, 'room_id');
+    }
+    public function rectificationTime()
+    {
+        return $this->rectification()->belongsTo(Timing::class, 'timing_id');
+    }
     public function class()
     {
         if ($this->sessionable_type == 'App\\Models\\Company') {
