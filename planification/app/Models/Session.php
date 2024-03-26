@@ -21,11 +21,37 @@ class Session extends Model
         'sessionable_type',
         'sessionable_id',
     ];
+
+    public function rectification()
+    {
+        return $this->hasOne(Rectification::class);
+    }
+    public function rectificationRoom()
+    {
+        return $this->rectification()->belongsTo(Room::class, 'room_id');
+    }
+    public function rectificationTime()
+    {
+        return $this->rectification()->belongsTo(Timing::class, 'timing_id');
+    }
+    public function class()
+    {
+        if ($this->sessionable_type == 'App\\Models\\Company') {
+            $c = Company::find($this->sessionable_id);
+            return 'Company ' . $c->battalion->battalion . $c->company;
+        } elseif ($this->sessionable_type == 'App\\Models\\Section') {
+            $s = Section::find($this->sessionable_id);
+            return 'Section ' . $s->section;
+        }
+    }
     public function module()
     {
         return $this->belongsTo(Module::class);
     }
-
+    public function TpTeachers()
+    {
+        return $this->belongsToMany(Teacher::class,'tp_teachers');
+    }
     public function sessionable()
     {
         return $this->morphTo();

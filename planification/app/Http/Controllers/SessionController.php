@@ -3,14 +3,27 @@
 namespace App\Http\Controllers;
 
 use App\Models\Absence;
+use App\Models\Rectification;
 use App\Models\Session;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 class SessionController extends Controller
 {
-
-    public function index()
+    public function get_session_class(Request $request){
+        $session = Session::find($request->input('session_id'));
+        return $session->class();
+    }
+    public function store_rectification(Request $request)
     {
+        $session = Session::find($request->input('session_id'));
+        $rectification = new Rectification;
+        $rectification->session_id = $session->id;
+        $rectification->room_id = $request->input('room_id');
+        $rectification->timing_id  = $request->input('timing_id');
+        $rectification->additive_id = $request->input('additive_id');
+        $rectification->save();
+        $session->rectified = true;
+        $session->save();
     }
     public function create(Request $request)
     {
@@ -47,6 +60,19 @@ class SessionController extends Controller
     {
         $session = Session::find($id);
         return $session;
+    }
+    //    ,
+    public function get_to_rectify(Request $request)
+    {
+        \Log::info('Request Parameters - session_date: ' . $request->query('session_date') . ', timing_id: ' .$request->query('timing_id') );
+        $sessions = Session::where('session_date',$request->query('session_date'))
+                    ->where('timing_id',$request->query('timing_id'))
+                    ->where('week_id',$request->query('week_id'))
+                    ->with('teacher','module','room','sessionable')
+                    ->get();
+        // \Log::info('Request Parameters - sessions :' .$sessions);
+        
+        return $sessions;
     }
     public function update(Request $request)
     {

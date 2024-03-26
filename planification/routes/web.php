@@ -14,6 +14,7 @@ use App\Http\Controllers\SessionController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\WeekController;
 use App\Http\Controllers\GlobalWeekController;
+use App\Models\Timing;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -61,13 +62,16 @@ Route::middleware('auth')->group(function () {
             Route::get('/absences/{id}',[TeacherController::class,'absences'])->name('teachers.absences');
         });
         Route::prefix('sessions')->group(function () {
+            Route::get('/store_rectification',[SessionController::class,'store_rectification'])->name('sessions.store_rectification');
+            Route::get('/get_to_rectify',[SessionController::class,'get_to_rectify'])->name('sessions.get_to_rectify');
+            
             Route::get('/',[SessionController::class,'index'])->name('sessions.index');
             Route::post('/delete/{id}',[SessionController::class, 'delete'])->name('sessions.delete');
             Route::post('/store',[SessionController::class,'store'])->name('sessions.store');
             Route::post('/update',[SessionController::class,'update'])->name('sessions.update');
             Route::get('/{id}',[SessionController::class,'show'])->name('sessions.show');
             Route::post('/mark_absence/{id}',[SessionController::class, 'mark_absence'])->name('sessions.mark_absence');
-
+            
         });
         Route::prefix('modules')->group(function () {
             Route::get('/',[ModuleController::class,'index'])->name('modules.index');
@@ -163,3 +167,6 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index']);
 Route::get('teachers/classes/{id}',[TeacherController::class,'classes']);
 Route::post('sessions/create',[SessionController::class,'create'])->name('sessions.create');
 // Route::post('/rooms/available', [RoomController::class, 'available']);
+Route::get('/timings/', function (){
+    return Timing::all();
+});

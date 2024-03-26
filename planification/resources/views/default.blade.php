@@ -24,8 +24,9 @@
     <title>Document</title>
 </head>
 
-<body class="z-0">
-
+<body class="z-0  relative">
+    <div class="w-screen h-full -z-10 bg-slate-400 opacity-10 absolute top-0 left-0 ">
+    </div>
 
     <style>
         body {
@@ -44,8 +45,7 @@
         <div class="w-[92px] h-screen sticky  top-0 z-10 ">
             @include('inc.sidebar')
         </div>
-        <div class="w-[100%] z-0 flex justify-center items-center ">
-
+        <div class="w-[100%] pt-2 z-0 flex justify-center items-center ">
             @yield('content')
         </div>
     </div>
