@@ -5,14 +5,14 @@
         $sections = $company->sections;
         $sectionsC = $sections->count();
     @endphp
-    <tr style="">
+    <tr class="h-0">
         @for ($i = 0; $i < $sectionsC; $i++)
             <td class="w-[130px]"></td>
         @endfor
 
     </tr>
     @foreach ($timings as $timing)
-        <tr class="relative company-tr p-10 " style="width: calc({{ $sectionsC }}*130px);">
+        <tr class="relative company-tr h-[160px]" style="width: calc({{ $sectionsC }}*130px) ;">
             @if ($sessions->where('sessionable_type', 'App\\Models\\Company')->where('session_date', $date)->where('timing_id', $timing->id)->where('sessionable_id', $company->id)->isNotEmpty())
                 @php
                     $cour = true;
@@ -23,14 +23,20 @@
                         ->where('sessionable_id', $company->id)
                         ->first();
                 @endphp
-                <td colspan="3" class="box-border session  p-[2px]" style="width:100%;">
-                    @if ($c->absented == 1)
-                        <div
-                            class="flex  hover:border-2 hover:border-slate-800 duration-300 flex-col shadow-lg justify-center ml-[5%]   pt-4  h-[90%] w-[90%] p-4 items-center rounded-xl bg-red-50 ">
-                        @else
-                            <div
-                                class="flex  hover:border-2 hover:border-slate-800 duration-300  flex-col shadow-lg justify-center ml-[5%]   pt-4  h-[90%] w-[90%] p-4 items-center rounded-xl bg-indigo-100 ">
-                    @endif
+                <td colspan="3" class="box-border h-[160px] session " style="width:100%;">
+                    @if($c->rectified == true)
+                    <div
+                        class="h-[150px] shadow-lg flex flex-col border-2 bg-yellow-200 rounded-xl justify-center items-center">
+                @endif
+                @if ($c->absented == true)
+                    <div
+                        class="h-[150px] shadow-lg flex flex-col border-2 bg-red-300 rounded-xl justify-center items-center ">
+                @endif
+                
+                @if ($c->absented == false and  $c->rectified == false)
+                    <div
+                        class="h-[150px] shadow-lg  flex flex-col border-2 bg-indigo-300 rounded-xl justify-center items-center">
+                @endif
 
                     <a href="{{ route('teachers.show', $c->teacher->id) }}">
                         <p
@@ -42,9 +48,8 @@
                     <p class= " font-bold">{{ $c->room->room }}</p>
                     <div class="flex updateformparent relative justify-center self-end  items-center space-x-2">
                         <button
-                            class="h-10 flex form-display-button justify-center items-center  hover:scale-125 duration-300 border-[2px] shadow-md update-button rounded-lg border-slate-500   font-bold w-10 hover:bg-white bg-slate-100"
+                            class="flex btn form-display-button justify-center items-center  hover:scale-125 duration-300 border-[2px] shadow-md update-button rounded-lg border-slate-500   font-bold w-10 hover:bg-white bg-slate-100"
                             title="Update this session">
-                            <img src="/svg/pen-thin.svg" class="h-6 w-6" alt="">
                         </button>
                         <form action="{{ route('sessions.update', ['id' => $c->id]) }}"
                             class="update-form flex flex-col justify-center space-y-4 items-center  text-xl w-[300px] h-[300px] ease-in z-30 hidden absolute bg-white shadow-xl rounded-xl top-10 right-2">
@@ -100,19 +105,13 @@
                             @csrf
                             <button type="submit" title="Delete this session"
                                 class="rounded-lg flex justify-center items-center  hover:scale-125 duration-300 btn hover:shadow-lg w-10  border-[2px] border-slate-500 hover:bg-red-300 bg-red-400 h-10">
-                                <img src="/svg/trash.svg" class="h-6 w-6" alt="">
                             </button>
-
                         </form>
-                        <button type="button" title="Delete  this session"
-                            class="rounded-lg hidden btn hover:shadow-lg w-10 p-2 bg-violet-400 h-10">
-                            <img src="/svg/trash.svg" alt="">
-                        </button>
+                       
                         @if ($c->absented == 0)
                             <button type="submit" title="Mark as absented"
-                                class="rounded-lg btn mark-cour-absence flex justify-center items-center  hover:scale-125 duration-300 hover:bg-gray-50 hover:shadow-lg border-[2px] border-slate-500  w-10  bg-gray-100 h-10">
+                                class="rounded-lg btn mark-cour-absence flex justify-center items-center  hover:scale-125 duration-300 hover:bg-gray-100 hover:shadow-lg border-[2px] border-slate-500  w-10  bg-gray-300 h-10">
                                 <div class="company-id hidden">{{ $c->id }}</div>
-                                <img src="/svg/absence.svg" class="h-6 w-6" alt="">
                             </button>
                         @endif
                     </div>
@@ -140,22 +139,30 @@
                                     ->where('sessionable_id', $section->id)
                                     ->first();
                             @endphp
-                            @if ($s->absented == 1)
+                            @if($s->rectified == true)
                                 <div
-                                    class="h-[150px] shadow-lg    hover:border-2 hover:border-slate-800 flex flex-col border-2 bg-red-300 rounded-xl justify-center items-center ">
-                                @else
-                                    <div
-                                        class="h-[150px] shadow-lg      hover:border-2 hover:border-slate-800 flex flex-col border-2 bg-indigo-300 rounded-xl justify-center items-center">
+                                    class="h-[150px] shadow-lg flex flex-col border-2 bg-yellow-300 rounded-xl justify-center items-center">
                             @endif
-                            <a href="{{ route('teachers.show', $s->teacher->id) }}">
-                                <p class="hover:shadow-lg  hover:bg-slate-50  bg-slate-100 px-2 rounded-xl font-bold">
+                            @if ($s->absented == true)
+                                <div
+                                    class="h-[150px] shadow-lg flex flex-col border-2 bg-red-300 rounded-xl justify-center items-center ">
+                            @endif
+                            
+                            @if ($s->absented == false and  $s->rectified == false)
+                                <div
+                                    class="h-[150px] shadow-lg  flex flex-col border-2 bg-indigo-300 rounded-xl justify-center items-center">
+                            @endif
+                            
+                            <a href="{{ route('teachers.show', $s->teacher->id) }}" class=" h-8 w-fit px-2 hover:bg-slate-100 hover:shadow-lg  bg-slate-100  rounded-xl">
+                                <p
+                                    class="  text-xl  font-bold">
                                     {{ $s->teacher->teacher_name }} </p>
                             </a>
                             <p class="text-xl font-normal">{{ $s->module->module }}</p>
                             <p class= "text-xl font-bold">{{ $s->room->room }}</p>
                             <div class="flex updateformparent relative justify-center items-center mt-4 space-x-2">
                                 <button
-                                    class="h-8 btn flex form-display-button justify-center items-center  hover:scale-125 duration-300  shadow-md update-button rounded-xl hover:bg-slate-50 hover:shadow-lg border-[2px] border-slate-500 p-1 font-bold w-8 bg-slate-200">
+                                    class="btn h-6 w-6  flex form-display-button justify-center items-center  hover:scale-125 duration-300  shadow-md update-button rounded-xl hover:bg-slate-50 hover:shadow-lg border-[2px] border-slate-500  font-bold  bg-slate-200">
                                     <img src="/svg/pen-thin.svg" class="h-6 w-6">
                                 </button>
                                 <form action="{{ route('sessions.update', ['id' => $s->id]) }}"
@@ -213,10 +220,9 @@
 
                                 @if ($s->absented == 0)
                                     <button type="button" title="Mark as absented"
-                                        class="rounded-lg mark-td-absence btn flex justify-center items-center hover:scale-125 duration-300 hover:bg-gray-100 hover:shadow-lg border-[2px] border-slate-500 w-8 p-2 bg-gray-300 h-8">
+                                        class="rounded-lg  mark-td-absence btn flex justify-center items-center hover:scale-125 duration-300 hover:bg-gray-100 hover:shadow-lg border-[2px] border-slate-500 w-8 p-2 bg-gray-300 h-8">
                                         <div class="hidden section-id">{{ $s->id }}</div>
                                         <div class="hidden sector">{{ $sector }}</div>
-                                        <img src="/svg/absence.svg" class="h-4 w-4" alt="">
                                     </button>
                                 @endif
                             </div>

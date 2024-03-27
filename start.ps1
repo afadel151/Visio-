@@ -22,3 +22,4 @@ Start-Sleep -Seconds 10
 $chromePath = "C:\Program Files\Google\Chrome\Application\chrome.exe"
 $url = "http://127.0.0.1:8000"
 Start-Process -FilePath $chromePath -ArgumentList $url
+

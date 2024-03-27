@@ -11,6 +11,13 @@ const instance = axios.create({
     },
 });
 
+// document.getElementById("show-rect-insert").addEventListener("click", function() 
+// {
+//     var displayDiv = document.getElementById('parent-of-rectify');
+//     var displayValue = (displayDiv.style.display === "block") ? "none" : "block";
+//     this.innerHTML = (displayValue === "block") ? "Hide" : "insert";
+//     displayDiv.style.display = displayValue;
+// });
 
 const SelectSession = document.querySelector("#rectification-search-session"); //here
 
@@ -41,7 +48,6 @@ async function SelectRectifiedRoom(Target,session_date,timing_id,week_id) {
             }
         });
         const sessions = response.data;
-        console.log(response.date);
         const NewSelect = document.createElement("select");
         NewSelect.name = "session_id";
         NewSelect.id = "rectified-select"
@@ -82,7 +88,7 @@ async function SelectRectifiedRoom(Target,session_date,timing_id,week_id) {
     }
 }
 
- function SetupRectifyButton()
+function SetupRectifyButton()
 {
     const RectifyButton = document.querySelector("#rectify-button");
     RectifyButton.addEventListener("click", ClickRectify);

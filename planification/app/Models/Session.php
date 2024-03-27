@@ -73,10 +73,10 @@ class Session extends Model
     {
         return $this->belongsTo(Teacher::class, 'teacher_id');
     }
-    public function absences()
-    {
-        return $this->hasMany(Absence::class, 'absenceable_id')->where('absenceable_type', 'App\Models\Session');
-    }
+    // public function absences()
+    // {
+    //     return $this->hasMany(Absence::class, 'absenceable_id')->where('absenceable_type', 'App\Models\Session');
+    // }
     //belongsto type
     public function timing()
     {

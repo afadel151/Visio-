@@ -444,13 +444,3 @@ VALUES
 ('BELAGOUNE', 'Maitre A', 'DSS',1,NOW(),NOW()),
 ('TITRI', 'Maitre A', 'ENPEI',2,NOW(),NOW());
 
-
-
-
-
-
-
-
-
-
-

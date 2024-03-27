@@ -48,7 +48,7 @@
                     const teachers_ST = @json($teachers_ST);
                     const modules_ST = @json($modules_ST);
                 </script>
-                <td class="sticky top-0 z-10 "  style="z-index: 60;>
+                <td class="sticky top-0 z-10 "  style="z-index: 60;">
                     @php
                         $companies_MI = $battalion->companies_MI;
                         $modules_MI = $battalion->modules_MI(1);
@@ -62,10 +62,7 @@
                         const teachers_MI = @json($teachers_MI);
                         const modules_MI = @json($modules_MI);
                     </script>
-                    @include('weeks.domaine', [
-                        'companies' => $companies_MI,
-                        'domaine' => $domaine,
-                    ])
+                    @include('weeks.domaine', ['companies' => $companies_MI,'domaine' => $domaine])
                 </td>
             </tr>
             @php
@@ -75,7 +72,7 @@
             
 
             @for ($i = 0; $i < 5; $i++)
-                <tr class="h-[800px] ">
+                <tr class="h-[800px]" >
                     @php
                         $date = date('Y-m-d', strtotime('+1 days', strtotime($date)));
                     @endphp

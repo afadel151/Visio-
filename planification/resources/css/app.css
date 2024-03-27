@@ -4,15 +4,5 @@
 
 
 *::-webkit-scrollbar {
-    width: 6px; /* Adjust width as needed */
-}
-
-*::-webkit-scrollbar-thumb {
-    background-color: #4f4f4f; /* Color of the scrollbar thumb */
-    border-radius: 8px; /* Adjust border radius as needed */
-}
-
-/* Optional: Hover effect */
-*::-webkit-scrollbar-thumb:hover {
-    background-color: #333; /* Adjust hover color as needed */
+    visibility: hidden; /* Adjust width as needed */
 }

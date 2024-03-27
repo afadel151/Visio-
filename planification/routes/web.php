@@ -64,6 +64,7 @@ Route::middleware('auth')->group(function () {
         Route::prefix('sessions')->group(function () {
             Route::get('/store_rectification',[SessionController::class,'store_rectification'])->name('sessions.store_rectification');
             Route::get('/get_to_rectify',[SessionController::class,'get_to_rectify'])->name('sessions.get_to_rectify');
+            Route::get('/get_absences',[SessionController::class,'get_absences'])->name('sessions.get_absences');
             
             Route::get('/',[SessionController::class,'index'])->name('sessions.index');
             Route::post('/delete/{id}',[SessionController::class, 'delete'])->name('sessions.delete');

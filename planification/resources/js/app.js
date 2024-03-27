@@ -88,7 +88,7 @@ function setupCreateCour() {
 }
 async function NewInnerTd(tr,td,session,moduleOptions,teacherOptions,roomOptions) {
     td.innerHTML =
-                `<div class="h-[150px] shadow-lg hover:border-2 hover:border-slate-800 flex flex-col border-2 bg-indigo-300 rounded-xl justify-center items-center">
+                `<div class="h-[150px] shadow-lg flex flex-col border-2 bg-indigo-300 rounded-xl justify-center items-center">
                             <a href="/teachers/${session.teacher_id}">
                                 <p class="hover:shadow-lg  hover:bg-slate-50  bg-slate-100 px-2 rounded-xl font-bold">
                                 ${session.teacher.teacher_name}</p>  
