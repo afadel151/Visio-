@@ -46,18 +46,18 @@ class AdditiveController extends Controller
         $week = Week::with('global_week','sessions','absences')->find($week_id);
         $battalion = Week::find($week->id)->battalion;
         $timings = Timing::all();
-        // $rectification = Rectification::where('additive_id',$additive->id)->get();
-        // $additionals = Additional::where('additive_id',$additive->id)->get();
-        // $catchups = CatchUp::where('additive_id',$additive->id)->get();
+        $rectifications = Rectification::with('session','room','timing')->where('additive_id',$additive->id)->get();
+        $additionals = Additional::with('absence','sections','companies')->where('additive_id',$additive->id)->get();
+        $catchups = CatchUp::with('absence')->where('additive_id',$additive->id)->get();
         return view('additives.show',[
 
                     'week' => $week,
                     'battalion'=> $battalion,
                     'timings' => $timings,
                     'additive' => $additive, 
-                    // 'rectifications' => $rectification,
-                    // 'additionals' => $additionals,
-                    // 'catchups'=>$catchups,
+                    'rectifications' => $rectifications,
+                    'additionals' => $additionals,
+                    'catchups'=>$catchups,
                 ]);
     }
 

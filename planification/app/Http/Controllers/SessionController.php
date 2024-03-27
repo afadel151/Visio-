@@ -9,6 +9,22 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 class SessionController extends Controller
 {
+    public function get_absences(Request $request)
+    {
+        $timing_id =  $request->input('timing_id');
+        $date = $request->input('session_date');
+        $week_id = $request->input('week_id');
+        $absences = Session::with('room','teacher','timing','sessionable','module')
+                    ->where('session_date',$date)
+                    ->where('timing_id',$timing_id)
+                    ->where('week_id',$week_id)
+                    ->where('absented',1)
+                    ->where('rectified',0)
+                    ->get();
+
+        return response()->json($absences);
+
+    }
     public function get_session_class(Request $request){
         $session = Session::find($request->input('session_id'));
         return $session->class();
@@ -21,9 +37,10 @@ class SessionController extends Controller
         $rectification->room_id = $request->input('room_id');
         $rectification->timing_id  = $request->input('timing_id');
         $rectification->additive_id = $request->input('additive_id');
+        $session->rectified = 1;
+        $session->update();
         $rectification->save();
-        $session->rectified = true;
-        $session->save();
+        
     }
     public function create(Request $request)
     {

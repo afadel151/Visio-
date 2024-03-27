@@ -11,9 +11,22 @@ class CatchUp extends Model
     use HasFactory;
     public function absence()
     {
-        return $this->morphOne(Absence::class,'absenceable');
+        // return $this->morphOne(Absence::class,'absenceable');
+        return $this->belongsTo(Absence::class,'absence_id');
     }
-    
+
+    public function session()
+    {
+        return $this->hasOneThrough(Session::class,Absence::class,'id','id','3','absenceable_id')->where('absenceable_type','App\\Models\\Session');
+    }
+    public function timing()
+    {
+        return $this->belongsTo(Timing::class,'timing_id');
+    }
+    public function room()
+    {
+        return $this->belongsTo(Room::class,'room_id');
+    }
 }
 // $InSessions = Session::where('session_date', $date)->where('timing_id', $timing_id)->pluck('room_id');
         // $InAdditionals = Additional::where('additional_date', $date)->where('timing_id', $timing_id)->pluck('room_id')->toArray();
