@@ -18,7 +18,7 @@
         }
     @endphp
     <div class=" pl-10 ml-4 pt-8 w-[100%] h-screen overflow-scroll">
-        
+
         <div class="grid grid-cols-9 grid-rows-8 gap-6 h-screen w-[100%] mb-10  " style="width: calc(100% - 92px)">
             <div
                 class="col-span-3  hover:shadow-2xl hover:border-slate-500 px-6 rounded-2xl shadow-2xl bg-slate-100 flex justify-between items-center col-start-1 row-start-2">
@@ -27,8 +27,7 @@
                 <div class="flex w-[40%] justify-between items-center">
                     <div class="text-2xl font-bold text-blue-600"> S{{ $week_2->semester }}</div>
                     @if ($week_2->cc == true)
-                        <div
-                            class="h-10 w-10 bg-yellow-300 rounded-full text-xl font-bold flex justify-center items-center">
+                        <div class="h-10 w-10 bg-yellow-300 rounded-full text-xl font-bold flex justify-center items-center">
                             C
                         </div>
                     @endif
@@ -65,13 +64,15 @@
                         <div class="flex justify-between px-8 items-center w-[90%] ">
                             <p class="text-2xl font-bold shadow-sm ">2nd Battalion : <span
                                     class="text-blue-500 font-normal">Cours</span></p>
-                                    <button class="btn w-32 rounded-full">></button>                        </div>
+                            <button class="btn w-32 rounded-full">></button>
+                        </div>
                         <div class="flex justify-between px-8 items-center w-[90%] ">
                             <p class="text-2xl font-bold shadow-sm ">1st Battalion : <span
                                     class="text-blue-500 font-normal">Cours</span></p>
-                                    <button class="btn w-32 rounded-full">></button>                        </div>
+                            <button class="btn w-32 rounded-full">></button>
+                        </div>
                     </div>
-                    
+
                 </div>
             </div>
             <div
@@ -133,7 +134,6 @@
     </div>
 @endsection
 @push('scripts')
-    
     <script src="chart.js\dist\chart.umd.js"></script>
     <script>
         var ctx = document.getElementById('barChart').getContext('2d');
@@ -188,6 +188,5 @@
                 }
             }
         });
-
     </script>
 @endpush

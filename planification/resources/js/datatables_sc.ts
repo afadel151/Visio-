@@ -1,7 +1,9 @@
 import './bootstrap';
+import $ from 'jquery';
+import DataTable from 'datatables.net';
 
-var $ = require('jquery');
-var DataTable = require('datatables.net')(window, $);
+// Ensure jQuery is available globally for DataTables
+(window as any).jQuery = $;
 
 let table = new DataTable('#teachers', {
     processing: true,

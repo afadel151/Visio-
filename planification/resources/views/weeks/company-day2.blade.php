@@ -24,11 +24,11 @@
                         ->first();
                 @endphp
                 <td colspan="3" class="box-border h-[160px] session " style="width:100%;">
-                    @if($c->rectified == true)
+                    @if($c->rectified == true && $c->absented == false)
                     <div
                         class="h-[150px] shadow-lg flex flex-col border-2 bg-yellow-200 rounded-xl justify-center items-center">
                 @endif
-                @if ($c->absented == true)
+                @if ($c->absented == true && $c->rectified == false)
                     <div
                         class="h-[150px] shadow-lg flex flex-col border-2 bg-red-300 rounded-xl justify-center items-center ">
                 @endif
@@ -139,11 +139,11 @@
                                     ->where('sessionable_id', $section->id)
                                     ->first();
                             @endphp
-                            @if($s->rectified == true)
+                            @if($s->rectified == true )
                                 <div
                                     class="h-[150px] shadow-lg flex flex-col border-2 bg-yellow-300 rounded-xl justify-center items-center">
                             @endif
-                            @if ($s->absented == true)
+                            @if ($s->absented == true && $s->rectified == false)
                                 <div
                                     class="h-[150px] shadow-lg flex flex-col border-2 bg-red-300 rounded-xl justify-center items-center ">
                             @endif
@@ -162,7 +162,7 @@
                             <p class= "text-xl font-bold">{{ $s->room->room }}</p>
                             <div class="flex updateformparent relative justify-center items-center mt-4 space-x-2">
                                 <button
-                                    class="btn h-6 w-6  flex form-display-button justify-center items-center  hover:scale-125 duration-300  shadow-md update-button rounded-xl hover:bg-slate-50 hover:shadow-lg border-[2px] border-slate-500  font-bold  bg-slate-200">
+                                    class="h-8 btn flex justify-center items-center  hover:scale-125 duration-300  shadow-md update-button rounded-xl hover:bg-slate-50 hover:shadow-lg border-[2px] border-slate-500 p-1 font-bold w-8 bg-slate-200">
                                     <img src="/svg/pen-thin.svg" class="h-6 w-6">
                                 </button>
                                 <form action="{{ route('sessions.update', ['id' => $s->id]) }}"
@@ -208,11 +208,11 @@
                                         </div>
                                     </div>
                                     <input type="submit" name="submit" id="" value="Update"
-                                        class="bg-indigo-300 btn rounded-lg btn hover:scale-115 duration-300 shadow-lg h-10 w-32">
+                                        class="bg-indigo-300 btn rounded-lg  hover:scale-115 duration-300 shadow-lg h-10 w-32">
                                 </form>
 
                                 <button type="button"
-                                    class="rounded-lg delete-td  btn flex justify-center items-center   w-8  hover:scale-125 duration-300 hover:bg-rose-400 hover:shadow-lg border-[2px] border-slate-500 bg-red-400 h-8">
+                                    class="rounded-lg btn delete-td flex justify-center items-center w-8  hover:scale-125 duration-300 hover:bg-rose-400 hover:shadow-lg border-[2px] border-slate-500 bg-red-400 h-8">
                                     <div class="hidden section-id"> {{ $s->id }} </div>
                                     <div class="hidden sector">{{ $sector }}</div>
                                     <img src="/svg/trash.svg" class="h-6 w-6" alt="">
@@ -220,7 +220,7 @@
 
                                 @if ($s->absented == 0)
                                     <button type="button" title="Mark as absented"
-                                        class="rounded-lg  mark-td-absence btn flex justify-center items-center hover:scale-125 duration-300 hover:bg-gray-100 hover:shadow-lg border-[2px] border-slate-500 w-8 p-2 bg-gray-300 h-8">
+                                        class="rounded-lg  mark-td-absence btn flex justify-center items-center hover:scale-125 duration-300 hover:bg-gray-100 hover:shadow-lg border-[2px] border-slate-500 w-8 p-2 bg-gray-400 h-8">
                                         <div class="hidden section-id">{{ $s->id }}</div>
                                         <div class="hidden sector">{{ $sector }}</div>
                                     </button>
@@ -230,7 +230,7 @@
                         @else
                             <div class="relative sectionparentofform h-[100%] flex justify-center items-center">
                                 <button
-                                    class="flex form-display-button shadow-md hover:scale-125 duration-300  btn section-button items-center justify-center  w-10 h-10 rounded-full bg-slate-300 hover:bg-yellow-50 z-0">
+                                    class="flex form-display-button shadow-md hover:scale-125 duration-300  btn section-button items-center justify-center  rounded-full bg-slate-300 hover:bg-yellow-50 z-0">
                                     <img src="/svg/pen-thin.svg" class="h-6 w-6" alt="">
                                 </button>
 
