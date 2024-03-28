@@ -16,6 +16,10 @@ class Teacher extends Model
             ->orWhere('Last_name', 'like', "%$q%");
     }
 
+    public function TpSessions()
+    {
+        return $this->belongsToMany(Session::class,'tp_teachers');
+    }
     public function modules()
     {
         return $this->belongsToMany(Module::class,'teachers_modules')->withPivot(['cours', 'td', 'tp']);

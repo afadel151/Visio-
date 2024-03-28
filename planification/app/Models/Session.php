@@ -44,6 +44,10 @@ class Session extends Model
             return 'Section ' . $s->section;
         }
     }
+    // public function TpTeachers()
+    // {
+    //     return $this->hasMany(TpTeacher::class);
+    // }
     public function module()
     {
         return $this->belongsTo(Module::class);

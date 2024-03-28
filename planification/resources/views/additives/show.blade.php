@@ -196,6 +196,6 @@
             });
         });
     </script>
-    @vite('resources/js/rectification-add-delete.js')
-    @vite('resources/js/catchupt-add-delete.js')
+    @vite('resources/js/rectification-add-delete.ts')
+    @vite('resources/js/catchupt-add-delete.ts')
 @endpush
