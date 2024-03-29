@@ -23,7 +23,8 @@ async function PostAbsenceTd(SectionId, GrandDiv) {
         console.log("deleted");
         GrandDiv.classList.remove("bg-indigo-300");
         GrandDiv.classList.add("bg-red-300");
-        const markAbsenceTd = parent.querySelector(".mark-td-absence");
+        const parent = GrandDiv.querySelector(".updateformparent");
+        const markAbsenceTd = GrandDiv.querySelector(".mark-td-absence");
         if (markAbsenceTd) {
             parent.removeChild(markAbsenceTd);
         }

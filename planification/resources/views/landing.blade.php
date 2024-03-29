@@ -5664,14 +5664,16 @@
     </div>
     <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
    
-        <script>
-            var typed = new Typed('#element', {
-                strings: ['1°RM', 'ENPEI.DZ' , 'D.ETUDES', 'DPP'],
-                typeSpeed: 150,
-                loop : true,
-                backSpeed : 60,
-            });
+    <script>
+        var typed = new Typed('#element', {
+            strings: ['1°RM', 'ENPEI.DZ' , 'D.ETUDES', 'DPP'],
+            typeSpeed: 200,
+            loop : true,
+            backSpeed : 60,
+        });
     </script>
+
+
 </body>
 
 </html>

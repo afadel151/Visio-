@@ -19,7 +19,6 @@ return new class extends Migration
             $table->date('session_date');//DATE 
             $table->foreignId('module_id')->constrained('modules')->onDelete('CASCADE');//MODULE    
             $table->foreignId('teacher_id')->constrained('teachers')->onDelete('CASCADE');  
-            // $table->string('students_type');
             $table->string('session_type');// TYPE  
             $table->string('sessionable_type');// App\Models\Company or App\Models\Section
             $table->unsignedBigInteger('sessionable_id');

@@ -112,7 +112,7 @@
 @endsection
 
 @push('scripts')
-    @vite('resources/js/mark-absence.js')
+    @vite('resources/js/mark-absence.ts')
     <script>
         async function setupEventListeners() {
             const UpdateForms = document.querySelectorAll(".update-form");

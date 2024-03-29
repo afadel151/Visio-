@@ -2,7 +2,7 @@ import "./bootstrap";
 import axios from "axios";
 import Alpine from "alpinejs";
 
-window.Alpine = Alpine;
+(window as any).Alpine = Alpine;
 
 Alpine.start();
 
@@ -143,12 +143,12 @@ async function NewInnerTd(tr,td,session,moduleOptions,teacherOptions,roomOptions
                                 </form>
                                 
                                 <button type="submit"
-                                    class="rounded-lg delete-td  btn flex justify-center items-center   w-8  hover:scale-125 duration-300 hover:bg-rose-400 hover:shadow-lg border-[2px] border-slate-500 bg-red-400 h-8">
+                                    class="rounded-lg btn delete-td flex justify-center items-center   w-8  hover:scale-125 duration-300 hover:bg-rose-400 hover:shadow-lg border-[2px] border-slate-500 bg-red-400 h-8">
                                     <div class="hidden section-id"> ${session.id} </div>
                                     <img src="/svg/trash.svg" class="h-6 w-6" alt="">
                                 </button>
                                 <button type="button" title="Mark as absented"
-                                        class="rounded-lg mark-td-absence btn flex justify-center items-center hover:scale-125 duration-300 hover:bg-gray-100 hover:shadow-lg border-[2px] border-slate-500 w-8 p-2 bg-gray-300 h-8">
+                                        class="rounded-lg mark-td-absence btn flex justify-center items-center hover:scale-125 duration-300 hover:bg-gray-100 hover:shadow-lg border-[2px] border-slate-500 w-8 p-2 bg-gray-600 h-8">
                                         <div class="hidden section-id"> ${session.id} </div>
                                         <img src="/svg/absence.svg" class="h-4 w-4" alt="">
                                 </button>
