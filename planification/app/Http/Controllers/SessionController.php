@@ -37,8 +37,8 @@ class SessionController extends Controller
         $rectification->room_id = $request->input('room_id');
         $rectification->timing_id  = $request->input('timing_id');
         $rectification->additive_id = $request->input('additive_id');
-        $session->rectified = 1;
-        $session->update();
+        $session->rectified = true;
+        $session->save();
         $rectification->save();
         
     }

@@ -16,7 +16,7 @@
         <div class=" relative mt-20 sm:rounded-lg w-[80%] pb-10 px-4 flex flex-col space-y-4 justify-center items-center">
             <p class="font-bold text-5xl">Rectifications</p>
             <table
-                class="w-[100%] relative text-sm shadow-xl p-4  text-center rtl:text-right text-gray-500 dark:text-gray-400">
+                class="w-[100%] table relative text-sm shadow-xl p-4  text-center rtl:text-right text-gray-500 dark:text-gray-400">
                 <thead class="text-xs  text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr class="h-[60px]">
                         <th scope="col" class="px-6 py-3">Session date</th>
@@ -99,7 +99,7 @@
         <div class=" relative mt-20 sm:rounded-lg w-[80%] pb-10 px-4 flex flex-col space-y-4 justify-center items-center">
             <p class="font-bold text-5xl">Catch up Absences</p>
             <table
-                class="w-[100%] relative text-sm shadow-xl p-4  text-center rtl:text-right text-gray-500 dark:text-gray-400">
+                class="w-[100%] table relative text-sm shadow-xl p-4  text-center rtl:text-right text-gray-500 dark:text-gray-400">
                 <thead class="text-xs  text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr class="h-[60px]">
                         <th scope="col" class="px-6 py-3">Session date</th>

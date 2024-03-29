@@ -35,7 +35,7 @@ Route::get('get-message', function (){
 });
 
 Route::get('/', function () {
-    return view('landing');
+    return view('landing2');
 })->name('home');
 // Route::get('/{battalion_id}/{week_id}',[PlanningController::class,'create']);
 

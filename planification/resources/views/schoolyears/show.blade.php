@@ -32,7 +32,7 @@
 
                 <div class="card-header z-0 text-2xl ">Manage School Years</div>
                 <div class="card-body w-[100%] z-0">
-                    <table class="z-0 display" id="global_weeks">
+                    <table class="z-0 display table" id="global_weeks">
                         <thead>
                             <th>No</th>
                             <th>Start</th>
