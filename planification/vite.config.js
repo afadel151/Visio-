@@ -6,9 +6,9 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/css/app.css',
-                'resources/js/app.js',
-                'resource/js/mark-absence.js',
-                'resource/js/dashboard.js',
+                'resources/js/app.ts',
+                'resource/js/mark-absence.ts',
+                'resource/js/dashboard.ts',
                 'resources/css/insertsession.css'
             ],
             refresh: true,

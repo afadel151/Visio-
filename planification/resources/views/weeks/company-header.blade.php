@@ -1,16 +1,22 @@
-<table class="w-[100%]">
-    <tr>
+@php
+$sections = $company->sections;
+$sectionsC = $sections->count();
+@endphp
+<table class="table"  style="width: calc({{ $sectionsC }}*140px) ;">
+
+   
+    <tr style="width: calc({{ $sectionsC }}*140px) ;">
         
-        <td colspan="{{ $company->sections->count() }}" class="text-center  bg-slate-300">
+        <td colspan="{{ $company->sections->count() }}" class="text-center  ">
         
             {{ $company->company }}
 
         </td>
     </tr>
-    <tr>
+    <tr style="width: calc({{ $sectionsC }}*140px) ;">
         
         @foreach ($company->sections as $section)
-            <td class="text-center   bg-slate-500" class="w-[100%]">{{ $section->section }}</td>
+            <td class="text-center   b" class="w-[140px]">{{ $section->section }}</td>
         @endforeach
     </tr>
 </table>

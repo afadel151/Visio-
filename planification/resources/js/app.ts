@@ -5,10 +5,9 @@ import Alpine from "alpinejs";
 (window as any).Alpine = Alpine;
 
 Alpine.start();
-
 const instance = axios.create({
     baseURL: "http://127.0.0.1:8000",
-    // timeout: 6000,
+    timeout: 100,
     withCredentials: true,
     xsrfCookieName: "XSRF-TOKEN",
     xsrfHeaderName: "X-XSRF-TOKEN",
@@ -16,7 +15,6 @@ const instance = axios.create({
         Accept: "application/json",
     },
 });
-
 function setupGetAvailableRooms() {
     const AllRoomSelects = document.querySelectorAll(".form-display-button");
     AllRoomSelects.forEach((SelectRooms) => {
@@ -48,9 +46,9 @@ async function GetAvailableRooms(Target, session_datee, timing_idd) {
                 session_date: session_datee,
                 timing_id: timing_idd,
             },
+            timeout: 1000
         });
-        console.log(session_datee);
-        console.log(timing_idd);
+
         const selectElement = document.createElement("select");
         selectElement.name = "room_id";
         selectElement.id = "room";
@@ -59,13 +57,6 @@ async function GetAvailableRooms(Target, session_datee, timing_idd) {
         const label = document.createElement("label");
         label.innerText = "Rooms";
         label.classList.add("w-[100px]");
-
-        console.log(responseData);
-        if (Array.isArray(responseData)) {
-            console.log("ARRAY");
-        } else {
-            console.log("no");
-        }
         responseData.forEach(function (room) {
             const option = document.createElement("option");
             option.value = room.id;
@@ -88,7 +79,7 @@ function setupCreateCour() {
 }
 async function NewInnerTd(tr,td,session,moduleOptions,teacherOptions,roomOptions) {
     td.innerHTML =
-                `<div class="h-[150px] shadow-lg flex flex-col border-2 bg-indigo-300 rounded-xl justify-center items-center">
+                `<div class="h-[150px] shadow-lg  flex flex-col border-2 bg-indigo-300 rounded-xl justify-center items-center">
                             <a href="/teachers/${session.teacher_id}">
                                 <p class="hover:shadow-lg  hover:bg-slate-50  bg-slate-100 px-2 rounded-xl font-bold">
                                 ${session.teacher.teacher_name}</p>  
@@ -101,8 +92,7 @@ async function NewInnerTd(tr,td,session,moduleOptions,teacherOptions,roomOptions
                                     <img src="/svg/pen-thin.svg" class="h-6 w-6">
                                 </button>
                                 <form action="{{ route('sessions.update', ['id' => $s->id]) }}"
-                                    onsubmit="UpdateSession(event)"
-                                    class="update-form flex z-50 flex-col justify-center space-y-4 items-center  text-xl w-[300px] h-[300px] ease-in  hidden absolute bg-white shadow-xl rounded-xl top-10 right-2">
+                                    class="update-form flex flex-col justify-center space-y-4 items-center  text-xl w-[300px] h-[300px] ease-in z-20 hidden absolute bg-white shadow-xl rounded-xl top-10 right-2">
                                     
                                     <a
                                         class="absolute top-4 right-4 section-update-cancel-button hover:cursor-pointer  bg-slate-400 h-6 w-6 rounded-full">
@@ -143,12 +133,12 @@ async function NewInnerTd(tr,td,session,moduleOptions,teacherOptions,roomOptions
                                 </form>
                                 
                                 <button type="submit"
-                                    class="rounded-lg btn delete-td flex justify-center items-center   w-8  hover:scale-125 duration-300 hover:bg-rose-400 hover:shadow-lg border-[2px] border-slate-500 bg-red-400 h-8">
+                                    class="rounded-lg btn delete-td flex justify-center items-center w-8  hover:scale-125 duration-300 hover:bg-rose-400 hover:shadow-lg border-[2px] border-slate-500 bg-red-400 h-8">
                                     <div class="hidden section-id"> ${session.id} </div>
                                     <img src="/svg/trash.svg" class="h-6 w-6" alt="">
                                 </button>
                                 <button type="button" title="Mark as absented"
-                                        class="rounded-lg mark-td-absence btn flex justify-center items-center hover:scale-125 duration-300 hover:bg-gray-100 hover:shadow-lg border-[2px] border-slate-500 w-8 p-2 bg-gray-600 h-8">
+                                        class="rounded-lg  mark-td-absence btn flex justify-center items-center hover:scale-125 duration-300 hover:bg-gray-100 hover:shadow-lg border-[2px] border-slate-500 w-8 p-2 bg-gray-400 h-8">
                                         <div class="hidden section-id"> ${session.id} </div>
                                         <img src="/svg/absence.svg" class="h-4 w-4" alt="">
                                 </button>

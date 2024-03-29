@@ -4,5 +4,7 @@
 
 
 *::-webkit-scrollbar {
-    visibility: hidden; /* Adjust width as needed */
+    /* visibility: hidden; */
+     /* Adjust width as needed */
+    border-radius: 50%;
 }
