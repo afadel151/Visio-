@@ -1,13 +1,73 @@
 @extends('default')
+@push('header')
+@vite('resources/js/app.js')
+    <script>
+        const openModal = (button) => {
+            const modal = button.nextElementSibling;
+            modal.showModal();
+        }
+
+        function closeModal(button) {
+            const modal = button.closest('.modal');
+            modal.close();
+        }
+
+        function ShowTpForm(button) {
+            const form = button.nextElementSibling;
+            form.classList.remove("hidden");
+
+
+        }
+
+        function HideTpForm(button) {
+            const form = button.parentNode;
+            form.classList.add("hidden");
+        }
+
+        function ShowTdForm(button) {
+            const form = button.nextElementSibling;
+            form.classList.remove("hidden");
+            
+        }
+
+        function HideTdForm(button) {
+            const form = button.parentNode;
+            form.classList.add("hidden");
+        }
+
+        function ShowCourForm(button) {
+            const form = button.nextElementSibling;
+            form.classList.remove("hidden");
+        }
+
+        function HideCourForm(button) {
+            const form = button.parentNode;
+            form.classList.add("hidden");
+        }
+    </script>
+@endpush
 @section('content')
-    <div class="w-[100%] z-0 ">
+    <div class="w-[100%]  z-0 ">
+
         <script>
             const rooms = @json($rooms);
             const timings = @json($timings);
         </script>
-        
+
         <div class="h-[100px]  flex justify-around items-center  ">
-            <input type="checkbox" value="cupcake" class="toggle theme-controller  justify-self-start" />
+            <label class="flex cursor-pointer gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="5" />
+                    <path
+                        d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" />
+                </svg>
+                <input type="checkbox" value="dark" class="toggle theme-controller" />
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+            </label>
             <div class="flex h-[100px] space-x-3 justify-center items-center ">
                 <a href="{{ route('weeks.additives', ['id' => $week->id]) }}" class="tooltip" data-tip="additifs">
                     <button class="btn glass rounded-xl ">
@@ -18,8 +78,9 @@
                         </svg>
                     </button>
                 </a>
-                
-                <a href="{{ route('battalions.show', ['id' => $week->battalion->id]) }}" class="tooltip" data-tip="battalion">
+
+                <a href="{{ route('battalions.show', ['id' => $week->battalion->id]) }}" class="tooltip"
+                    data-tip="battalion">
                     <button class="btn glass rounded-xl"><svg xmlns="http://www.w3.org/2000/svg" fill="none"
                             viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                             <path stroke-linecap="round" stroke-linejoin="round"
@@ -35,40 +96,41 @@
                             <path stroke-linecap="round" stroke-linejoin="round"
                                 d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
                         </svg>
-    
+
                     </button>
                 </a>
             </div>
             <div class="stats shadow">
-  
+
                 <div class="stat">
-                  <div class="stat-figure text-secondary">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-8 h-8 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                  </div>
-                  <div class="stat-title">Total Sessions</div>
-                  <div class="stat-value">{{ $sessions->where('week_id', $week->id)->count() }}</div>
-                  <div class="stat-desc">{{$week->global_week->start_week_date}} -> {{$week->global_week->start_week_date}}</div>
+                    <div class="stat-figure text-secondary">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-8 h-8">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25" />
+                        </svg>
+
+                    </div>
+                    <div class="stat-title">Total Sessions</div>
+                    <div class="stat-value">{{ $sessions->where('week_id', $week->id)->count() }}</div>
+                    <div class="stat-desc">{{ $week->global_week->start_week_date }} ->
+                        {{ $week->global_week->start_week_date }}</div>
                 </div>
-                
+
                 <div class="stat">
-                  <div class="stat-figure text-secondary">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-8 h-8 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
-                  </div>
-                  <div class="stat-title">Absences</div>
-                  <div class="stat-value">{{ $week->absences()->count() }}</div>
-                  <div class="stat-desc">↗︎ 400 (22%)</div>
+                    <div class="stat-figure text-secondary">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M22 10.5h-6m-2.25-4.125a3.375 3.375 0 1 1-6.75 0 3.375 3.375 0 0 1 6.75 0ZM4 19.235v-.11a6.375 6.375 0 0 1 12.75 0v.109A12.318 12.318 0 0 1 10.374 21c-2.331 0-4.512-.645-6.374-1.766Z" />
+                        </svg>
+
+                    </div>
+                    <div class="stat-title">Absences</div>
+                    <div class="stat-value">{{ $week->absences()->count() }}</div>
+                    <div class="stat-desc">{{ $week->sessions->where('caughtup', 1)->count() }} Caught up</div>
                 </div>
-                
-                <div class="stat">
-                  <div class="stat-figure text-secondary">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="inline-block w-8 h-8 stroke-current"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path></svg>
-                  </div>
-                  <div class="stat-title">New Registers</div>
-                  <div class="stat-value">1,200</div>
-                  <div class="stat-desc">↘︎ 90 (14%)</div>
-                </div>
-                
-              </div>
+            </div>
         </div>
 
         <table class="mt-4" style="width: calc({{ $battalion->sections->count() }}*140px + 122px);z-index : 60;">
@@ -122,7 +184,7 @@
                     @php
                         $date = date('Y-m-d', strtotime('+1 days', strtotime($date)));
                     @endphp
-                    <td class="h-[500%]  w-[300px]">
+                    <td class="h-[500%]  w-[300px]" data-aos="fade-right">
                         @include('weeks.day', ['date' => $date, 'timings' => $timings])
                     </td>
 
@@ -159,190 +221,4 @@
 
 @push('scripts')
     @vite('resources/js/mark-absence.ts')
-
-    <script>
-        function openModal(button) {
-            const modal = button.nextElementSibling;
-            modal.showModal();
-        }
-
-        function closeModal(button) {
-            const modal = button.closest('.modal');
-            modal.close();
-        }
-    </script>
-    <script>
-        async function setupEventListeners() {
-            const UpdateForms = document.querySelectorAll(".update-form");
-            const UpdateButtons = document.querySelectorAll(".update-button");
-            const SectionButtons = document.querySelectorAll(".section-button");
-            const CompanyButtons = document.querySelectorAll(".company-button");
-
-            const TpButtons = document.querySelectorAll(".add-tp-button");
-            const TpCancels = document.querySelectorAll(".tp-cancel-button");
-            const TpForms = document.querySelectorAll(".tp-insert-form");
-            const sectionforms = document.querySelectorAll(".section-form");
-            const companyforms = document.querySelectorAll(".company-form");
-            const sectioncancels = document.querySelectorAll(".section-cancel-button");
-            //    console.log(sectioncancels);
-            const sectionupdatecancels = document.querySelectorAll(".section-update-cancel-button");
-            const companycancels = document.querySelectorAll(".company-cancel-button");
-            const companyupdatecancels = document.querySelectorAll(".company-update-cancel-button");
-            TpButtons.forEach((button, index) => {
-                button.addEventListener("click", function(event) {
-                    event.preventDefault();
-                    sectionforms.forEach(form => {
-                        form.classList.add("hidden");
-                    });
-                    TpForms.forEach(form => {
-                        form.classList.remove("hidden");
-                        form.classList.add("hidden");
-                    });
-                    companyforms.forEach(form => {
-                        form.classList.add("hidden");
-                    });
-                    UpdateForms.forEach(form => {
-                        form.classList.add("hidden");
-                    });
-                    // const parents = document.querySelectorAll(".td-parent");
-                    // parents.forEach(parent => {
-                    //     parent.classList.remove("relative");
-                    // });
-                    // const parent = button.parentNode;
-                    // parent.classList.add("relative");
-                    const nextElementSibling = button.nextElementSibling;
-                    nextElementSibling.classList.remove("hidden");
-
-
-                });
-            });
-            UpdateButtons.forEach((Button, index) => {
-                Button.addEventListener("click", function(event) {
-                    UpdateForms.forEach(form => {
-                        form.classList.add("hidden");
-                    });
-                    sectionforms.forEach(form => {
-                        form.classList.add("hidden");
-                    });
-                    companyforms.forEach(form => {
-                        form.classList.add("hidden");
-                    });
-                    TpForms.forEach(form => {
-                        form.classList.add("hidden");
-                    });
-                    const parents = document.querySelectorAll(".updateformparent");
-                    parents.forEach(parent => {
-                        parent.classList.remove("relative");
-                    });
-                    const parent = Button.parentNode;
-                    parent.classList.add("relative");
-                    const nextElementSibling = Button.nextElementSibling;
-                    // Hide all forms
-                    nextElementSibling.classList.remove("hidden")
-
-                    event.preventDefault();
-                });
-            });
-            SectionButtons.forEach((button, index) => {
-                button.addEventListener("click", function(event) {
-                    event.preventDefault();
-                    sectionforms.forEach(form => {
-                        form.classList.add("hidden");
-                    });
-                    TpForms.forEach(form => {
-                        form.classList.add("hidden");
-                    });
-                    companyforms.forEach(form => {
-                        form.classList.add("hidden");
-                    });
-                    UpdateForms.forEach(form => {
-                        form.classList.add("hidden");
-                    });
-                    const parents = document.querySelectorAll(".sectionparentofform");
-                    parents.forEach(parent => {
-                        parent.classList.remove("relative");
-                    });
-                    const parent = button.parentElement;
-                    parent.classList.add("relative");
-                    const nextElementSibling = button.nextElementSibling;
-                    nextElementSibling.classList.remove("hidden")
-
-
-                });
-            });
-            CompanyButtons.forEach((button, index) => {
-                button.addEventListener("click", function(event) {
-                    sectionforms.forEach(form => {
-                        form.classList.add("hidden");
-                    });
-                    TpForms.forEach(form => {
-                        form.classList.add("hidden");
-                    });
-                    companyforms.forEach(form => {
-                        form.classList.add("hidden");
-                    });
-                    UpdateForms.forEach(form => {
-                        form.classList.add("hidden");
-                    });
-                    const parents = document.querySelectorAll(".companyparentofform");
-                    parents.forEach(parent => {
-                        parent.classList.remove("relative");
-                    });
-
-                    const parent = button.parentElement;
-                    parent.classList.add("relative");
-                    const nextElementSibling = button.nextElementSibling;
-
-                    nextElementSibling.classList.remove("hidden")
-
-                    event.preventDefault();
-                });
-            });
-            TpCancels.forEach((cancel, index) => function(event) {
-
-                cancel.addEventListener("click", function(event) {
-                    console.log("cancel-clicked");
-                    TpForms.forEach(form => {
-                        form.classList.add("hidden");
-                    });
-                });
-            });
-            sectioncancels.forEach((cancel, index) => {
-                // console.log(cancel);
-                cancel.addEventListener("click", function(event) {
-                    sectionforms.forEach(form => {
-                        form.classList.add("hidden");
-                    });
-                });
-            });
-            sectionupdatecancels.forEach((cancel, index) => {
-                cancel.addEventListener("click", function(event) {
-                    UpdateForms.forEach(form => {
-                        form.classList.add("hidden");
-                    });
-                });
-            });
-            companycancels.forEach((cancel, index) => {
-                cancel.addEventListener("click", function(event) {
-                    companyforms.forEach(form => {
-                        form.classList.add("hidden");
-                    });
-                });
-            });
-            console.log("execute");
-            companyupdatecancels.forEach((cancel, index) => {
-                cancel.addEventListener("click", function(event) {
-                    UpdateForms.forEach(form => {
-                        form.classList.add("hidden");
-                    });
-                });
-            });
-
-        }
-        document.addEventListener("DOMContentLoaded", async function() {
-            await setupEventListeners();
-            setInterval(setupEventListeners, 5000);
-            setTimeout(setupEventListeners, 5);
-        });
-    </script>
 @endpush

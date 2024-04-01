@@ -14,6 +14,7 @@ use App\Http\Controllers\SessionController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\WeekController;
 use App\Http\Controllers\GlobalWeekController;
+use App\Models\GlobalWeek;
 use App\Models\Timing;
 use Illuminate\Support\Facades\Route;
 
@@ -35,7 +36,8 @@ Route::get('get-message', function (){
 });
 
 Route::get('/', function () {
-    return view('landing2');
+    $global_week = GlobalWeek::with('events')->find(3);
+    return view('landing2',['global_week'=>$global_week]);
 })->name('home');
 // Route::get('/{battalion_id}/{week_id}',[PlanningController::class,'create']);
 
@@ -62,6 +64,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/absences/{id}',[TeacherController::class,'absences'])->name('teachers.absences');
         });
         Route::prefix('sessions')->group(function () {
+            Route::get('/create_tp',[SessionController::class,'create_tp'])->name('sessions.create_tp');
             Route::get('/store_rectification',[SessionController::class,'store_rectification'])->name('sessions.store_rectification');
             Route::get('/get_to_rectify',[SessionController::class,'get_to_rectify'])->name('sessions.get_to_rectify');
             Route::get('/get_absences',[SessionController::class,'get_absences'])->name('sessions.get_absences');

@@ -17,16 +17,21 @@ function SetupMarkAbsenceTd() {
         AddAbsence.addEventListener("click", ClickAbsenceTd);
     });
 }
-async function PostAbsenceTd(SectionId, GrandDiv) {
+async function PostAbsenceTd(SectionId, GrandDiv,MarkAbsence) {
     try {
         let response = await axios.post("/sessions/mark_absence/" + SectionId);
         console.log("deleted");
-        GrandDiv.classList.remove("bg-indigo-300");
-        GrandDiv.classList.add("bg-red-300");
-        const parent = GrandDiv.querySelector(".updateformparent");
-        const markAbsenceTd = GrandDiv.querySelector(".mark-td-absence");
-        if (markAbsenceTd) {
-            parent.removeChild(markAbsenceTd);
+        const GrandDivDiv = GrandDiv.parentNode;
+        const newspan = document.createElement("span");
+        newspan.classList.add("badge","badge-error");
+        newspan.innerText = "absented";
+        var firstChild = GrandDiv.firstChild;
+        GrandDiv.insertBefore(newspan, firstChild);
+        console.log(GrandDiv);
+        const requestbutton = GrandDiv.querySelector(".request-td-absence");
+        // const markAbsenceTd = GrandDiv.querySelector(".mark-td-absence");
+        if (requestbutton) {
+            requestbutton.classList.add("btn-disabled");
         }
     } catch (error) {
         console.log(error);
@@ -38,7 +43,8 @@ function ClickAbsenceTd(event) {
     const DivSectionId = MarkAbsence.querySelector(".section-id");
     const SectionId = DivSectionId.innerText.trim();
     const GrandDiv = MarkAbsence.parentNode.parentNode;
-    PostAbsenceTd(SectionId, GrandDiv);
+    // const GrandDiv = GrandDiv1.parentNode.parentNode;
+    PostAbsenceTd(SectionId, GrandDiv,MarkAbsence);
 }
 function SetupMarkAbsenceCour() {
     const AllMarkTdAbsencesCour = document.querySelectorAll(".mark-cour-absence"); //here

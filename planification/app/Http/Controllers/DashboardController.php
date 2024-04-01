@@ -44,7 +44,7 @@ class DashboardController extends Controller
                     'data' => $absences,
                 ];
                 return view(
-                    'dashboarding',
+                    'dashboard0',
                     [
                         'global_week' => $global_week,
                         'schoolyear_id' => $schoolyear_id,

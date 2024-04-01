@@ -12,6 +12,7 @@ use App\Models\TeacherClasses;
 use App\Models\Timing;
 use App\Models\Config;
 use App\Models\Room;
+use App\Models\TpTeacher;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -35,13 +36,19 @@ class TeacherController extends Controller
     
         $sessions = Session::where('teacher_id', $teacher->id)
                             ->where('absented',0)
+                            ->orWhere('caughtup',1)
                             ->whereDate('session_date', '>=', $request->min_date)
                             ->whereDate('session_date', '<=', $request->max_date)
                             ->get();
-
+        
         $classes->Nbcours = $sessions->where('session_type', 'cour')->count();
         $classes->Nbtds = $sessions->where('session_type', 'td')->count();
-        $classes->Nbtps = $sessions->where('session_type', 'tp')->count();
+        $Tps = Session::where('absented',0)->orWhere('caughtup',1)
+                ->whereDate('session_date', '>=', $request->min_date)
+                ->whereDate('session_date', '<=', $request->max_date)
+                ->where('session_type','tp')->pluck('id')->toArray();
+        $TpsDone  = TpTeacher::whereIn('session_id',$Tps)->where('teacher_id',$teacher->id)->count();
+        $classes->Nbtps = $TpsDone;
         return $classes;
     }
 

@@ -1,4 +1,4 @@
-<table class="w-[100%] table h-[800px] bg-base-200 bg-opacity-90 backdrop-blur transition-shadow duration-100 [transform:translate3d(0,0,0)] 
+<table class="w-[100%] table h-[800px] bg-base-100 bg-opacity-90 backdrop-blur transition-shadow duration-100 [transform:translate3d(0,0,0)] 
 shadow-sm">
     <tr class="">
         @php
