@@ -31,7 +31,7 @@ class WeekController extends Controller
         $week = Week::find($id);
         $battalion_id = $week->battalion_id;
         $battalion = Battalion::find($battalion_id);
-        $sessions = Session::with('teacher', 'module', 'room')->where('week_id', $week->id)->get();
+        $sessions = Session::with('teacher', 'module', 'room','rectification')->where('week_id', $week->id)->get();
         $timings = Timing::all();
         $rooms = Room::all();
         return view('weeks.create', compact('battalion', 'week', 'timings', 'sessions', 'rooms'));

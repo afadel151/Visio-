@@ -21,6 +21,7 @@ class Session extends Model
         'sessionable_type',
         'sessionable_id',
     ];
+    public $timestamps = true;
 
     public function rectification()
     {

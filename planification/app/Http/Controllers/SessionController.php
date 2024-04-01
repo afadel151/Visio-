@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Absence;
 use App\Models\Rectification;
 use App\Models\Session;
+use App\Models\TpTeacher;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 class SessionController extends Controller
@@ -42,21 +43,51 @@ class SessionController extends Controller
         $rectification->save();
         
     }
+
     public function create(Request $request)
     {
         $session = new Session();
-        $session->session_date = $request->input('session_date');
-        $session->timing_id = $request->input('timing_id');
-        $session->week_id = $request->input('week_id');
-        $session->sessionable_type = $request->input('sessionable_type');
-        $session->sessionable_id = $request->input('sessionable_id');
-        $session->session_type = $request->input('session_type');
-        $session->module_id = $request->input('module_id');
-        $session->teacher_id = $request->input('teacher_id');
-        $session->room_id = $request->input('room_id');
-        $session->save();  
+        // $session->session_date = $request->query('session_date');
+        // $session->timing_id = $request->query('timing_id');
+        // $session->week_id = $request->query('week_id');
+        // $session->sessionable_type = $request->query('sessionable_type');
+        // $session->sessionable_id = $request->query('sessionable_id');
+        // $session->session_type = $request->query('session_type');
+        // $session->module_id = $request->query('module_id');
+        // $session->teacher_id = $request->query('teacher_id');
+        // $session->room_id = $request->query('room_id');
+        // $session->save();  
+        $session = Session::create($request->all());
+        // $session->load('teacher', 'module', 'room');
         $session->load('teacher', 'module', 'room');
         return response()->json($session, 201);
+    }
+//
+    public function create_tp(Request $request)
+    {
+        $session = new Session();
+        $session->session_date = $request->query('session_date');
+        $session->timing_id = $request->query('timing_id');
+        $session->week_id = $request->query('week_id');
+        $session->sessionable_type = $request->query('sessionable_type');
+        $session->sessionable_id = $request->query('sessionable_id');
+        $session->session_type = 'tp';
+        $session->module_id = $request->query('module_id');
+        $session->teacher_id = 1;
+        $session->room_id = $request->query('room_id');
+        $session->save(); 
+        $teachers_Ids = $request->query('teachers');
+        foreach ($teachers_Ids as $teacherId) 
+        {
+            
+            $tp_teacher = new TpTeacher;
+            $tp_teacher->session_id = $session->id;
+            $tp_teacher->teacher_id = $teacherId;
+            $tp_teacher->save();
+        } 
+        $session->load('module', 'room','TpTeachers');
+
+        return response()->json($session);
     }
     public function store(Request $request)
     {
@@ -73,6 +104,7 @@ class SessionController extends Controller
         $session->save();
         return redirect()->back();
     }
+    
     public function show($id)
     {
         $session = Session::find($id);

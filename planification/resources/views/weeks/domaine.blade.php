@@ -1,4 +1,4 @@
-<table class="w-[100%] table  bg-base-200 bg-opacity-95 backdrop-blur transition-shadow duration-100 [transform:translate3d(5,0,0)] 
+<table class="w-[100%] table font-bold  bg-base-100 bg-opacity-50 backdrop-blur transition-shadow duration-100 [transform:translate3d(5,0,0)] 
 shadow-sm" style="z-index:60">
     <tr>
         @if ($domaine == 'ST')
