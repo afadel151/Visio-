@@ -13,7 +13,7 @@
 <body>
     <!-- Hero -->
     <div 
-        class="relative h-[100%] overflow-hidden before:absolute before:top-0 before:start-1/2 before:bg-[url('https://preline.co/assets/svg/examples/polygon-bg-element.svg')] before:bg-no-repeat before:bg-top before:bg-cover before:size-full before:-z-[1] before:transform before:-translate-x-1/2 dark:before:bg-[url('https://preline.co/assets/svg/examples-dark/polygon-bg-element.svg')]">
+        class="relative h-[100%] overflow-hidden before:absolute before:top-0 before:start-1/2 before:bg-[url('https://preline.co/assets/svg/examples/polygon-bg-element.svg')] before:bg-no-repeat before:bg-top before:bg-cover before:size-full before:-z-[1] before:transform before:-translate-x-1/2 ">
         <div class="absolute top-20 right-5 h-[200px] w-[300px]">
             <p
                 class="text-6xl h-[100%] font-[700] bg-clip-text bg-gradient-to-tl from-blue-400 to-violet-400 text-transparent">
@@ -28,13 +28,13 @@
             <!-- Announcement Banner -->
             <div class="flex justify-center">
                 <a href="{{ route('schoolyears.show', 1) }}"
-                    class="inline-flex items-center gap-x-2 bg-white border border-gray-200 text-sm text-gray-800 p-1 ps-3 rounded-full transition hover:border-gray-300 dark:bg-gray-800 dark:border-gray-700 dark:hover:border-gray-600 dark:text-gray-200 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                    class="inline-flex items-center gap-x-2 bg-white border border-gray-200 text-sm text-gray-800 p-1 ps-3 rounded-full transition hover:border-gray-300 "
                     href="#">
                     @foreach ($global_week->events as $event)
                         {{ $event->event }}
                     @endforeach
                     <span
-                        class="py-1.5 px-2.5 inline-flex justify-center items-center gap-x-2 rounded-full bg-gray-200 font-semibold text-sm text-gray-600 dark:bg-gray-700 dark:text-gray-400">
+                        class="py-1.5 px-2.5 inline-flex justify-center items-center gap-x-2 rounded-full bg-gray-200 font-semibold text-sm text-gray-600 ">
                         <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"
                             height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                             stroke-linecap="round" stroke-linejoin="round">
@@ -47,7 +47,7 @@
 
             <!-- Title -->
             <div class="mt-10 text-center "  >
-                <h1  class="block  font-bold text-gray-800 text-9xl   dark:text-gray-200">
+                <h1  class="block  font-bold text-gray-800 text-9xl   ">
                     Let's Plan 
                     <span 
                         class="bg-clip-text bg-gradient-to-tl from-blue-600 to-violet-600 text-transparent">Together</span>
@@ -56,7 +56,7 @@
             <!-- End Title -->
 
             <div class="mt-5 max-w-[50%] text-center mx-auto">
-                <p class="text-lg text-gray-600 dark:text-gray-400"
+                <p class="text-lg text-gray-600 "
                     style="font-family: ui-sans-serif, system-ui, sans-serif,Apple Color Emoji,Segoe UI Emoji">Preline
                     UI is an open-source set of prebuilt UI components, ready-to-use examples and Figma design system
                     based on the utility-first Tailwind CSS framework.</p>
@@ -65,7 +65,7 @@
             <!-- Buttons -->
             <div   class="mt-8 gap-3 flex justify-center">
                 <a href="{{ route('dashboard') }}"
-                    class="inline-flex h-12 w-40 justify-center items-center gap-x-3 text-center bg-gradient-to-tl from-blue-600 to-violet-600 hover:from-violet-600 hover:to-blue-600 border border-transparent text-white text-sm font-medium rounded-md focus:outline-none focus:ring-1 focus:ring-gray-600 py-3 px-4 dark:focus:ring-offset-gray-800"
+                    class="inline-flex h-12 w-40 justify-center items-center gap-x-3 text-center bg-gradient-to-tl from-blue-600 to-violet-600 hover:from-violet-600 hover:to-blue-600 border border-transparent text-white text-sm font-medium rounded-md focus:outline-none focus:ring-1 focus:ring-gray-600 py-3 px-4 "
                     href="#">
                     Get started
                     <svg class="flex-shrink-0 size-4" width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -77,9 +77,9 @@
             <!-- End Buttons -->
 
             <div class="mt-5  flex justify-center items-center gap-x-1 sm:gap-x-3">
-                <span class="text-sm text-gray-600 dark:text-gray-400">Maker:</span>
-                <span class="text-sm font-bold text-gray-900 dark:text-white">Fadel Akram</span>
-                <svg class="size-5 text-gray-300 dark:text-gray-600" width="16" height="16" viewBox="0 0 16 16"
+                <span class="text-sm text-gray-600 ">Maker:</span>
+                <span class="text-sm font-bold text-gray-900 ">Fadel Akram</span>
+                <svg class="size-5 text-gray-300 " width="16" height="16" viewBox="0 0 16 16"
                     fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                     <path d="M6 13L10 3" stroke="currentColor" stroke-linecap="round" />
                 </svg>
@@ -195,9 +195,9 @@
         <!-- Grid -->
         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 mb-10">
             <div class="col-span-full hidden lg:col-span-1 lg:block">
-                <a class="flex-none text-xl font-semibold dark:text-white dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                <a class="flex-none text-xl font-semibold "
                     href="#" aria-label="Brand">Nexcet</a>
-                <p class="mt-3 text-xs sm:text-sm text-gray-600 dark:text-gray-400">© 2022 Fadel.</p>
+                <p class="mt-3 text-xs sm:text-sm text-gray-600 ">© 2022 Fadel.</p>
             </div>
             <!-- End Col -->
 
@@ -205,13 +205,13 @@
                 <h4 class="text-xs font-semibold text-gray-900 uppercase dark:text-gray-100">Product</h4>
 
                 <div class="mt-3 grid space-y-3 text-sm">
-                    <p><a class="inline-flex gap-x-2 text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                    <p><a class="inline-flex gap-x-2 text-gray-600 hover:text-gray-800 "
                             href="#">Pricing</a></p>
-                    <p><a class="inline-flex gap-x-2 text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                    <p><a class="inline-flex gap-x-2 text-gray-600 hover:text-gray-800 "
                             href="#">Changelog</a></p>
-                    <p><a class="inline-flex gap-x-2 text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                    <p><a class="inline-flex gap-x-2 text-gray-600 hover:text-gray-800 "
                             href="#">Docs</a></p>
-                    <p><a class="inline-flex gap-x-2 text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                    <p><a class="inline-flex gap-x-2 text-gray-600 hover:text-gray-800 "
                             href="#">Download</a></p>
                 </div>
             </div>

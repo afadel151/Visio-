@@ -31,17 +31,43 @@ class DashboardController extends Controller
                 $length = count($GWE);
 
                 for ($i = 0; $i < $length; $i++) {
+                    
                     $date = $GWS[$i] . '->' . $GWE[$i];
                     array_push($globalweeks, $date);
                 }
+                $aditives = [];
                 $absences = [];
+                $rectifications = [];
+                $aditionals = [];
+                $Ab = 0;
+                $tab = 0;
+                $Tt=0;
                 foreach ($weeks as $week) {
-                    $nb = $week->absences()->count() ;
+                    $nb = $week->absences()->count();
+                    $Rb = $week->absences()->where('caughtup',1)->count();
+                    $additives = $week->additives();
+                    $Additionals = 0;
+                    foreach ($additives as $add){
+                        $Additionals += $add->additionals()->count();
+                        $Tt += $Additionals;
+                    }
+                    $Ab = $additives->count();
+                    $tab += $Ab;
                     array_push($absences, $nb);
+                    array_push($aditives, $Ab);
+                    array_push($rectifications, $Rb);
+                    array_push($aditionals,$Additionals);
                 }
                 $data = [
                     'labels' => $globalweeks,
                     'data' => $absences,
+                    'Rectifications'=>$rectifications,
+                ];
+                
+                $data2 = [
+                    'labels' => $globalweeks,
+                    'data' => $aditives,
+                    'aditionals' => $aditionals,
                 ];
                 return view(
                     'dashboard0',
@@ -50,8 +76,9 @@ class DashboardController extends Controller
                         'schoolyear_id' => $schoolyear_id,
                         'next_week' => $nextgw,
                         'data' => $data,
-                        'globalweeks' => $globalweeks,
-                        'absences' => $absences,
+                        'data2' => $data2,
+                        'additionals' => $Tt,
+                        'additives' => $tab,
                     ]
                 );
             

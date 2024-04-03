@@ -52,4 +52,9 @@ class GlobalWeek extends Model
             ->where('weeks.global_week_id', $this->id)
             ->get();
     }
+
+    public function additives()
+    {
+        return $this->hasManyThrough(Additive::class,Week::class);
+    }
 }

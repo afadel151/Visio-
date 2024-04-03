@@ -19,19 +19,7 @@ const instance = axios.create({
     },
 });
 
-// async function ShowAlert()
-// {
-    
-//     const alert = document.querySelector(".alert-div");
-//     alert.classList.remove("hidden");
-// }
-// setTimeout(ShowAlert, 2000);
-// async function HideAlert()
-// {
-    
-//     const alert = document.querySelector(".alert-success");
-//     alert.classList.add("hidden");
-// }
+
 const openModal = (button) => {
     const modal = button.nextElementSibling;
     modal.showModal();
@@ -46,60 +34,58 @@ function DeleteTd(button, SectionId) {
     const td = dialogue.parentNode.parentNode.parentNode;
     console.log(td);
 }
-document.addEventListener("DOMContentLoaded", async function () {
-    await Promise.all([
-        setupCreateTp(),
-        setupCreateCour(),
-        setupCreateTd(),
-        setupGetAvailableRooms(),
-    ]);
-    setInterval(async () => {
-        await Promise.all([
+document.addEventListener("DOMContentLoaded",  function () {
+    
+        setupCreateTp();
+        setupCreateCour();
+        setupCreateTd();
+        setupGetAvailableRooms();
+    setInterval([
             setupCreateCour(),
             setupCreateTp(),
             setupCreateTd(),
-            setupGetAvailableRooms(),
-        ]);
-    }, 10000);
-});
-async function setupCreateTp() {
+            setupGetAvailableRooms()
+        ]
+    , 10000);}
+);
+ function setupCreateTp() {
     const AllSubmitsOfTp = document.querySelectorAll(".submit-tp");
-    await Promise.all(
-        Array.from(AllSubmitsOfTp).map(async (AddTp) => {
+   
+        Array.from(AllSubmitsOfTp).map( (AddTp) => {
             AddTp.removeEventListener("click", clickHandlerTp);
             AddTp.addEventListener("click", clickHandlerTp);
         })
-    );
+   
 }
 
-async function setupCreateCour() {
+ function setupCreateCour() {
     const AllSubmitsOfCours = document.querySelectorAll(".submit-cour");
-    await Promise.all(
-        Array.from(AllSubmitsOfCours).map(async (AddCour) => {
+
+        Array.from(AllSubmitsOfCours).map( (AddCour) => {
             AddCour.removeEventListener("click", clickHandler);
             AddCour.addEventListener("click", clickHandler);
         })
-    );
+
 }
 
-async function setupCreateTd() {
+ function setupCreateTd() {
     const AllSubmitsOfTds = document.querySelectorAll(".submit-td");
-    await Promise.all(
-        Array.from(AllSubmitsOfTds).map(async (Addtd) => {
+ 
+        Array.from(AllSubmitsOfTds).map( (Addtd) => {
             Addtd.removeEventListener("click", ClickH);
             Addtd.addEventListener("click", ClickH);
         })
-    );
+ 
 }
 
-async function setupGetAvailableRooms() {
+ function setupGetAvailableRooms() {
     const AllRoomSelects = document.querySelectorAll(".form-display-button");
-    await Promise.all(
-        Array.from(AllRoomSelects).map(async (SelectRooms) => {
+   
+        Array.from(AllRoomSelects).map( (SelectRooms) => {
             SelectRooms.removeEventListener("click", clickHandlerForRooms);
             SelectRooms.addEventListener("click", clickHandlerForRooms);
         })
-    );
+
 }
 
 function clickHandlerForRooms(event) {
@@ -110,8 +96,11 @@ function clickHandlerForRooms(event) {
     const Target = td.querySelector(
         "form .form-section  .selects .available-rooms"
     );
+    console.log(Target);console.log(form);
     if (Target) {
+        
         const dateInput = form.querySelector(".date");
+        console.log(dateInput);
         const session_datee = dateInput.value;
         const timingInput = form.querySelector(".timing_id");
         const timing_idd = timingInput.value;
@@ -135,7 +124,7 @@ async function GetAvailableRooms(Target, session_datee, timing_idd) {
         console.log(error);
     }
 }
-async function HandleRooms(response, Target) {
+ function HandleRooms(response, Target) {
     const selectElement = document.createElement("select");
     selectElement.name = "room_id";
     selectElement.id = "room";
@@ -156,7 +145,7 @@ async function HandleRooms(response, Target) {
     return ;
 }
 
-async function NewInnerTd(tr, td, session) {
+ function NewInnerTd(tr, td, session) {
     td.innerHTML = `<div class="h-[150px] shadow-lg  flex flex-col border-2 bg-opacity-90 backdrop-blur transition-shadow duration-100 [transform:translate3d(0,0,0)] rounded-xl justify-center items-center">
                             <a href="/teachers/${session.teacher_id}">
                                 <p class="hover:shadow-lg  hover:bg-slate-50  bg-slate-100 px-2 rounded-xl font-bold">
@@ -203,7 +192,7 @@ async function NewInnerTd(tr, td, session) {
         CourButton.classList.add("hidden");
     }
 }
-async function NewInnerCour(tr, session) {
+ function NewInnerCour(tr, session) {
     tr.innerHTML = `
 <td colspan="3" class="session">
 <div class="h-[150px] w-[100%] shadow-lg  flex card  bg-opacity-90 backdrop-blur transition-shadow duration-100 [transform:translate3d(0,0,0)] 
@@ -388,7 +377,7 @@ async function clickHandlerTp(event) {
         }
     }
 }
-async function clickHandler(event) {
+ function clickHandler(event) {
     event.preventDefault();
     const AddCour = event.currentTarget;
     const td = AddCour.parentNode.parentNode;
@@ -407,7 +396,7 @@ async function clickHandler(event) {
         teacher_id: formData.get("teacher_id"),
         room_id: formData.get("room_id"),
     };
-    await PostCour(data, tr);
+     PostCour(data, tr);
 }
 
 async function ClickH(event) {

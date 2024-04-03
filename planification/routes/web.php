@@ -36,7 +36,7 @@ Route::get('get-message', function (){
 });
 
 Route::get('/', function () {
-    $global_week = GlobalWeek::with('events')->find(3);
+    $global_week = GlobalWeek::with('events')->find(1);
     return view('landing2',['global_week'=>$global_week]);
 })->name('home');
 // Route::get('/{battalion_id}/{week_id}',[PlanningController::class,'create']);

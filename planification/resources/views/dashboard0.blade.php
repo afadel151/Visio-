@@ -15,9 +15,8 @@
             }
         }
     @endphp
-
-    <div class="grid grid-cols-12 grid-rows-8 gap-10 w-[100%] h-[100%] p-10 pt-12">
-        <div class="col-span-3 row-span-3 ">
+    <div class="grid grid-cols-12 grid-rows-5 gap-10 w-[100%] h-[100%] p-10 pt-12">
+        <div class="col-span-3 row-span-2 ">
             <div class="card card-compact w-[100%] h-[100%] bg-base-100 shadow-xl">
                 <figure>
                     <p class="text-6xl font-bold">1st year</p>
@@ -60,12 +59,26 @@
                         @endif
                     </div>
                     <div class="card-actions justify-end">
-                        <button class="btn btn-primary">View</button>
+                        <a href="{{ route('weeks.show', $week_1->id) }}">
+                            <button class="btn btn-base-300"> Additives 
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15M9 12l3 3m0 0 3-3m-3 3V2.25" />
+                                  </svg>
+                                  
+                            </button>
+                            <button class="btn btn-primary"> Calendar 
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z" />
+                                </svg>
+                            </button>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-span-3 row-span-3 col-start-4">
+        <div class="col-span-3 row-span-2 col-start-4">
             <div class="card card-compact w-[100%] h-[100%] bg-base-100 shadow-xl">
                 <figure>
                     <p class="text-6xl font-bold">2nd year</p>
@@ -108,12 +121,25 @@
                         @endif
                     </div>
                     <div class="card-actions justify-end">
-                        <button class="btn btn-primary">View</button>
+                        <a href="{{ route('weeks.show', $week_2->id) }}">
+                            <button class="btn btn-base-300"> Additives
+                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15M9 12l3 3m0 0 3-3m-3 3V2.25" />
+                              </svg>
+                              </button>
+                            <button class="btn btn-primary "> Calendar 
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z" />
+                                </svg>
+                            </button>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-span-3 row-span-3 col-start-7">
+        <div class="col-span-3 row-span-2 col-start-7">
             <div class="card card-compact w-[100%] h-[100%] bg-base-100 shadow-xl">
                 <figure>
                     <p class="text-6xl font-bold">3rd year</p>
@@ -156,12 +182,28 @@
                         @endif
                     </div>
                     <div class="card-actions justify-end">
-                        <button class="btn btn-primary">View</button>
+                        <a href="{{ route('weeks.show', $week_3->id) }}">
+                            <button class="btn btn-base-300"> Additives <svg xmlns="http://www.w3.org/2000/svg"
+                                    fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                    class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15M9 12l3 3m0 0 3-3m-3 3V2.25" />
+                                </svg>
+                            </button>
+                            <button class="btn btn-primary"> Calendar
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5m-9-6h.008v.008H12v-.008ZM12 15h.008v.008H12V15Zm0 2.25h.008v.008H12v-.008ZM9.75 15h.008v.008H9.75V15Zm0 2.25h.008v.008H9.75v-.008ZM7.5 15h.008v.008H7.5V15Zm0 2.25h.008v.008H7.5v-.008Zm6.75-4.5h.008v.008h-.008v-.008Zm0 2.25h.008v.008h-.008V15Zm0 2.25h.008v.008h-.008v-.008Zm2.25-4.5h.008v.008H16.5v-.008Zm0 2.25h.008v.008H16.5V15Z" />
+                                </svg>
+                            </button>
+
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-span-6 row-span-5 col-start-1 row-start-4 card  bg-base-100 shadow-xl">
+        <div class="col-span-6 row-span-3 col-start-1 row-start-3 card  bg-base-100 shadow-xl">
             <div class="w-[100%] flex justify-center items-center border-b-2 h-20 bg-base-200 rounded-t-xl">
                 <p class="text-3xl font-bold ">Absences of this year</p>
             </div>
@@ -171,7 +213,7 @@
         <div class="col-span-3 row-span-3 col-start-10 row-start-1">
             <ul class="max-w-[100%] flex flex-col">
                 <li
-                    class="inline-flex items-center gap-x-2 py-3 px-4 text-sm font-medium bg-white border border-gray-200 text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg dark:bg-slate-900 dark:border-gray-700 dark:text-white">
+                    class="inline-flex items-center gap-x-2 py-3 px-4 text-sm font-medium bg-white border border-gray-200 text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg ">
                     <div class="flex justify-between w-full">
                         1st year additives
                         <span
@@ -179,7 +221,7 @@
                     </div>
                 </li>
                 <li
-                    class="inline-flex items-center gap-x-2 py-3 px-4 text-sm font-medium bg-white border border-gray-200 text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg dark:bg-slate-900 dark:border-gray-700 dark:text-white">
+                    class="inline-flex items-center gap-x-2 py-3 px-4 text-sm font-medium bg-white border border-gray-200 text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg ">
                     <div class="flex justify-between w-full">
                         2nd year additives
                         <span
@@ -187,7 +229,7 @@
                     </div>
                 </li>
                 <li
-                    class="inline-flex items-center gap-x-2 py-3 px-4 text-sm font-medium bg-white border border-gray-200 text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg dark:bg-slate-900 dark:border-gray-700 dark:text-white">
+                    class="inline-flex items-center gap-x-2 py-3 px-4 text-sm font-medium bg-white border border-gray-200 text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg ">
                     <div class="flex justify-between w-full">
                         3rd year additives
                         <span
@@ -197,30 +239,122 @@
             </ul>
             <div id="chart"></div>
         </div>
-        <div class="col-span-3 row-span-2 col-start-7 row-start-4">9</div>
-        <div class="col-span-3 row-span-2 col-start-10 row-start-4">10</div>
-        <div class="col-span-6 row-span-2 col-start-7 row-start-6">11</div>
-    </div>
-@endsection
-@push('scripts')
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
-    <script>
-        var options = {
-            chart: {
-                type: 'line'
-            },
-            series: [{
-                name: 'sales',
-                data: @json($data['data'])
-            }],
-            xaxis: {
-                categories: @json($data['labels'])
+        <div class="col-span-3 row-span-2 col-start-7 row-start-3">
+            <div class="h-[100%] w-[100%] bg-base-200">
+
+            </div>
+        </div>
+        <div class="col-span-3 row-span-2 col-start-10 row-start-3">
+            <div class="h-[100%] w-[100%] bg-base-200">
+
+            </div>
+        </div>
+        <div class="col-span-6 row-span-1 col-start-7 row-start-5">
+            <div class="h-[100%] w-[100%] ">
+                <div class="stats h-[100%] w-[100%] bg-base-100 stats-vertical lg:stats-horizontal shadow">
+                    @php
+                        $sessions = $global_week->sessions;
+                        $cours = $sessions->where('session_type', 'cour')->count();
+                        $Tds = $sessions->where('session_type', 'td')->count();
+                        $Tps = $sessions->where('session_type', 'tps')->count();
+                    @endphp
+                    <div class="stat">
+                        <div class="stat-title">Total Sessions</div>
+                        <div class="stat-value">{{ $sessions->count() }}</div>
+                        <div class="stat-desc text-xl">{{ $cours }} Cours , {{ $Tds }} Tds,
+                            {{ $Tps }} Tps</div>
+                    </div>
+
+                    <div class="stat">
+                        <div class="stat-title">Total Absences</div>
+                        <div class="stat-value">{{ $global_week->sessions->where('absented', 1)->count() }}</div>
+                        <div class="stat-desc text-xl">{{ $global_week->sessions->where('caughtup', 1)->count() }} Caught
+                            up</div>
+                    </div>
+
+                    <div class="stat">
+                        <div class="stat-title">Total Aditives</div>
+                        <div class="stat-value">{{ $additives }}</div>
+                        <div class="stat-desc">{{ $additionals }} Additional</div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    @endsection
+    @push('scripts')
+        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+        <script>
+            var options = {
+                chart: {
+                    type: 'area',
+
+                },
+                series: [{
+                        name: 'Absences',
+                        data: @json($data['data'])
+                    },
+                    {
+                        name: 'Catch Ups',
+                        data: @json($data['Rectifications']),
+                    }
+                ],
+                stroke: {
+                    curve: 'smooth'
+                },
+
+                xaxis: {
+                    // labels: {
+                    //     rotate: 0, // no need to rotate since hiding labels gives plenty of room
+                    //     // hideOverlappingLabels: false // all labels must be rendered
+                    // }
+                    labels: {
+                        show: false,
+                    },
+                    categories: @json($data['labels']),
+
+                },
+
             }
-        }
 
-        var chart = new ApexCharts(document.querySelector("#barChart"), options);
+            var chart = new ApexCharts(document.querySelector("#barChart"), options);
 
-        chart.render();
+            chart.render();
         </script>
+        <script>
+            var options = {
+                chart: {
+                    type: 'line'
+                },
+                series: [{
+                    name: 'Additives',
+                    data: @json($data2['data'])
+                }, {
+                    name: 'Additionals',
+                    data: @json($data2['aditionals'])
+                }],
+                xaxis: {
+                    labels: {
+                        show: false,
+                    },
+                    categories: @json($data2['labels'])
+                },
+                yaxis: {
+                    labels: {
+                        show: false,
+                    }
+                },
+                toolbar: {
+                    show: false,
+                },
+                legend: {
+                    show: false,
+                }
 
-@endpush
+            }
+
+            var chart = new ApexCharts(document.querySelector("#chart"), options);
+
+            chart.render();
+        </script>
+    @endpush

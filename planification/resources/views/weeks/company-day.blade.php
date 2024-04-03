@@ -66,7 +66,7 @@
                     <td colspan="3" class=" z-0 session ">
 
                         <div
-                            class="h-[150px] z-0 w-[100%] shadow-lg flex card  bg-opacity-90 backdrop-blur transition-shadow duration-100 [transform:translate3d(0,0,0)] 
+                            class="h-[150px] border-2 z-0 w-[100%] shadow-lg flex card  bg-opacity-90 backdrop-blur transition-shadow duration-100 [transform:translate3d(0,0,0)] 
                              flex-col rounded-xl justify-center items-center">
                             @if ($c->rectified == true && $c->absented == false)
                                 <span class=" badge badge-accent">rectified</span>
@@ -603,8 +603,8 @@
                                             d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                     </svg>
                                 </a>
-                                <input type="hidden" name="date" value="{{ $date }}">
-                                <input type="hidden" name="timing_id" value="{{ $timing->id }}">
+                                <input type="hidden" name="date" class="date" value="{{ $date }}">
+                                <input type="hidden" name="timing_id" class="timing_id" value="{{ $timing->id }}">
                                 <input type="hidden" name="week_id" value="{{ $week_id }}">
                                 <input type="hidden" name="sessionable_type" value="App\Models\Company">
                                 <input type="hidden" name="sessionable_id" value="{{ $company->id }}">
