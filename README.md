@@ -1,6 +1,11 @@
-# Nexcet
-![letsplan](https://github.com/Bruheem/Visio-/assets/117863082/1c2e1fe5-b384-475c-a57f-e1610126190b)
+# Nexcet   
+
 Nexcet is a flexible web application designed for planning courses and classes within a school environment. It serves as a comprehensive tool for departments involved in curriculum planning and programming. The application assists in scheduling studies, exams, and various activities, while also providing statistical insights into teacher courses and absences.
+## Landing page
+![letsplan](https://github.com/Bruheem/Visio-/assets/117863082/1c2e1fe5-b384-475c-a57f-e1610126190b)
+## Dashboard
+![127 0 0 1_8000_dashboard (2)](https://github.com/Bruheem/Visio-/assets/117863082/aa682534-4056-4f96-9f8d-65f886734eab)
+
 
 ## Table of Contents
 
