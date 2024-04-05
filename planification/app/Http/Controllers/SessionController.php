@@ -14,11 +14,9 @@ class SessionController extends Controller
     {
         $timing_id =  $request->input('timing_id');
         $date = $request->input('session_date');
-        $week_id = $request->input('week_id');
-        $absences = Session::with('room','teacher','timing','sessionable','module')
+        $absences = Session::with('room','teacher','timing','sessionable','module','absence')
                     ->where('session_date',$date)
                     ->where('timing_id',$timing_id)
-                    ->where('week_id',$week_id)
                     ->where('absented',1)
                     ->where('rectified',0)
                     ->get();
@@ -47,18 +45,9 @@ class SessionController extends Controller
     public function create(Request $request)
     {
         $session = new Session();
-        // $session->session_date = $request->query('session_date');
-        // $session->timing_id = $request->query('timing_id');
-        // $session->week_id = $request->query('week_id');
-        // $session->sessionable_type = $request->query('sessionable_type');
-        // $session->sessionable_id = $request->query('sessionable_id');
-        // $session->session_type = $request->query('session_type');
-        // $session->module_id = $request->query('module_id');
-        // $session->teacher_id = $request->query('teacher_id');
-        // $session->room_id = $request->query('room_id');
-        // $session->save();  
+          
         $session = Session::create($request->all());
-        // $session->load('teacher', 'module', 'room');
+       
         $session->load('teacher', 'module', 'room');
         return response()->json($session, 201);
     }

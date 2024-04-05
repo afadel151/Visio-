@@ -27,6 +27,7 @@ class CatchUp extends Model
     {
         return $this->belongsTo(Room::class,'room_id');
     }
+
 }
 // $InSessions = Session::where('session_date', $date)->where('timing_id', $timing_id)->pluck('room_id');
         // $InAdditionals = Additional::where('additional_date', $date)->where('timing_id', $timing_id)->pluck('room_id')->toArray();

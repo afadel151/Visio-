@@ -62,9 +62,9 @@
         {{-- {{ $teacher }} --}}
         <div class="card mt-20 mb-20 w-[100%]">
             <div class="card-header text-center text-3xl font-bold">Modules</div>
-            <div class="card-body">
+            <div class="card-body relative">
                 {{-- {!! $dataTable->table() !!} --}}
-                <table class="table table-bordered display  table-fixed text-center" id="modules">
+                <table class="table display  table-fixed text-center" id="modules">
                     <thead class="text-center">
                         <tr>
                             <th class="text-center">No</th>
@@ -110,6 +110,53 @@
                     </tbody>
                 </table>
             </div>
+            <button id="show-module-add" class="absolute btn -bottom-14 right-0">Add</button>
+        </div>
+        <div id="parent-of-module"
+            class="p-4 border-[3px]  w-[50%] bg-slate-50 rounded-xl flex flex-col justify-center items-center"
+            style="display: none;">
+
+            <div class="flex flex-col justify-center items-center space-y-4">
+                <form action="{{ route('teachers.add_module',['id'=>$teacher->id] )}}" enctype="multipart/form-data" method="POST" class="flex flex-col justify-center items-center space-y-6" id="">
+                    @csrf
+                    <div class="flex space-x-3 ">
+                        <div class="flex flex-col justify-center items-center">
+                            <p class="text-2xl">Select Schoolyear</p>
+                            <select name="schoolyear_id" id="" class="w-[300px] select-bordered select ">
+                                @foreach ($schoolyears as $schoolyear)
+                                    <option value="{{ $schoolyear->id }}">Schoolyear : {{ $schoolyear->schoolyear }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="flex flex-col justify-center items-center">
+                            <p class="text-2xl">Select module</p>
+                            <select name="module_id" id="" class="w-[300px] select-bordered select">
+                                @foreach ($allmodules as $module)
+                                    <option value="{{ $module->id }}">{{ $module->module }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="w-full flex mt-6 justify-around items-center">
+                        <div class="flex flex-col justify-center items-center">
+                            <p class="text-xl">COUR</p>
+                            <input name="cour" type="checkbox" class="toggle" />
+                        </div>
+                        <div class="flex flex-col justify-center items-center">
+                            <p class="text-xl">TD</p>
+                            <input name="td" type="checkbox" class="toggle" />
+                        </div>
+                        <div class="flex flex-col justify-center items-center">
+                            <p class="text-xl">TP</p>
+                            <input name="tp" type="checkbox" class="toggle" />
+                        </div>
+
+                    </div>
+
+                    <input type="submit" name="submit" value="Add" class="btn  ">
+                </form>
+            </div>
 
         </div>
         <div class="card mt-10 mb-20 w-[100%]">
@@ -132,15 +179,22 @@
             </div>
         @endsection
         @push('scripts')
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
-            <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-            <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+            <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+            <script src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>
+            <script src="https://cdn.datatables.net/2.0.2/js/dataTables.bootstrap5.js"></script>
+            <script src="https://cdn.datatables.net/buttons/3.0.1/js/dataTables.buttons.js"></script>
             <script>
+                $(document).ready(function() {
+                    $('#show-module-add').click(function() {
+                        $('#parent-of-module').slideToggle();
+                    });
+                });
                 $(function() {
                     var url = "{{ route('teachers.show', $teacher->id) }}";
                     var table = $('#modules').DataTable({
+                        destroy: true,
                         processing: true,
                         serverSide: true,
                         searching: true,
@@ -206,9 +260,7 @@
                                 name: 'action'
                             },
                         ],
-                        drawCallback: function(settings) {
-                            $('#modules tbody tr').addClass('hover:scale-105  duration-500');
-                        }
+
                     });
 
                 });
@@ -225,7 +277,7 @@
                         serverSide: true,
                         searching: true,
                         ajax: url2,
-
+                        destroy: true,
                         columns: [{
                                 data: 'module',
                                 name: 'module',
@@ -270,9 +322,7 @@
 
                             },
                         ],
-                        drawCallback: function(settings) {
-                            $('#absences tbody tr').addClass('hover:scale-105  duration-500');
-                        }
+
                     });
 
                 });
@@ -303,14 +353,5 @@
                         });
                 }
             </script>
-            <script>
-                document.addEventListener("DOMContentLoaded", function() {
-
-                    const rows = document.querySelectorAll("tr");
-                    rows.forEach(row => {
-                        row.classList.add("hover:scale-110");
-                        row.classList.add("duration-300");
-                    });
-                });
-            </script>
+            <script></script>
         @endpush

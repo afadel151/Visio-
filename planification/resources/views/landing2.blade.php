@@ -197,7 +197,7 @@
             <div class="col-span-full hidden lg:col-span-1 lg:block">
                 <a class="flex-none text-xl font-semibold "
                     href="#" aria-label="Brand">Nexcet</a>
-                <p class="mt-3 text-xs sm:text-sm text-gray-600 ">© 2022 Fadel.</p>
+                <p class="mt-3 text-xs sm:text-sm text-gray-600 ">© 2024 Fadel.</p>
             </div>
             <!-- End Col -->
 

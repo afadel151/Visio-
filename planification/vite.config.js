@@ -9,6 +9,7 @@ export default defineConfig({
                 'resources/js/app.js',
                 'resource/js/mark-absence.ts',
                 'resource/js/dashboard.js',
+                'resource/js/additional-add-delete.ts',
                 // 'resource/js/deletetd.ts',
                 // 'resources/css/insertsession.css'
             ],

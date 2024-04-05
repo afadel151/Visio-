@@ -1,5 +1,7 @@
 <?php
 // use App\Http\Controllers;
+use App\Http\Controllers\AbsenceController;
+use App\Http\Controllers\AdditionalController;
 use App\Http\Controllers\AdditiveController;
 use App\Http\Controllers\BattalionController;
 use App\Http\Controllers\CompanyController;
@@ -58,9 +60,9 @@ Route::middleware('auth')->group(function () {
             Route::get('/create',[TeacherController::class,'create'])->name('teachers.create');
             Route::get('/delete',[TeacherController::class,'delete'])->name('teachers.delete');
             Route::post('/store',[TeacherController::class,'store'])->name('teachers.store');
-            // Route::post('/updatepage',[TeacherController::class,'updatepage'])->name('teachers.updatepage');
             Route::post('/update',[TeacherController::class,'update'])->name('teachers.update');
             Route::get('/{id}',[TeacherController::class,'show'])->name('teachers.show');
+            Route::post('/{id}/add_module',[TeacherController::class,'add_module'])->name('teachers.add_module');
             Route::get('/absences/{id}',[TeacherController::class,'absences'])->name('teachers.absences');
         });
         Route::prefix('sessions')->group(function () {
@@ -79,11 +81,12 @@ Route::middleware('auth')->group(function () {
         });
         Route::prefix('modules')->group(function () {
             Route::get('/',[ModuleController::class,'index'])->name('modules.index');
+            Route::get('/{id}',[ModuleController::class,'show'])->name('modules.show');
             Route::get('/create',[ModuleController::class,'index'])->name('modules.create');
             Route::post('/store',[ModuleController::class,'store'])->name('modules.store');
             Route::post('/update',[ModuleController::class,'update'])->name('modules.update');
             Route::delete('/delete',[ModuleController::class,'delete'])->name('modules.delete');
-            Route::get('/{id}',[ModuleController::class,'show'])->name('modules.show');
+
         });
         Route::prefix('rooms')->group(function () {
             Route::get('/',[RoomController::class,'index'])->name('rooms.index');
@@ -101,6 +104,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/update',[WeekController::class,'update'])->name('weeks.update');
             Route::delete('/delete',[WeekController::class,'delete'])->name('weeks.delete');
             Route::get('/{id}',[WeekController::class,'show'])->name('weeks.show');
+            Route::get('/{id}/pdf',[WeekController::class,'export_pdf'])->name('weeks.export_pdf');
             Route::get('/{id}/additives',[WeekController::class,'additives'])->name('weeks.additives');
             Route::post('/{id}/additives_add',[WeekController::class,'additives_add'])->name('weeks.additives_add');
         });
@@ -108,8 +112,9 @@ Route::middleware('auth')->group(function () {
             Route::get('/',[GlobalWeekController::class,'index'])->name('global_weeks.index');
             Route::get('/create',[GlobalWeekController::class,'create'])->name('global_weeks.create');
             Route::post('/store',[GlobalWeekController::class,'store'])->name('global_weeks.store');
+            Route::post('/store_middle',[GlobalWeekController::class,'store_middle'])->name('global_weeks.store_middle');
             Route::post('/update',[GlobalWeekController::class,'update'])->name('global_weeks.update');
-            Route::delete('/delete',[GlobalWeekController::class,'delete'])->name('global_weeks.delete');
+            Route::get('/destroy/{id}',[GlobalWeekController::class,'destroy'])->name('global_weeks.destroy');
             Route::get('/{id}',[GlobalWeekController::class,'show'])->name('global_weeks.show');
         });
         Route::prefix('battalions')->group(function () {
@@ -160,11 +165,20 @@ Route::middleware('auth')->group(function () {
             Route::post('/update',[AdditiveController::class,'update'])->name('additives.update');
             Route::get('/{id}',[AdditiveController::class,'show'])->name('additives.show');
         });
-        
+        Route::prefix('absences')->group(function () {
+            Route::get('/',[AbsenceController::class,'index'])->name('absences.index');
+            Route::post('/create_catchup',[AbsenceController::class,'create_catchup'])->name('absences.create_catchup');
+            Route::get('/delete/{id}',[AbsenceController::class, 'delete'])->name('absences.delete');
+            Route::post('/update',[AbsenceController::class,'update'])->name('absences.update');
+            Route::get('/{id}',[AbsenceController::class,'show'])->name('absences.show');
+        });
+        Route::prefix('additionals')->group(function () {
+            Route::get('/get_available_timings',[AdditionalController::class,'get_available_timings']);
+        });
 
     });
 });
-// Auth::routes();
+// Auth::routes(); get_available_timings
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index']);
 

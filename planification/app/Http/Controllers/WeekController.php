@@ -10,7 +10,7 @@ use App\Models\Timing;
 use App\Models\Battalion;
 use App\Models\Room;
 use Yajra\DataTables\DataTables;
-
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class WeekController extends Controller
 {
@@ -22,8 +22,22 @@ class WeekController extends Controller
     {
 
     }
-    public function store()
+    public function export_pdf($id)
     {
+        $week = Week::find($id);
+        $battalion_id = $week->battalion_id;
+        $battalion = Battalion::find($battalion_id);
+        $sessions = Session::with('teacher', 'module', 'room','rectification')->where('week_id', $week->id)->get();
+        $timings = Timing::all();
+        $rooms = Room::all();
+        $pdf = Pdf::loadView('weeks.create', [
+            'battalion' => $battalion,
+            'week' => $week,
+            'timings' => $timings,
+           'sessions' => $sessions,
+            'rooms' => $rooms
+        ]);
+        return $pdf->download('invoice.pdf');
     }
     public function show($id)
     {

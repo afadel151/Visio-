@@ -55,7 +55,6 @@ async function GetDateTimeAbsences(Target, session_date, timing_id, week_id) {
         const p = document.createElement("p");
         p.innerText = "Absences";
         p.classList.add("w-[100px]", "text-2xl");
-        console.log(p);
         sessions.forEach(function (session) {
             const option = document.createElement("option");
             option.value = session.id;
@@ -81,7 +80,6 @@ async function GetDateTimeAbsences(Target, session_date, timing_id, week_id) {
         Button.innerText = "Select";
         Target.appendChild(Button);
         SetupSelectAbsenceButton();
-
     }
     catch (error) {
         console.log(error);
@@ -99,7 +97,6 @@ async function ClickSelectSession(event) {
     const SelectedSession = document.querySelector("#absences-select");
     if (SelectedSession && SelectedSession instanceof HTMLSelectElement) {
         const SessionId = SelectedSession.value;
-        console.log(SessionId);
         const Target = document.querySelector("#insert-catchup");
         const NewSelect = document.createElement("select");
         NewSelect.id = 'catchup-timing-select';
@@ -211,6 +208,45 @@ async function ClickSelectDateTime(event) {
     }
 }
 
-function  SetupSelectRoomRect() {
-    
+function SetupSelectRoomRect() {
+    const SelectRoom = document.querySelector("#catchup-room-select-button");
+    if (SelectRoom) {
+        SelectRoom.addEventListener("click", ClickSelectRoom);
+    }
+}
+
+async function ClickSelectRoom(event) {
+    event.preventDefault();
+    const SelectRoom = document.querySelector("#select-catchup-room") as HTMLSelectElement;
+    if (SelectRoom) {
+        const SelectdRoomId = SelectRoom.value;
+        const SelectTimingToCatchup = document.querySelector("#catchup-timing-select") as HTMLSelectElement;
+        const SelectDateInput = document.querySelector("#catch-up-date-input") as HTMLSelectElement;
+        const SelectedSession = document.querySelector("#absences-select") as HTMLSelectElement;
+        const TiminId = SelectTimingToCatchup.value;
+        const Date = SelectDateInput.value;
+        const SessionId = SelectedSession.value;
+        const AdditiveIdDiv = document.querySelector("#additive_id");
+        if (AdditiveIdDiv && AdditiveIdDiv instanceof HTMLDivElement) {
+            const AdditiveId = AdditiveIdDiv.innerText.trim();
+            try {
+                let response = await axios.post('http://127.0.0.1:8000/absences/create_catchup',
+                    {
+                        session_id: SessionId,
+                        timing_id: TiminId,
+                        catchup_date: Date,
+                        room_id: SelectdRoomId,
+                        additive_id: AdditiveId,
+                    }
+                );
+                location.reload();
+            } catch (error) {
+                console.log(error);
+
+
+            }
+        }
+
+    }
+
 }

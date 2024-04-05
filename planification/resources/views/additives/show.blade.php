@@ -15,9 +15,8 @@
         {{-- RECTIFICATIONS --}}
         <div class=" relative mt-20 sm:rounded-lg w-[80%] pb-10 px-4 flex flex-col space-y-4 justify-center items-center">
             <p class="font-bold text-5xl">Rectifications</p>
-            <table
-                class="w-[100%] table relative text-sm shadow-xl p-4  text-center rtl:text-right text-gray-500 dark:text-gray-400">
-                <thead class="text-xs  text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <table class="w-[100%] table relative text-sm shadow-xl p-4  text-center rtl:text-right text-gray-500 ">
+                <thead class="text-xs  text-gray-700 uppercase bg-gray-50  ">
                     <tr class="h-[60px]">
                         <th scope="col" class="px-6 py-3">Session date</th>
                         <th scope="col" class="px-6 py-3">Session Time</th>
@@ -37,7 +36,7 @@
                             $session = $rect->session;
                         @endphp
                         <tr
-                            class="odd:bg-white h-[60px] odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                            class="odd:bg-white h-[60px] odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b ">
                             <th scope="row"
                                 class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 {{ $session->session_date }}</th>
@@ -98,9 +97,8 @@
         {{-- CATCHUP ABSENCES --}}
         <div class=" relative mt-20 sm:rounded-lg w-[80%] pb-10 px-4 flex flex-col space-y-4 justify-center items-center">
             <p class="font-bold text-5xl">Catch up Absences</p>
-            <table
-                class="w-[100%] table relative text-sm shadow-xl p-4  text-center rtl:text-right text-gray-500 dark:text-gray-400">
-                <thead class="text-xs  text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <table class="w-[100%] table relative text-sm shadow-xl p-4  text-center rtl:text-right text-gray-500 ">
+                <thead class="text-xs  text-gray-700 uppercase bg-gray-50  ">
                     <tr class="h-[60px]">
                         <th scope="col" class="px-6 py-3">Session date</th>
                         <th scope="col" class="px-6 py-3">Session Time</th>
@@ -120,10 +118,8 @@
                             $session = $absence->absenceable;
                         @endphp
                         @if ($session)
-                            <tr
-                                class="odd:bg-white h-[60px] odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                                <th scope="row"
-                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            <tr class="odd:bg-white h-[60px] border-b ">
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
                                     {{ $session->session_date }}</th>
                                 <td class="px-6 py-4">{{ $session->timing->session_start }} ->
                                     {{ $session->timing->session_finish }}</td>
@@ -178,6 +174,111 @@
             </div>
 
         </div>
+        <div class=" relative mt-20 sm:rounded-lg w-[80%] pb-10 px-4 flex flex-col space-y-4 justify-center items-center">
+            <p class="font-bold text-5xl">Additionals</p>
+            <table class="w-[100%] table relative text-sm shadow-xl p-4  text-center rtl:text-right text-gray-500 ">
+                <thead class="text-xs  text-gray-700 uppercase bg-gray-50  ">
+                    <tr class="h-[60px]">
+                        <th scope="col" class="px-6 py-3">Additional date</th>
+                        <th scope="col" class="px-6 py-3">Additional Time</th>
+                        <th scope="col" class="px-6 py-3">Teacher</th>
+                        <th scope="col" class="px-6 py-3">Module</th>
+                        <th scope="col" class="px-6 py-3">Room</th>
+                        <th scope="col" class="px-6 py-3">Sections</th>
+                        <th scope="col" class="px-6 py-3">Companies</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="rectifications-tbody">
+                    @foreach ($additionals as $additional)
+                        <tr
+                            class="odd:bg-white h-[60px] odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b ">
+                            <th scope="row"
+                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                {{ $additional->additional_date }}</th>
+                            <td class="px-6 py-4">{{ $additional->timing->session_start }} ->
+                                {{ $additional->timing->session_finish }}</td>
+                            <td class="px-6 py-4"> {{ $additional->teacher->teacher_name }}</td>
+                            <td class="px-6 py-4">{{ $additional->module->module }}</td>
+                            <td class="px-6 py-4">{{ $additional->room->room }}</td>
+                            <td class="px-6 py-4">{{ $additional->additionables->where('additionable_type','App\\Models\\Section') }}</td>
+                            <td class="px-6 py-4">{{ $additional->additionables->where('additionable_type','App\\Models\\Company') }}</td>
+                            <td class="px-2 py-4 "><a href="#"
+                                    class="delete-rectification font-medium text-red-600 hover:no-underline  dark:text-blue-500 p-4  duration-300  hover:bg-red-50 hover:rounded-xl h-[100%] w-[100%]">Delete</a>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            <button id="show-additional-insert"
+                class="absolute -bottom-4 right-3 bg-indigo-500 rounded-xl w-40 h-12 text-slate-50 text-xl hover:bg-slate-200 hover:text-gray-900 hover:border-2 hover:border-slate-900 hover:scale-110 duration-300">insert</button>
+        </div>
+        <div id="parent-of-additonal"
+            class="p-4 border-[3px]  w-[50%] bg-slate-50 rounded-xl flex flex-col justify-center items-center"
+            style="display: none;">
+
+            <div class="flex flex-col justify-center items-center space-y-4" id="get-date-time">
+                <form action="" id="select-additional-props">
+                    <input type="hidden" id="week_id" name="week_id" value="{{ $week->id }}">
+                    <div class="flex space-x-3 ">
+                        <div class="flex flex-col justify-center items-center">
+                            <p class="text-2xl">Select Sections</p>
+                            <select name="sections[]" id="additional-select-sections"
+                                class="w-[300px] input  border-2 focus:h-60 focus:overflow-scroll input-bordered  focus:border-2 rounded-xl hover:scale-110 duration-150"
+                                multiple>
+                                @php
+                                    $sections = $additive->week->battalion->sections;
+                                @endphp
+                                @foreach ($sections as $section)
+                                    <option value="{{ $section->id }}">{{ $section->section }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="flex flex-col justify-center items-center">
+                            <p class="text-2xl">Select Companies</p>
+                            @php
+                                $companies = $additive->week->battalion->companies;
+                            @endphp
+                            <select name="companies[]" id="additional-select-companies" multiple
+                                class="w-[300px] input  focus:h-40 input-bordered focus:overflow-scroll border-2  focus:border-2 rounded-xl hover:scale-110 duration-150">
+
+                                @foreach ($companies as $company)
+                                    <option value="{{ $company->id }}">Company {{ $company->company }} </option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="flex flex-col justify-center items-center">
+                        <p class="text-2xl">Select Date</p>
+                        <input type="date" name="session_date" id="rectify-date"
+                            class="w-[300px] input focus:border-blue-400 rounded-xl input-bordered ">
+                    </div>
+                    <div class="flex flex-col justify-center items-center">
+                        <p class="text-2xl">Select Type</p>
+                        <select name="additional_type" id="additional-select-type" class="select select-bordered" id="additional-type" >
+                            
+                            <option value="cour">Cour</option>
+                            <option value="td">Td</option>
+                        </select>
+                    </div>
+                    {{-- <div class="flex flex-col justify-center items-center">
+                        <p class="text-2xl">Select Time</p>
+                        <select name="timing_id" id="additional-select-timing"
+                            class="w-[300px]  rounded-xl select select-bordered">
+                            @foreach ($timings as $timing)
+                                <option value="{{ $timing->id }}">{{ $timing->session_start }} ->
+                                    {{ $timing->session_finish }}</option>
+                            @endforeach
+                        </select>
+                    </div> --}}
+                </form>
+                <button id="additional-search-room"
+                    class="bg-indigo-500 rounded-xl w-40 h-12 text-slate-50 text-xl hover:bg-slate-200 hover:text-gray-900 hover:border-2 hover:border-slate-900 hover:scale-110 duration-300">Search</button>
+            </div>
+            <div id="insert-additional"
+                class="w-[400px]  focus:border-blue-400 flex  flex-col justify-center items-center space-y-4 focus:border-2 rounded-xl ">
+            </div>
+        </div>
 
     </div>
     <script>
@@ -187,15 +288,19 @@
 @push('scripts')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script>
-        $(document).ready(function(){
-            $('#show-catchup-insert').click(function(){
+        $(document).ready(function() {
+            $('#show-catchup-insert').click(function() {
                 $('#parent-of-catchup').slideToggle();
             });
-            $('#show-rect-insert').click(function(){
+            $('#show-rect-insert').click(function() {
                 $('#parent-of-rectify').slideToggle();
+            });
+            $('#show-additional-insert').click(function() {
+                $('#parent-of-additonal').slideToggle();
             });
         });
     </script>
     @vite('resources/js/rectification-add-delete.ts')
     @vite('resources/js/catchupt-add-delete.ts')
+    @vite('resources/js/additional-add-delete.ts')
 @endpush

@@ -17,7 +17,7 @@ class Additional extends Model
     {
         return $this->morphedByMany(Section::class, 'additionables');
     }
- 
+    
     /**
      * Get all of the videos that are assigned this tag.
      */

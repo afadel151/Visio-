@@ -1,28 +1,19 @@
 @extends('default')
 @push('header')
-    <link rel="stylesheet" href="//cdn.datatables.net/2.0.1/css/dataTables.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
-    <link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
-    <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
-    <script>
-        $(document).ready(function() {
-            $('table.display').DataTable();
-        });
-    </script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/2.0.2/css/dataTables.bootstrap5.css" rel="stylesheet">
 @endpush
 @section('content')
-    <div class="  h-[130vh] w-[90%]  flex flex-col justify-between mt-10 items-center p-20">
+    <div class="  h-[130vh] w-[100%]  flex flex-col justify-between mt-10 items-center p-20">
         <div class="flex flex-col justify-center items-center w-[100%]">
             {{-- schoolyars datatable --}}
             <p class="text-6xl font-bold ">School year : {{ $schoolyear->schoolyear }} </p>
-            <div class="card mt-4 rounded-2xl  z-0  mb-20  w-[100%]">
+            <div class="card mt-4 rounded-2xl  z-0  mb-20  w-[50%]">
                 <div class="card-header z-0 text-2xl ">Battalions</div>
                 <div class="card-body w-[100%] z-0">
-                    <table class="z-0 display" id="battalions">
+                    <table class="z-0  w-[100%]  display" id="battalions">
                         <thead>
-                            <th>No</th>
                             <th>Battalion</th>
-                            <th>Schoolyear id</th>
                             <th>Action</th>
                         </thead>
                     </table>
@@ -30,36 +21,20 @@
             </div>
             <div class="card mt-4  rounded-2xl  z-0  mb-20  w-[100%]">
 
-                <div class="card-header z-0 text-2xl ">Manage School Years</div>
+                <div class="card-header z-0 text-2xl ">Manage School year Calendar</div>
                 <div class="card-body w-[100%] z-0">
-                    <table class="z-0 display table" id="global_weeks">
+                    <table class="z-0 relative display text-center table" id="global_weeks">
                         <thead>
-                            <th>No</th>
-                            <th>Start</th>
-                            <th>End</th>
-                            <th>1er annee</th>
-                            <th>2em annee</th>
-                            <th>3em annee</th>
-                            <th>Events</th>
-                            <th>Sport events</th>
-
+                            <th class="exclude">Start</th>
+                            <th class="exclude">End</th>
+                            <th class="exclude">1er annee</th>
+                            <th class="exclude">2em annee</th>
+                            <th class="exclude">3em annee</th>
+                            <th class="exclude">Events</th>
+                            <th class="exclude">Sport events</th>
+                            <th class="exclude">Action</th>
                         </thead>
                         <tbody class="z-0">
-
-                            @foreach ($global_weeks as $global_week)
-                                <tr>
-                                    <td>{{ $global_week->id }}</td>
-                                    <td>{{ $global_week->star_week_date }}</td>
-                                    <td>{{ $global_week->end_week_date }}</td>
-                                    <td> {{ $global_week->battalion_1 }} </td>
-                                    <td>{{ $global_week->battalion_2 }}</td>
-                                    <td>{{ $global_week->battalion_3 }}</td>
-                                    <td> {{ $global_week->events }}</td>
-                                    <td>{{ $global_week->sport_events }}</td>
-
-                                </tr>
-                            @endforeach
-
                         </tbody>
 
                     </table>
@@ -87,7 +62,7 @@
                             <div class="flex justify-between space-x-2 items-center">
                                 <label for="1">type</label>
                                 <select name="type_1" id="1" class="h-10 rounded-lg focus:border-indigo-400 w-30">
-                                    <option value="Cours magistreau">Cours magistreau</option>
+                                    <option value="Cours Magistreaux">Cours Magistreaux</option>
                                     <option value="Cours">Cours</option>
                                     <option value="Examens">Examens</option>
                                     <option value="Detente">Detente</option>
@@ -103,7 +78,7 @@
                                     <option value="2">S2</option>
                                 </select>
                             </div>
-                           
+
                             <div class="flex justify-between space-x-2 items-center">
                                 <label for="cc1">Control Continue</label>
                                 <input type="checkbox" name="cc_1" value="true"
@@ -122,7 +97,7 @@
 
                                 <label for="2">type</label>
                                 <select name="type_2" id="2" class="h-10 rounded-lg focus:border-indigo-400 w-30">
-                                    <option value="Cours magistreau">Cours magistreau</option>
+                                    <option value="Cours Magistreaux">Cours Magistreaux</option>
                                     <option value="Cours">Cours</option>
                                     <option value="Examens">Examens</option>
                                     <option value="Detente">Detente</option>
@@ -138,7 +113,7 @@
                                     <option value="2">S2</option>
                                 </select>
                             </div>
-                            
+
                             <div class="flex justify-between space-x-2 items-center">
                                 <label for="cc2">Control Continue </label>
                                 <input type="checkbox" name="cc_2" class="rounded-lg focus:border-indigo-400"
@@ -156,7 +131,7 @@
                                 <label for="3">type</label>
                                 <select name="type_3" id="3"
                                     class="h-10 rounded-lg focus:border-indigo-400 w-30">
-                                    <option value="Cours magistreau">Cours magistreau</option>
+                                    <option value="Cours Magistreaux">Cours Magistreaux</option>
                                     <option value="Cours">Cours</option>
                                     <option value="Examens">Examens</option>
                                     <option value="Detente">Detente</option>
@@ -172,7 +147,7 @@
                                     <option value="2">S2</option>
                                 </select>
                             </div>
-                            
+
                             <div class="flex justify-between space-x-2 items-center">
                                 <label for="cc3">Control Continue</label>
                                 <input type="checkbox" name="cc_3" value="true"
@@ -206,31 +181,32 @@
         </div>
     @endsection
     @push('scripts')
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.js"></script>
-        <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-        <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+        <script src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>
+        <script src="https://cdn.datatables.net/2.0.2/js/dataTables.bootstrap5.js"></script>
+        <script src="https://cdn.datatables.net/buttons/3.0.1/js/dataTables.buttons.js"></script>
+        <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.dataTables.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.html5.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.print.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
         <script>
             $(function() {
                 var url = "{{ route('schoolyears.battalions', $schoolyear->id) }}";
                 var table1 = $('#battalions').DataTable({
                     processing: true,
                     serverSide: true,
+
                     ajax: url,
                     columns: [{
-                            data: 'id',
-                            name: 'id'
-                        },
-                        {
                             data: 'battalion',
                             name: 'battalion',
                             searchable: true,
                         },
-                        {
-                            data: 'schoolyear_id',
-                            name: 'schoolyear_id'
-                        },
+
                         {
                             data: 'action',
                             name: 'action'
@@ -239,19 +215,27 @@
                 });
             });
         </script>
+        <script>
+            const openModal = (button) => {
+                const modal = button.nextElementSibling;
+                modal.showModal();
+            }
 
+            function closeModal(button) {
+                const modal = button.closest('.modal');
+                modal.close();
+            }
+        </script>
         <script>
             $(function() {
                 var url = "{{ route('schoolyears.show', $schoolyear->id) }}";
                 var table = $('#global_weeks').DataTable({
                     processing: true,
                     serverSide: true,
+                    lengthMenu: [100],
                     ajax: url,
+                    orderBy: 'start_week_date',
                     columns: [{
-                            data: 'id',
-                            name: 'id'
-                        },
-                        {
                             data: 'start_week_date',
                             name: 'start_week_date',
                             searchable: true,
@@ -280,9 +264,43 @@
                             data: 'sport_events',
                             name: 'sport_events',
                         },
+                        {
+                            data: 'action',
+                            name: 'action'
+                        }
                     ],
+
+                    layout: {
+                        top2Start: {
+                            buttons: [{
+                                extend: 'copyHtml5',
+                                text: '<i class="fa fa-files-o bg-base-200 btn">Copy</i>',
+                                titleAttr: 'Copy'
+                            }, {
+                                extend: 'csvHtml5',
+                                text: '<i class="fa fa-file-excel-o btn">CSV</i>',
+                                titleAttr: 'CSV'
+                            }, {
+                                extend: 'excelHtml5',
+                                text: '<i class="fa fa-file-excel-o btn">Excel</i>',
+                                titleAttr: 'Excel',
+                                exportOptions: {
+                                    columns: [0, 1, 2, 3, 4, 5, 6]
+                                },
+                            }, {
+                                extend: 'pdfHtml5',
+                                text: '<i class="fa fa-file-pdf-o bg-base-200 btn">Pdf</i>',
+                                titleAttr: 'PDF',
+                                exportOptions: {
+                                    columns: [0, 1, 2, 3, 4, 5, 6]
+                                },
+                            }]
+                        }
+
+
+                    },
                     columnDefs: [{
-                        targets: [3, 4, 5], // Indices of columns where you want to include the div
+                        targets: [2, 3, 4], // Indices of columns where you want to include the div
                         render: function(data, type, row, meta) {
                             // Add the div element with class bg-green-400 around the data
                             var jsonData = JSON.parse(data);
@@ -291,36 +309,49 @@
                             var ur =
                                 '{{ route('weeks.show', ':id') }}'; // Define the route template
                             ur = ur.replace(':id', jsonData.id);
-                            if (jsonData.week_type == 'Cours') {
-                                var element =
-                                    '<div class="flex justify-between text-xl items-center p-2 rounded-lg">' +
-                                    jsonData.week_type + ' (' + jsonData.week_number + ')';
-                                if (jsonData.cc == 1) {
-                                    element = element +
-                                        '<div class=" bg-blue-400 h-6 w-6 rounded-full"></div>';
+                            if (jsonData.week_type == 'Cours' || jsonData.week_type ==
+                                'Cours Magistreaux' || jsonData.week_type == 'Examens') {
+                                if (jsonData.semester == 1) {
+                                    var element =
+                                        '<div class="flex justify-start bg-secondary-content space-x-4 text-xl items-center p-2 rounded-lg"><div class="flex space-x-4"><a class="text-none" href="/weeks/' +
+                                        jsonData.id +
+                                        '">' +
+                                        jsonData.week_type + '</div>';
+                                } else {
+                                    var element =
+                                        '<div class="flex bg-primary-content  justify-start space-x-2 text-xl items-center p-2 rounded-lg"><a class="text-none" href="/weeks/' +
+                                        jsonData.id +
+                                        '">' +
+                                        jsonData.week_type;
                                 }
-                                if (jsonData.sport_exam == 1) {
-                                    element = element +
-                                        '<div class=" bg-yellow-400 h-6 w-6 rounded-full"></div>';
+
+                                if (jsonData.week_type == 'Cours') {
+
+                                    element = element + ' (' + jsonData.week_number + ')</a>';
+                                    if (jsonData.cc == 1) {
+                                        element = element +
+                                            '<div class="badge badge-outline">cc</div>';
+                                    }
+                                    if (jsonData.sport_exam == 1) {
+                                        element = element +
+                                            '<div class="badge badge-primary  badge-outline">Es</div>';
+                                    }
                                 }
-                                return element + '<div class="flex space-x-4"><p class="text-red font-bold">'+ jsonData.semester +
-                                         '</p><button class="bg-green-400 p-1 rounded-lg"><a class="text-none" href="' +
-                                    ur +
-                                    '">View</a></button></div></div>';
-                                    
+                                return element +
+                                    '</div>';
+
                             } else {
                                 return jsonData ?
-
-                                    '<div class="flex justify-between text-xl items-center p-2 rounded-lg">' +
-                                    jsonData.week_type  + '<div class="flex space-x-4 "><p class="text-red font-bold">'+ jsonData.semester +
-                                         '</p><button class="bg-green-400 p-1 rounded-lg"><a class="text-none" href="' +
-                                    ur +
-                                    '">View</a></button></div></div>' :
+                                    '<div class="flex justify-start bg-base-200 space-x-4 text-xl items-center p-2 rounded-lg "><span class="font-bold  text-red"> ' +
+                                    jsonData.week_type + '</span></div>' :
                                     'Empty';
                             }
 
                         }
-                    }]
+                    }],
+                    // drawCallback: function(settings) {
+                    //         $('#global_weeks tbody tr').addClass('relative');
+                    //     }
                 });
             });
         </script>
@@ -360,5 +391,15 @@
 
             });
         </script>
+        <script>
+            function ShowMiddleForm(button) {
+                const form = button.nextElementSibling;
+                form.classList.remove("hidden");
+            }
+
+            function HideMiddleForm(button) {
+                const form = button.parentNode;
+                form.classList.add("hidden");
+            }
         </script>
     @endpush

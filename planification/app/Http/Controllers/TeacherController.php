@@ -8,46 +8,39 @@ use App\Models\Teacher;
 use App\Models\Module;
 use App\Models\Company;
 use App\Models\Section;
-use App\Models\TeacherClasses;
+use App\Models\TeacherModule;
 use App\Models\Timing;
 use App\Models\Config;
 use App\Models\Room;
 use App\Models\TpTeacher;
-use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
-use Yajra\DataTables\Services\DataTable;
-use App\DataTables\TeacherDataTable;
 use Illuminate\Support\Facades\DB;
 
 class TeacherController extends Controller
 {
 
 
-    // public function index(TeacherDataTable $dataTable)
-    // {
-    //     // return $dataTable
-    //     // ->render('teachers.index');
 
-    public function classes($id,Request $request)
+    public function classes($id, Request $request)
     {
         $teacher = Teacher::find($id);
         $classes = new \stdClass;
-    
+
         $sessions = Session::where('teacher_id', $teacher->id)
-                            ->where('absented',0)
-                            ->orWhere('caughtup',1)
-                            ->whereDate('session_date', '>=', $request->min_date)
-                            ->whereDate('session_date', '<=', $request->max_date)
-                            ->get();
-        
+            ->where('absented', 0)
+            ->orWhere('caughtup', 1)
+            ->whereDate('session_date', '>=', $request->min_date)
+            ->whereDate('session_date', '<=', $request->max_date)
+            ->get();
+
         $classes->Nbcours = $sessions->where('session_type', 'cour')->count();
         $classes->Nbtds = $sessions->where('session_type', 'td')->count();
-        $Tps = Session::where('absented',0)->orWhere('caughtup',1)
-                ->whereDate('session_date', '>=', $request->min_date)
-                ->whereDate('session_date', '<=', $request->max_date)
-                ->where('session_type','tp')->pluck('id')->toArray();
-        $TpsDone  = TpTeacher::whereIn('session_id',$Tps)->where('teacher_id',$teacher->id)->count();
+        $Tps = Session::where('absented', 0)->orWhere('caughtup', 1)
+            ->whereDate('session_date', '>=', $request->min_date)
+            ->whereDate('session_date', '<=', $request->max_date)
+            ->where('session_type', 'tp')->pluck('id')->toArray();
+        $TpsDone = TpTeacher::whereIn('session_id', $Tps)->where('teacher_id', $teacher->id)->count();
         $classes->Nbtps = $TpsDone;
         return $classes;
     }
@@ -64,12 +57,11 @@ class TeacherController extends Controller
                 ->addColumn('action', function ($row) {
 
                     $btn = '<a href="/teachers/' . $row->id . '" class="edit btn btn-info btn-sm rounded-lg">View</a>';
-                    // $btn = $btn . '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm rounded-lg">Edit</a>';
-                    // $btn = $btn . '<a href="javascript:void(0)" class="edit btn btn-danger btn-sm rounded-lg">Delete</a>';
-    
                     return '<div class="flex justify-around items-center">' . $btn . '</div>';
                 })
-
+                ->addColumn('absences', function ($row) {
+                    return $row->SessionsAbsences->count();
+                })
                 ->rawColumns(['action'])
                 ->make(true);
 
@@ -84,7 +76,7 @@ class TeacherController extends Controller
     public function store()
     {
     }
-    public function show( $id, Request $request)
+    public function show($id, Request $request)
     {
         if ($request->ajax()) {
             $teacher = Teacher::find($id);
@@ -106,25 +98,21 @@ class TeacherController extends Controller
                 ->make(true);
         }
 
-        // $teacher = Teacher::join('departments', 'teachers.department_id', '=', 'departments.id')->where('teachers.id', $id)->first();
+
         $teacher = Teacher::find($id);
 
         $modules = Module::join('teachers_modules', 'modules.id', '=', 'teachers_modules.module_id')->where('teacher_id', $teacher->id)->join('departments', 'modules.department_id', '=', 'departments.id')
             ->get();
+        $allmodules = Module::all();
+        $schoolyears = SchoolYear::all();
         $schoolyear_id = 1;
-        return view('teachers.show', ['modules' => $modules, 'teacher' => $teacher, 'schoolyear_id' => $schoolyear_id, 'id' => $id]);
+        return view('teachers.show', ['modules' => $modules, 'schoolyears' => $schoolyears, 'allmodules' => $allmodules, 'teacher' => $teacher, 'schoolyear_id' => $schoolyear_id, 'id' => $id]);
     }
 
     public function showt(int $id, Request $request)
     {
         if ($request->ajax()) {
             $teacher = Teacher::find($id);
-            // $modules = DB::table('teachers_modules')->select('*')->join('modules','teachers_modules.module_id','=','modules.id')->where('teacher_id',$id)->get();
-            // $modules = DB::table('teachers_modules')
-            //     ->select('*')
-            //     ->join('modules', 'teachers_modules.module_id', '=', 'modules.id')
-            //     ->where('teachers_modules.teacher_id', '=', $id)
-            //     ->get();
             $modules = DB::table('teachers_modules')
                 ->select('*')
                 ->join('modules', 'teachers_modules.module_id', '=', 'modules.id')
@@ -155,18 +143,8 @@ class TeacherController extends Controller
         }
         ;
         $teacher = Teacher::join('departments', 'teachers.department_id', '=', 'departments.id')->where('teachers.id', $id)->first();
-        // $modules = DB::table('teachers_modules')->select(['module_id', 'module', 'semester', 'departement_id', 'cours'])->join('modules', 'teachers_modules.module_id', '=', 'modules.id')->where('teacher_id', $id);
         $modules = DB::table('teachers_modules')
             ->select('*')
-            // ->select(
-            //     'teachers_modules.cours as cours',
-            //     'teachers_modules.td as td',
-            //     'teachers_modules.tp as tp',
-            //     'teachers_modules.module_id as id',
-            //     'modules.module as module',
-            //     'modules.semester as semester',
-            //     'modules.department_id as department_id',
-            // )
             ->join('modules', 'teachers_modules.module_id', '=', 'modules.id')
             ->where('teachers_modules.teacher_id', '=', $id)
             ->join('departments', 'modules.department_id', '=', 'departments.id')
@@ -220,8 +198,30 @@ class TeacherController extends Controller
 
 
 
-    public function update()
+    public function add_module($id, Request $request)
     {
+        $module_id = $request->module_id;
+        $teacher_module = new TeacherModule;
+        $teacher_module->teacher_id = $id;
+        $teacher_module->module_id = $module_id;
+        $teacher_module->schoolyear_id = $request->schoolyear_id;
+        if ($request->has('cour')) {
+            $teacher_module->cours = 1;
+        } else {
+            $teacher_module->cours = 0;
+        }
+        if ($request->has('td')) {
+            $teacher_module->td = 1;
+        }else {
+            $teacher_module->td = 0;
+        }
+        if ($request->has('tp')) {
+            $teacher_module->tp = 1;
+        }else {
+            $teacher_module->tp = 0;
+        }
+        $teacher_module->save();
+        return redirect()->back();
     }
     public function updatepage()
     {
