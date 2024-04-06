@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Additional;
 use App\Models\Additive;
 use App\Models\CatchUp;
+use App\Models\Module;
 use App\Models\Rectification;
+use App\Models\Teacher;
 use App\Models\Timing;
 use App\Models\Week;
 use Illuminate\Http\Request;
@@ -39,6 +41,16 @@ class AdditiveController extends Controller
     /**
      * Display the specified resource.
      */
+    public function teachers($modules,$schoolyear_id)
+    {
+        $ALLmodules = collect($modules)->flatten()->all();
+        $teachers = Teacher::join('teachers_modules', 'teachers.id', '=', 'teachers_modules.teacher_id')
+            ->whereIn('teachers_modules.module_id', $ALLmodules)
+            ->where('teachers_modules.schoolyear_id', '=', $schoolyear_id)
+            ->get();
+
+        return $teachers;
+    }
     public function show($id)
     {
         $additive  = Additive::with('rectifications','additionals','catchups')->find($id);
@@ -49,8 +61,13 @@ class AdditiveController extends Controller
         $rectifications = Rectification::with('session','room','timing')->where('additive_id',$additive->id)->get();
         $additionals = Additional::with('absence','sections','companies')->where('additive_id',$additive->id)->get();
         $catchups = CatchUp::with('absence')->where('additive_id',$additive->id)->get();
+        $modules = Module::where('battalion',$battalion->battalion)->get();
+        $ALLmodules = $modules->pluck('id')->toArray();
+        $teachers = Teacher::join('teachers_modules', 'teachers.id', '=', 'teachers_modules.teacher_id')
+            ->where('teachers_modules.schoolyear_id', $battalion->schoolyear_id)
+            ->whereIn('teachers_modules.module_id', $ALLmodules)
+            ->get();
         return view('additives.show',[
-
                     'week' => $week,
                     'battalion'=> $battalion,
                     'timings' => $timings,
@@ -58,6 +75,8 @@ class AdditiveController extends Controller
                     'rectifications' => $rectifications,
                     'additionals' => $additionals,
                     'catchups'=>$catchups,
+                    'modules'=>$modules,
+                    'teachers'=>$teachers,
                 ]);
     }
 

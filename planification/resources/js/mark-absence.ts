@@ -17,34 +17,40 @@ function SetupMarkAbsenceTd() {
         AddAbsence.addEventListener("click", ClickAbsenceTd);
     });
 }
-async function PostAbsenceTd(SectionId, GrandDiv,MarkAbsence) {
-    try {
-        let response = await axios.post("/sessions/mark_absence/" + SectionId);
-        console.log("deleted");
-        const GrandDivDiv = GrandDiv.parentNode;
-        const newspan = document.createElement("span");
-        newspan.classList.add("badge","badge-error");
-        newspan.innerText = "absented";
-        var firstChild = GrandDiv.firstChild;
-        GrandDiv.insertBefore(newspan, firstChild);
-        console.log(GrandDiv);
-        const requestbutton = GrandDiv.querySelector(".request-td-absence");
-        // const markAbsenceTd = GrandDiv.querySelector(".mark-td-absence");
-        if (requestbutton) {
-            requestbutton.classList.add("btn-disabled");
-        }
-    } catch (error) {
-        console.log(error);
-    }
+function closeModal(button) {
+    const modal = button.closest('.modal');
+    modal.close();
 }
+
 function ClickAbsenceTd(event) {
     event.preventDefault();
     const MarkAbsence = event.currentTarget;
     const DivSectionId = MarkAbsence.querySelector(".section-id");
     const SectionId = DivSectionId.innerText.trim();
     const GrandDiv = MarkAbsence.parentNode.parentNode;
-    // const GrandDiv = GrandDiv1.parentNode.parentNode;
+  
     PostAbsenceTd(SectionId, GrandDiv,MarkAbsence);
+}
+async function PostAbsenceTd(SectionId, GrandDiv,MarkAbsence) {
+    try {
+        let response = await axios.post("/sessions/mark_absence/" + SectionId);
+        console.log("deleted");
+        const newspan = document.createElement("span");
+        newspan.classList.add("badge","badge-error");
+        newspan.innerText = "absented";
+        const GGDiv = GrandDiv.parentNode.parentNode.parentNode;
+        var firstChild = GGDiv.firstChild;
+        closeModal(MarkAbsence);
+        GGDiv.insertBefore(newspan, firstChild);
+        const requestbutton = GGDiv.querySelector(".request-td-absence");
+        // const markAbsenceTd = GrandDiv.querySelector(".mark-td-absence");
+        if (requestbutton) {
+            requestbutton.classList.add("btn-disabled");
+        }
+
+    } catch (error) {
+        console.log(error);
+    }
 }
 function SetupMarkAbsenceCour() {
     const AllMarkTdAbsencesCour = document.querySelectorAll(".mark-cour-absence"); //here
@@ -56,22 +62,29 @@ function SetupMarkAbsenceCour() {
 function ClickAbsenceCour(event) {
     event.preventDefault();
     const MarkAbsence = event.currentTarget;
-    const DivCompanyId = MarkAbsence.querySelector(".company-id");
+    const Td_Div = MarkAbsence.parentNode.parentNode.parentNode.parentNode.parentNode;
+    console.log(Td_Div);
+    const DivCompanyId = Td_Div.querySelector(".company-id");
     const CompanyId = DivCompanyId.innerText.trim();
-    const GrandDiv = MarkAbsence.parentNode.parentNode;
-    const parent = MarkAbsence.parentNode;
-    PostAbsenceCour(CompanyId, GrandDiv, parent);
+
+   
+    PostAbsenceCour(CompanyId, Td_Div, MarkAbsence);
 }
-async function PostAbsenceCour(CompanyId, GrandDiv, parent) {
+async function PostAbsenceCour(CompanyId, Td_div, MarkAbsence) {
     try {
         let response = await axios.post("/sessions/mark_absence/" + CompanyId);
-        console.log("deleted");
-        GrandDiv.classList.remove("bg-indigo-300");
-        GrandDiv.classList.add("bg-red-300");
-        const markAbsenceCour =parent.querySelector(".mark-cour-absence");
-        if (markAbsenceCour) {
-            parent.removeChild(markAbsenceCour);
+        const newspan = document.createElement("span");
+        newspan.classList.add("badge","badge-error");
+        newspan.innerText = "absented";
+        var firstChild = Td_div.firstChild;
+        closeModal(MarkAbsence);
+        Td_div.insertBefore(newspan, firstChild);
+        const requestbutton = Td_div.querySelector(".request-td-absence");
+        // const markAbsenceTd = GrandDiv.querySelector(".mark-td-absence");
+        if (requestbutton) {
+            requestbutton.classList.add("btn-disabled");
         }
+       
     } 
     catch (error) {
         console.log(error);

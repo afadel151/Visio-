@@ -72,14 +72,14 @@ class ModuleController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
         }
-        $module = Teacher::find($id);
+        $module = Module::find($id);
 
         $teachers = Module::join('teachers_modules', 'modules.id', '=', 'teachers_modules.module_id')->where('module_id', $module->id)->join('departments', 'modules.department_id', '=', 'departments.id')
             ->get();
         $allmodules = Module::all();
         $schoolyears = SchoolYear::all();
-        $schoolyear_id = 1;
-        return view('modules.show', ['teachers' => $teachers, 'schoolyears' => $schoolyears, 'allmodules' => $allmodules, 'module' => $module, 'schoolyear_id' => $schoolyear_id, 'id' => $id]);
+       
+        return view('modules.show', ['teachers' => $teachers,'module' => $module, 'id' => $id]);
 
     }
     public function update()

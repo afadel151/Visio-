@@ -128,7 +128,7 @@ async function GetAvailableRooms(Target, session_datee, timing_idd) {
     const selectElement = document.createElement("select");
     selectElement.name = "room_id";
     selectElement.id = "room";
-    selectElement.classList.add("w-[150px]", "h-10", "rounded-lg");
+    selectElement.classList.add("select", "select-bordered");
     var responseData = response.data;
     const label = document.createElement("label");
     label.innerText = "Rooms";

@@ -217,14 +217,14 @@
             class="p-4 border-[3px]  w-[50%] bg-slate-50 rounded-xl flex flex-col justify-center items-center"
             style="display: none;">
 
-            <div class="flex flex-col justify-center items-center space-y-4" id="get-date-time">
-                <form action="" id="select-additional-props">
+            <div class="flex flex-col  w-full justify-center items-center space-y-6" id="get-date-time">
+                <form action="" id="select-additional-props" class="w-full space-y-6">
                     <input type="hidden" id="week_id" name="week_id" value="{{ $week->id }}">
-                    <div class="flex space-x-3 ">
-                        <div class="flex flex-col justify-center items-center">
+                    <div class="flex space-x-3 justify-around items-center w-full ">
+                        <div class="flex flex-col  justify-center items-center">
                             <p class="text-2xl">Select Sections</p>
                             <select name="sections[]" id="additional-select-sections"
-                                class="w-[300px] input  border-2 focus:h-60 focus:overflow-scroll input-bordered  focus:border-2 rounded-xl hover:scale-110 duration-150"
+                                class="select select-multiple border-2 focus:h-52"
                                 multiple>
                                 @php
                                     $sections = $additive->week->battalion->sections;
@@ -240,7 +240,7 @@
                                 $companies = $additive->week->battalion->companies;
                             @endphp
                             <select name="companies[]" id="additional-select-companies" multiple
-                                class="w-[300px] input  focus:h-40 input-bordered focus:overflow-scroll border-2  focus:border-2 rounded-xl hover:scale-110 duration-150">
+                                class="select select-multiple border-2 focus:h-52">
 
                                 @foreach ($companies as $company)
                                     <option value="{{ $company->id }}">Company {{ $company->company }} </option>
@@ -250,30 +250,38 @@
                     </div>
                     <div class="flex flex-col justify-center items-center">
                         <p class="text-2xl">Select Date</p>
-                        <input type="date" name="session_date" id="rectify-date"
-                            class="w-[300px] input focus:border-blue-400 rounded-xl input-bordered ">
+                        <input type="date" name="session_date" id="additional-date"
+                            class="input ">
                     </div>
-                    <div class="flex flex-col justify-center items-center">
-                        <p class="text-2xl">Select Type</p>
-                        <select name="additional_type" id="additional-select-type" class="select select-bordered" id="additional-type" >
-                            
-                            <option value="cour">Cour</option>
-                            <option value="td">Td</option>
-                        </select>
+                    <div class="flex justify-around w-[100%] items-center ">
+                        <div class="flex flex-col justify-center items-center">
+                            <p class="text-2xl">Select Type</p>
+                            <select name="additional_type" id="additional-select-type" class="select select-bordered w-32" >
+                                
+                                <option value="cour">Cour</option>
+                                <option value="td">Td</option>
+                            </select>
+                        </div>
+                        <div class="flex flex-col justify-center items-center">
+                            <p class="text-2xl">Select Module</p>
+                            <select name="aditional_module_id" id="additional-select-module" class="select select-bordered w-32" >
+                                @foreach ($modules as $module)
+                                    <option value="{{$module->id}}">{{$module->module}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="flex flex-col justify-center items-center">
+                            <p class="text-2xl">Select Teacher</p>
+                            <select name="additional_teacher_id" id="additional-select-teacher" class="select select-bordered w-32" >
+                                @foreach ($teachers as $teacher)
+                                    <option value="{{$teacher->id}}">{{$teacher->teacher_name}}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
-                    {{-- <div class="flex flex-col justify-center items-center">
-                        <p class="text-2xl">Select Time</p>
-                        <select name="timing_id" id="additional-select-timing"
-                            class="w-[300px]  rounded-xl select select-bordered">
-                            @foreach ($timings as $timing)
-                                <option value="{{ $timing->id }}">{{ $timing->session_start }} ->
-                                    {{ $timing->session_finish }}</option>
-                            @endforeach
-                        </select>
-                    </div> --}}
                 </form>
                 <button id="additional-search-room"
-                    class="bg-indigo-500 rounded-xl w-40 h-12 text-slate-50 text-xl hover:bg-slate-200 hover:text-gray-900 hover:border-2 hover:border-slate-900 hover:scale-110 duration-300">Search</button>
+                    class="bg-indigo-500 rounded-xl place-self-end w-40 h-12 text-slate-50 text-xl hover:bg-slate-200 hover:text-gray-900 hover:border-2 hover:border-slate-900 hover:scale-110 duration-300">Search</button>
             </div>
             <div id="insert-additional"
                 class="w-[400px]  focus:border-blue-400 flex  flex-col justify-center items-center space-y-4 focus:border-2 rounded-xl ">
@@ -281,6 +289,7 @@
         </div>
 
     </div>
+   
     <script>
         const JsonTimings = @json($timings);
     </script>

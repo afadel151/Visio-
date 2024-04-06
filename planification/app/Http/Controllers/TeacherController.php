@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Additional;
 use App\Models\SchoolYear;
 use App\Models\Session;
 use App\Models\Teacher;
@@ -26,22 +27,32 @@ class TeacherController extends Controller
     {
         $teacher = Teacher::find($id);
         $classes = new \stdClass;
+        $sessions = Session::whereDate('session_date', '>=', $request->min_date)
+                            ->whereDate('session_date', '<=', $request->max_date)
+                            ->get();
+        $classes->CoursDones = $sessions->where('teacher_id', $teacher->id)->where('session_type', 'cour')->where('absented', 0)->count();
+        $classes->CoursAbsented = $sessions->where('teacher_id', $teacher->id)->where('session_type', 'cour')->where('absented', 1)->where('caughtup', 0)->count();
+        $classes->CoursCaughtUp = $sessions->where('teacher_id', $teacher->id)->where('session_type', 'cour')->where('caughtup', 1)->count();
 
-        $sessions = Session::where('teacher_id', $teacher->id)
-            ->where('absented', 0)
-            ->orWhere('caughtup', 1)
-            ->whereDate('session_date', '>=', $request->min_date)
-            ->whereDate('session_date', '<=', $request->max_date)
-            ->get();
+        $classes->TdsDones = $sessions->where('teacher_id', $teacher->id)->where('session_type', 'td')->where('absented', 0)->count();
+        $classes->TdsAbsented = $sessions->where('teacher_id', $teacher->id)->where('session_type', 'td')->where('absented', 1)->where('caughtup', 0)->count();
+        $classes->TdsCaughtUp = $sessions->where('teacher_id', $teacher->id)->where('session_type', 'td')->where('caughtup', 1)->count();
+        $Tps = Session::where('session_type', 'tp')
+                        ->whereDate('session_date', '>=', $request->min_date)
+                        ->whereDate('session_date', '<=', $request->max_date)
+                        ->join('tp_teachers', 'sessions_table.id', '=', 'tp_teachers.session_id')
+                        ->where('tp_teachers.teacher_id', $teacher->id);
 
-        $classes->Nbcours = $sessions->where('session_type', 'cour')->count();
-        $classes->Nbtds = $sessions->where('session_type', 'td')->count();
-        $Tps = Session::where('absented', 0)->orWhere('caughtup', 1)
-            ->whereDate('session_date', '>=', $request->min_date)
-            ->whereDate('session_date', '<=', $request->max_date)
-            ->where('session_type', 'tp')->pluck('id')->toArray();
-        $TpsDone = TpTeacher::whereIn('session_id', $Tps)->where('teacher_id', $teacher->id)->count();
-        $classes->Nbtps = $TpsDone;
+        $classes->TpsDones = $Tps->where('sessions_table.absented',0)->count();
+        $classes->TpsAbsented = $Tps->where('sessions_table.absented',1)->where('caughtup',0)->count();
+        $classes->TpsCaughtUp = $Tps->where('sessions_table.absented',1)->where('caughtup',1)->count();
+        $additionals = Additional::whereDate('additional_date', '>=', $request->min_date)
+                                    ->whereDate('additional_date', '<=', $request->max_date)
+                                    ->where('teacher_id', $teacher->id)->get();
+
+        $classes->AdditionalsDones = $additionals->where('absented',0)->count();
+        $classes->AdditionalsAbsented = $additionals->where('absented',1)->count();
+
         return $classes;
     }
 
@@ -212,12 +223,12 @@ class TeacherController extends Controller
         }
         if ($request->has('td')) {
             $teacher_module->td = 1;
-        }else {
+        } else {
             $teacher_module->td = 0;
         }
         if ($request->has('tp')) {
             $teacher_module->tp = 1;
-        }else {
+        } else {
             $teacher_module->tp = 0;
         }
         $teacher_module->save();

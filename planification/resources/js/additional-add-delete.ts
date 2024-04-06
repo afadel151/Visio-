@@ -1,5 +1,4 @@
 import axios from "axios";
-import { resolve } from "path";
 
 const instance = axios.create({
     // baseURL: "http://127.0.0.1:8000",
@@ -14,7 +13,7 @@ const instance = axios.create({
 
 const SelectSession = document.querySelector("#additional-search-room"); //here
 
-// SelectSession.removeEventListener("click", ClickRectificationSelect);
+// SelectSession.removeEventListener("click", ClickadditionalSelect);
 if (SelectSession) {
     SelectSession.addEventListener("click", ClickAddAdditional);
 }
@@ -69,14 +68,103 @@ async function SelectAdditionalTimings(Target, session_date, selectedSections, s
     try {
         let response = await axios.get('http://127.0.0.1:8000/additionals/get_available_timings', {
             params: {
-                session_date : session_date,
-                sections : selectedSections,
-                companies : selectedCompanies,
+                session_date: session_date,
+                sections: selectedSections,
+                companies: selectedCompanies,
             },
         });
-    console.log(response.data );
-    
+        console.log(response.data);
+        const NewSelect = document.createElement("select");
+        NewSelect.name = "timing_id";
+        NewSelect.id = "timing-select";
+        NewSelect.classList.add("select", "select-bordered");
+        const timings = response.data;
+        timings.forEach(function (timing) {
+            var NewOption = document.createElement("option");
+            NewOption.value = timing.id;
+            NewOption.innerText = timing.session_start + " -> " + timing.session_finish;
+            NewSelect.appendChild(NewOption);
+        })
+        const p = document.createElement("p");
+        p.innerText = "Timings";
+        p.classList.add("text-center", "text-2xl", "mt-4");
+        Target.appendChild(p);
+        Target.appendChild(NewSelect);
+        const Button = document.createElement("button");
+        Button.id = "additional-select-timing";
+        Button.classList.add("btn");
+        Button.innerText = "Search for a room";
+        Target.appendChild(Button);
+        SetupgetRoomsButton();
     } catch (error) {
         console.log(error);
     }
-}   
+}
+
+function SetupgetRoomsButton() {
+    const RectifyButton = document.querySelector("#additional-select-timing");
+    if (RectifyButton) {
+        RectifyButton.addEventListener("click", ClickSearchRooms);
+    }
+}
+
+async function ClickSearchRooms(event) {
+
+    event.preventDefault();
+    const TimingSelect = document.querySelector("#timing-select");
+    if (TimingSelect && TimingSelect instanceof HTMLSelectElement) {
+        const Timing_id = TimingSelect.value;
+        const DateInput = document.querySelector("#additional-date");
+        if (DateInput && DateInput instanceof HTMLInputElement) {
+            const date = DateInput.value;
+            try {
+                let response = await axios.get("http://127.0.0.1:8000/rooms/available", {
+                    params: {
+                        session_date: date,
+                        timing_id: Timing_id,
+                    }
+                });
+                const AvailableRooms = response.data;
+                const NewSelect = document.createElement("select");
+                NewSelect.id = "select-additional-room";
+                NewSelect.name = "room_id";
+                NewSelect.classList.add("select","select-bordered");
+                AvailableRooms.forEach(room => {
+                    var NewOption = document.createElement("option");
+                    NewOption.value = room.id;
+                    NewOption.innerText = room.room;
+                    NewSelect.appendChild(NewOption);
+                });
+                const Target = document.querySelector("#insert-additional");
+                if (Target) {
+                    const Oldp = Target.querySelector("#p-select-additional-room");
+                    const OldSelect = Target.querySelector("#select-additional-room");
+                    if (Oldp) {
+                        Target.removeChild(Oldp);
+                    }
+                    if (OldSelect) {
+                        Target.removeChild(OldSelect);
+                    }
+                    const newp = document.createElement("p");
+                    newp.innerText = "Select  Room";
+                    newp.id = "p-select-additional-room";
+                    newp.classList.add("text-center", "text-2xl", "mt-4");
+                    Target.appendChild(newp);
+                    Target.appendChild(NewSelect);
+                    const Button = document.createElement("button");
+                    const oldButton = Target.querySelector("#additional-room-select-button");
+                    if (oldButton) {
+                        Target.removeChild(oldButton);
+                    }
+                    Button.id = "additional-room-select-button";
+                    Button.classList.add("btn");
+                    Button.innerText = "Insert Additional";
+                    Target.appendChild(Button);
+                }
+            } catch (error) {
+                
+            }
+
+        }
+    }
+}

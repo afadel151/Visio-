@@ -74,7 +74,7 @@
                             @if ($c->absented == true && $c->rectified == false)
                                 <span class=" badge badge-error">absented</span>
                             @endif
-                            <div class="hidden section-id"> {{ $c->id }} </div>
+                            <div class="hidden company-id"> {{ $c->id }} </div>
 
 
                             <a href="{{ route('teachers.show', $c->teacher->id) }}">
@@ -99,9 +99,7 @@
                                         <h3 class="font-bold text-lg">Hello!</h3>
                                         <p class="py-4">Do you rally want to delete this session ?</p>
                                         <div class="modal-action">
-                                            <form action="">
-                                                <button class="btn btn-warning">Delete</button>
-                                            </form>
+                                            <a href="{{ route('sessions.delete', ['id'=> $c->id])}}" class="btn btn-error delete-td">Delete</a>
                                             <form method="dialog">
                                                 <!-- if there is a button in form, it will close the modal -->
                                                 <button class="btn">Close</button>
@@ -111,30 +109,30 @@
                                 </dialog>
 
                                 @if ($c->absented == 0)
-                                    <button type="button" title="Mark as absented" onclick="openModal(this)"
-                                        class="btn btn-circle request-td-absence">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                            stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
-                                        </svg>
+                                <button type="button" title="Mark as absented" onclick="openModal(this)"
+                                    class="btn btn-circle request-td-absence">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+                                    </svg>
 
-                                    </button>
-                                    <dialog class="modal z-60">
-                                        <div class="modal-box">
-                                            <h3 class="font-bold text-lg">Hello!</h3>
-                                            <p class="py-4">Do you rally want to make this session as
-                                                absented ?</p>
-                                            <div class="modal-action">
-                                                <button class="btn btn-warning mark-cour-absence">Mark absence
-                                                </button>
-                                                <form method="dialog">
-                                                    <!-- if there is a button in form, it will close the modal -->
-                                                    <button class="btn">Close</button>
-                                                </form>
-                                            </div>
+                                </button>
+                                <dialog class="modal z-60">
+                                    <div class="modal-box">
+                                        <h3 class="font-bold text-lg">Hello!</h3>
+                                        <p class="py-4">Do you rally want to make this session as
+                                            absented ?</p>
+                                        <div class="modal-action">
+                                            <button class="btn btn-warning mark-cour-absence">Mark absence
+                                            </button>
+                                            <form method="dialog">
+                                                <!-- if there is a button in form, it will close the modal -->
+                                                <button class="btn">Close</button>
+                                            </form>
                                         </div>
-                                    </dialog>
+                                    </div>
+                                </dialog>
                                 @endif
 
                             </div>
@@ -223,7 +221,7 @@
                                                 <p class="py-4">Do you rally want to delete this session ?</p>
                                                 <div class="modal-action">
 
-                                                    <button class="btn btn-error delete-td">Delete</button>
+                                                    <a href="{{ route('sessions.delete', ['id'=> $tp->id])}}" class="btn btn-error delete-td">Delete</a>
                                                     <form method="dialog">
                                                         <!-- if there is a button in form, it will close the modal -->
                                                         <button class="btn">Close</button>
@@ -323,7 +321,7 @@
                                                         </p>
                                                         <div class="modal-action">
 
-                                                            <button class="btn btn-error delete-td">Delete</button>
+                                                            <a href="{{ route('sessions.delete', ['id'=> $s->id])}}" class="btn btn-error delete-td">Delete</a>
                                                             <form method="dialog">
                                                                 <!-- if there is a button in form, it will close the modal -->
                                                                 <button class="btn">Close</button>
@@ -332,36 +330,36 @@
                                                     </div>
                                                 </dialog>
                                                 @if ($s->absented == 0)
-                                                    <button type="button" title="Mark as absented"
-                                                        onclick="openModal(this)"
-                                                        class="btn btn-circle request-td-absence">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                            viewBox="0 0 24 24" stroke-width="1.5"
-                                                            stroke="currentColor" class="w-6 h-6">
-                                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                                d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
-                                                        </svg>
+                                                <button type="button" title="Mark as absented"
+                                                    onclick="openModal(this)"
+                                                    class="btn btn-circle request-td-absence">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                        viewBox="0 0 24 24" stroke-width="1.5"
+                                                        stroke="currentColor" class="w-6 h-6">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+                                                    </svg>
 
-                                                    </button>
-                                                    <dialog class="modal z-60">
-                                                        <div class="modal-box">
-                                                            <h3 class="font-bold text-lg">Hello!</h3>
-                                                            <p class="py-4">Do you rally want to make this session as
-                                                                absented ?</p>
-                                                            <div class="modal-action">
+                                                </button>
+                                                <dialog class="modal z-60">
+                                                    <div class="modal-box">
+                                                        <h3 class="font-bold text-lg">Hello!</h3>
+                                                        <p class="py-4">Do you rally want to make this session as
+                                                            absented ?</p>
+                                                        <div class="modal-action">
 
-                                                                <button class="btn btn-warning mark-td-absence">Delete
-                                                                    <div class="hidden section-id">{{ $s->id }}
-                                                                    </div>
-                                                                </button>
+                                                            <button class="btn btn-warning mark-td-absence">Delete
+                                                                <div class="hidden section-id">{{ $s->id }}
+                                                                </div>
+                                                            </button>
 
-                                                                <form method="dialog">
-                                                                    <!-- if there is a button in form, it will close the modal -->
-                                                                    <button class="btn">Close</button>
-                                                                </form>
-                                                            </div>
+                                                            <form method="dialog">
+                                                                <!-- if there is a button in form, it will close the modal -->
+                                                                <button class="btn">Close</button>
+                                                            </form>
                                                         </div>
-                                                    </dialog>
+                                                    </div>
+                                                </dialog>
                                                 @endif
                                             </div>
                                         </div>
@@ -390,7 +388,7 @@
 
                                             </button>
                                             <form 
-                                                class="hidden section-form  tp-insert-form absolute    rounded-[20px] shadow-lg text-xl w-[300px] h-[350px] flex flex-col justify-around items-center bg-slate-50"
+                                                class="hidden section-form  tp-insert-form absolute    rounded-[20px] shadow-lg text-xl w-[300px] flex flex-col justify-around items-center bg-slate-50"
                                                 style="top: 50px; left: 50px;z-index: 50;">
                                                 <button onclick="HideTpForm(this)" type="button"
                                                     class="absolute top-4 right-4 tp-cancel-button   hover:scale-125 duration-200  h-6 w-6 rounded-full">
@@ -418,7 +416,7 @@
                                                     <div class="sector hidden">PR</div>
                                                 @endif
                                                 <div
-                                                    class=" form-section  h-[80%] w-[100%] flex  flex-col justify-around items-center">
+                                                    class=" form-section  py-4 w-[100%] flex  flex-col justify-around items-center">
 
                                                     <div>
                                                         <h2 class="text-xl">Session : TP </h2>
@@ -432,7 +430,7 @@
                                                         <div class="flex justify-center items-center w-[100%]">
                                                             <label for="module" class="w-[100px]">Module</label>
                                                             <select name="module_id" id="module"
-                                                                class="w-[150px] h-10 rounded-lg">
+                                                                class="select select-bordered">
                                                                 {{-- DISPLAY MODULES  --}}
                                                                 @foreach ($modules as $module)
                                                                     <option value="{{ $module->id }}">
@@ -444,7 +442,7 @@
                                                         <div class="flex teachers-select justify-center items-center w-[100%]">
                                                             <label for="room" class="w-[100px]">Teacher</label>
                                                             <select name="teachers[]" id="room"
-                                                                class="w-[150px] h-10 focus:h-fit focus:z-50 rounded-lg"
+                                                                class="select select-multiple focus:h-56"
                                                                 multiple >
                                                                 {{-- DISPLAY TEACHERS ACCORDING TO THE MOODULE --}}
                                                                 @foreach ($teachers as $teacher)
@@ -497,7 +495,7 @@
                                                 </button>
 
                                                 <form @submit.prevent="submit"
-                                                    class="section-form   hidden bg-opacity-90 backdrop-blur transition-shadow duration-100 [transform:translate3d(0,0,0)] absolute  rounded-[20px] shadow-lg text-xl w-[300px] h-[350px] flex flex-col justify-around items-center"
+                                                    class="section-form   hidden  absolute bg-base-200 card shadow-xl py-4   flex flex-col justify-around items-center"
                                                     style="top: 50px; left: 50px;z-index: 50;">
                                                     @csrf
                                                     <a onclick="HideTdForm(this)"
@@ -541,7 +539,7 @@
                                                             <div class="flex justify-center items-center w-[100%]">
                                                                 <label for="module" class="w-[100px]">Module</label>
                                                                 <select name="module_id" id="module"
-                                                                class="py-3 px-4 pe-9 block w-[150px] h-10 border-gray-200 rounded-lg text-base focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600">
+                                                                class="select select-bordered">
                                                                     {{-- DISPLAY MODULES  --}}
                                                                     @foreach ($modules as $module)
                                                                         <option value="{{ $module->id }}">
@@ -553,7 +551,7 @@
                                                             <div class="flex justify-center items-center w-[100%]">
                                                                 <label for="room"
                                                                     class="w-[100px]">Teacher</label>
-                                                                <select name="teacher_id" class="py-3 px-4 pe-9 block w-[150px] h-10 border-gray-200 rounded-lg text-base focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600">
+                                                                <select name="teacher_id" class="select select-bordered">
                                                                     {{-- DISPLAY TEACHERS ACCORDING TO THE MOODULE --}}
                                                                     @foreach ($teachers as $teacher)
                                                                         <option value="{{ $teacher->id }}">
@@ -593,7 +591,7 @@
                             </button>
 
                             <form @submit.prevent="submit"
-                                class="hidden rounded-[20px] bg-opacity-90 backdrop-blur transition-shadow duration-100 [transform:translate3d(0,0,0)] shadow-lg flex flex-col space-y-3 pb-4 justify-start items-center text-xl w-[300px] h-[300px] company-form absolute"
+                                class="hidden  flex flex-col space-y-3 justify-center items-center bg-base-200 card shadow-xl py-4 company-form absolute"
                                 style="top: 10px; left: 10px;z-index: 50;" method="POST">
                                 <a class="absolute top-4 right-4  btn btn-circle btn-sm btn-ghost"
                                     onclick="HideCourForm(this)">
@@ -616,27 +614,27 @@
                                 @else
                                     <div class="sector hidden">PR</div>
                                 @endif
-                                <div class="form-section h-[100%] w-[100%] flex  flex-col justify-around items-center">
+                                <div class="form-section h-[100%]  flex  flex-col justify-around items-center">
                                     <div>
                                         <h2 class="">Company : {{ $company->company }} </h2>
                                         <h2> {{ $date }}</h2>
                                         <h2> {{ $timing->session_start }} -> {{ $timing->session_finish }}</h2>
                                     </div>
                                     <div class="selects mb-4 space-y-2">
-                                        <div class="flex justify-center items-center w-[100%]">
+                                        <div class="flex justify-center items-center ">
                                             <label for="room" class="w-[100px]">Module</label>
                                             <select name="module_id" id="room"
-                                                class="w-[150px] h-10 rounded-lg">
+                                                class="select select-bordered">
                                                 @foreach ($modules as $module)
                                                     <option value="{{ $module->id }}">{{ $module->module }}
                                                     </option>
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <div class="flex justify-center items-center w-[100%]">
+                                        <div class="flex justify-center items-center ">
                                             <label for="room" class="w-[100px]">Teacher</label>
                                             <select name="teacher_id" id="room"
-                                                class="w-[150px] h-10 rounded-lg">
+                                                class="select select-bordered">
                                                 @foreach ($teachers as $teacher)
                                                     <option value="{{ $teacher->id }}">
                                                         {{ $teacher->teacher_name }}
@@ -644,7 +642,7 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <div class="flex justify-center available-rooms items-center w-[100%]">
+                                        <div class="flex justify-center available-rooms items-center ">
                                             <div class="session_date hidden">{{ $date }}</div>
                                             <div class="timing_id hidden">{{ $timing->id }}</div>
                                             <img src="/svg/3-dots-fade.svg" class="w-20 h-10" alt="">

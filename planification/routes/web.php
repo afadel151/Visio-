@@ -72,7 +72,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/get_absences',[SessionController::class,'get_absences'])->name('sessions.get_absences');
             
             Route::get('/',[SessionController::class,'index'])->name('sessions.index');
-            Route::post('/delete/{id}',[SessionController::class, 'delete'])->name('sessions.delete');
+            Route::get('/delete/{id}',[SessionController::class, 'delete'])->name('sessions.delete');
             Route::post('/store',[SessionController::class,'store'])->name('sessions.store');
             Route::post('/update',[SessionController::class,'update'])->name('sessions.update');
             Route::get('/{id}',[SessionController::class,'show'])->name('sessions.show');
