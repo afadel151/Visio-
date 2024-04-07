@@ -6,6 +6,7 @@ use App\Http\Controllers\AdditiveController;
 use App\Http\Controllers\BattalionController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ExamController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\Batta;
@@ -175,10 +176,15 @@ Route::middleware('auth')->group(function () {
         Route::prefix('additionals')->group(function () {
             Route::get('/get_available_timings',[AdditionalController::class,'get_available_timings']);
         });
+        Route::prefix('exams')->group(function () {
+            Route::post('/store',[ExamController::class, 'store'])->name('exams.store');
+            Route::get('/destroy/{id}',[ExamController::class, 'destroy'])->name('exams.destroy');
+            Route::post('/add_exams_day',[ExamController::class, 'add_exams_day'])->name('exams.add_exams_day');
+            Route::get('/{id}',[ExamController::class,'show'])->name('exams.show');
+        });
 
     });
 });
-// Auth::routes(); get_available_timings
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index']);
 

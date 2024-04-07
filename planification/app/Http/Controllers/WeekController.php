@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Additive;
+use App\Models\Exam;
+use App\Models\Module;
 use Illuminate\Http\Request;
 use App\Models\Week;
 use App\Models\Session;
@@ -27,14 +29,14 @@ class WeekController extends Controller
         $week = Week::find($id);
         $battalion_id = $week->battalion_id;
         $battalion = Battalion::find($battalion_id);
-        $sessions = Session::with('teacher', 'module', 'room','rectification')->where('week_id', $week->id)->get();
+        $sessions = Session::with('teacher', 'module', 'room', 'rectification')->where('week_id', $week->id)->get();
         $timings = Timing::all();
         $rooms = Room::all();
         $pdf = Pdf::loadView('weeks.create', [
             'battalion' => $battalion,
             'week' => $week,
             'timings' => $timings,
-           'sessions' => $sessions,
+            'sessions' => $sessions,
             'rooms' => $rooms
         ]);
         return $pdf->download('invoice.pdf');
@@ -43,12 +45,31 @@ class WeekController extends Controller
     {
 
         $week = Week::find($id);
-        $battalion_id = $week->battalion_id;
-        $battalion = Battalion::find($battalion_id);
-        $sessions = Session::with('teacher', 'module', 'room','rectification')->where('week_id', $week->id)->get();
-        $timings = Timing::all();
-        $rooms = Room::all();
-        return view('weeks.create', compact('battalion', 'week', 'timings', 'sessions', 'rooms'));
+        if ($week->week_type == 'Cours') {
+            $battalion_id = $week->battalion_id;
+            $battalion = Battalion::find($battalion_id);
+            $sessions = Session::with('teacher', 'module', 'room', 'rectification')->where('week_id', $week->id)->get();
+            $timings = Timing::all();
+            $rooms = Room::all();
+            return view('weeks.create', compact('battalion', 'week', 'timings', 'sessions', 'rooms'));
+        }
+        if ($week->week_type == 'Examens') {
+            $battalion = Battalion::find($week->battalion_id);
+            $modules = Module::where('battalion', $battalion->battalion)->get();
+            $exams = Exam::where('week_id', $week->id)
+                ->get();
+            $exams_dates = Exam::where('week_id', $week->id)
+                ->groupBy('exam_date')
+                ->orderBy('exam_date', 'asc')
+                ->get('exam_date');
+            return view('exams.show', [
+                'battalion' => $battalion,
+                'week' => $week,
+                'modules' => $modules,
+                'exams' => $exams,
+                'exams_dates' => $exams_dates
+            ]);
+        }
     }
     public function BattalionWeeks($id, Request $request)
     {
@@ -91,7 +112,7 @@ class WeekController extends Controller
                     })
                     ->addColumn('action', function ($row) {
                         $btn = '<a href="/additives/' . $row->id . '" class="edit btn btn-info btn-sm rounded-lg">View</a>';
-                        $btn = $btn . '<a href="/additives/delete/'.$row->id.'" class="edit btn btn-danger btn-sm rounded-lg">delete</a>';
+                        $btn = $btn . '<a href="/additives/delete/' . $row->id . '" class="edit btn btn-danger btn-sm rounded-lg">delete</a>';
                         // $btn = $btn . '<a href="javascript:void(0)" class="edit btn btn-danger btn-sm rounded-lg">Delete</a>';
     
                         return '<div class="flex justify-around items-center">' . $btn . '</div>';
@@ -104,7 +125,7 @@ class WeekController extends Controller
         }
         $week = Week::find($id);
         $additives = $week->additives;
-        return view('weeks.additives',['additives' => $additives, 'week'=> $week] );
+        return view('weeks.additives', ['additives' => $additives, 'week' => $week]);
     }
 
     public function update()
@@ -114,7 +135,8 @@ class WeekController extends Controller
     {
     }
 
-    public function additives_add($id){
+    public function additives_add($id)
+    {
         $week = Week::find($id);
         $additivesNb = $week->additives->count();
         $additive = new Additive;
