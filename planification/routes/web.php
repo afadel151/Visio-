@@ -7,6 +7,7 @@ use App\Http\Controllers\BattalionController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExamController;
+use App\Http\Controllers\ExamRoomController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\Batta;
@@ -105,6 +106,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/update',[WeekController::class,'update'])->name('weeks.update');
             Route::delete('/delete',[WeekController::class,'delete'])->name('weeks.delete');
             Route::get('/{id}',[WeekController::class,'show'])->name('weeks.show');
+            Route::get('/{id}/controls',[WeekController::class,'controls'])->name('weeks.controls');
             Route::get('/{id}/pdf',[WeekController::class,'export_pdf'])->name('weeks.export_pdf');
             Route::get('/{id}/additives',[WeekController::class,'additives'])->name('weeks.additives');
             Route::post('/{id}/additives_add',[WeekController::class,'additives_add'])->name('weeks.additives_add');
@@ -177,10 +179,26 @@ Route::middleware('auth')->group(function () {
             Route::get('/get_available_timings',[AdditionalController::class,'get_available_timings']);
         });
         Route::prefix('exams')->group(function () {
+            Route::get('/{id}',[ExamController::class,'show'])->name('exams.show');
             Route::post('/store',[ExamController::class, 'store'])->name('exams.store');
+            Route::get('/{id}/get_rooms_groups',[ExamController::class, 'get_rooms_groups'])->name('exams.get_rooms_groups');
+            Route::get('/{id}/get_rooms_groups_exam',[ExamController::class, 'get_rooms_groups_exam'])->name('exams.get_rooms_groups_exam');
             Route::get('/destroy/{id}',[ExamController::class, 'destroy'])->name('exams.destroy');
             Route::post('/add_exams_day',[ExamController::class, 'add_exams_day'])->name('exams.add_exams_day');
-            Route::get('/{id}',[ExamController::class,'show'])->name('exams.show');
+            Route::post('/add_room_group',[ExamRoomController::class, 'store'])->name('exams.add_room_group');
+            Route::post('/add_monitor',[ExamController::class, 'add_monitor'])->name('exams.add_monitor');
+            Route::get('/delete_monitor/{id}',[ExamController::class, 'delete_monitor'])->name('exams.delete_monitor');
+        });
+        Route::prefix('controls')->group(function () {
+            Route::get('/{id}',[ControlsController::class,'show'])->name('controls.show');
+            Route::post('/store',[ControlsController::class, 'store'])->name('controls.store');
+            Route::get('/{id}/get_rooms_groups',[ControlsController::class, 'get_rooms_groups'])->name('controls.get_rooms_groups');
+            Route::get('/{id}/get_rooms_groups_exam',[ControlsController::class, 'get_rooms_groups_exam'])->name('controls.get_rooms_groups_exam');
+            Route::get('/destroy/{id}',[ControlsController::class, 'destroy'])->name('controls.destroy');
+            Route::post('/add_controls_day',[ControlsController::class, 'add_controls_day'])->name('controls.add_controls_day');
+            Route::post('/add_room_group',[ExamRoomController::class, 'store'])->name('controls.add_room_group');
+            Route::post('/add_monitor',[ControlsController::class, 'add_monitor'])->name('controls.add_monitor');
+            Route::get('/delete_monitor/{id}',[ControlsController::class, 'delete_monitor'])->name('controls.delete_monitor');
         });
 
     });

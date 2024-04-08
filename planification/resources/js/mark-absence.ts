@@ -80,7 +80,6 @@ async function PostAbsenceCour(CompanyId, Td_div, MarkAbsence) {
         closeModal(MarkAbsence);
         Td_div.insertBefore(newspan, firstChild);
         const requestbutton = Td_div.querySelector(".request-td-absence");
-        // const markAbsenceTd = GrandDiv.querySelector(".mark-td-absence");
         if (requestbutton) {
             requestbutton.classList.add("btn-disabled");
         }

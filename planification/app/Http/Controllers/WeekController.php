@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Additive;
 use App\Models\Exam;
+use App\Models\ExamRoomGroup;
 use App\Models\Module;
 use Illuminate\Http\Request;
 use App\Models\Week;
@@ -45,7 +46,7 @@ class WeekController extends Controller
     {
 
         $week = Week::find($id);
-        if ($week->week_type == 'Cours') {
+        if ($week->week_type == 'Cours' || $week->week_type == 'Cours Magistreaux') {
             $battalion_id = $week->battalion_id;
             $battalion = Battalion::find($battalion_id);
             $sessions = Session::with('teacher', 'module', 'room', 'rectification')->where('week_id', $week->id)->get();
@@ -62,12 +63,16 @@ class WeekController extends Controller
                 ->groupBy('exam_date')
                 ->orderBy('exam_date', 'asc')
                 ->get('exam_date');
+                
+                $OccupiedRooms = ExamRoomGroup::where('week_id', $week->id)->pluck('room_id')->toArray();
+                $AvailableRooms = Room::whereNotIn('id', $OccupiedRooms)->get();
             return view('exams.show', [
                 'battalion' => $battalion,
                 'week' => $week,
                 'modules' => $modules,
                 'exams' => $exams,
-                'exams_dates' => $exams_dates
+                'exams_dates' => $exams_dates,
+                'rooms' => $AvailableRooms,
             ]);
         }
     }

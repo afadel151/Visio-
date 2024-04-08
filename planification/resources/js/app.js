@@ -40,13 +40,7 @@ document.addEventListener("DOMContentLoaded",  function () {
         setupCreateCour();
         setupCreateTd();
         setupGetAvailableRooms();
-    setInterval([
-            setupCreateCour(),
-            setupCreateTp(),
-            setupCreateTd(),
-            setupGetAvailableRooms()
-        ]
-    , 10000);}
+    }
 );
  function setupCreateTp() {
     const AllSubmitsOfTp = document.querySelectorAll(".submit-tp");

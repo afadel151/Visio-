@@ -1,5 +1,14 @@
 @extends('default')
 @push('header')
+<link rel="stylesheet" href="//cdn.datatables.net/2.0.1/css/dataTables.dataTables.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
+<link href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+<script>
+    $(document).ready(function() {
+        $('table.display').DataTable();
+    });
+</script>
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 @endpush
 @section('content')
@@ -8,17 +17,55 @@
         <h1 class="text-4xl font-black">Battalion {{ $battalion->battalion }}</h1>
         <h1 class="text-3xl font-bold">{{ $week->global_week->start_week_date }} -> {{ $week->global_week->end_week_date }}
         </h1>
-        {{-- 
-        <select name="" class=" w-52" id="module-select">
-            @foreach ($modules as $module)
-                <option value="">{{ $module->module }}</option>
-            @endforeach
-        </select> --}}
-        <table class="table text-center  w-[80%]  border-2">
-            <thead>
+        <div class="card mt-20 mb-6 w-[60%]">
+            <div class="card-header text-center text-3xl font-bold">Rooms And Groups</div>
+            <div class="card-body relative">
+                {{-- {!! $dataTable->table() !!} --}}
+                <table class="table display  table-fixed text-center" id="rooms-groups">
+                    <thead class="text-center">
+                        <tr>
+                            <th>Sector</th>
+                            <th>Room</th>
+                            <th>Group</th>
+                            
+                            <th class="text-center">Action </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            
+        </div>
+        <div class="dropdown dropdown-end ">
+            <div tabindex="0" role="button" class="btn m-1">Click</div>
+            <form action="{{route('exams.add_room_group')}}" method="POST" enctype="multipart/form-data" tabindex="0" class="dropdown-content z-[1] menu py-10 shadow bg-base-100 rounded-box w-fit p-6 space-y-3 flex flex-col">
+                @csrf
+                <input type="hidden" name="week_id" value="{{$week->id}}">
+                <label class="input input-bordered flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                      </svg>
+                      
+                    <input type="text" name="group_name" class="grow" placeholder="Group" />
+                  </label>
+                  <select name="room_id" class="select select-bordered w-full max-w-xs">
+                    <option disabled selected>Select a Room</option>
+                    @foreach ($rooms as $room)
+                        <option value="{{$room->id}}">{{ $room->room}}</option>
+                    @endforeach
+                  </select>
+                  <select name="sector" id="" class="select select-bordered w-full max-w-xs">
+                    <option disabled selected>Select a sector</option>
+                    <option value="MI">MI</option>
+                    <option value="ST">ST</option>
+                  </select>
+                  <button type="submit" class="btn">add</button>
+            </form>
+          </div>
+        <table class="table text-center text-xl font-bold w-[80%]  border-2">
+            <thead class="text-xl font-bold">
                 <th>Date</th>
                 <th>MI</th>
-                <th>St</th>
+                <th>ST</th>
             </thead>
             <tbody>
                 @foreach ($exams_dates as $date)
@@ -27,7 +74,8 @@
                             <table class="table text-center h-full ">
                                 <tbody>
                                     <tr>
-                                        <td rowspan="2" class="bg-base-300 h-44 font-bold text-xl"> {{ $date->exam_date }}
+                                        <td rowspan="2" class="bg-base-300 h-44 font-bold text-xl">
+                                            {{ $date->exam_date }}
                                         </td>
                                         <td class="bg-base-200">AM</td>
                                     </tr>
@@ -54,7 +102,7 @@
                                                 <p class="w-[70%] text-xl font-bold">
                                                     {{ $exam->module->module }}
                                                 </p>
-                                                <button class="btn rounded-3xl " onclick="ShowModal(this)">
+                                                <button class="btn rounded-3xl " onclick="openModal(this)">
                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                                                         fill="currentColor" class="w-6 h-6">
                                                         <path fill-rule="evenodd"
@@ -63,15 +111,6 @@
                                                     </svg>
 
                                                 </button>
-                                                <a heref class="btn rounded-3xl" title="Go to rooms and groups">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                                        fill="currentColor" class="w-6 h-6">
-                                                        <path fill-rule="evenodd"
-                                                            d="M15.75 2.25H21a.75.75 0 0 1 .75.75v5.25a.75.75 0 0 1-1.5 0V4.81L8.03 17.03a.75.75 0 0 1-1.06-1.06L19.19 3.75h-3.44a.75.75 0 0 1 0-1.5Zm-10.5 4.5a1.5 1.5 0 0 0-1.5 1.5v10.5a1.5 1.5 0 0 0 1.5 1.5h10.5a1.5 1.5 0 0 0 1.5-1.5V10.5a.75.75 0 0 1 1.5 0v8.25a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3V8.25a3 3 0 0 1 3-3h8.25a.75.75 0 0 1 0 1.5H5.25Z"
-                                                            clip-rule="evenodd" />
-                                                    </svg>
-
-                                                </a>
                                                 <dialog class="modal">
                                                     <div class="modal-box">
                                                         <h3 class="font-bold text-lg">Hello!</h3>
@@ -86,6 +125,17 @@
                                                         </div>
                                                     </div>
                                                 </dialog>
+                                                <a href="{{ route('exams.show', ['id' => $exam->id]) }}"
+                                                    class="btn rounded-3xl" title="Go to rooms and groups">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                        fill="currentColor" class="w-6 h-6">
+                                                        <path fill-rule="evenodd"
+                                                            d="M15.75 2.25H21a.75.75 0 0 1 .75.75v5.25a.75.75 0 0 1-1.5 0V4.81L8.03 17.03a.75.75 0 0 1-1.06-1.06L19.19 3.75h-3.44a.75.75 0 0 1 0-1.5Zm-10.5 4.5a1.5 1.5 0 0 0-1.5 1.5v10.5a1.5 1.5 0 0 0 1.5 1.5h10.5a1.5 1.5 0 0 0 1.5-1.5V10.5a.75.75 0 0 1 1.5 0v8.25a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3V8.25a3 3 0 0 1 3-3h8.25a.75.75 0 0 1 0 1.5H5.25Z"
+                                                            clip-rule="evenodd" />
+                                                    </svg>
+
+                                                </a>
+                                               
                                             @else
                                                 <button class="btn relative" onclick="ShowForm(this)">Add module</button>
                                                 <form action="{{ route('exams.store') }}" method="POST"
@@ -124,7 +174,7 @@
                                                 <p class="w-[70%] text-xl font-bold">
                                                     {{ $exam->module->module }}
                                                 </p>
-                                                <button class="btn rounded-3xl" onclick="ShowModal(this)">
+                                                <button class="btn rounded-3xl" onclick="openModal(this)">
                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                                                         fill="currentColor" class="w-6 h-6">
                                                         <path fill-rule="evenodd"
@@ -133,15 +183,6 @@
                                                     </svg>
 
                                                 </button>
-                                                <a heref class="btn rounded-3xl" title="Go to rooms and groups">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                                        fill="currentColor" class="w-6 h-6">
-                                                        <path fill-rule="evenodd"
-                                                            d="M15.75 2.25H21a.75.75 0 0 1 .75.75v5.25a.75.75 0 0 1-1.5 0V4.81L8.03 17.03a.75.75 0 0 1-1.06-1.06L19.19 3.75h-3.44a.75.75 0 0 1 0-1.5Zm-10.5 4.5a1.5 1.5 0 0 0-1.5 1.5v10.5a1.5 1.5 0 0 0 1.5 1.5h10.5a1.5 1.5 0 0 0 1.5-1.5V10.5a.75.75 0 0 1 1.5 0v8.25a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3V8.25a3 3 0 0 1 3-3h8.25a.75.75 0 0 1 0 1.5H5.25Z"
-                                                            clip-rule="evenodd" />
-                                                    </svg>
-
-                                                </a>
                                                 <dialog class="modal">
                                                     <div class="modal-box">
                                                         <h3 class="font-bold text-lg">Hello!</h3>
@@ -156,6 +197,17 @@
                                                         </div>
                                                     </div>
                                                 </dialog>
+                                                <a href="{{ route('exams.show', ['id' => $exam->id]) }}"
+                                                    class="btn rounded-3xl" title="Go to rooms and groups">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                        fill="currentColor" class="w-6 h-6">
+                                                        <path fill-rule="evenodd"
+                                                            d="M15.75 2.25H21a.75.75 0 0 1 .75.75v5.25a.75.75 0 0 1-1.5 0V4.81L8.03 17.03a.75.75 0 0 1-1.06-1.06L19.19 3.75h-3.44a.75.75 0 0 1 0-1.5Zm-10.5 4.5a1.5 1.5 0 0 0-1.5 1.5v10.5a1.5 1.5 0 0 0 1.5 1.5h10.5a1.5 1.5 0 0 0 1.5-1.5V10.5a.75.75 0 0 1 1.5 0v8.25a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3V8.25a3 3 0 0 1 3-3h8.25a.75.75 0 0 1 0 1.5H5.25Z"
+                                                            clip-rule="evenodd" />
+                                                    </svg>
+
+                                                </a>
+                                              
                                             @else
                                                 <button class="btn relative" onclick="ShowForm(this)">Add module</button>
                                                 <form action="{{ route('exams.store') }}" method="POST"
@@ -201,7 +253,7 @@
                                                 <p class="w-[70%] text-xl font-bold">
                                                     {{ $exam->module->module }}
                                                 </p>
-                                                <button class="btn rounded-3xl" onclick="ShowModal(this)">
+                                                <button class="btn rounded-3xl" onclick="openModal(this)">
                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                                                         fill="currentColor" class="w-6 h-6">
                                                         <path fill-rule="evenodd"
@@ -210,15 +262,6 @@
                                                     </svg>
 
                                                 </button>
-                                                <a heref class="btn rounded-3xl" title="Go to rooms and groups">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                                        fill="currentColor" class="w-6 h-6">
-                                                        <path fill-rule="evenodd"
-                                                            d="M15.75 2.25H21a.75.75 0 0 1 .75.75v5.25a.75.75 0 0 1-1.5 0V4.81L8.03 17.03a.75.75 0 0 1-1.06-1.06L19.19 3.75h-3.44a.75.75 0 0 1 0-1.5Zm-10.5 4.5a1.5 1.5 0 0 0-1.5 1.5v10.5a1.5 1.5 0 0 0 1.5 1.5h10.5a1.5 1.5 0 0 0 1.5-1.5V10.5a.75.75 0 0 1 1.5 0v8.25a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3V8.25a3 3 0 0 1 3-3h8.25a.75.75 0 0 1 0 1.5H5.25Z"
-                                                            clip-rule="evenodd" />
-                                                    </svg>
-
-                                                </a>
                                                 <dialog class="modal">
                                                     <div class="modal-box">
                                                         <h3 class="font-bold text-lg">Hello!</h3>
@@ -233,6 +276,17 @@
                                                         </div>
                                                     </div>
                                                 </dialog>
+                                                <a href="{{ route('exams.show', ['id' => $exam->id]) }}"
+                                                    class="btn rounded-3xl" title="Go to rooms and groups">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                        fill="currentColor" class="w-6 h-6">
+                                                        <path fill-rule="evenodd"
+                                                            d="M15.75 2.25H21a.75.75 0 0 1 .75.75v5.25a.75.75 0 0 1-1.5 0V4.81L8.03 17.03a.75.75 0 0 1-1.06-1.06L19.19 3.75h-3.44a.75.75 0 0 1 0-1.5Zm-10.5 4.5a1.5 1.5 0 0 0-1.5 1.5v10.5a1.5 1.5 0 0 0 1.5 1.5h10.5a1.5 1.5 0 0 0 1.5-1.5V10.5a.75.75 0 0 1 1.5 0v8.25a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3V8.25a3 3 0 0 1 3-3h8.25a.75.75 0 0 1 0 1.5H5.25Z"
+                                                            clip-rule="evenodd" />
+                                                    </svg>
+
+                                                </a>
+                                                
                                             @else
                                                 <button class="btn relative" onclick="ShowForm(this)">Add module</button>
                                                 <form action="{{ route('exams.store') }}" method="POST"
@@ -272,7 +326,7 @@
                                                 <p class="w-[70%] text-xl font-bold">
                                                     {{ $exam->module->module }}
                                                 </p>
-                                                <button class="btn rounded-3xl" onclick="ShowModal(this)">
+                                                <button class="btn rounded-3xl" onclick="openModal(this)">
                                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
                                                         fill="currentColor" class="w-6 h-6">
                                                         <path fill-rule="evenodd"
@@ -281,15 +335,6 @@
                                                     </svg>
 
                                                 </button>
-                                                <a heref class="btn rounded-3xl" title="Go to rooms and groups">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                                        fill="currentColor" class="w-6 h-6">
-                                                        <path fill-rule="evenodd"
-                                                            d="M15.75 2.25H21a.75.75 0 0 1 .75.75v5.25a.75.75 0 0 1-1.5 0V4.81L8.03 17.03a.75.75 0 0 1-1.06-1.06L19.19 3.75h-3.44a.75.75 0 0 1 0-1.5Zm-10.5 4.5a1.5 1.5 0 0 0-1.5 1.5v10.5a1.5 1.5 0 0 0 1.5 1.5h10.5a1.5 1.5 0 0 0 1.5-1.5V10.5a.75.75 0 0 1 1.5 0v8.25a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3V8.25a3 3 0 0 1 3-3h8.25a.75.75 0 0 1 0 1.5H5.25Z"
-                                                            clip-rule="evenodd" />
-                                                    </svg>
-
-                                                </a>
                                                 <dialog class="modal">
                                                     <div class="modal-box">
                                                         <h3 class="font-bold text-lg">Hello!</h3>
@@ -304,6 +349,17 @@
                                                         </div>
                                                     </div>
                                                 </dialog>
+                                                <a href="{{ route('exams.show', ['id' => $exam->id]) }}"
+                                                    class="btn rounded-3xl" title="Go to rooms and groups">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
+                                                        fill="currentColor" class="w-6 h-6">
+                                                        <path fill-rule="evenodd"
+                                                            d="M15.75 2.25H21a.75.75 0 0 1 .75.75v5.25a.75.75 0 0 1-1.5 0V4.81L8.03 17.03a.75.75 0 0 1-1.06-1.06L19.19 3.75h-3.44a.75.75 0 0 1 0-1.5Zm-10.5 4.5a1.5 1.5 0 0 0-1.5 1.5v10.5a1.5 1.5 0 0 0 1.5 1.5h10.5a1.5 1.5 0 0 0 1.5-1.5V10.5a.75.75 0 0 1 1.5 0v8.25a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3V8.25a3 3 0 0 1 3-3h8.25a.75.75 0 0 1 0 1.5H5.25Z"
+                                                            clip-rule="evenodd" />
+                                                    </svg>
+
+                                                </a>
+                                                
                                             @else
                                                 <button class="btn relative" onclick="ShowForm(this)">Add module</button>
                                                 <form action="{{ route('exams.store') }}" method="POST"
@@ -353,8 +409,8 @@
                         <td>AM</td>
                         <td>
                             <select name="AM_MI_module_id" class="module-select w-36" id="">
+                                <option value="0" selected>No Exam</option>
                                 @foreach ($modules as $module)
-                                    <option value="0" selected>No Exam</option>
                                     <option value="{{ $module->id }}">{{ $module->module }}
                                     </option>
                                 @endforeach
@@ -362,8 +418,8 @@
                         </td>
                         <td>
                             <select name="AM_ST_module_id" class="module-select w-36" id="">
+                                <option value="0" selected>No Exam</option>
                                 @foreach ($modules as $module)
-                                    <option value="0" selected>No Exam</option>
                                     <option value="{{ $module->id }}">{{ $module->module }}
                                     </option>
                                 @endforeach
@@ -374,8 +430,8 @@
                         <td>PM</td>
                         <td>
                             <select name="PM_MI_module_id" class="module-select w-36" id="">
+                                <option value="0" selected>No Exam</option>
                                 @foreach ($modules as $module)
-                                    <option value="0" selected>No Exam</option>
                                     <option value="{{ $module->id }}">{{ $module->module }}
                                     </option>
                                 @endforeach
@@ -383,8 +439,8 @@
                         </td>
                         <td>
                             <select name="PM_ST_module_id" class="module-select w-36" id="">
+                                <option value="0" selected>No Exam</option>
                                 @foreach ($modules as $module)
-                                    <option value="0" selected> No Exam</option>
                                     <option value="{{ $module->id }}">{{ $module->module }}
                                     </option>
                                 @endforeach
@@ -398,13 +454,59 @@
             </form>
         </div>
     </div>
+    
 @endsection
 
 @push('scripts')
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>
+    <script src="https://cdn.datatables.net/2.0.2/js/dataTables.bootstrap5.js"></script>
+    <script src="https://cdn.datatables.net/buttons/3.0.1/js/dataTables.buttons.js"></script>
     <script>
-        function ShowModal(button) {
+        $(function() {
+            var url = "{{ route('exams.get_rooms_groups', $week->id) }}";
+            var table = $('#rooms-groups').DataTable({
+                destroy: true,
+                processing: true,
+                serverSide: true,
+                searching: true,
+                ajax: url,
+
+                columns: [
+                    {
+                        data: 'sector',
+                        name: 'sector'
+                    },
+                    {
+                        data: 'room',
+                        name: 'room'
+                    },
+                    {
+                        data: 'group',
+                        name: 'group'
+                    },
+                    {
+                        data: 'action',
+                        name: 'action'
+                    },
+                ],
+
+            });
+
+        });
+    </script>
+    <script>
+        function openModal(button) 
+        {
             const modal = button.nextElementSibling;
             modal.showModal();
+        }
+
+        function closeModal(button) {
+            const modal = button.closest('.modal');
+            modal.close();
         }
 
         function ShowForm(button) {

@@ -16,7 +16,7 @@ class ExamRoomGroup extends Model
     public function room(){
         return $this->belongsTo(Room::class);
     }
-    public function monitors(){
-        return $this->hasMany(Monitor::class);
+    public function teachers(){
+        return $this->belongsToMany(Teacher::class,'exams_monitoring');
     }
 }

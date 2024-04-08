@@ -33,14 +33,7 @@
             font-family: "Poppins", sans-serif;
         }
     </style>
-    <div id="loading-spinner"
-        class="fixed  top-0 will-change-transform z-[300] left-0 w-screen h-screen bg-gray-100  flex items-center justify-center ">
-        <div class="h-20 w-32 flex items-center justify-cente flex-col">
-            <p class="text-xl w-30">Please wait</p>
-            <img src="/svg/6-dots-rotate.svg" alt="">
-        </div>
-
-    </div>
+    
     <div class="flex w-screen">
         <div class="w-[92px] h-screen sticky bg-base-100 bg-opacity-80 backdrop-blur transition-shadow duration-100 [transform:translate3d(0,0,0)] 
         shadow-sm  top-0 z-10 ">
@@ -50,30 +43,7 @@
             @yield('content')
         </div>
     </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', async function() {
-            async function showLoadingSpinner() {
-                var loadingSpinner = document.querySelector('#loading-spinner');
-                if (loadingSpinner) {
-                    await loadingSpinner.classList.remove('hidden');
-                }
-            }
-            showLoadingSpinner();
-
-            async function hideLoadingSpinner() {
-                var loadingSpinner = document.querySelector('#loading-spinner');
-                if (loadingSpinner) {
-                    await loadingSpinner.classList.add('hidden');
-                }
-            }
-            window.addEventListener('load', async function() {
-                await hideLoadingSpinner();
-            });
-            setTimeout(async function() {
-                await hideLoadingSpinner();
-            }, 5000);
-        });
-    </script>
+   
     @vite('resources/js/sidebar.js')
     @stack('scripts')
 

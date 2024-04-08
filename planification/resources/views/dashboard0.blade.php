@@ -50,12 +50,12 @@
                     <div class="flex flex-wrap gap-2">
                         @if ($week_1->sport_exam == 1)
                             <span
-                                class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-teal-100 text-teal-800 dark:bg-teal-800/30 dark:text-teal-500">Sport
+                                class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-blue-600 text-gray-200 ">Sport
                                 exam</span>
                         @endif
                         @if ($week_1->cc == 1)
                             <span
-                                class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-white/10 dark:text-white">Controls</span>
+                                class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-red-500 text-gray-200 ">Controls</span>
                         @endif
                     </div>
                     <div class="card-actions justify-end">
@@ -116,12 +116,12 @@
                     <div class="flex flex-wrap gap-2">
                         @if ($week_2->sport_exam == 1)
                             <span
-                                class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-teal-100 text-teal-800 dark:bg-teal-800/30 dark:text-teal-500">Sport
+                                class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-blue-600 text-gray-200 ">Sport
                                 exam</span>
                         @endif
                         @if ($week_2->cc == 1)
                             <span
-                                class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-white/10 dark:text-white">Controls</span>
+                                class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-red-500 text-gray-200 ">Controls</span>
                         @endif
                     </div>
                     <div class="card-actions justify-end">
@@ -181,12 +181,12 @@
                     <div class="flex flex-wrap gap-2">
                         @if ($week_3->sport_exam == 1)
                             <span
-                                class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-teal-100 text-teal-800 dark:bg-teal-800/30 dark:text-teal-500">Sport
+                                class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-blue-600 text-gray-200 ">Sport
                                 exam</span>
                         @endif
                         @if ($week_3->cc == 1)
-                            <span
-                                class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-white/10 dark:text-white">Controls</span>
+                        <span
+                        class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-red-500 text-gray-200 ">Controls</span>
                         @endif
                     </div>
                     <div class="card-actions justify-end">
