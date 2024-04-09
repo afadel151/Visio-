@@ -22,7 +22,10 @@ class Company extends Model
                         ->where('sessionable_id',$this->id)->first();
     }
     
-
+    public function controls()
+    {
+        return $this->hasMany(Control::class);
+    }
 
     public function sections()
     {

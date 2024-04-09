@@ -5,6 +5,7 @@ use App\Http\Controllers\AdditionalController;
 use App\Http\Controllers\AdditiveController;
 use App\Http\Controllers\BattalionController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\ControlsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ExamController;
 use App\Http\Controllers\ExamRoomController;
@@ -190,15 +191,13 @@ Route::middleware('auth')->group(function () {
             Route::get('/delete_monitor/{id}',[ExamController::class, 'delete_monitor'])->name('exams.delete_monitor');
         });
         Route::prefix('controls')->group(function () {
+            Route::get('/store',[ControlsController::class, 'store'])->name('controls.store');
+            Route::get('/available_rooms',[ControlsController::class, 'available_rooms'])->name('controls.available_rooms');
             Route::get('/{id}',[ControlsController::class,'show'])->name('controls.show');
-            Route::post('/store',[ControlsController::class, 'store'])->name('controls.store');
-            Route::get('/{id}/get_rooms_groups',[ControlsController::class, 'get_rooms_groups'])->name('controls.get_rooms_groups');
-            Route::get('/{id}/get_rooms_groups_exam',[ControlsController::class, 'get_rooms_groups_exam'])->name('controls.get_rooms_groups_exam');
+            
             Route::get('/destroy/{id}',[ControlsController::class, 'destroy'])->name('controls.destroy');
-            Route::post('/add_controls_day',[ControlsController::class, 'add_controls_day'])->name('controls.add_controls_day');
-            Route::post('/add_room_group',[ExamRoomController::class, 'store'])->name('controls.add_room_group');
-            Route::post('/add_monitor',[ControlsController::class, 'add_monitor'])->name('controls.add_monitor');
-            Route::get('/delete_monitor/{id}',[ControlsController::class, 'delete_monitor'])->name('controls.delete_monitor');
+           
+
         });
 
     });

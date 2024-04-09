@@ -37,6 +37,10 @@ class Week extends Model
     {
         return $this->hasMany(Additive::class);
     }
+    public function controls()
+    {
+        return $this->hasMany(Control::class);
+    }
    
     //belongsto type
 }

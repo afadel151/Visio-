@@ -91,7 +91,7 @@
               <p>Groupe : {{ $room->group}}</p>
               <div class="w-full flex justify-end gap-2 items-center">
                 <div class="card-actions  dropdown justify-end">
-                    <div tabindex="0" role="button" class="btn m-1">Monitors</div>
+                    <div tabindex="0" role="button" class="btn m-1">Monitors {{$teachers->where('exam_room_group_id',$room->id)->count()}}</div>
                     <ul tabindex="0" class="dropdown-content z-[1] menu p-2 shadow  bg-base-100 rounded-box w-52">
                       @php
                           $monitors = $teachers->where('exam_room_group_id',$room->id);

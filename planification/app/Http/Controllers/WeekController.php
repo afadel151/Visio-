@@ -6,6 +6,8 @@ use App\Models\Additive;
 use App\Models\Exam;
 use App\Models\ExamRoomGroup;
 use App\Models\Module;
+use App\Models\Teacher;
+use App\Models\TeacherModule;
 use Illuminate\Http\Request;
 use App\Models\Week;
 use App\Models\Session;
@@ -21,9 +23,16 @@ class WeekController extends Controller
     public function index()
     {
     }
-    public function create()
+    public function controls($id)
     {
-
+        $controls = Week::find($id)->controls;
+        $week = Week::find($id);
+        $timings = Timing::all();
+        $modules = Module::where('battalion',$week->battalion->battalion)->get();
+        $modulesIds = $modules->pluck('id')->toArray();
+        $teachersIds = TeacherModule::whereIn('module_id',$modulesIds)->pluck('teacher_id')->toArray();
+        $teachers = Teacher::whereIn('id',$teachersIds)->get();
+        return view('weeks.controls',compact('controls', 'week', 'timings','modules','teachers'));
     }
     public function export_pdf($id)
     {

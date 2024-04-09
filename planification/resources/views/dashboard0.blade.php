@@ -50,17 +50,29 @@
                     <div class="flex flex-wrap gap-2">
                         @if ($week_1->sport_exam == 1)
                             <span
-                                class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-blue-600 text-gray-200 ">Sport
+                                class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border border-blue-600 text-blue-600 dark:text-blue-500">Sport
                                 exam</span>
                         @endif
                         @if ($week_1->cc == 1)
                             <span
-                                class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-red-500 text-gray-200 ">Controls</span>
+                                class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border border-red-500 text-red-500">Controls</span>
                         @endif
                     </div>
-                    <div class="card-actions justify-end">
+                    <div class="card-actions justify-end  mt-10">
+                        @if ($week_1->cc == 1)
+                            <a href="{{ route('weeks.controls', $week_1->id) }}">
+                                <button class="btn btn-sm btn-base-300"> Controls
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15M9 12l3 3m0 0 3-3m-3 3V2.25" />
+                                    </svg>
+
+                                </button>
+                            </a>
+                        @endif
                         <a href="{{ route('weeks.additives', $week_1->id) }}">
-                            <button class="btn btn-base-300"> Additives
+                            <button class="btn btn-base-300 btn-sm"> Additives
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -69,7 +81,7 @@
 
                             </button>
                         </a>
-                        <a href="{{ route('weeks.show', $week_1->id) }}"><button class="btn btn-primary"> Calendar
+                        <a href="{{ route('weeks.show', $week_1->id) }}"><button class="btn btn-sm btn-primary"> Calendar
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -116,17 +128,29 @@
                     <div class="flex flex-wrap gap-2">
                         @if ($week_2->sport_exam == 1)
                             <span
-                                class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-blue-600 text-gray-200 ">Sport
-                                exam</span>
+                                class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border border-blue-600 text-blue-600 dark:text-blue-500">Sport
+                                Exam</span>
                         @endif
                         @if ($week_2->cc == 1)
                             <span
-                                class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-red-500 text-gray-200 ">Controls</span>
+                                class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border border-red-500 text-red-500">Controls</span>
                         @endif
                     </div>
-                    <div class="card-actions justify-end">
+                    <div class="card-actions mt-10 justify-end">
+                        @if ($week_2->cc == 1)
+                            <a href="{{ route('weeks.controls', $week_2->id) }}">
+                                <button class="btn btn-base-300 btn-sm"> Controls
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15M9 12l3 3m0 0 3-3m-3 3V2.25" />
+                                    </svg>
+
+                                </button>
+                            </a>
+                        @endif
                         <a href="{{ route('weeks.additives', $week_2->id) }}">
-                            <button class="btn btn-base-300"> Additives
+                            <button class="btn btn-base-300 btn-sm"> Additives
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -135,7 +159,7 @@
 
                             </button>
                         </a>
-                        <a href="{{ route('weeks.show', $week_2->id) }}"><button class="btn btn-primary"> Calendar
+                        <a href="{{ route('weeks.show', $week_2->id) }}"><button class="btn btn-sm  btn-primary"> Calendar
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -181,17 +205,29 @@
                     <div class="flex flex-wrap gap-2">
                         @if ($week_3->sport_exam == 1)
                             <span
-                                class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-blue-600 text-gray-200 ">Sport
+                                class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border border-blue-600 text-blue-600 dark:text-blue-500">Sport
                                 exam</span>
                         @endif
                         @if ($week_3->cc == 1)
-                        <span
-                        class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-red-500 text-gray-200 ">Controls</span>
+                            <span
+                                class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border border-red-500 text-red-500">Controls</span>
                         @endif
                     </div>
-                    <div class="card-actions justify-end">
+                    <div class="card-actions mt-10" justify-end">
+                        @if ($week_3->cc == 1)
+                            <a href="{{ route('weeks.controls', $week_3->id) }}">
+                                <button class="btn btn-sm btn-base-300"> Controls
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15M9 12l3 3m0 0 3-3m-3 3V2.25" />
+                                    </svg>
+
+                                </button>
+                            </a>
+                        @endif
                         <a href="{{ route('weeks.additives', $week_3->id) }}">
-                            <button class="btn btn-base-300"> Additives
+                            <button class="btn btn-sm btn-base-300"> Additives
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -200,7 +236,7 @@
 
                             </button>
                         </a>
-                        <a href="{{ route('weeks.show', $week_3->id) }}"><button class="btn btn-primary"> Calendar
+                        <a href="{{ route('weeks.show', $week_3->id) }}"><button class="btn btn-sm btn-primary"> Calendar
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -219,7 +255,7 @@
             <div id="barChart" class="card-body">
             </div>
         </div>
-        <div class="col-span-3 row-span-3 col-start-10 row-start-1">
+        <div class="col-span-3  row-span-3 col-start-10 row-start-1">
             <ul class="max-w-[100%] flex flex-col">
                 <li
                     class="inline-flex items-center gap-x-2 py-3 px-4 text-sm font-medium bg-white border border-gray-200 text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg ">
@@ -249,13 +285,14 @@
             <div id="chart"></div>
         </div>
         <div class="col-span-3 row-span-2 col-start-7 row-start-3">
-            <div class="h-[100%] w-[100%] bg-base-200">
+            <div class="h-[100%] w-[100%] ">
+                <div id="bar-chart" class="w-full h-full"></div>
 
             </div>
         </div>
         <div class="col-span-3 row-span-2 col-start-10 row-start-3">
-            <div class="h-[100%] w-[100%] bg-base-200">
-
+            <div class="h-[100%] w-[100%] ">
+                <div id="radialchart" class="w-full h-full"></div>
             </div>
         </div>
         <div class="col-span-6 row-span-1 col-start-7 row-start-5">
@@ -366,6 +403,77 @@
             }
 
             var chart = new ApexCharts(document.querySelector("#chart"), options);
+
+            chart.render();
+        </script>
+        <script>
+            var options = {
+                chart: {
+                    height: 450,
+                    type: "radialBar"
+                },
+
+                series: [67],
+
+                plotOptions: {
+                    radialBar: {
+                        hollow: {
+                            margin: 15,
+                            size: "70%"
+                        },
+
+                        dataLabels: {
+                            showOn: "always",
+                            name: {
+                                offsetY: -10,
+                                show: true,
+                                color: "#888",
+                                fontSize: "13px"
+                            },
+                            value: {
+                                color: "#111",
+                                fontSize: "30px",
+                                show: true
+                            }
+                        }
+                    }
+                },
+
+                stroke: {
+                    lineCap: "round",
+                },
+                labels: ["Progress"]
+            };
+
+            var chart = new ApexCharts(document.querySelector("#radialchart"), options);
+
+            chart.render();
+        </script>
+        <script>
+            var options = {
+                chart: {
+                    type: 'bar',
+                    height: 450,
+                },
+                plotOptions: {
+                    bar: {
+                        horizontal: false
+                    }
+                },
+                series: [{
+                    data: [{
+                        x: '203/2024',
+                        y: 10
+                    }, {
+                        x: '2024/2025',
+                        y: 18
+                    }, {
+                        x: '2025/2026',
+                        y: 13
+                    }]
+                }]
+            };
+            var chart = new ApexCharts(document.querySelector("#bar-chart"), options);
 
             chart.render();
         </script>

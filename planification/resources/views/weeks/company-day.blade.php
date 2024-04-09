@@ -25,29 +25,57 @@
                 if ($daysession->rectification) {
                     array_push($rectificationsTimings, $daysession->rectification->timing_id);
                 }
-                
             }
             $isRectified = false;
+            $HasControl = false;
+            if (
+                $company->controls
+                    ->where('control_date', $date)
+                    ->where('timing_id', $timing->id)
+                    ->isNotEmpty()
+            ) {
+                $HasControl = true;
+            }
         @endphp
         @if (in_array($timing->id, $rectificationsTimings))
             @php
                 $isRectifiedCour = true;
             @endphp
         @endif
-        @if ($isRectifiedCour == true)
+
+        @if ($isRectifiedCour == true || $HasControl == true)
             <tr class=" h-[160px] w-[100%]">
                 <td colspan="3">
                     <div class="card w-[100%] h-[100%] bg-base-200">
                         <div class="card-body items-center text-center">
-                          <h2 class="card-title">Rectification Here!</h2>
-                          @php
-                             $recty =  $sessions->where('sessionable_type','App\\Models\\Company')->where('sessionable_id',$company->id)->where('session_date',$date)->where('rectified',1)->first();
-                             $time = $recty->timing;
-                             $roomRecty = $recty->room;
-                          @endphp
-                          <p> {{$time->session_start}} -> {{$time->session_finish}} in <span class="font-bold">{{$roomRecty->room}}</span></p>
+                            @if ($isRectifiedCour == true)
+                                <h2 class="card-title">Rectification Here!</h2>
+                                @php
+                                    $recty = $sessions
+                                        ->where('sessionable_type', 'App\\Models\\Company')
+                                        ->where('sessionable_id', $company->id)
+                                        ->where('session_date', $date)
+                                        ->where('rectified', 1)
+                                        ->first();
+                                    $time = $recty->timing;
+                                    $roomRecty = $recty->room;
+                                @endphp
+                                <p> {{ $time->session_start }} -> {{ $time->session_finish }} in <span
+                                        class="font-bold">{{ $roomRecty->room }}</span></p>
+                            @elseif ($HasControl == true)
+                                @php
+                                    $controls = $company->controls
+                                        ->where('control_date', $date)
+                                        ->where('timing_id', $timing->id);
+                                @endphp
+                                <h2>Controls Here !</h2>
+                                @foreach ($controls as $control)
+                                    <p>{{$control->teacher->teacher_name}} in {{$control->room->room}}</p>
+
+                                @endforeach
+                            @endif
                         </div>
-                      </div>
+                    </div>
                 </td>
             </tr>
         @else
@@ -99,7 +127,8 @@
                                         <h3 class="font-bold text-lg">Hello!</h3>
                                         <p class="py-4">Do you rally want to delete this session ?</p>
                                         <div class="modal-action">
-                                            <a href="{{ route('sessions.delete', ['id'=> $c->id])}}" class="btn btn-error delete-td">Delete</a>
+                                            <a href="{{ route('sessions.delete', ['id' => $c->id]) }}"
+                                                class="btn btn-error delete-td">Delete</a>
                                             <form method="dialog">
                                                 <!-- if there is a button in form, it will close the modal -->
                                                 <button class="btn">Close</button>
@@ -109,30 +138,30 @@
                                 </dialog>
 
                                 @if ($c->absented == 0)
-                                <button type="button" title="Mark as absented" onclick="openModal(this)"
-                                    class="btn btn-circle request-td-absence">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                            d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
-                                    </svg>
+                                    <button type="button" title="Mark as absented" onclick="openModal(this)"
+                                        class="btn btn-circle request-td-absence">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+                                        </svg>
 
-                                </button>
-                                <dialog class="modal z-60">
-                                    <div class="modal-box">
-                                        <h3 class="font-bold text-lg">Hello!</h3>
-                                        <p class="py-4">Do you rally want to make this session as
-                                            absented ?</p>
-                                        <div class="modal-action">
-                                            <button class="btn btn-warning mark-cour-absence">Mark absence
-                                            </button>
-                                            <form method="dialog">
-                                                <!-- if there is a button in form, it will close the modal -->
-                                                <button class="btn">Close</button>
-                                            </form>
+                                    </button>
+                                    <dialog class="modal z-60">
+                                        <div class="modal-box">
+                                            <h3 class="font-bold text-lg">Hello!</h3>
+                                            <p class="py-4">Do you rally want to make this session as
+                                                absented ?</p>
+                                            <div class="modal-action">
+                                                <button class="btn btn-warning mark-cour-absence">Mark absence
+                                                </button>
+                                                <form method="dialog">
+                                                    <!-- if there is a button in form, it will close the modal -->
+                                                    <button class="btn">Close</button>
+                                                </form>
+                                            </div>
                                         </div>
-                                    </div>
-                                </dialog>
+                                    </dialog>
                                 @endif
 
                             </div>
@@ -221,7 +250,8 @@
                                                 <p class="py-4">Do you rally want to delete this session ?</p>
                                                 <div class="modal-action">
 
-                                                    <a href="{{ route('sessions.delete', ['id'=> $tp->id])}}" class="btn btn-error delete-td">Delete</a>
+                                                    <a href="{{ route('sessions.delete', ['id' => $tp->id]) }}"
+                                                        class="btn btn-error delete-td">Delete</a>
                                                     <form method="dialog">
                                                         <!-- if there is a button in form, it will close the modal -->
                                                         <button class="btn">Close</button>
@@ -321,7 +351,8 @@
                                                         </p>
                                                         <div class="modal-action">
 
-                                                            <a href="{{ route('sessions.delete', ['id'=> $s->id])}}" class="btn btn-error delete-td">Delete</a>
+                                                            <a href="{{ route('sessions.delete', ['id' => $s->id]) }}"
+                                                                class="btn btn-error delete-td">Delete</a>
                                                             <form method="dialog">
                                                                 <!-- if there is a button in form, it will close the modal -->
                                                                 <button class="btn">Close</button>
@@ -330,36 +361,36 @@
                                                     </div>
                                                 </dialog>
                                                 @if ($s->absented == 0)
-                                                <button type="button" title="Mark as absented"
-                                                    onclick="openModal(this)"
-                                                    class="btn btn-circle request-td-absence">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                        viewBox="0 0 24 24" stroke-width="1.5"
-                                                        stroke="currentColor" class="w-6 h-6">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
-                                                    </svg>
+                                                    <button type="button" title="Mark as absented"
+                                                        onclick="openModal(this)"
+                                                        class="btn btn-circle request-td-absence">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                            viewBox="0 0 24 24" stroke-width="1.5"
+                                                            stroke="currentColor" class="w-6 h-6">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+                                                        </svg>
 
-                                                </button>
-                                                <dialog class="modal z-60">
-                                                    <div class="modal-box">
-                                                        <h3 class="font-bold text-lg">Hello!</h3>
-                                                        <p class="py-4">Do you rally want to make this session as
-                                                            absented ?</p>
-                                                        <div class="modal-action">
+                                                    </button>
+                                                    <dialog class="modal z-60">
+                                                        <div class="modal-box">
+                                                            <h3 class="font-bold text-lg">Hello!</h3>
+                                                            <p class="py-4">Do you rally want to make this session as
+                                                                absented ?</p>
+                                                            <div class="modal-action">
 
-                                                            <button class="btn btn-warning mark-td-absence">Delete
-                                                                <div class="hidden section-id">{{ $s->id }}
-                                                                </div>
-                                                            </button>
+                                                                <button class="btn btn-warning mark-td-absence">Delete
+                                                                    <div class="hidden section-id">{{ $s->id }}
+                                                                    </div>
+                                                                </button>
 
-                                                            <form method="dialog">
-                                                                <!-- if there is a button in form, it will close the modal -->
-                                                                <button class="btn">Close</button>
-                                                            </form>
+                                                                <form method="dialog">
+                                                                    <!-- if there is a button in form, it will close the modal -->
+                                                                    <button class="btn">Close</button>
+                                                                </form>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </dialog>
+                                                    </dialog>
                                                 @endif
                                             </div>
                                         </div>
@@ -387,7 +418,7 @@
                                                 </svg>
 
                                             </button>
-                                            <form 
+                                            <form
                                                 class="hidden section-form  tp-insert-form absolute    rounded-[20px] shadow-lg text-xl w-[300px] flex flex-col justify-around items-center bg-slate-50"
                                                 style="top: 50px; left: 50px;z-index: 50;">
                                                 <button onclick="HideTpForm(this)" type="button"
@@ -439,11 +470,11 @@
                                                                 @endforeach
                                                             </select>
                                                         </div>
-                                                        <div class="flex teachers-select justify-center items-center w-[100%]">
+                                                        <div
+                                                            class="flex teachers-select justify-center items-center w-[100%]">
                                                             <label for="room" class="w-[100px]">Teacher</label>
                                                             <select name="teachers[]" id="room"
-                                                                class="select select-multiple focus:h-56"
-                                                                multiple >
+                                                                class="select select-multiple focus:h-56" multiple>
                                                                 {{-- DISPLAY TEACHERS ACCORDING TO THE MOODULE --}}
                                                                 @foreach ($teachers as $teacher)
                                                                     <option value="{{ $teacher->id }}">
@@ -454,8 +485,8 @@
                                                         </div>
                                                         <div
                                                             class="flex available-rooms justify-center items-center w-[100%]">
-                                                            <div class="session_date hidden">{{$date}}</div>
-                                                            <div class="timing_id hidden">{{$timing->id}}</div>
+                                                            <div class="session_date hidden">{{ $date }}</div>
+                                                            <div class="timing_id hidden">{{ $timing->id }}</div>
                                                             <img src="/svg/3-dots-fade.svg" alt="">
                                                         </div>
                                                     </div>
@@ -467,23 +498,31 @@
                                         @endif
 
                                         @if ($isRectified)
-                                        <div class="rounded-xl w-[100%] h-[100%] bg-base-200">
-                                            <div class="flex w-[100%] h-[100%]  flex-col justify-center  text-center">
-                                              <h2 class="font-bold">Rectification Here!</h2>
-                                              @php
-                                                 $Recty =  $sessions->where('sessionable_type','App\\Models\\Section')->where('sessionable_id',$section->id)->where('session_date',$date)->where('rectified',1)->first();
-                                                 $time  =$Recty->timing;
-                                                 $roomRecty = $Recty->room;
-                                              @endphp
-                                              <p >{{ date('H:i', strtotime($time->session_start)) }} ->
-                                                {{ date('H:i', strtotime($time->session_finish)) }} <br>in <span class="font-bold">{{$roomRecty->room}}</span></p>
+                                            <div class="rounded-xl w-[100%] h-[100%] bg-base-200">
+                                                <div
+                                                    class="flex w-[100%] h-[100%]  flex-col justify-center  text-center">
+                                                    <h2 class="font-bold">Rectification Here!</h2>
+                                                    @php
+                                                        $Recty = $sessions
+                                                            ->where('sessionable_type', 'App\\Models\\Section')
+                                                            ->where('sessionable_id', $section->id)
+                                                            ->where('session_date', $date)
+                                                            ->where('rectified', 1)
+                                                            ->first();
+                                                        $time = $Recty->timing;
+                                                        $roomRecty = $Recty->room;
+                                                    @endphp
+                                                    <p>{{ date('H:i', strtotime($time->session_start)) }} ->
+                                                        {{ date('H:i', strtotime($time->session_finish)) }} <br>in
+                                                        <span class="font-bold">{{ $roomRecty->room }}</span>
+                                                    </p>
+                                                </div>
                                             </div>
-                                          </div>
                                         @else
                                             <div
                                                 class="relative sectionparentofform h-[100%] flex justify-center items-center">
 
-                                                <button onclick="ShowTdForm(this)" 
+                                                <button onclick="ShowTdForm(this)"
                                                     class=" form-display-button hover:scale-125 duration-300  btn section-button ">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"
                                                         viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
@@ -514,7 +553,8 @@
                                                         value="{{ $timing->id }}">
                                                     <input type="hidden" name="week_id"
                                                         value="{{ $week_id }}">
-                                                    <input type="hidden" name="sessionable_type" value="App\Models\Section">
+                                                    <input type="hidden" name="sessionable_type"
+                                                        value="App\Models\Section">
                                                     <input type="hidden" name="sessionable_id"
                                                         value="{{ $section->id }}">
                                                     <input type="hidden" name="session_type" value="td">
@@ -539,7 +579,7 @@
                                                             <div class="flex justify-center items-center w-[100%]">
                                                                 <label for="module" class="w-[100px]">Module</label>
                                                                 <select name="module_id" id="module"
-                                                                class="select select-bordered">
+                                                                    class="select select-bordered">
                                                                     {{-- DISPLAY MODULES  --}}
                                                                     @foreach ($modules as $module)
                                                                         <option value="{{ $module->id }}">
@@ -551,7 +591,8 @@
                                                             <div class="flex justify-center items-center w-[100%]">
                                                                 <label for="room"
                                                                     class="w-[100px]">Teacher</label>
-                                                                <select name="teacher_id" class="select select-bordered">
+                                                                <select name="teacher_id"
+                                                                    class="select select-bordered">
                                                                     {{-- DISPLAY TEACHERS ACCORDING TO THE MOODULE --}}
                                                                     @foreach ($teachers as $teacher)
                                                                         <option value="{{ $teacher->id }}">
@@ -562,7 +603,7 @@
                                                             </div>
                                                             <div
                                                                 class="flex available-rooms justify-center items-center w-[100%]">
-                                                                
+
                                                                 <img src="/svg/3-dots-fade.svg" alt="">
                                                             </div>
                                                         </div>
@@ -602,7 +643,8 @@
                                     </svg>
                                 </a>
                                 <input type="hidden" name="date" class="date" value="{{ $date }}">
-                                <input type="hidden" name="timing_id" class="timing_id" value="{{ $timing->id }}">
+                                <input type="hidden" name="timing_id" class="timing_id"
+                                    value="{{ $timing->id }}">
                                 <input type="hidden" name="week_id" value="{{ $week_id }}">
                                 <input type="hidden" name="sessionable_type" value="App\Models\Company">
                                 <input type="hidden" name="sessionable_id" value="{{ $company->id }}">
@@ -623,8 +665,7 @@
                                     <div class="selects mb-4 space-y-2">
                                         <div class="flex justify-center items-center ">
                                             <label for="room" class="w-[100px]">Module</label>
-                                            <select name="module_id" id="room"
-                                                class="select select-bordered">
+                                            <select name="module_id" id="room" class="select select-bordered">
                                                 @foreach ($modules as $module)
                                                     <option value="{{ $module->id }}">{{ $module->module }}
                                                     </option>
@@ -633,8 +674,7 @@
                                         </div>
                                         <div class="flex justify-center items-center ">
                                             <label for="room" class="w-[100px]">Teacher</label>
-                                            <select name="teacher_id" id="room"
-                                                class="select select-bordered">
+                                            <select name="teacher_id" id="room" class="select select-bordered">
                                                 @foreach ($teachers as $teacher)
                                                     <option value="{{ $teacher->id }}">
                                                         {{ $teacher->teacher_name }}
