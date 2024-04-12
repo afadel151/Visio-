@@ -3,34 +3,34 @@
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "build": "vite build"
+        "build": "vite build && vite build --ssr"
     },
     "devDependencies": {
+        "@inertiajs/vue3": "^1.0.0",
         "@popperjs/core": "^2.11.6",
         "@tailwindcss/forms": "^0.5.2",
+        "@tailwindcss/typography": "^0.5.2",
         "@types/node": "^20.11.30",
-        "@vitejs/plugin-vue": "^5.0.4",
-        "@vitejs/plugin-vue2": "^2.3.1",
+        "@vitejs/plugin-vue": "^4.5.0",
+        "@vue/server-renderer": "^3.2.31",
         "alpinejs": "^3.4.2",
-        "autoprefixer": "^10.4.2",
+        "autoprefixer": "^10.4.7",
         "axios": "^1.6.8",
         "bootstrap": "^5.2.3",
         "daisyui": "^4.9.0",
         "laravel-datatables-vite": "^0.5.2",
-        "laravel-vite-plugin": "^1.0.0",
-        "postcss": "^8.4.31",
+        "laravel-vite-plugin": "^1.0",
+        "postcss": "^8.4.14",
         "sass": "^1.56.1",
         "tailwindcss": "^3.1.0",
         "typescript": "^5.4.3",
-        "vite": "^5.0.12",
-        "vite-plugin-components": "^0.13.3",
-        "vite-plugin-fonts": "^0.7.0",
-        "vite-plugin-pages": "^0.32.0",
-        "vite-plugin-vue-layouts": "^0.11.0",
-        "vite-plugin-vue2": "^2.0.3"
+        "vite": "^5.0",
+        "vue": "^3.2.31"
     },
     "dependencies": {
+        "@inertiajs/vue3": "^1.0.15",
         "@vitejs/plugin-react": "^4.2.1",
+        "@vitejs/plugin-vue": "^5.0.4",
         "aos": "^2.3.4",
         "apexcharts": "^3.48.0",
         "chart.js": "^4.4.2",
@@ -43,7 +43,8 @@
         "pdfmake": "^0.2.10",
         "preline": "^2.0.3",
         "react": "^18.2.0",
-        "react-dom": "^18.2.0"
+        "react-dom": "^18.2.0",
+        "vue": "^3.4.21"
     },
     "name": "planification",
     "description": "<p align=\"center\"><a href=\"https://laravel.com\" target=\"_blank\"><img src=\"https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg\" width=\"400\" alt=\"Laravel Logo\"></a></p>",

@@ -21,8 +21,9 @@ use App\Http\Controllers\WeekController;
 use App\Http\Controllers\GlobalWeekController;
 use App\Models\GlobalWeek;
 use App\Models\Timing;
+use Illuminate\Console\Application;
 use Illuminate\Support\Facades\Route;
-
+use Inertia\Inertia;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -33,7 +34,23 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
- 
+// Route::get('/', function () {
+//     return Inertia::render('Welcome', [
+//         'canLogin' => Route::has('login'),
+//         'canRegister' => Route::has('register'),
+//         'laravelVersion' => \Illuminate\Foundation\Application::VERSION,
+//         'phpVersion' => PHP_VERSION,
+//     ]);
+// });
+
+// Route::middleware([
+//     'auth:sanctum',
+//     config('jetstream.auth_session'),
+//     'verified',
+// ])->group(function () {
+//     Route::get('/dashboard',[DashboardController::class, 'index'])->name('dashboard');
+// });
+
 Route::get('get-message', function (){
     return response()->json([
         'message' => 'Hello there, it\'s your first response.'

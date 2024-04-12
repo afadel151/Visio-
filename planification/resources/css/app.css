@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
-*::-webkit-scrollbar {
-    /* visibility: hidden; */
-     /* Adjust width as needed */
-    border-radius: 50%;
+[x-cloak] {
+    display: none;
 }
