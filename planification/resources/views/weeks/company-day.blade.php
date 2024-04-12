@@ -44,7 +44,7 @@
         @endif
 
         @if ($isRectifiedCour == true || $HasControl == true)
-            <tr class=" h-[160px] w-[100%]">
+            <tr class=" h-[160px] w-[100%] ">
                 <td colspan="3">
                     <div class="card w-[100%] h-[100%] bg-base-200">
                         <div class="card-body items-center text-center">
@@ -79,7 +79,7 @@
                 </td>
             </tr>
         @else
-            <tr class="relative company-tr   h-[160px] w-[100%]">
+            <tr class="relative company-tr   h-[160px] w-[100%] border-b">
 
                 @if ($sessions->where('sessionable_type', 'App\\Models\\Company')->where('session_date', $date)->where('timing_id', $timing->id)->where('sessionable_id', $company->id)->isNotEmpty())
                     @php
@@ -227,7 +227,7 @@
                                     <div class="flex flex-col space-y-2 justify-around items-center w-[100%]">
                                         @foreach ($tpteachers as $tpteacher)
                                             <a href="{{ route('teachers.show', $tpteacher->id) }}"
-                                                class=" h-8 w-fit px-2 hover:bg-slate-100 hover:shadow-lg  bg-slate-100  rounded-xl">
+                                                class=" btn btn-xs">
                                                 <p class="  text-xl  font-bold">
                                                     {{ $tpteacher->teacher_name }} </p>
                                             </a>

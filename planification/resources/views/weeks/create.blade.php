@@ -158,6 +158,25 @@
         <table class="mt-4" style="width: calc({{ $battalion->sections->count() }}*140px + 122px);z-index : 60;">
             <tr class="" style="z-index: 60;">
                 <td class="" style="visibility: hidden">Domaine JCP</td>{{-- //vide --}}
+                @if ($battalion->battalion == 1)
+                <td class="sticky top-0 " style="z-index: 60;">
+                    @php
+                        $companies_PR = $battalion->companies;
+                        $modules_PR = $battalion->modules_PR(1);
+                        $teachers = $battalion->teachers_PR(1);
+                        $teachers_PR = collect($teachers)->map(function ($teacher) {
+                            return (object) $teacher;
+                        });
+                        $domaine = 'PR';
+                    @endphp
+                    @include('weeks.domaine', [
+                        'companies' => $companies_PR,
+                        'domaine' => $domaine,
+                    ])
+                </td>
+                @else
+                    
+                
                 <td class="sticky top-0 " style="z-index: 60;">
                     @php
                         $companies_ST = $battalion->companies_ST;
@@ -192,6 +211,7 @@
                     </script>
                     @include('weeks.domaine', ['companies' => $companies_MI, 'domaine' => $domaine])
                 </td>
+                @endif
             </tr>
             @php
 
@@ -207,7 +227,22 @@
                     <td class="h-[500%]  w-[300px]" data-aos="fade-right">
                         @include('weeks.day', ['date' => $date, 'timings' => $timings])
                     </td>
-
+                    @if ($battalion->battalion == 1)
+                    <td class="h-[800px]">
+                        @include('weeks.domaine-day', [
+                            'companies' => $companies_PR,
+                            'timings' => $timings,
+                            'date' => $date,
+                            'sessions' => $sessions,
+                            'week_id' => $week->id,
+                            'modules' => $modules_PR,
+                            'teachers' => $teachers_PR,
+                            'rooms' => $rooms,
+                        ])
+                    </td>
+                    @else
+                        
+                    
                     <td class="h-[800px]">
                         @include('weeks.domaine-day', [
                             'companies' => $companies_ST,
@@ -232,6 +267,7 @@
                             'rooms' => $rooms,
                         ])
                     </td>
+                    @endif
                 </tr>
             @endfor
 

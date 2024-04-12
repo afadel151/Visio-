@@ -21,4 +21,7 @@ export default {
     },
 
     plugins: [forms, typography,require("daisyui")],
+    daisyui: {
+        themes: ["light", "synthwave"],
+    },
 };

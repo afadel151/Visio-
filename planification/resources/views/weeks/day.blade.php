@@ -1,4 +1,4 @@
-<table class="w-[100%] table h-[800px] bg-base-100 bg-opacity-90 backdrop-blur transition-shadow duration-100 [transform:translate3d(0,0,0)] 
+<table class="w-[100%]  table h-[800px] bg-base-300 bg-opacity-90 backdrop-blur transition-shadow duration-100 [transform:translate3d(0,0,0)] 
 shadow-sm">
     <tr class="">
         @php
@@ -11,7 +11,7 @@ shadow-sm">
             {{ date('H:i', strtotime($timings[0]->session_finish)) }} </td>
     </tr>
     <tr>
-        <td class="text-center  border-b-2">
+        <td class="text-center  border-b-2 ">
             {{ date('H:i', strtotime($timings[1]->session_start)) }} ->
             {{ date('H:i', strtotime($timings[1]->session_finish)) }}
         </td>
