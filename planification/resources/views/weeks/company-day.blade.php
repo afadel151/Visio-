@@ -70,8 +70,7 @@
                                 @endphp
                                 <h2>Controls Here !</h2>
                                 @foreach ($controls as $control)
-                                    <p>{{$control->teacher->teacher_name}} in {{$control->room->room}}</p>
-
+                                    <p>{{ $control->teacher->teacher_name }} in {{ $control->room->room }}</p>
                                 @endforeach
                             @endif
                         </div>
@@ -226,8 +225,7 @@
                                     @endphp
                                     <div class="flex flex-col space-y-2 justify-around items-center w-[100%]">
                                         @foreach ($tpteachers as $tpteacher)
-                                            <a href="{{ route('teachers.show', $tpteacher->id) }}"
-                                                class=" btn btn-xs">
+                                            <a href="{{ route('teachers.show', $tpteacher->id) }}" class=" btn btn-xs">
                                                 <p class="  text-xl  font-bold">
                                                     {{ $tpteacher->teacher_name }} </p>
                                             </a>
@@ -483,11 +481,15 @@
                                                                 @endforeach
                                                             </select>
                                                         </div>
-                                                        <div
-                                                            class="flex available-rooms justify-center items-center w-[100%]">
-                                                            <div class="session_date hidden">{{ $date }}</div>
-                                                            <div class="timing_id hidden">{{ $timing->id }}</div>
-                                                            <img src="/svg/3-dots-fade.svg" alt="">
+                                                        <div class="flex justify-center items-center ">
+                                                            <label for="rooms" class="w-[100px]">Teacher</label>
+                                                            <select name="room_id" class="select select-bordered">
+                                                                @foreach ($rooms as $room)
+                                                                    <option value="{{ $room->id }}">
+                                                                        {{ $room->room }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -601,10 +603,17 @@
                                                                     @endforeach
                                                                 </select>
                                                             </div>
-                                                            <div
-                                                                class="flex available-rooms justify-center items-center w-[100%]">
+                                                            <div class="flexjustify-center items-center w-[100%]">
+                                                                <label for="rooms"
+                                                                    class="w-[100px]">Teacher</label>
+                                                                <select name="room_id" class="select select-bordered">
+                                                                    @foreach ($rooms as $room)
+                                                                        <option value="{{ $room->id }}">
+                                                                            {{ $room->room }}
+                                                                        </option>
+                                                                    @endforeach
+                                                                </select>
 
-                                                                <img src="/svg/3-dots-fade.svg" alt="">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -682,10 +691,15 @@
                                                 @endforeach
                                             </select>
                                         </div>
-                                        <div class="flex justify-center available-rooms items-center ">
-                                            <div class="session_date hidden">{{ $date }}</div>
-                                            <div class="timing_id hidden">{{ $timing->id }}</div>
-                                            <img src="/svg/3-dots-fade.svg" class="w-20 h-10" alt="">
+                                        <div class="flex justify-center items-center ">
+                                            <label for="rooms" class="w-[100px]">Teacher</label>
+                                            <select name="room_id" class="select select-bordered">
+                                                @foreach ($rooms as $room)
+                                                    <option value="{{ $room->id }}">
+                                                        {{ $room->room }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
                                         </div>
                                     </div>
                                 </div>

@@ -28,11 +28,11 @@ class WeekController extends Controller
         $controls = Week::find($id)->controls;
         $week = Week::find($id);
         $timings = Timing::all();
-        $modules = Module::where('battalion',$week->battalion->battalion)->get();
+        $modules = Module::where('battalion', $week->battalion->battalion)->get();
         $modulesIds = $modules->pluck('id')->toArray();
-        $teachersIds = TeacherModule::whereIn('module_id',$modulesIds)->pluck('teacher_id')->toArray();
-        $teachers = Teacher::whereIn('id',$teachersIds)->get();
-        return view('weeks.controls',compact('controls', 'week', 'timings','modules','teachers'));
+        $teachersIds = TeacherModule::whereIn('module_id', $modulesIds)->pluck('teacher_id')->toArray();
+        $teachers = Teacher::whereIn('id', $teachersIds)->get();
+        return view('weeks.controls', compact('controls', 'week', 'timings', 'modules', 'teachers'));
     }
     public function export_pdf($id)
     {
@@ -72,9 +72,9 @@ class WeekController extends Controller
                 ->groupBy('exam_date')
                 ->orderBy('exam_date', 'asc')
                 ->get('exam_date');
-                
-                $OccupiedRooms = ExamRoomGroup::where('week_id', $week->id)->pluck('room_id')->toArray();
-                $AvailableRooms = Room::whereNotIn('id', $OccupiedRooms)->get();
+
+            $OccupiedRooms = ExamRoomGroup::where('week_id', $week->id)->pluck('room_id')->toArray();
+            $AvailableRooms = Room::whereNotIn('id', $OccupiedRooms)->get();
             return view('exams.show', [
                 'battalion' => $battalion,
                 'week' => $week,

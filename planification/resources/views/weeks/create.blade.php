@@ -27,7 +27,7 @@
         function ShowTdForm(button) {
             const form = button.nextElementSibling;
             form.classList.remove("hidden");
-            
+
         }
 
         function HideTdForm(button) {
@@ -88,8 +88,8 @@
                         </svg>
                     </button>
                 </a>
-                <a href="{{ route('schoolyears.show', ['id' => $week->schoolyear()->id]) }}"  class="tooltip"
-                    data-tip="Schoolyear" >
+                <a href="{{ route('schoolyears.show', ['id' => $week->schoolyear()->id]) }}" class="tooltip"
+                    data-tip="Schoolyear">
                     <button class="btn glass rounded-xl ">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                             stroke="currentColor" class="w-6 h-6">
@@ -99,29 +99,99 @@
 
                     </button>
                 </a>
-                <a href="{{ route('weeks.export_pdf',$week->id)}}" class="tooltip"
-                    data-tip="Export PDF">
+                <a href="{{ route('weeks.export_pdf', $week->id) }}" class="tooltip" data-tip="Export PDF">
                     <button class="btn glass rounded-xl">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
-                          </svg>
-                          
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                            stroke="currentColor" class="w-6 h-6">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />
+                        </svg>
+
                     </button>
                 </a>
                 @if ($week->cc == 1)
-                <a href="{{route('weeks.controls',['id'=>$week->id])}}" class="tooltip"
-                    data-tip="Controls">
-                    <button class="btn glass rounded-xl">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
-                            <path fill-rule="evenodd" d="M7.502 6h7.128A3.375 3.375 0 0 1 18 9.375v9.375a3 3 0 0 0 3-3V6.108c0-1.505-1.125-2.811-2.664-2.94a48.972 48.972 0 0 0-.673-.05A3 3 0 0 0 15 1.5h-1.5a3 3 0 0 0-2.663 1.618c-.225.015-.45.032-.673.05C8.662 3.295 7.554 4.542 7.502 6ZM13.5 3A1.5 1.5 0 0 0 12 4.5h4.5A1.5 1.5 0 0 0 15 3h-1.5Z" clip-rule="evenodd" />
-                            <path fill-rule="evenodd" d="M3 9.375C3 8.339 3.84 7.5 4.875 7.5h9.75c1.036 0 1.875.84 1.875 1.875v11.25c0 1.035-.84 1.875-1.875 1.875h-9.75A1.875 1.875 0 0 1 3 20.625V9.375ZM6 12a.75.75 0 0 1 .75-.75h.008a.75.75 0 0 1 .75.75v.008a.75.75 0 0 1-.75.75H6.75a.75.75 0 0 1-.75-.75V12Zm2.25 0a.75.75 0 0 1 .75-.75h3.75a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75ZM6 15a.75.75 0 0 1 .75-.75h.008a.75.75 0 0 1 .75.75v.008a.75.75 0 0 1-.75.75H6.75a.75.75 0 0 1-.75-.75V15Zm2.25 0a.75.75 0 0 1 .75-.75h3.75a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75ZM6 18a.75.75 0 0 1 .75-.75h.008a.75.75 0 0 1 .75.75v.008a.75.75 0 0 1-.75.75H6.75a.75.75 0 0 1-.75-.75V18Zm2.25 0a.75.75 0 0 1 .75-.75h3.75a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75Z" clip-rule="evenodd" />
-                          </svg>
-                          
-                          
-                    </button>
-                </a>
+                    <a href="{{ route('weeks.controls', ['id' => $week->id]) }}" class="tooltip" data-tip="Controls">
+                        <button class="btn glass rounded-xl">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
+                                <path fill-rule="evenodd"
+                                    d="M7.502 6h7.128A3.375 3.375 0 0 1 18 9.375v9.375a3 3 0 0 0 3-3V6.108c0-1.505-1.125-2.811-2.664-2.94a48.972 48.972 0 0 0-.673-.05A3 3 0 0 0 15 1.5h-1.5a3 3 0 0 0-2.663 1.618c-.225.015-.45.032-.673.05C8.662 3.295 7.554 4.542 7.502 6ZM13.5 3A1.5 1.5 0 0 0 12 4.5h4.5A1.5 1.5 0 0 0 15 3h-1.5Z"
+                                    clip-rule="evenodd" />
+                                <path fill-rule="evenodd"
+                                    d="M3 9.375C3 8.339 3.84 7.5 4.875 7.5h9.75c1.036 0 1.875.84 1.875 1.875v11.25c0 1.035-.84 1.875-1.875 1.875h-9.75A1.875 1.875 0 0 1 3 20.625V9.375ZM6 12a.75.75 0 0 1 .75-.75h.008a.75.75 0 0 1 .75.75v.008a.75.75 0 0 1-.75.75H6.75a.75.75 0 0 1-.75-.75V12Zm2.25 0a.75.75 0 0 1 .75-.75h3.75a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75ZM6 15a.75.75 0 0 1 .75-.75h.008a.75.75 0 0 1 .75.75v.008a.75.75 0 0 1-.75.75H6.75a.75.75 0 0 1-.75-.75V15Zm2.25 0a.75.75 0 0 1 .75-.75h3.75a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75ZM6 18a.75.75 0 0 1 .75-.75h.008a.75.75 0 0 1 .75.75v.008a.75.75 0 0 1-.75.75H6.75a.75.75 0 0 1-.75-.75V18Zm2.25 0a.75.75 0 0 1 .75-.75h3.75a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75Z"
+                                    clip-rule="evenodd" />
+                            </svg>
+
+
+                        </button>
+                    </a>
+                    <div class="drawer  drawer-end" style="z-index: 100;">
+                        <input id="my-drawer" type="checkbox" class="drawer-toggle" />
+                        <div class="drawer-content tooltip" data-tip="Available Rooms">
+                            <!-- Page content here -->
+                            <label for="my-drawer" class="btn btn-ghost drawer-button">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M9 17.25v1.007a3 3 0 0 1-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0 1 15 18.257V17.25m6-12V15a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 15V5.25m18 0A2.25 2.25 0 0 0 18.75 3H5.25A2.25 2.25 0 0 0 3 5.25m18 0V12a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 12V5.25" />
+                                </svg>
+
+                            </label>
+                        </div>
+                        <div class="drawer-side "style="z-index: 100;">
+                            <label for="my-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
+                            <ul class="menu p-4 w-96 min-h-full bg-base-200 text-base-content" style="z-index: 100;">
+                                <!-- Sidebar content here -->
+                                <p class="text-center text-3xl font-bold">Available Rooms</p>
+                                <li>
+                                    <div class=" w-full h-full flex flex-col items-center justify-between">
+                                        <form @submit.prevent="submit" id="available_rooms_form"
+                                            class="flex   w-full h-full space-y-4 flex-col justify-center items-stretch">
+                                            <div class="flex items-center justify-between w-full">
+                                                <p>Date</p>
+                                                <input type="date" name="date" class="input input-bordered">
+                                            </div>
+                                            <div class="flex items-center justify-between w-full">
+                                                <p>Timing</p>
+                                                <select name="timing_id" id="" class="select select-bordered">
+                                                    @foreach ($timings as $timing)
+                                                        <option value="{{ $timing->id }}">{{ $timing->session_start }} ->
+                                                            {{ $timing->session_finish }} </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+
+                                        </form>
+                                        <button class="btn btn-primary" id="get_available_rooms">Search</button>
+                                    </div>
+                                </li>
+                                <li id="available_rooms_result">
+
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 @endif
             </div>
+            <div class="stats stats-vertical lg:stats-horizontal shadow">
+                <div class="stat">
+                  <div class="stat-title">Week Number</div>
+                  <div class="stat-value">{{$week->week_number}}</div>
+                  <div class="stat-desc">{{$week->global_week->start_week_date}} -> {{$week->global_week->end_week_date}}</div>
+                </div>
+                
+                <div class="stat">
+                  <div class="stat-title">Semester</div>
+                  <div class="stat-value">{{$week->semester}}</div>
+                  <div class="stat-desc">↗︎ 400 (22%)</div>
+                </div>
+                
+                <div class="stat">
+                  <div class="stat-title">Battalion</div>
+                  <div class="stat-value">{{$week->battalion->battalion}}</div>
+                  <div class="stat-desc">↘︎ 90 (14%)</div>
+                </div>
+                
+              </div>
             <div class="stats shadow">
 
                 <div class="stat">
@@ -159,63 +229,61 @@
             <tr class="" style="z-index: 60;">
                 <td class="" style="visibility: hidden">Domaine JCP</td>{{-- //vide --}}
                 @if ($battalion->battalion == 1)
-                <td class="sticky top-0 " style="z-index: 60;">
-                    @php
-                        $companies_PR = $battalion->companies;
-                        $modules_PR = $battalion->modules_PR(1);
-                        $teachers = $battalion->teachers_PR(1);
-                        $teachers_PR = collect($teachers)->map(function ($teacher) {
-                            return (object) $teacher;
-                        });
-                        $domaine = 'PR';
-                    @endphp
-                    @include('weeks.domaine', [
-                        'companies' => $companies_PR,
-                        'domaine' => $domaine,
-                    ])
-                </td>
+                    <td class="sticky top-0 " style="z-index: 60;">
+                        @php
+                            $companies_PR = $battalion->companies;
+                            $modules_PR = $battalion->modules_PR(1);
+                            $teachers = $battalion->teachers_PR(1);
+                            $teachers_PR = collect($teachers)->map(function ($teacher) {
+                                return (object) $teacher;
+                            });
+                            $domaine = 'PR';
+                        @endphp
+                        @include('weeks.domaine', [
+                            'companies' => $companies_PR,
+                            'domaine' => $domaine,
+                        ])
+                    </td>
                 @else
-                    
-                
-                <td class="sticky top-0 " style="z-index: 60;">
-                    @php
-                        $companies_ST = $battalion->companies_ST;
-                        $modules_ST = $battalion->modules_ST(1);
-                        $teachers_ST = $battalion->teachers_ST(1);
-                        $teachers_ST = collect($teachers_ST)->map(function ($teacher) {
-                            return (object) $teacher;
-                        });
-                        $domaine = 'ST';
-                    @endphp
-                    @include('weeks.domaine', [
-                        'companies' => $companies_ST,
-                        'domaine' => $domaine,
-                    ])
-                </td>
+                    <td class="sticky top-0 " style="z-index: 60;">
+                        @php
+                            $companies_ST = $battalion->companies_ST;
+                            $modules_ST = $battalion->modules_ST(1);
+                            $teachers_ST = $battalion->teachers_ST(1);
+                            $teachers_ST = collect($teachers_ST)->map(function ($teacher) {
+                                return (object) $teacher;
+                            });
+                            $domaine = 'ST';
+                        @endphp
+                        @include('weeks.domaine', [
+                            'companies' => $companies_ST,
+                            'domaine' => $domaine,
+                        ])
+                    </td>
 
-                <script>
-                    const teachers_ST = @json($teachers_ST);
-                    const modules_ST = @json($modules_ST);
-                </script>
-                <td class="sticky top-0 z-10  " style="z-index: 60;">
-                    @php
-                        $companies_MI = $battalion->companies_MI;
-                        $modules_MI = $battalion->modules_MI(1);
-                        $teachers_MI = $battalion->teachers_MI(1);
-                        
-                        $domaine = 'MI';
-                    @endphp
                     <script>
-                        const teachers_MI = @json($teachers_MI);
-                        const modules_MI = @json($modules_MI);
+                        const teachers_ST = @json($teachers_ST);
+                        const modules_ST = @json($modules_ST);
                     </script>
-                    @include('weeks.domaine', ['companies' => $companies_MI, 'domaine' => $domaine])
-                </td>
+                    <td class="sticky top-0 z-10  " style="z-index: 60;">
+                        @php
+                            $companies_MI = $battalion->companies_MI;
+                            $modules_MI = $battalion->modules_MI(1);
+                            $teachers_MI = $battalion->teachers_MI(1);
+
+                            $domaine = 'MI';
+                        @endphp
+                        <script>
+                            const teachers_MI = @json($teachers_MI);
+                            const modules_MI = @json($modules_MI);
+                        </script>
+                        @include('weeks.domaine', ['companies' => $companies_MI, 'domaine' => $domaine])
+                    </td>
                 @endif
             </tr>
             @php
 
-                $date = date('Y-m-d',strtotime('-1 days',strtotime($week->global_week->start_week_date)));
+                $date = date('Y-m-d', strtotime('-1 days', strtotime($week->global_week->start_week_date)));
             @endphp
 
 
@@ -228,45 +296,43 @@
                         @include('weeks.day', ['date' => $date, 'timings' => $timings])
                     </td>
                     @if ($battalion->battalion == 1)
-                    <td class="h-[800px]">
-                        @include('weeks.domaine-day', [
-                            'companies' => $companies_PR,
-                            'timings' => $timings,
-                            'date' => $date,
-                            'sessions' => $sessions,
-                            'week_id' => $week->id,
-                            'modules' => $modules_PR,
-                            'teachers' => $teachers_PR,
-                            'rooms' => $rooms,
-                        ])
-                    </td>
+                        <td class="h-[800px]">
+                            @include('weeks.domaine-day', [
+                                'companies' => $companies_PR,
+                                'timings' => $timings,
+                                'date' => $date,
+                                'sessions' => $sessions,
+                                'week_id' => $week->id,
+                                'modules' => $modules_PR,
+                                'teachers' => $teachers_PR,
+                                'rooms' => $rooms,
+                            ])
+                        </td>
                     @else
-                        
-                    
-                    <td class="h-[800px]">
-                        @include('weeks.domaine-day', [
-                            'companies' => $companies_ST,
-                            'timings' => $timings,
-                            'date' => $date,
-                            'sessions' => $sessions,
-                            'week_id' => $week->id,
-                            'modules' => $modules_ST,
-                            'teachers' => $teachers_ST,
-                            'rooms' => $rooms,
-                        ])
-                    </td>
-                    <td class="h-[800px] ">
-                        @include('weeks.domaine-day', [
-                            'companies' => $companies_MI,
-                            'timings' => $timings,
-                            'sessions' => $sessions,
-                            'date' => $date,
-                            'week_id' => $week->id,
-                            'modules' => $modules_MI,
-                            'teachers' => $teachers_MI,
-                            'rooms' => $rooms,
-                        ])
-                    </td>
+                        <td class="h-[800px]">
+                            @include('weeks.domaine-day', [
+                                'companies' => $companies_ST,
+                                'timings' => $timings,
+                                'date' => $date,
+                                'sessions' => $sessions,
+                                'week_id' => $week->id,
+                                'modules' => $modules_ST,
+                                'teachers' => $teachers_ST,
+                                'rooms' => $rooms,
+                            ])
+                        </td>
+                        <td class="h-[800px] ">
+                            @include('weeks.domaine-day', [
+                                'companies' => $companies_MI,
+                                'timings' => $timings,
+                                'sessions' => $sessions,
+                                'date' => $date,
+                                'week_id' => $week->id,
+                                'modules' => $modules_MI,
+                                'teachers' => $teachers_MI,
+                                'rooms' => $rooms,
+                            ])
+                        </td>
                     @endif
                 </tr>
             @endfor

@@ -10,6 +10,7 @@ export default {
         './storage/framework/views/*.php',
         './resources/views/**/*.blade.php',
         './resources/js/**/*.vue',
+        'node_modules/preline/dist/*.js',
     ],
 
     theme: {
@@ -20,7 +21,7 @@ export default {
         },
     },
 
-    plugins: [forms, typography,require("daisyui")],
+    plugins: [ require('preline/plugin'),forms, typography,require("daisyui")],
     daisyui: {
         themes: ["light", "synthwave"],
     },

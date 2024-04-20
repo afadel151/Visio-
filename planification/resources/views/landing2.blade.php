@@ -30,9 +30,7 @@
                 <a href="{{ route('schoolyears.show', 1) }}"
                     class="inline-flex items-center gap-x-2 bg-white border border-gray-200 text-sm text-gray-800 p-1 ps-3 rounded-full transition hover:border-gray-300 "
                     href="#">
-                    @foreach ($global_week->events as $event)
-                        {{ $event->event }}
-                    @endforeach
+                    
                     <span
                         class="py-1.5 px-2.5 inline-flex justify-center items-center gap-x-2 rounded-full bg-gray-200 font-semibold text-sm text-gray-600 ">
                         <svg class="flex-shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24"

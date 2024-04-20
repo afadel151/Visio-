@@ -123,7 +123,7 @@ async function ClickSearchRooms(event) {
                         session_date: date,
                         timing_id: Timing_id,
                     }
-                });
+                });                
                 const AvailableRooms = response.data;
                 const NewSelect = document.createElement("select");
                 NewSelect.id = "select-additional-room";

@@ -1,7 +1,8 @@
-import "./bootstrap.ts";
+// import "./bootstrap.js";
 import axios from "axios";
 import Alpine from "alpinejs";
 import AOS from "aos";
+import "preline";
 import "aos/dist/aos.css"; // You can also use <link> for styles
 // ..
 AOS.init();
@@ -19,7 +20,6 @@ const instance = axios.create({
     },
 });
 
-
 const openModal = (button) => {
     const modal = button.nextElementSibling;
     modal.showModal();
@@ -34,112 +34,74 @@ function DeleteTd(button, SectionId) {
     const td = dialogue.parentNode.parentNode.parentNode;
     console.log(td);
 }
-document.addEventListener("DOMContentLoaded",  function () {
-    
-        setupCreateTp();
-        setupCreateCour();
-        setupCreateTd();
-        setupGetAvailableRooms();
-    }
-);
- function setupCreateTp() {
+document.addEventListener("DOMContentLoaded", function () {
+    setupCreateTp();
+    setupCreateCour();
+    setupCreateTd();
+    setupGetAvailableRooms();
+});
+function setupGetAvailableRooms() {
+    const SearchForRooms = document.querySelector("#get_available_rooms");
+    SearchForRooms.removeEventListener("click", GetAvailableRooms);
+    SearchForRooms.addEventListener("click", GetAvailableRooms);
+}
+function setupCreateTp() {
     const AllSubmitsOfTp = document.querySelectorAll(".submit-tp");
-   
-        Array.from(AllSubmitsOfTp).map( (AddTp) => {
-            AddTp.removeEventListener("click", clickHandlerTp);
-            AddTp.addEventListener("click", clickHandlerTp);
-        })
-   
+
+    Array.from(AllSubmitsOfTp).map((AddTp) => {
+        AddTp.removeEventListener("click", clickHandlerTp);
+        AddTp.addEventListener("click", clickHandlerTp);
+    });
 }
 
- function setupCreateCour() {
+function setupCreateCour() {
     const AllSubmitsOfCours = document.querySelectorAll(".submit-cour");
 
-        Array.from(AllSubmitsOfCours).map( (AddCour) => {
-            AddCour.removeEventListener("click", clickHandler);
-            AddCour.addEventListener("click", clickHandler);
-        })
-
+    Array.from(AllSubmitsOfCours).map((AddCour) => {
+        AddCour.removeEventListener("click", clickHandler);
+        AddCour.addEventListener("click", clickHandler);
+    });
 }
 
- function setupCreateTd() {
+function setupCreateTd() {
     const AllSubmitsOfTds = document.querySelectorAll(".submit-td");
- 
-        Array.from(AllSubmitsOfTds).map( (Addtd) => {
-            Addtd.removeEventListener("click", ClickH);
-            Addtd.addEventListener("click", ClickH);
-        })
- 
+
+    Array.from(AllSubmitsOfTds).map((Addtd) => {
+        Addtd.removeEventListener("click", ClickH);
+        Addtd.addEventListener("click", ClickH);
+    });
 }
 
- function setupGetAvailableRooms() {
-    const AllRoomSelects = document.querySelectorAll(".form-display-button");
-   
-        Array.from(AllRoomSelects).map( (SelectRooms) => {
-            SelectRooms.removeEventListener("click", clickHandlerForRooms);
-            SelectRooms.addEventListener("click", clickHandlerForRooms);
-        })
-
-}
-
-function clickHandlerForRooms(event) {
-    event.preventDefault();
-    const button = event.currentTarget;
-    const form = button.nextElementSibling;
-    const td = button.parentNode;
-    const Target = td.querySelector(
-        "form .form-section  .selects .available-rooms"
-    );
-    console.log(Target);console.log(form);
-    if (Target) {
-        
-        const dateInput = form.querySelector(".date");
-        console.log(dateInput);
-        const session_datee = dateInput.value;
-        const timingInput = form.querySelector(".timing_id");
-        const timing_idd = timingInput.value;
-        GetAvailableRooms(Target, session_datee, timing_idd);
-    } else {
-        console.log("Target element not found");
-    }
-}
-
-async function GetAvailableRooms(Target, session_datee, timing_idd) {
+async function GetAvailableRooms() {
+    const form = document.querySelector("#available_rooms_form");
+    const formdata = new FormData(form);
+    const date = formdata.get("date");
+    const timing = formdata.get("timing_id");
     try {
-        let response = await axios.get("/rooms/available", {
+        let response = axios.get("/rooms/available", {
             params: {
-                session_date: session_datee,
-                timing_id: timing_idd,
+                session_date: date,
+                timing_id: timing,
             },
-            timeout: 4000,
         });
-        HandleRooms(response, Target);
+        const Rooms = (await response).data;
+        console.log(Rooms);
+
+        const Target = document.querySelector("#available_rooms_result");
+        Target.innerHTML = "";
+        for (let index = 0; index < Rooms.length; index++) {
+            const element = Rooms[index];
+            var newItem = document.createElement("p");
+            newItem.classList.add("text-xl", "font-bold");
+            newItem.innerText = `${element.room}`;
+            Target.appendChild(newItem);
+        }
     } catch (error) {
         console.log(error);
     }
 }
- function HandleRooms(response, Target) {
-    const selectElement = document.createElement("select");
-    selectElement.name = "room_id";
-    selectElement.id = "room";
-    selectElement.classList.add("select", "select-bordered");
-    var responseData = response.data;
-    const label = document.createElement("label");
-    label.innerText = "Rooms";
-    label.classList.add("w-[100px]");
-    responseData.forEach(function (room) {
-        const option = document.createElement("option");
-        option.value = room.id;
-        option.textContent = room.room;
-        selectElement.appendChild(option);
-    });
-    Target.innerHTML = "";
-    Target.appendChild(label);
-    Target.appendChild(selectElement);
-    return ;
-}
 
- function NewInnerTd(tr, td, session) {
+function NewInnerTd(tr, td, session) {
     td.innerHTML = `<div class="h-[150px] shadow-lg  flex flex-col border-2 bg-opacity-90 backdrop-blur transition-shadow duration-100 [transform:translate3d(0,0,0)] rounded-xl justify-center items-center">
                             <a href="/teachers/${session.teacher_id}">
                                 <p class="hover:shadow-lg  hover:bg-slate-50  bg-slate-100 px-2 rounded-xl font-bold">
@@ -186,7 +148,7 @@ async function GetAvailableRooms(Target, session_datee, timing_idd) {
         CourButton.classList.add("hidden");
     }
 }
- function NewInnerCour(tr, session) {
+function NewInnerCour(tr, session) {
     tr.innerHTML = `
 <td colspan="3" class="session">
 <div class="h-[150px] w-[100%] shadow-lg  flex card  bg-opacity-90 backdrop-blur transition-shadow duration-100 [transform:translate3d(0,0,0)] 
@@ -304,8 +266,14 @@ async function clickHandlerTp(event) {
                                             ${teacher.teacher_name} </p>
                                     </a>`;
             });
-            const divy  = document.createElement("div");
-            divy.classList.add("flex","relative","justify-center","items-center","mt-4");
+            const divy = document.createElement("div");
+            divy.classList.add(
+                "flex",
+                "relative",
+                "justify-center",
+                "items-center",
+                "mt-4"
+            );
             divy.innerHTML = `
             <button class="btn btn-circle delete-td hover:bg-rose-400"
                 onclick="openModal(this)">
@@ -336,12 +304,26 @@ async function clickHandlerTp(event) {
                 "space-y-2",
                 "justify-center",
                 "items-center",
-                "w-[100%]",
+                "w-[100%]"
             );
             newDiv.innerHTML = teachersElements;
             const ChildDiv = document.createElement("div");
-            ChildDiv.classList.add("h-[300px]","shadow-xl" ,  "flex" ,"flex-col" ,"border-2", "bg-opacity-90", "backdrop-blur" ,"transition-shadow", "duration-100", "[transform:translate3d(0,0,0)]" ,"rounded-xl", "justify-between","items-center")
-                ChildDiv.appendChild(newDiv);
+            ChildDiv.classList.add(
+                "h-[300px]",
+                "shadow-xl",
+                "flex",
+                "flex-col",
+                "border-2",
+                "bg-opacity-90",
+                "backdrop-blur",
+                "transition-shadow",
+                "duration-100",
+                "[transform:translate3d(0,0,0)]",
+                "rounded-xl",
+                "justify-between",
+                "items-center"
+            );
+            ChildDiv.appendChild(newDiv);
             td.innerHTML = "";
             var newp = document.createElement("p");
             newp.classList.add("text-xl", "font-normal");
@@ -355,7 +337,9 @@ async function clickHandlerTp(event) {
             ChildDiv.appendChild(divy);
             const tr = td.parentNode;
             var compButton = tr.querySelector(".parentofform");
-            compButton.classList.add("hidden");
+            if (compButton) {
+                compButton.classList.add("hidden");
+            }
             // Find the next row
             const nextRow = tr.nextElementSibling;
             if (nextRow) {
@@ -382,7 +366,7 @@ async function clickHandlerTp(event) {
         }
     }
 }
- function clickHandler(event) {
+function clickHandler(event) {
     event.preventDefault();
     const AddCour = event.currentTarget;
     const td = AddCour.parentNode.parentNode;
@@ -401,7 +385,7 @@ async function clickHandlerTp(event) {
         teacher_id: formData.get("teacher_id"),
         room_id: formData.get("room_id"),
     };
-     PostCour(data, tr);
+    PostCour(data, tr);
 }
 
 async function ClickH(event) {
