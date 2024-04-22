@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\GlobalWeek;
+use App\Models\SchoolYear;
 use App\Models\Week;
 use App\Models\Battalion;
 use App\Models\Event;
@@ -123,13 +124,24 @@ class GlobalWeekController extends Controller
         $week3 = new Week;
         $events = new Event;
         $sportevents = new SportEvent;
-        $g = GlobalWeek::create([
-            'start_week_date' => $request->start_week_date,
-            'end_week_date' => $request->end_week_date,
-            'schoolyear_id' => $request->schoolyear_id,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
+        if (GlobalWeek::where('schoolyear_id',$request->schoolyear_id)->get()->isNotEmpty()) {
+            $g = GlobalWeek::create([
+                'start_week_date' => $request->start_week_date,
+                'end_week_date' => $request->end_week_date,
+                'schoolyear_id' => $request->schoolyear_id,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]);
+        }
+        else {
+            $g = GlobalWeek::create([
+                'start_week_date' => SchoolYear::find($request->schoolyear_id)->schoolyear_start_date,
+                'end_week_date' => date('Y-m-d', strtotime('+4 days', strtotime(SchoolYear::find($request->schoolyear_id)->schoolyear_start_date))),
+                'schoolyear_id' => $request->schoolyear_id,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ]);
+        }
 
         $week1->global_week_id = $g->id;
         $week1->battalion_id = $battalion1->id;

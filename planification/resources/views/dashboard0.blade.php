@@ -71,6 +71,7 @@
                                 </button>
                             </a>
                         @endif
+                        @if ($week_1->week_type == 'Cours' || $week_1->week_type == 'Cours Magistreaux')
                         <a href="{{ route('weeks.additives', $week_1->id) }}">
                             <button class="btn btn-base-300 btn-sm"> Additives
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
@@ -89,6 +90,7 @@
                                 </svg>
                             </button>
                         </a>
+                        @endif
 
                     </div>
                 </div>
