@@ -44,7 +44,7 @@
                 <button class=" bg-slate-400 rounded-lg add-button  p-2 z-0" id="form-button">Add</button>
                 <form action="{{ route('global_weeks.store', ['id' => $schoolyear->id]) }}" enctype="multipart/form-data"
                     method="POST"
-                    class="z-100 p-4 global-week-form   absolute h-fit flex flex-col justify-center items-center  bg-slate-50 top-20 left-[10%]  w-[80%] rounded-3xl shadow-lg">
+                    class="z-100 p-4 global-week-form   absolute h-fit flex flex-col justify-center items-center  bg-base-200 top-20 left-[10%]  w-[80%] rounded-3xl shadow-lg">
                     @csrf
                     @php
                         $nextstartdate = date('Y-m-d', strtotime('+7 days', strtotime($maxstartdate)));

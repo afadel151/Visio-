@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Department;
 use App\Models\SchoolYear;
 use App\Models\Config;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
 
 class SettingsController extends Controller
@@ -22,6 +24,11 @@ class SettingsController extends Controller
         
         $schoolyears  = SchoolYear::all();
         return view('settings.schoolyears',['schoolyears'=>$schoolyears ]);
+    }
+    public function teachers(){
+        $departments = Department::all();
+        $teachers = Teacher::select('*')->with('department');
+        return view('settings.teachers' ,['departments'=>$departments, 'teachers'=>$teachers]);
     }
     /**
      * Show the form for creating a new resource.

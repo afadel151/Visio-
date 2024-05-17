@@ -77,8 +77,8 @@ Route::middleware('auth')->group(function () {
     Route::prefix('/')->group(function (){
         Route::prefix('teachers')->group(function () {
             Route::get('/',[TeacherController::class,'index'])->name('teachers.index');
-            Route::get('/create',[TeacherController::class,'create'])->name('teachers.create');
-            Route::get('/delete',[TeacherController::class,'delete'])->name('teachers.delete');
+            Route::post('/create',[TeacherController::class,'create'])->name('teachers.create');
+            Route::get('/delete/{id}',[TeacherController::class,'delete'])->name('teachers.delete');
             Route::post('/store',[TeacherController::class,'store'])->name('teachers.store');
             Route::post('/update',[TeacherController::class,'update'])->name('teachers.update');
             Route::get('/{id}',[TeacherController::class,'show'])->name('teachers.show');
@@ -157,15 +157,12 @@ Route::middleware('auth')->group(function () {
             Route::post('/update',[CompanyController::class,'update'])->name('companies.update');
             Route::delete('/delete',[CompanyController::class,'delete'])->name('companies.delete');
             Route::get('/{id}',[CompanyController::class,'show'])->name('companies.show');
-            // Route::get('/{id}/sections',[SectionContr::class,'BattalionCompanies'])->name('companies.companies');
             Route::get('/{id}/weeks',[WeekController::class,'BattalionWeeks'])->name('companies.weeks');
         });
         Route::prefix('schoolyears')->group(function () {
             Route::get('/',[SchoolYearController::class,'index'])->name('schoolyears.index');
-            // Route::get('/battalions',[SchoolYearController::class,'index'])->name('schoolyears.create');
             Route::post('/store',[SchoolYearController::class,'store'])->name('schoolyears.store');
             Route::post('/update',[SchoolYearController::class,'update'])->name('schoolyears.update');
-            // Route::delete('/delete',[SchoolYearController::class,'delete'])->name('schoolyears.delete');
             Route::get('/{id}',[SchoolYearController::class,'showw'])->name('schoolyears.show');
             Route::get('/{id}/battalions',[BattalionController::class,'SY_battalions'])->name('schoolyears.battalions');
             Route::get('/current',[SchoolYearController::class,'currentSY'])->name('schoolyears.current');

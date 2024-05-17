@@ -8,7 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Teacher extends Model
 {
     use HasFactory;
-    
+    protected $fillable = [
+        'teacher_name' ,
+        'teacher_grade',
+        'teacher_type',
+        'department_id'
+    ];
     public function scopeSearch($query)
     {
         $q = request('q');

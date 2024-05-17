@@ -19,7 +19,7 @@
         <div class="col-span-3 row-span-2 ">
             <div class="card card-compact w-[100%] h-[100%] bg-base-100 shadow-xl">
                 <figure>
-                    <p class="text-6xl font-bold">1st year</p>
+                    <p class="text-6xl font-bold bg-base-200 rounded-lg p-4">First year</p>
                 </figure>
                 <div class="stats mt-6">
 
@@ -39,8 +39,8 @@
                             up</div>
                     </div>
                 </div>
-                <div class="card-body">
-                    <h2 class="card-title text-2xl font-bold">{{ $week_1->week_type }}
+                <div class="card-body flex flex-col justify-around items-center">
+                    <h2 class="card-title text-4xl font-bold bg-base-200 rounded-lg p-4">{{ $week_1->week_type }}
                         @if ($week_1->week_type == 'Cours')
                             {{ $week_1->week_number }}
                         @endif
@@ -73,7 +73,7 @@
                         @endif
                         @if ($week_1->week_type == 'Cours' || $week_1->week_type == 'Cours Magistreaux')
                         <a href="{{ route('weeks.additives', $week_1->id) }}">
-                            <button class="btn btn-base-300 btn-sm"> Additives
+                            <button class="btn btn-base-300 "> Additives
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -82,7 +82,7 @@
 
                             </button>
                         </a>
-                        <a href="{{ route('weeks.show', $week_1->id) }}"><button class="btn btn-sm btn-primary"> Calendar
+                        <a href="{{ route('weeks.show', $week_1->id) }}"><button class="btn  btn-primary"> Calendar
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -99,7 +99,7 @@
         <div class="col-span-3 row-span-2 col-start-4">
             <div class="card card-compact w-[100%] h-[100%] bg-base-100 shadow-xl">
                 <figure>
-                    <p class="text-6xl font-bold">2nd year</p>
+                    <p class="text-6xl font-bold bg-base-200 rounded-lg p-4">Second year</p>
                 </figure>
                 <div class="stats mt-6">
 
@@ -119,8 +119,8 @@
                             up</div>
                     </div>
                 </div>
-                <div class="card-body">
-                    <h2 class="card-title text-2xl font-bold">{{ $week_2->week_type }}
+                <div class="card-body flex flex-col justify-around items-center">
+                    <h2 class="card-title text-4xl font-bold  bg-base-200 rounded-lg p-4">{{ $week_2->week_type }}
                         @if ($week_2->week_type == 'Cours')
                             {{ $week_2->week_number }}
                         @endif
@@ -151,8 +151,9 @@
                                 </button>
                             </a>
                         @endif
+                        @if ($week_2->week_type == 'cours' || $week_2->week_type == 'Cours Magistreaux')
                         <a href="{{ route('weeks.additives', $week_2->id) }}">
-                            <button class="btn btn-base-300 btn-sm"> Additives
+                            <button class="btn btn-base-300 "> Additives
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -161,7 +162,8 @@
 
                             </button>
                         </a>
-                        <a href="{{ route('weeks.show', $week_2->id) }}"><button class="btn btn-sm  btn-primary"> Calendar
+                        @endif
+                        <a href="{{ route('weeks.show', $week_2->id) }}"><button class="btn   btn-primary"> Calendar
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -176,7 +178,7 @@
         <div class="col-span-3 row-span-2 col-start-7">
             <div class="card card-compact w-[100%] h-[100%] bg-base-100 shadow-xl">
                 <figure>
-                    <p class="text-6xl font-bold">3rd year</p>
+                    <p class="text-6xl font-bold bg-base-200 rounded-lg p-4">Third year</p>
                 </figure>
                 <div class="stats mt-6">
 
@@ -196,8 +198,8 @@
                             up</div>
                     </div>
                 </div>
-                <div class="card-body">
-                    <h2 class="card-title text-2xl font-bold">{{ $week_3->week_type }}
+                <div class="card-body flex flex-col justify-around items-center">
+                    <h2 class="card-title text-4xl font-bold bg-base-200 rounded-lg p-4">{{ $week_3->week_type }}
                         @if ($week_3->week_type == 'Cours')
                             {{ $week_3->week_number }}
                         @endif
@@ -215,7 +217,7 @@
                                 class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border border-red-500 text-red-500">Controls</span>
                         @endif
                     </div>
-                    <div class="card-actions mt-10" justify-end">
+                    <div class="card-actions mt-10  justify-end">
                         @if ($week_3->cc == 1)
                             <a href="{{ route('weeks.controls', $week_3->id) }}">
                                 <button class="btn btn-sm btn-base-300"> Controls
@@ -228,8 +230,9 @@
                                 </button>
                             </a>
                         @endif
-                        <a href="{{ route('weeks.additives', $week_3->id) }}">
-                            <button class="btn btn-sm btn-base-300"> Additives
+                        @if ($week_3->week_type == 'Cours' || $week_3->week_type == 'Cours Magistreaux')
+                        <a href="{{ route('weeks.additives',  $week_3->id) }}">
+                            <button class="btn btn-base-300 "> Additives
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -238,7 +241,8 @@
 
                             </button>
                         </a>
-                        <a href="{{ route('weeks.show', $week_3->id) }}"><button class="btn btn-sm btn-primary"> Calendar
+                        @endif
+                        <a href="{{ route('weeks.show', $week_3->id) }}"><button class="btn  btn-primary"> Calendar
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                                     <path stroke-linecap="round" stroke-linejoin="round"

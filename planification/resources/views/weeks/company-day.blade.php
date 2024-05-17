@@ -288,6 +288,7 @@
                                             </dialog>
                                         @endif
                                     </div>
+                                </div>
                             </td>
                         @else
                             @php
@@ -473,7 +474,7 @@
                                                             <label for="room" class="w-[100px]">Teacher</label>
                                                             <select name="teachers[]" id="room"
                                                                 class="select select-multiple focus:h-56" multiple>
-                                                                {{-- DISPLAY TEACHERS ACCORDING TO THE MOODULE --}}
+
                                                                 @foreach ($teachers as $teacher)
                                                                     <option value="{{ $teacher->id }}">
                                                                         {{ $teacher->teacher_name }}
@@ -497,6 +498,43 @@
                                                     class="h-10 btn   w-20 rounded-lg submit-tp  bg-slate-300 hover:bg-slate-50 hover:text-slate-800 hover:scale-110 duration-200 hover:border-slate-300 hover:cursor-pointer hover:border-2">
 
                                             </form>
+                                            <div
+                                                class="h-[300px] shadow-xl hidden result-tp   flex flex-col border-2 bg-opacity-90 backdrop-blur transition-shadow duration-100 [transform:translate3d(0,0,0)] rounded-xl justify-between items-center">
+
+                                                <div
+                                                    class="flex flex-col tp-teachers space-y-2 justify-around items-center w-[100%]">
+                                                </div>
+                                                <p class="text-xl font-normal module-p"></p>
+                                                <p class= "text-xl font-bold room-p"></p>
+                                                <div class="flex  relative justify-center items-center mt-4 ">
+                                                    <button class="btn btn-circle delete-td hover:bg-rose-400"
+                                                        onclick="openModal(this)">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                            viewBox="0 0 24 24" stroke-width="1.5"
+                                                            stroke="currentColor" class="w-6 h-6">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                                        </svg>
+                                                    </button>
+                                                    <dialog class="modal z-60">
+                                                        <div class="modal-box">
+                                                            <h3 class="font-bold text-lg">Hello!</h3>
+                                                            <p class="py-4">Do you rally want to delete this session
+                                                                ?</p>
+                                                            <div class="modal-action">
+
+                                                                <a
+                                                                    class="btn btn-error delete-a">Delete</a>
+                                                                <form method="dialog">
+                                                                    <!-- if there is a button in form, it will close the modal -->
+                                                                    <button class="btn">Close</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </dialog>
+                                                    
+                                                </div>
+                                            </div>
                                         @endif
 
                                         @if ($isRectified)
@@ -621,6 +659,45 @@
                                                 </form>
 
                                             </div>
+                                            <div
+                                                class="h-[150px] result hidden shadow-lg  flex flex-col border-2 bg-opacity-90 backdrop-blur transition-shadow duration-100 [transform:translate3d(0,0,0)] rounded-xl justify-center items-center">
+
+                                                <a class="btn btn-sm teacher-a">
+                                                </a>
+                                                <p class="text-xl font-normal module-p"></p>
+                                                <p class= "text-xl font-bold room-p"></p>
+                                                <div
+                                                    class="flex updateformparent relative justify-center items-center mt-4 ">
+                                                    <button class="btn btn-circle delete-td hover:bg-rose-400"
+                                                        onclick="openModal(this)">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                            viewBox="0 0 24 24" stroke-width="1.5"
+                                                            stroke="currentColor" class="w-6 h-6">
+                                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                                d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                                        </svg>
+
+
+                                                    </button>
+                                                    <dialog class="modal z-60">
+                                                        <div class="modal-box">
+                                                            <h3 class="font-bold text-lg">Hello!</h3>
+                                                            <p class="py-4">Do you rally want to delete this session
+                                                                ?
+                                                            </p>
+                                                            <div class="modal-action">
+
+                                                                <a class="btn btn-error delete-a">Delete</a>
+                                                                <form method="dialog">
+                                                                    <!-- if there is a button in form, it will close the modal -->
+                                                                    <button class="btn">Close</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </dialog>
+
+                                                </div>
+                                            </div>
                                         @endif
                                     @endif
                                 </td>
@@ -658,13 +735,6 @@
                                 <input type="hidden" name="sessionable_type" value="App\Models\Company">
                                 <input type="hidden" name="sessionable_id" value="{{ $company->id }}">
                                 <input type="hidden" name="session_type" value="cour">
-                                @if ($sector == 'MI')
-                                    <div class="sector hidden">MI</div>
-                                @elseif ($sector == 'ST')
-                                    <div class="sector hidden">ST</div>
-                                @else
-                                    <div class="sector hidden">PR</div>
-                                @endif
                                 <div class="form-section h-[100%]  flex  flex-col justify-around items-center">
                                     <div>
                                         <h2 class="">Company : {{ $company->company }} </h2>
@@ -705,6 +775,42 @@
                                 </div>
                                 <input type="submit" value="submit" class=" submit-cour  btn">
                             </form>
+
+                        </td>
+                        <td class="result hidden" colspan="3">
+                            <div
+                                class="h-[150px] border-2 z-0 w-[100%] shadow-lg flex card  bg-opacity-90 backdrop-blur transition-shadow duration-100 [transform:translate3d(0,0,0)] 
+                             flex-col rounded-xl justify-center items-center">
+                                <a href="" class="btn teacher-a">
+                                </a>
+
+                                <p class=" font-normal module-p"></p>
+                                <p class= " font-bold room-p"></p>
+                                <div class="flex  relative justify-center self-end  items-center space-x-2">
+
+                                    <button class="btn btn-circle delete-td hover:bg-rose-400"
+                                        onclick="openModal(this)">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round"
+                                                d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                        </svg>
+
+                                    </button>
+                                    <dialog id="my_modal_1" class="modal z-60">
+                                        <div class="modal-box">
+                                            <h3 class="font-bold text-lg">Hello!</h3>
+                                            <p class="py-4">Do you rally want to delete this session ?</p>
+                                            <div class="modal-action">
+                                                <a href="" class="btn btn-error delete-a">Delete</a>
+                                                <form method="dialog">
+                                                    <button class="btn">Close</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </dialog>
+                                </div>
+                            </div>
                         </td>
                     @endif
                 @endif

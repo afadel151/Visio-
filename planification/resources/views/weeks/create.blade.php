@@ -124,53 +124,54 @@
 
                         </button>
                     </a>
-                    <div class="drawer  drawer-end" style="z-index: 100;">
-                        <input id="my-drawer" type="checkbox" class="drawer-toggle" />
-                        <div class="drawer-content tooltip" data-tip="Available Rooms">
-                            <!-- Page content here -->
-                            <label for="my-drawer" class="btn btn-ghost drawer-button">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M9 17.25v1.007a3 3 0 0 1-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0 1 15 18.257V17.25m6-12V15a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 15V5.25m18 0A2.25 2.25 0 0 0 18.75 3H5.25A2.25 2.25 0 0 0 3 5.25m18 0V12a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 12V5.25" />
-                                </svg>
-
-                            </label>
-                        </div>
-                        <div class="drawer-side "style="z-index: 100;">
-                            <label for="my-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
-                            <ul class="menu p-4 w-96 min-h-full bg-base-200 text-base-content" style="z-index: 100;">
-                                <!-- Sidebar content here -->
-                                <p class="text-center text-3xl font-bold">Available Rooms</p>
-                                <li>
-                                    <div class=" w-full h-full flex flex-col items-center justify-between">
-                                        <form @submit.prevent="submit" id="available_rooms_form"
-                                            class="flex   w-full h-full space-y-4 flex-col justify-center items-stretch">
-                                            <div class="flex items-center justify-between w-full">
-                                                <p>Date</p>
-                                                <input type="date" name="date" class="input input-bordered">
-                                            </div>
-                                            <div class="flex items-center justify-between w-full">
-                                                <p>Timing</p>
-                                                <select name="timing_id" id="" class="select select-bordered">
-                                                    @foreach ($timings as $timing)
-                                                        <option value="{{ $timing->id }}">{{ $timing->session_start }} ->
-                                                            {{ $timing->session_finish }} </option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-
-                                        </form>
-                                        <button class="btn btn-primary" id="get_available_rooms">Search</button>
-                                    </div>
-                                </li>
-                                <li id="available_rooms_result">
-
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                    
                 @endif
+                <div class="drawer  drawer-end" style="z-index: 100;">
+                    <input id="my-drawer" type="checkbox" class="drawer-toggle" />
+                    <div class="drawer-content tooltip" data-tip="Available Rooms">
+                      
+                        <label for="my-drawer" class="btn btn-ghost drawer-button">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round"
+                                    d="M9 17.25v1.007a3 3 0 0 1-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0 1 15 18.257V17.25m6-12V15a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 15V5.25m18 0A2.25 2.25 0 0 0 18.75 3H5.25A2.25 2.25 0 0 0 3 5.25m18 0V12a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 12V5.25" />
+                            </svg>
+
+                        </label>
+                    </div>
+                    <div class="drawer-side "style="z-index: 100;">
+                        <label for="my-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
+                        <ul class="menu p-4 w-96 min-h-full bg-base-200 text-base-content" style="z-index: 100;">
+                            <!-- Sidebar content here -->
+                            <p class="text-center text-3xl font-bold">Available Rooms</p>
+                            <li>
+                                <div class=" w-full h-full flex flex-col items-center justify-between">
+                                    <form @submit.prevent="submit" id="available_rooms_form"
+                                        class="flex   w-full h-full space-y-4 flex-col justify-center items-stretch">
+                                        <div class="flex items-center justify-between w-full">
+                                            <p>Date</p>
+                                            <input type="date" name="date" class="input input-bordered">
+                                        </div>
+                                        <div class="flex items-center justify-between w-full">
+                                            <p>Timing</p>
+                                            <select name="timing_id" id="" class="select select-bordered">
+                                                @foreach ($timings as $timing)
+                                                    <option value="{{ $timing->id }}">{{ $timing->session_start }} ->
+                                                        {{ $timing->session_finish }} </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+
+                                    </form>
+                                    <button class="btn btn-primary" id="get_available_rooms">Search</button>
+                                </div>
+                            </li>
+                            <li id="available_rooms_result">
+
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </div>
             <div class="stats stats-vertical lg:stats-horizontal shadow">
                 <div class="stat">

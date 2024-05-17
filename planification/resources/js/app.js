@@ -9,16 +9,7 @@ AOS.init();
 window.Alpine = Alpine;
 
 Alpine.start();
-const instance = axios.create({
-    baseURL: "http://127.0.0.1:8000",
-    // timeout: 100,
-    withCredentials: true,
-    xsrfCookieName: "XSRF-TOKEN",
-    xsrfHeaderName: "X-XSRF-TOKEN",
-    headers: {
-        Accept: "application/json",
-    },
-});
+
 
 const openModal = (button) => {
     const modal = button.nextElementSibling;
@@ -199,8 +190,27 @@ async function PostCour(data, tr) {
     try {
         let response = await axios.post("/sessions/create", data);
         const session = response.data;
-        console.log("sent");
-        NewInnerCour(tr, session);
+        var ResultChiild = null;
+        Array.from(tr.children).forEach((child) => {
+            if (child.classList.contains("result")) {
+                ResultChiild = child;
+            } else {
+                child.classList.add("hidden");
+            }
+        });
+        if (ResultChiild) {
+            const TeacherAnchor = ResultChiild.querySelector(".teacher-a");
+            TeacherAnchor.href = "/teachers/" + session.teacher.id;
+            TeacherAnchor.innerText = session.teacher.teacher_name;
+            const ModulePar = ResultChiild.querySelector(".module-p");
+            ModulePar.innerText = session.module.module;
+            const RoomPar = ResultChiild.querySelector(".room-p");
+            RoomPar.innerText = session.room.room;
+            
+            const DeleteAnchor = ResultChiild.querySelector(".delete-a");
+            DeleteAnchor.href = "/sessions/delete/" + session.id;
+            ResultChiild.classList.remove("hidden");
+        }
     } catch (error) {
         console.log(error);
     }
@@ -212,7 +222,7 @@ async function clickHandlerTp(event) {
     const tr = grandparent.parentNode.parentNode;
     const td = AddTp.parentNode.parentNode;
     const form = AddTp.parentNode;
-    console.log(form);
+    console.log(td);
 
     if (form && form instanceof HTMLFormElement) {
         const formData = new FormData(form);
@@ -258,83 +268,31 @@ async function clickHandlerTp(event) {
             });
             const session = response.data;
             console.log(session);
-            var teachersElements = "";
-            session.tp_teachers.forEach((teacher) => {
-                teachersElements += `<a href="http://127.0.0.1:8000/teachers/${teacher.id}'"
-                                        class=" btn btn-sm">
-                                        <p class="  text-xl  font-bold">
-                                            ${teacher.teacher_name} </p>
-                                    </a>`;
-            });
-            const divy = document.createElement("div");
-            divy.classList.add(
-                "flex",
-                "relative",
-                "justify-center",
-                "items-center",
-                "mt-4"
-            );
-            divy.innerHTML = `
-            <button class="btn btn-circle delete-td hover:bg-rose-400"
-                onclick="openModal(this)">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                </svg>
-            </button>
-            <dialog class="modal z-60">
-                <div class="modal-box">
-                    <h3 class="font-bold text-lg">Hello!</h3>
-                    <p class="py-4">Do you rally want to delete this session ?</p>
-                    <div class="modal-action">
+            Array.from(td.children).forEach((child)=>{
+                if (child.classList.contains("result-tp")) {
+                    const TpTeachers = session.tp_teachers;
+                    const TpTeachersDiv = td.querySelector(".tp-teachers");
+                    TpTeachers.forEach((teacher)=>{
+                        const NewAnchor = document.createElement('a');
+                        NewAnchor.href = "/teachers/" + teacher.id;
+                        NewAnchor.innerText = teacher.teacher_name;
+                        NewAnchor.classList.add("btn","btn-sm");
+                        TpTeachersDiv.appendChild(NewAnchor);
+                    });
+                  
+                    const ModuleP = td.querySelector(".module-p");
+                    ModuleP.innerText = session.module.module;
+                    const RoomP = td.querySelector(".room-p");
+                    RoomP.innerText = session.room.room;
+                    const DeleteA = td.querySelector(".delete-a");
+                    DeleteA.href = "/sessions/delete" + session.id;
 
-                        <button class="btn btn-error delete-td">Delete</button>
-                        <form method="dialog">
-                            <!-- if there is a button in form, it will close the modal -->
-                            <button class="btn">Close</button>
-                        </form>
-                    </div>
-                </div>
-            </dialog>`;
-            var newDiv = document.createElement("div");
-            newDiv.classList.add(
-                "flex",
-                "flex-col",
-                "space-y-2",
-                "justify-center",
-                "items-center",
-                "w-[100%]"
-            );
-            newDiv.innerHTML = teachersElements;
-            const ChildDiv = document.createElement("div");
-            ChildDiv.classList.add(
-                "h-[300px]",
-                "shadow-xl",
-                "flex",
-                "flex-col",
-                "border-2",
-                "bg-opacity-90",
-                "backdrop-blur",
-                "transition-shadow",
-                "duration-100",
-                "[transform:translate3d(0,0,0)]",
-                "rounded-xl",
-                "justify-between",
-                "items-center"
-            );
-            ChildDiv.appendChild(newDiv);
-            td.innerHTML = "";
-            var newp = document.createElement("p");
-            newp.classList.add("text-xl", "font-normal");
-            newp.innerText = session.module.module;
-            ChildDiv.appendChild(newp);
-            newp = document.createElement("p");
-            newp.classList.add("text-xl", "font-normal");
-            newp.innerText = session.room.room;
-            ChildDiv.appendChild(newp);
-            form.classList.add("hidden");
-            ChildDiv.appendChild(divy);
+                    child.classList.remove("hidden");
+                } else {
+                    td.removeChild(child);
+                }
+            });
+            
             const tr = td.parentNode;
             var compButton = tr.querySelector(".parentofform");
             if (compButton) {
@@ -346,8 +304,8 @@ async function clickHandlerTp(event) {
                 // Get the next td in the same column
                 const nextTd = nextRow.querySelector(
                     "td:nth-child(" +
-                        (Array.from(tr.children).indexOf(td) + 1) +
-                        ")"
+                    (Array.from(tr.children).indexOf(td) + 1) +
+                    ")"
                 );
                 if (nextTd) {
                     // Remove the next td element
@@ -358,9 +316,8 @@ async function clickHandlerTp(event) {
             if (compButton) {
                 compButton.classList.add("hidden");
             }
-            td.appendChild(ChildDiv);
             td.setAttribute("rowspan", "2");
-            return;
+
         } catch (error) {
             console.log(error);
         }
@@ -393,7 +350,6 @@ async function ClickH(event) {
     const submit = event.currentTarget;
     const grandparent = submit.parentNode.parentNode;
     const tr = grandparent.parentNode.parentNode;
-    console.log(tr);
     const form = grandparent.querySelector("form");
     const formData = new FormData(form);
 
@@ -412,8 +368,23 @@ async function ClickH(event) {
         let response = await axios.post("/sessions/create", data);
         const session = response.data;
         const td = grandparent.parentNode;
-        NewInnerTd(tr, td, session);
-        ShowAlert();
-        HideAlert();
-    } catch (error) {}
+      
+        Array.from(td.children).forEach((child) => {
+            if (child.classList.contains("result")) {
+                const TeacherAnchor = child.querySelector(".teacher-a");
+                TeacherAnchor.href = "/teachers/"+ session.teacher.id;
+                TeacherAnchor.innerText = session.teacher.teacher_name;
+                const RoomP = child.querySelector(".room-p");
+                RoomP.innerText = session.room.room;
+                const ModulePar = child.querySelector(".module-p");
+                ModulePar.innerText = session.module.module;
+                const DeleteAnchor = child.querySelector(".delete-a");
+                DeleteAnchor.href = "/sessions/delete/" + session.id;
+                child.classList.remove("hidden");
+            } else {
+                td.removeChild(child);
+                // child.classList.add("hidden");
+            }
+        });
+    } catch (error) { }
 }

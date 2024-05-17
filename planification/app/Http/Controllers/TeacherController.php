@@ -59,9 +59,9 @@ class TeacherController extends Controller
     public function index(Request $request)
     {
 
-
-        if ($request->ajax()) {
-            $teachers = Teacher::select('*')->with('department');
+        $teachers = Teacher::select('*')->with('department');
+        if ($request->ajax() &&  $request->headers->get('referer') == 'http://127.0.0.1:8000/teachers') {
+            
 
             return Datatables::of($teachers)
                 ->addIndexColumn()
@@ -77,7 +77,35 @@ class TeacherController extends Controller
                 ->make(true);
 
         }
-        ;
+        elseif ($request->ajax() &&  $request->headers->get('referer') == 'http://127.0.0.1:8000/settings/teachers') {
+
+            return Datatables::of($teachers)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+
+                    $btn = '<a href="/teachers/' . $row->id . '" class="edit btn btn-info btn-sm rounded-lg">View</a>
+                    <button class="btn btn-warning btn-sm" onclick="openModal(this)">Delete</button>
+                    <dialog  class="modal">
+                      <div class="modal-box">
+                        <h3 class="font-bold text-lg">Hello!</h3>
+                        <p class="py-4">Press ESC key or click the button below to close</p>
+                        <div class="modal-action">
+                          <form method="dialog">
+                            <a href="/teachers/delete/' . $row->id . '" class="edit btn btn-error">Delete</a>
+                            <button class="btn">Close</button>
+                          </form>
+                        </div>
+                      </div>
+                    </dialog>';
+                    return '<div class="flex justify-around items-center">' . $btn . '</div>';
+                })
+                ->addColumn('absences', function ($row) {
+                    return $row->SessionsAbsences->count();
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+
+        };
         $absences = Session::where('teacher_id', 72)->where('absented', 1)->get();
         $teachers = Teacher::select('*')->with('department');
         $schoolyear_id = Config::find(1)->schoolyear_id;
@@ -234,10 +262,14 @@ class TeacherController extends Controller
         $teacher_module->save();
         return redirect()->back();
     }
-    public function updatepage()
+    public function create(Request $request)
     {
+        Teacher::create($request->except('_token'));
+        return redirect()->back();
     }
-    public function delete()
+    public function delete($id)
     {
+        Teacher::destroy($id);
+        return redirect()->back();
     }
 }

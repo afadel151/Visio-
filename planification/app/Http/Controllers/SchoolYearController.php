@@ -137,14 +137,14 @@ class SchoolYearController extends Controller
                 })
                 ->addColumn('action', function ($row) {
 
-                    $btn = '<button  class="edit btn btn-info btn-sm rounded-lg " onclick="ShowMiddleForm(this)" id="new-global-week-middle">New  
+                    $btn = '<button  class="edit btn btn-info   " onclick="ShowMiddleForm(this)" id="new-global-week-middle">New  
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
                             <path d="M2 4.25A2.25 2.25 0 0 1 4.25 2h2.5A2.25 2.25 0 0 1 9 4.25v2.5A2.25 2.25 0 0 1 6.75 9h-2.5A2.25 2.25 0 0 1 2 6.75v-2.5ZM2 13.25A2.25 2.25 0 0 1 4.25 11h2.5A2.25 2.25 0 0 1 9 13.25v2.5A2.25 2.25 0 0 1 6.75 18h-2.5A2.25 2.25 0 0 1 2 15.75v-2.5ZM11 4.25A2.25 2.25 0 0 1 13.25 2h2.5A2.25 2.25 0 0 1 18 4.25v2.5A2.25 2.25 0 0 1 15.75 9h-2.5A2.25 2.25 0 0 1 11 6.75v-2.5ZM15.25 11.75a.75.75 0 0 0-1.5 0v2h-2a.75.75 0 0 0 0 1.5h2v2a.75.75 0 0 0 1.5 0v-2h2a.75.75 0 0 0 0-1.5h-2v-2Z" />
                         </svg>
                     </button>
                     <form action="/global_weeks/store_middle" enctype="multipart/form-data"
                     method="POST"
-                    class=" p-4 z-30  hidden absolute top-0 right-0 h-fit flex flex-col justify-center items-center  bg-base-100 bg-opacity-50 backdrop-blur transition-shadow duration-100 [transform:translate3d(5,0,0)] 
+                    class=" p-4 z-30  hidden absolute top-0 right-0 h-fit flex flex-col justify-center items-center  bg-base-200  
                     shadow-sm   w-[80%] rounded-3xl ">
                     <input type="hidden" name="_token" value="' . csrf_token() . '"> <!-- Include CSRF token manually -->
                     <input type="hidden" name="start_week_date" value="'.$row->start_week_date.'">
@@ -279,7 +279,7 @@ class SchoolYearController extends Controller
                     ';
                     $btn = $btn . '
                     <!-- Open the modal using ID.showModal() method -->
-                    <button class="btn" onclick="openModal(this)">open modal</button>
+                    <button class="btn btn-warning" onclick="openModal(this)">Delete</button>
                     <dialog id="my_modal_5" class="modal ">
                       <div class="modal-box h-60 w-96">
                         <h3 class="font-bold text-lg">Hello!</h3>

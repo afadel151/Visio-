@@ -47,7 +47,7 @@ async function PostAbsenceTd(SectionId, GrandDiv,MarkAbsence) {
         if (requestbutton) {
             requestbutton.classList.add("btn-disabled");
         }
-
+        closeModal(MarkAbsence);
     } catch (error) {
         console.log(error);
     }
@@ -83,7 +83,8 @@ async function PostAbsenceCour(CompanyId, Td_div, MarkAbsence) {
         if (requestbutton) {
             requestbutton.classList.add("btn-disabled");
         }
-       
+        closeModal(MarkAbsence);
+
     } 
     catch (error) {
         console.log(error);
