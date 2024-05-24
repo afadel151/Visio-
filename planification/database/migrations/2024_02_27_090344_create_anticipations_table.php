@@ -18,6 +18,7 @@ return new class extends Migration
             $table->date('anticipation_date');
             $table->foreignId('timing_id')->constrained('timings')->onDelete('CASCADE');
             $table->foreignId('room_id')->constrained('rooms')->onDelete('cascade');
+            $table->boolean('absented')->default(false);
             $table->timestamps();
         });
     }

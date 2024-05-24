@@ -11,20 +11,7 @@ window.Alpine = Alpine;
 Alpine.start();
 
 
-const openModal = (button) => {
-    const modal = button.nextElementSibling;
-    modal.showModal();
-};
 
-function closeModal(button) {
-    const modal = button.closest(".modal");
-    modal.close();
-}
-function DeleteTd(button, SectionId) {
-    const dialogue = button.parentNode.parentNode.parentNode;
-    const td = dialogue.parentNode.parentNode.parentNode;
-    console.log(td);
-}
 document.addEventListener("DOMContentLoaded", function () {
     setupCreateTp();
     setupCreateCour();
@@ -92,100 +79,8 @@ async function GetAvailableRooms() {
     }
 }
 
-function NewInnerTd(tr, td, session) {
-    td.innerHTML = `<div class="h-[150px] shadow-lg  flex flex-col border-2 bg-opacity-90 backdrop-blur transition-shadow duration-100 [transform:translate3d(0,0,0)] rounded-xl justify-center items-center">
-                            <a href="/teachers/${session.teacher_id}">
-                                <p class="hover:shadow-lg  hover:bg-slate-50  bg-slate-100 px-2 rounded-xl font-bold">
-                                ${session.teacher.teacher_name}</p>  
-                            </a>
-                            <p class="text-xl font-normal">${session.module.module}</p>
-                            <p class= "text-xl font-bold">${session.room.room}</p>
-                            <div class="flex updateformparent relative justify-center items-center mt-4 space-x-2">
-                               
-                                <button class="btn btn-circle delete-td hover:bg-rose-400"
-                                            onclick="openModal(this)">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                                class="w-6 h-6">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                                            </svg>
-
-                                            <div class="hidden section-id"> ${session.id} </div>
-
-                                        </button>
-                                        <dialog id="my_modal_1" class="modal z-60">
-                                            <div class="modal-box">
-                                                <h3 class="font-bold text-lg">Hello!</h3>
-                                                <p class="py-4">Do you rally want to delete this session ?</p>
-                                                <div class="modal-action">
-                                                    <form action="">
-                                                        <button class="btn btn-error">Delete</button>
-                                                    </form>
-                                                    <form method="dialog">
-                                                        <!-- if there is a button in form, it will close the modal -->
-                                                        <button class="btn">Close</button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </dialog>
-                                
-                            </div>
-                    </div>`;
-    td.classList.remove("leave");
-    td.classList.add("enter");
-    const CourButton = tr.querySelector("td .parentofform");
-    if (CourButton) {
-        CourButton.classList.add("hidden");
-    }
-}
-function NewInnerCour(tr, session) {
-    tr.innerHTML = `
-<td colspan="3" class="session">
-<div class="h-[150px] w-[100%] shadow-lg  flex card  bg-opacity-90 backdrop-blur transition-shadow duration-100 [transform:translate3d(0,0,0)] 
-     flex-col rounded-xl justify-center items-center">
-     <div class="company-id hidden">${session.sessionable_id}</div>
-        <a href="/teachers/${session.teacher_id}">
-            <p class="hover:shadow-lg  hover:bg-slate-50  bg-slate-100 px-2 rounded-xl font-bold">
-            ${session.teacher.teacher_name}</p>  
-        </a>
-        <p class="text-xl font-normal">${session.module.module}</p>
-        <p class= "text-xl font-bold">${session.room.room}</p>
-        <div class="flex updateformparent relative justify-center self-end  items-center space-x-2">
-        
-           
-        <button class="btn btn-circle delete-td hover:bg-rose-400" onclick="openModal(this)">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round"
-                    d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-            </svg>
 
 
-        </button>
-    <dialog id="my_modal_1" class="modal z-60">
-        <div class="modal-box">
-            <h3 class="font-bold text-lg">Hello!</h3>
-            <p class="py-4">Do you rally want to delete this session ?</p>
-            <div class="modal-action">
-                    <button class="btn btn-error">Delete
-                        
-                    </button>
-               
-                <form method="dialog">
-                    <!-- if there is a button in form, it will close the modal -->
-                    <button class="btn">Close</button>
-                </form>
-            </div>
-        </div>
-    </dialog>
-        
-        </div>
-                
-    </div>
-</td>`;
-    tr.classList.add("enter");
-}
 async function PostCour(data, tr) {
     try {
         let response = await axios.post("/sessions/create", data);

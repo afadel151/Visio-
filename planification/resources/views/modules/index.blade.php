@@ -12,7 +12,7 @@
         <div>
             <p class="text-7xl font-weight-bold" style="font-weight: 700">All modules </p>
         </div>
-        <div class="card mt-20 mb-20">
+        <div class="card mt-10 mb-10 w-[90%]">
             <div class="card-header ">Manage modules</div>
             <div class="card-body">
                 {{-- {!! $dataTable->table() !!} --}}
@@ -25,6 +25,10 @@
                             <th>Sector</th>
                             <th>semester </th>
                             <th>departement </th>
+                            <th>Vol.Horaire</th>
+                            <th>Cours</th>
+                            <th>Tds</th>
+                            <th>Tps</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -91,6 +95,22 @@
                             name: 'department_id',
                             searchable: false,
                             orderable: true
+                        },
+                        {
+                            data:null,
+                            render: function(data,type,row) { return (data["nb_cours"] + data["nb_tds"] + data["nb_tps"])}
+                        },
+                        {
+                            data:'nb_cours',
+                            name:'nb_cours'
+                        },
+                        {
+                            data:'nb_tds',
+                            name:'nb_tds'
+                        },
+                        {
+                            data:'nb_tps',
+                            name:'nb_tps'
                         },
                         {
                             data: 'action',

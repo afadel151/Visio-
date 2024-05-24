@@ -14,11 +14,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     
     @stack('header')
-   {{-- <script src="./app.js"></script> --}}
-    <!-- Scripts -->
-    @vite(['resources/css/app.css'])
-    {{-- @vite(['resources/js/app.js']) --}}
-
+    @vite(['resources/css/app.css','resources/js/vueintegrate.js'])
     @vite('resources/css/sidebar.css')
     @vite('resources/css/insertsession.css')
 
@@ -26,7 +22,6 @@
 </head>
 
 <body class="z-0 relative">
-    </div>
 
     <style>
         body {
@@ -34,7 +29,7 @@
         }
     </style>
     
-    <div class="flex w-screen">
+    <div class="flex w-screen" id="app">
         <div class="w-[92px] h-screen sticky bg-base-100 bg-opacity-80 backdrop-blur transition-shadow duration-100 [transform:translate3d(0,0,0)] 
         shadow-sm  top-0 z-10 ">
             @include('inc.sidebar')

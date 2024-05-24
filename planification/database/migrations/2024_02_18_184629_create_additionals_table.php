@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignId('module_id')->constrained('modules','id')->onDelete('CASCADE');//prof
             $table->foreignId('room_id')->constrained('rooms','id')->onDelete('CASCADE');
             $table->foreignId('teacher_id')->constrained('teachers','id')->onDelete('CASCADE');
-            $table->string('session_type');
+            $table->string('session_type');//deleted?
             $table->boolean('absented')->default(false);
             $table->timestamps();
         });

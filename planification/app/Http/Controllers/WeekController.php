@@ -101,10 +101,7 @@ class WeekController extends Controller
                         return $enddate;
                     })
                     ->addColumn('action', function ($row) {
-                        $btn = '<a href="/weeks/' . $row->id . '" class="edit btn btn-info btn-sm rounded-lg">View</a>';
-                        // $btn = $btn . '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm rounded-lg">Edit</a>';
-                        // $btn = $btn . '<a href="javascript:void(0)" class="edit btn btn-danger btn-sm rounded-lg">Delete</a>';
-    
+                        $btn = '<a href="/weeks/' . $row->id . '" class="edit btn btn-info btn-sm rounded-lg">View</a>';    
                         return '<div class="flex justify-around items-center">' . $btn . '</div>';
                     })
                     ->make(true);

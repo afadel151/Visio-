@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
+use App\Models\Module;
 use App\Models\Room;
+use App\Models\Section;
+use App\Models\Session;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
@@ -25,27 +28,58 @@ class CompanyController extends Controller
                     $room = Room::where('id', $row->default_room_id)->first();
                     return $room->room;
                 })
-                ->addColumn('sections',function($row){
+                ->addColumn('sections', function ($row) {
                     return $row->sections->count();
                 })
                 ->addColumn('action', function ($row) {
 
                     $btn = '<a href="/companies/' . $row->id . '" class="edit btn btn-info btn-sm rounded-lg">View</a>';
-                    // $btn = $btn . '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm rounded-lg">Edit</a>';
-                    // $btn = $btn . '<a href="javascript:void(0)" class="edit btn btn-danger btn-sm rounded-lg">Delete</a>';
-    
                     return '<div class="flex justify-around items-center">' . $btn . '</div>';
                 })
                 ->make(true);
-            // $battalions = Battalion::where('schoolyear_id',$id)->get()
         }
     }
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function view_section($id)
     {
-        //
+        $section = Section::find($id);
+        $company = $section->company;
+        // $Cours = Session::where('sessionable_type', 'App\\Models\\Company')
+        //     ->where('sessionsble_id', $company->id)
+        //     ->whereAll(['absented', 'rectified', 'anticipated'], '=', 0)
+        //     ->orWhereAll(['absented', 'caughtup'], '=', 1)
+        //     ->join('absences', 'absences.session_id ', '=', 'sessions_tablle.id')
+        //     ->where('absences.caughtup', '=', 1)
+        //     ->get();
+        // $Tds = Session::where('sessionable_type', 'App\\Models\\Section')
+        //     ->where('sessionsble_id', $section->id)
+        //     ->where('session_type', 'td')
+        //     ->whereAll(['absented', 'rectified', 'anticipated'], '=', 0)
+        //     ->orWhereAll(['absented', 'caughtup'], '=', 1)
+        //     ->join('absences', 'absences.session_id ', '=', 'sessions_tablle.id')
+        //     ->where('absences.caughtup', '=', 1)
+        //     ->get();
+        // $Tps = Session::where('sessionable_type', 'App\\Models\\Section')
+        //     ->where('sessionsble_id', $section->id)
+        //     ->where('session_type', 'tp')
+        //     ->whereAll(['absented', 'rectified', 'anticipated'], '=', 0)
+        //     ->orWhereAll(['absented', 'caughtup'], '=', 1)
+        //     ->join('absences', 'absences.session_id ', '=', 'sessions_tablle.id')
+        //     ->where('absences.caughtup', '=', 1)
+        //     ->get();
+        // $MovedTds = Session::where('sessionable_type', 'App\\Models\\Section')
+        //     ->where('sessionsble_id', $section->id)
+        //     ->where('session_type', 'td')
+        //     ->where('rectified', 1)
+        //     ->join('rectifications', 'rectifications.session_id', '=', 'sessions_table.id')
+        //     ->where('rectifications.absented', '=', 0)
+        //     ->orWhere('anticipated', 1)
+        //     ->join('anticipations', 'anticipations.session_id', '=', 'sessions_table.id')
+        //     ->where('anticipations.absented', '=', 0)
+        //     ->get();
+
     }
 
     /**

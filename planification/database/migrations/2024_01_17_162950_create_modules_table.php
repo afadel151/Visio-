@@ -14,12 +14,15 @@ return new class extends Migration
         Schema::create('modules', function (Blueprint $table) {
             $table->id();
             $table->string('module');
-            $table->timestamps();
             $table->foreignId('department_id')->constrained('departments')->onDelete('CASCADE');
             $table->foreignId('module_head_id')->constrained('teachers')->onDelete('CASCADE');
             $table->unsignedBigInteger('battalion');
             $table->char('semester',1);
             $table->char('module_sector',2);
+            $table->unsignedInteger('nb_cours');
+            $table->unsignedInteger('nb_tds');
+            $table->unsignedInteger('nb_tps');
+            $table->timestamps();
         });
         Schema::create('teachers_modules', function (Blueprint $table) {
             $table->timestamps();

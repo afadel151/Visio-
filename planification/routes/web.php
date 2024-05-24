@@ -110,11 +110,6 @@ Route::middleware('auth')->group(function () {
         });
         Route::prefix('rooms')->group(function () {
             Route::get('/',[RoomController::class,'index'])->name('rooms.index');
-            Route::get('/create',[RoomController::class,'create'])->name('rooms.create');
-            Route::post('/store',[RoomController::class,'store'])->name('rooms.store');
-            Route::post('/update',[RoomController::class,'update'])->name('rooms.update');
-            Route::delete('/delete',[RoomController::class,'delete'])->name('rooms.delete');
-            // Route::get('/{id}',[RoomController::class,'show'])->name('rooms.show');
             Route::get('/available',[RoomController::class,'available'])->name('rooms.available');
         });
         Route::prefix('weeks')->group(function () {
@@ -158,6 +153,7 @@ Route::middleware('auth')->group(function () {
             Route::delete('/delete',[CompanyController::class,'delete'])->name('companies.delete');
             Route::get('/{id}',[CompanyController::class,'show'])->name('companies.show');
             Route::get('/{id}/weeks',[WeekController::class,'BattalionWeeks'])->name('companies.weeks');
+            Route::get('/section/{id}', [CompanyController::class,'view_section'])->name('companies.view_section');
         });
         Route::prefix('schoolyears')->group(function () {
             Route::get('/',[SchoolYearController::class,'index'])->name('schoolyears.index');
@@ -208,10 +204,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/store',[ControlsController::class, 'store'])->name('controls.store');
             Route::get('/available_rooms',[ControlsController::class, 'available_rooms'])->name('controls.available_rooms');
             Route::get('/{id}',[ControlsController::class,'show'])->name('controls.show');
-            
             Route::get('/destroy/{id}',[ControlsController::class, 'destroy'])->name('controls.destroy');
-           
-
         });
 
     });

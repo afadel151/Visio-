@@ -14,11 +14,10 @@ return new class extends Migration
         Schema::create('absences', function (Blueprint $table)
         {
             $table->id();
-            //session (teacher,Module,section,company,day,timing,sessionType)
             $table->string('absenceable_type');
             $table->unsignedBigInteger('absenceable_id');
+            $table->string('reason')->default('no reason');
             $table->boolean('caughtup')->default(false);
-            $table->string('reason');
             $table->timestamps();
             
         });

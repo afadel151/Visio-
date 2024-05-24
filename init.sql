@@ -2,10 +2,10 @@ use planification;
 
 -- schoolyear
 INSERT INTO
-  schoolyears (schoolyear, schoolyear_start_date,created_at,updated_at)
+  schoolyears (schoolyear,time_per_session, schoolyear_start_date,created_at,updated_at)
 VALUES
-  ('2023/2024', '2023-09-15',NOW(),NOW()),
-  ('2024/2025', '2024-01-01',NOW(),NOW());
+  ('2023/2024',1.33, '2023-09-15',NOW(),NOW()),
+  ('2024/2025',1.33, '2024-01-01',NOW(),NOW());
 
 INSERT INTO 
   configs (schoolyear_id,created_at,updated_at)
