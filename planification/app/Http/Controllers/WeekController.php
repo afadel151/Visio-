@@ -3,12 +3,22 @@
 namespace App\Http\Controllers;
 
 use App\Models\Additive;
+<<<<<<< Updated upstream
+=======
+use App\Models\Company;
+use App\Models\Exam;
+use App\Models\ExamRoomGroup;
+use App\Models\Module;
+use App\Models\Teacher;
+use App\Models\TeacherModule;
+>>>>>>> Stashed changes
 use Illuminate\Http\Request;
 use App\Models\Week;
 use App\Models\Session;
 use App\Models\Timing;
 use App\Models\Battalion;
 use App\Models\Room;
+use Inertia\Inertia;
 use Yajra\DataTables\DataTables;
 
 
@@ -28,6 +38,7 @@ class WeekController extends Controller
     public function show($id)
     {
 
+<<<<<<< Updated upstream
         $week = Week::find($id);
         $battalion_id = $week->battalion_id;
         $battalion = Battalion::find($battalion_id);
@@ -35,6 +46,49 @@ class WeekController extends Controller
         $timings = Timing::all();
         $rooms = Room::all();
         return view('weeks.create', compact('battalion', 'week', 'timings', 'sessions', 'rooms'));
+=======
+        $week = Week::with('global_week')->find($id);
+        if ($week->week_type == 'Cours' || $week->week_type == 'Cours Magistreaux') {
+           
+            $battalion = Battalion::find($week->battalion_id);
+            $modules = Module::with('teachers')->where('battalion',$battalion->battalion)->where('semester',$week->semester)->get();
+            $companies = Company::with('sections')->where('battalion_id',$battalion->id)->get();
+            $sessions = Session::with('teacher', 'module', 'room', 'rectification')->where('week_id', $week->id)->get();
+            $timings = Timing::all();
+            $rooms = Room::all();
+            // return view('weeks.create', compact('battalion', 'week', 'timings', 'sessions', 'rooms'));
+            return Inertia::render('WeekShow',[
+                'battalion' => $battalion,
+                'week' => $week,
+                'timings' => $timings,
+                'sessions' => $sessions,
+                'rooms' => $rooms,
+                'companies' => $companies,
+                'modules' => $modules,
+            ]);
+        }
+        if ($week->week_type == 'Examens') {
+            $battalion = Battalion::find($week->battalion_id);
+            $modules = Module::where('battalion', $battalion->battalion)->get();
+            $exams = Exam::where('week_id', $week->id)
+                ->get();
+            $exams_dates = Exam::where('week_id', $week->id)
+                ->groupBy('exam_date')
+                ->orderBy('exam_date', 'asc')
+                ->get('exam_date');
+
+            $OccupiedRooms = ExamRoomGroup::where('week_id', $week->id)->pluck('room_id')->toArray();
+            $AvailableRooms = Room::whereNotIn('id', $OccupiedRooms)->get();
+            return view('exams.show', [
+                'battalion' => $battalion,
+                'week' => $week,
+                'modules' => $modules,
+                'exams' => $exams,
+                'exams_dates' => $exams_dates,
+                'rooms' => $AvailableRooms,
+            ]);
+        }
+>>>>>>> Stashed changes
     }
     public function BattalionWeeks($id, Request $request)
     {

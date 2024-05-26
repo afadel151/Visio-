@@ -42,7 +42,7 @@ class Battalion extends Model
     }
     public function modules()
     {
-        return Module::where('battalion', $this->battalion)->get();
+        return $this->hasMany(Module::class,'battalion',$this->battalion);
     }
     public function modules_PR($semester)
     {
