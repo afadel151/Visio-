@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Additive;
+use App\Models\Company;
 use App\Models\Exam;
 use App\Models\ExamRoomGroup;
 use App\Models\Module;
@@ -14,6 +15,7 @@ use App\Models\Session;
 use App\Models\Timing;
 use App\Models\Battalion;
 use App\Models\Room;
+use Inertia\Inertia;
 use Yajra\DataTables\DataTables;
 use Barryvdh\DomPDF\Facade\Pdf;
 
@@ -54,14 +56,24 @@ class WeekController extends Controller
     public function show($id)
     {
 
-        $week = Week::find($id);
+        $week = Week::with('global_week')->find($id);
         if ($week->week_type == 'Cours' || $week->week_type == 'Cours Magistreaux') {
-            $battalion_id = $week->battalion_id;
-            $battalion = Battalion::find($battalion_id);
-            $sessions = Session::with('teacher', 'module', 'room', 'rectification')->where('week_id', $week->id)->get();
+            $battalion = Battalion::find($week->battalion_id);
+            $companies = Company::with('sections')->where('battalion_id',$battalion->id)->get();
+            $sessions = Session::with('teacher', 'module', 'room','TpTeachers')->where('week_id', $week->id)->get();
+            $modules = Module::with('teachers')->where('battalion',$battalion->battalion)->where('semester',$week->semester)->get();
             $timings = Timing::all();
             $rooms = Room::all();
-            return view('weeks.create', compact('battalion', 'week', 'timings', 'sessions', 'rooms'));
+            return Inertia::render('Weeks/WeekCreate',[
+                'week' => $week,
+                'modules' => $modules,
+                'companies' => $companies,
+               'sessions' => $sessions,
+                'timings' => $timings,
+                'rooms' => $rooms,
+                'battalion' => $battalion,
+            ]);
+            // return view('weeks.create', compact('battalion', 'week', 'timings', 'sessions', 'rooms'));
         }
         if ($week->week_type == 'Examens') {
             $battalion = Battalion::find($week->battalion_id);

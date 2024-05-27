@@ -7,7 +7,7 @@ export default defineConfig({
         laravel({
             input: 'resources/js/app.js',
             ssr: 'resources/js/ssr.js',
-            refresh: false,
+            refresh: true,
         }),
         vue({
             template: {
