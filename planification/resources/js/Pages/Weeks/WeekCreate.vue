@@ -85,12 +85,12 @@ const GetDateRange = computed(() => {
         <tr>
             <td></td>
             <template v-for="company in props.companies.filter(company => company.sector == 'ST').sort((a,b)=> a.company - b.company)" :colspan="company.sections.length">
-                <td v-for="section in company.sections.sort((a,b)=> a.section-b.section)">
+                <td class="w-32"v-for="section in company.sections.sort((a,b)=> a.section-b.section)">
                     {{ section.section }}
                 </td>
             </template>
             <template v-for="company in props.companies.filter(company => company.sector == 'MI').sort((a,b)=> a.company - b.company)" :colspan="company.sections.length">
-                <td v-for="section in company.sections.sort((a,b)=> a.section-b.section)">
+                <td class="w-32"v-for="section in company.sections.sort((a,b)=> a.section-b.section)">
                     {{ section.section }}
                 </td>
             </template>
@@ -100,7 +100,7 @@ const GetDateRange = computed(() => {
                 <DayTimes :date="date" :timings="props.timings"/>
            </td>
             <td  v-for="company in props.companies.sort((a, b) => a.compay - b.company)" :colspan="company.sections.length" >
-                <CompanyDay :rooms="props.rooms" :modules="props.modules"  :company="company" :date="date" :timings="props.timings" :sessions="CompanySessions(company)"/>
+                <CompanyDay :rooms="props.rooms" :modules="props.modules.filter(module => module.module_sector == company.sector)" :week_id="props.week.id"  :company="company" :date="date" :timings="props.timings" :sessions="CompanySessions(company)"/>
             </td>
         </tr>
 
