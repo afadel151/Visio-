@@ -3,6 +3,7 @@ import { computed } from "vue";
 import Cours from "./Cours.vue";
 import TdCell from "./TdCell.vue";
 import TpCell from "./TpCell.vue";
+import TdForm from "./TdForm.vue";
 const props = defineProps({
     company : {
         type: Object,
@@ -17,6 +18,14 @@ const props = defineProps({
         required:true
     },
     sessions:{
+        type:Array,
+        required:true
+    },
+    modules:{
+        type:Array,
+        required:true
+    },
+    rooms:{
         type:Array,
         required:true
     }
@@ -53,7 +62,9 @@ const GetDateFormat = (date) => {
                     </td>
                     <template v-else-if="FilteredSessions.filter(s => s.timing_id === tim.id-1 && s.sessionable_type === 'App\\Models\\Section' && s.sessionable_id === section.id && s.session_type === 'tp').length > 0">
                     </template>
-                    <td v-else class="h-32">X</td>
+                    <td v-else class="h-32">
+                        <TdForm :rooms="props.rooms" :modules="props.modules" :section="section"  />
+                    </td>
                 </template>
             </template>
         </tr>

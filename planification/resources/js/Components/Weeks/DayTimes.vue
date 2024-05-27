@@ -15,8 +15,8 @@ const props = defineProps({
 <template>
     <table class="bg-slate-400 text-center">
         <tr >
-            <td rowspan="5"  class="-rotate-90" >
-                <span class="h-full">{{ props.date.getFullYear() }}-{{ props.date.getMonth() }}-{{ props.date.getDate() }}</span>
+            <td rowspan="5" class="p-0 -rotate-90"  >
+                <span class="h-44" >{{ props.date.getFullYear() }}-{{ props.date.getMonth() }}-{{ props.date.getDate() }}</span>
             </td>
             <td class="h-32">
                 {{ props.timings[0].session_start }}

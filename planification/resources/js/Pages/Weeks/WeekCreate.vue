@@ -100,7 +100,7 @@ const GetDateRange = computed(() => {
                 <DayTimes :date="date" :timings="props.timings"/>
            </td>
             <td  v-for="company in props.companies.sort((a, b) => a.compay - b.company)" :colspan="company.sections.length" >
-                <CompanyDay  :company="company" :date="date" :timings="props.timings" :sessions="CompanySessions(company)"/>
+                <CompanyDay :rooms="props.rooms" :modules="props.modules"  :company="company" :date="date" :timings="props.timings" :sessions="CompanySessions(company)"/>
             </td>
         </tr>
 
