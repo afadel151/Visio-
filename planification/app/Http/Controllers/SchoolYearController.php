@@ -31,8 +31,6 @@ class SchoolYearController extends Controller
                 ->addColumn('action', function ($row) {
 
                     $btn = '<a href="/schoolyears/' . $row->id . '" class="edit btn btn-info btn-sm rounded-lg">View</a>';
-                    // $btn = $btn . '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm rounded-lg">Edit</a>';
-                    // $btn = $btn . '<a href="javascript:void(0)" class="edit btn btn-danger btn-sm rounded-lg">Delete</a>';
     
                     return '<div class="flex justify-around items-center">' . $btn . '</div>';
                 })
@@ -61,6 +59,7 @@ class SchoolYearController extends Controller
 
         $schoolyear->schoolyear = $request->input('schoolyear');
         $schoolyear->schoolyear_start_date = $request->input('schoolyear_start_date');
+        $schoolyear->time_per_session = 1.33;
         $schoolyear->save();
 
         $b1->schoolyear_id = $schoolyear->id;

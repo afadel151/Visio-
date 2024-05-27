@@ -18,7 +18,7 @@ class DashboardController extends Controller
     {
         $today = date('Y-m-d');
         // $global_week = GlobalWeek::where('start_week_date','<=',$today)->where('end_week_date','>=',$today)->first();
-        $global_week = GlobalWeek::find(2);
+        $global_week = GlobalWeek::find(3);
         $schoolyear_id = SchoolYear::find(1)->id;
         if ($global_week) {
             $nextgw = GlobalWeek::where('start_week_date', '<=', date('Y-m-d', strtotime('+7 days', strtotime($today))))->where('end_week_date', '>=', date('Y-m-d', strtotime('+7 days', strtotime($today))))->first();

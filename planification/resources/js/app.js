@@ -278,7 +278,6 @@ async function ClickH(event) {
                 child.classList.remove("hidden");
             } else {
                 td.removeChild(child);
-                // child.classList.add("hidden");
             }
         });
     } catch (error) { }
