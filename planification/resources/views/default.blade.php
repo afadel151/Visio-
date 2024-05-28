@@ -14,7 +14,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     
     @stack('header')
-    @vite(['resources/css/app.css','resources/js/vueintegrate.js'])
+    @vite(['resources/css/app.css'])
     @vite('resources/css/sidebar.css')
     @vite('resources/css/insertsession.css')
 

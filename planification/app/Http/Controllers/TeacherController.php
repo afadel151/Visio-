@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Additional;
+use App\Models\Anticipation;
+use App\Models\Control;
 use App\Models\SchoolYear;
 use App\Models\Session;
 use App\Models\Teacher;
@@ -28,8 +30,8 @@ class TeacherController extends Controller
         $teacher = Teacher::find($id);
         $classes = new \stdClass;
         $sessions = Session::whereDate('session_date', '>=', $request->min_date)
-                            ->whereDate('session_date', '<=', $request->max_date)
-                            ->get();
+            ->whereDate('session_date', '<=', $request->max_date)
+            ->get();
         $classes->CoursDones = $sessions->where('teacher_id', $teacher->id)->where('session_type', 'cour')->where('absented', 0)->count();
         $classes->CoursAbsented = $sessions->where('teacher_id', $teacher->id)->where('session_type', 'cour')->where('absented', 1)->where('caughtup', 0)->count();
         $classes->CoursCaughtUp = $sessions->where('teacher_id', $teacher->id)->where('session_type', 'cour')->where('caughtup', 1)->count();
@@ -38,20 +40,20 @@ class TeacherController extends Controller
         $classes->TdsAbsented = $sessions->where('teacher_id', $teacher->id)->where('session_type', 'td')->where('absented', 1)->where('caughtup', 0)->count();
         $classes->TdsCaughtUp = $sessions->where('teacher_id', $teacher->id)->where('session_type', 'td')->where('caughtup', 1)->count();
         $Tps = Session::where('session_type', 'tp')
-                        ->whereDate('session_date', '>=', $request->min_date)
-                        ->whereDate('session_date', '<=', $request->max_date)
-                        ->join('tp_teachers', 'sessions_table.id', '=', 'tp_teachers.session_id')
-                        ->where('tp_teachers.teacher_id', $teacher->id);
+            ->whereDate('session_date', '>=', $request->min_date)
+            ->whereDate('session_date', '<=', $request->max_date)
+            ->join('tp_teachers', 'sessions_table.id', '=', 'tp_teachers.session_id')
+            ->where('tp_teachers.teacher_id', $teacher->id);
 
-        $classes->TpsDones = $Tps->where('sessions_table.absented',0)->count();
-        $classes->TpsAbsented = $Tps->where('sessions_table.absented',1)->where('caughtup',0)->count();
-        $classes->TpsCaughtUp = $Tps->where('sessions_table.absented',1)->where('caughtup',1)->count();
+        $classes->TpsDones = $Tps->where('sessions_table.absented', 0)->count();
+        $classes->TpsAbsented = $Tps->where('sessions_table.absented', 1)->where('caughtup', 0)->count();
+        $classes->TpsCaughtUp = $Tps->where('sessions_table.absented', 1)->where('caughtup', 1)->count();
         $additionals = Additional::whereDate('additional_date', '>=', $request->min_date)
-                                    ->whereDate('additional_date', '<=', $request->max_date)
-                                    ->where('teacher_id', $teacher->id)->get();
+            ->whereDate('additional_date', '<=', $request->max_date)
+            ->where('teacher_id', $teacher->id)->get();
 
-        $classes->AdditionalsDones = $additionals->where('absented',0)->count();
-        $classes->AdditionalsAbsented = $additionals->where('absented',1)->count();
+        $classes->AdditionalsDones = $additionals->where('absented', 0)->count();
+        $classes->AdditionalsAbsented = $additionals->where('absented', 1)->count();
 
         return $classes;
     }
@@ -60,8 +62,8 @@ class TeacherController extends Controller
     {
 
         $teachers = Teacher::select('*')->with('department');
-        if ($request->ajax() &&  $request->headers->get('referer') == 'http://127.0.0.1:8000/teachers') {
-            
+        if ($request->ajax() && $request->headers->get('referer') == 'http://127.0.0.1:8000/teachers') {
+
 
             return Datatables::of($teachers)
                 ->addIndexColumn()
@@ -76,8 +78,7 @@ class TeacherController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
 
-        }
-        elseif ($request->ajax() &&  $request->headers->get('referer') == 'http://127.0.0.1:8000/settings/teachers') {
+        } elseif ($request->ajax() && $request->headers->get('referer') == 'http://127.0.0.1:8000/settings/teachers') {
 
             return Datatables::of($teachers)
                 ->addIndexColumn()
@@ -105,16 +106,105 @@ class TeacherController extends Controller
                 ->rawColumns(['action'])
                 ->make(true);
 
-        };
+        }
+        ;
         $absences = Session::where('teacher_id', 72)->where('absented', 1)->get();
         $teachers = Teacher::select('*')->with('department');
         $schoolyear_id = Config::find(1)->schoolyear_id;
         return view('teachers.index', ['teachers' => $teachers, 'schoolyear_id' => $schoolyear_id, 'absences' => $absences]);
     }
 
-    public function store()
+    public function available(Request $request)
     {
+        \Log::info($request->input('timing_id'));
+        $teacher_id = $request->input('teacher_id');
+        $timing_id = $request->input('timing_id');
+        $date = $request->input('date');
+        \Log::info('date : ' . $date);
+        $InSessionsTdOrCour = Session::whereAll(['absented', 'caughtup'], '=', 1)
+            ->orWhereAll(['absented', 'caughtup', 'anticipated', 'rectified'], '=', 0)
+            ->whereNot('session_type', 'tp')
+            ->where('timing_id', $timing_id)
+            ->where('teacher_id', $teacher_id)
+            ->where('session_date', $date)
+            ->count();
+        // $InSessionsTp = Session::where('session_type', 'tp')
+        //     ->where('session_date', $date)
+        //     ->where('timing_id', $timing_id)
+        //     ->orWhere('timing_id', $timing_id - 1 == 0 ? 1 : $timing_id-1)
+        //     ->whereAll(['absented', 'caughtup'], '=', 1)
+        //     ->orWhereAll(['absented', 'caughtup', 'anticipated', 'rectified'], '=', 0)
+        //     ->join('tp_teachers', 'sessions_table.id', '=', 'tp_teachers.session_id')
+        //     ->where('tp_teachers.teacher_id', '=', $teacher_id)
+        //     ->count(); 
+        $InSessionsTp = TpTeacher::where('tp_teachers.teacher_id', $teacher_id)
+            ->join('sessions_table', 'tp_teachers.session_id', '=', 'sessions_table.id')
+            ->where('sessions_table.session_date', $date)
+            ->where(function ($query) use ($timing_id) {
+                $query->where('sessions_table.timing_id', $timing_id)
+                    ->orWhere(function ($subQuery) use ($timing_id) {
+                        if ($timing_id - 1 != 0) {
+                            $subQuery->where('sessions_table.timing_id', $timing_id - 1);
+                        }
+                    });
+            })
+            ->where(function ($query) {
+                $query->where(function ($subQuery) {
+                    $subQuery->where('sessions_table.absented', 1)
+                        ->where('sessions_table.caughtup', 1);
+                })
+                    ->orWhere(function ($subQuery) {
+                        $subQuery->where('sessions_table.absented', 0)
+                            ->where('sessions_table.rectified', 0)
+                            ->where('sessions_table.anticipated', 0);
+                    });
+            })
+            ->count();
+        $InRectifications = Session::where('session_date', $date)
+            ->whereNot('session_type', 'tp')
+            ->where('teacher_id', $teacher_id)
+            ->where('rectified', '=', 1)
+            ->join('rectifications', 'rectifications.session_id', '=', 'sessions_table.id')
+            ->where('rectifications.timing_id', '=', $timing_id)
+            ->count();
+        $InAnticipation = Anticipation::where('anticipation_date', $date)
+            ->where('anticipations.timing_id', $timing_id)
+            ->join('sessions_table', 'anticipations.session_id', '=', 'sessions_table.id')
+            ->whereNot('sessions_table.session_type', 'tp')
+            ->where('sessions_table.teacher_id', '=', $teacher_id)
+            ->count();
+        $InAnticipatedTps = Anticipation::where('anticipation_date', $date)
+            ->where('anticipations.timing_id', $timing_id)
+            ->join('sessions_table', 'anticipations.session_id', '=', 'sessions_table.id')
+            ->where('sessions_table.session_type', 'tp')
+            ->join('tp_teachers', 'anticipations.session_id', '=', 'tp_teachers.session_id')
+            ->where('tp_teachers.teacher_id', $teacher_id)
+            ->count();
+        $InCatchUpCourTd = Session::where('teacher_id', '=', $teacher_id)
+            ->whereNot('session_type', 'tp')
+            ->where('sessions_table.caughtup', 1)
+            ->join('absences', 'absences.absenceable_id', '=', 'sessions_table.id')
+            ->where('absences.absenceable_type', '=', 'App\\Models\\Session')
+            ->where('absences.absenceable_id', '=', 'sessions_table.id')
+            ->join('caughtupabsences', 'caughtupabsences.absence_id', '=', 'absences.id')
+            ->where('caughtupabsences.catchup_date', $date)
+            ->where('caughtupabsences.timing_id', $timing_id)
+            ->where('caughtupabsences.absented', 0)
+            ->count();
+        $InControls = Control::where('control_date', $date)
+            ->where('timing_id', $timing_id)
+            ->where('teacher_id', $teacher_id)
+            ->count();
+        $inAdditionals = Additional::where('teacher_id', $teacher_id)
+            ->where('additional_date', $date)
+            ->where('timing_id', $timing_id)
+            ->where('absented', 0)
+            ->count();
+        $total = $InSessionsTdOrCour + $InSessionsTp + $InRectifications + $InAnticipation + $InAnticipatedTps + $InCatchUpCourTd + $InControls + $inAdditionals;
+        \Log::info('In sessionsCT :' . $InSessionsTdOrCour . 'In sesions tp :' . $InSessionsTp . ' in rectifications ' . $InRectifications . ' in anticcipations : ' . $InAnticipation . ' In Anticipated Tps : ' . $InAnticipatedTps . ' In Catchup ct: ' . $InCatchUpCourTd . ' in Controls : ' . $InControls . ' In Additionals : ' . $inAdditionals);
+        return response()->json($total);
     }
+
     public function show($id, Request $request)
     {
         if ($request->ajax()) {

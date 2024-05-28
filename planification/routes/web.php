@@ -77,6 +77,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('/')->group(function (){
         Route::prefix('teachers')->group(function () {
             Route::get('/',[TeacherController::class,'index'])->name('teachers.index');
+            Route::get('/available',[TeacherController::class,'available'])->name('teachers.available');
             Route::post('/create',[TeacherController::class,'create'])->name('teachers.create');
             Route::get('/delete/{id}',[TeacherController::class,'delete'])->name('teachers.delete');
             Route::post('/store',[TeacherController::class,'store'])->name('teachers.store');

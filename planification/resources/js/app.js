@@ -10,8 +10,6 @@ window.Alpine = Alpine;
 
 Alpine.start();
 
-
-
 document.addEventListener("DOMContentLoaded", function () {
     setupCreateTp();
     setupCreateCour();
@@ -19,19 +17,44 @@ document.addEventListener("DOMContentLoaded", function () {
     setupGetAvailableRooms();
     setupIsTeacherAvailable();
 });
-function setupIsTeacherAvailable(){
-  const IsTeacherAvailable = document.querySelector("#submit_is_teacher_available");
-  IsTeacherAvailable.removeEventListener("click", CheckTeahcherAvailability);
-  IsTeacherAvailable.addEventListener("click", CheckTeahcherAvailability);
+function setupIsTeacherAvailable() {
+    const IsTeacherAvailable = document.querySelector(
+        "#submit_is_teacher_available"
+    );
+    IsTeacherAvailable.removeEventListener("click", CheckTeahcherAvailability);
+    IsTeacherAvailable.addEventListener("click", CheckTeahcherAvailability);
 }
 
-function CheckTeahcherAvailability()
-{ 
-  const MyForm = document.querySelector("#is_teacher_available_form");
-  const fdata = new FormData(MyForm);
-  console.log(fdata.getAll());
-
-
+async function CheckTeahcherAvailability() {
+    const MyForm = document.querySelector("#is_teacher_available_form");
+    const fdata = new FormData(MyForm);
+    try {
+        let response = await axios.get("/teachers/available", {
+            params: {
+                date: fdata.get("date"),
+                timing_id: fdata.get("timing_id"),
+                teacher_id: fdata.get("teacher_id"),
+            },
+        });
+        // console.log(response.data);
+        document.querySelector("#is_teacher_available_result").innerHTML = response.data;
+        if (response.data > 0)
+            {
+                document.querySelector("#is_teacher_available_result").innerHTML = `<div role="alert" class="alert alert-warning">
+                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                <span>Oups! This teacher is occupied at the provided date and time</span>
+              </div>`;
+            }
+        else if (response.data == 0){
+            document.querySelector("#is_teacher_available_result").innerHTML = `<div role="alert" class="alert alert-success">
+            <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            <span>The teacher is available at te provided time!</span>
+          </div>`;
+        }
+        
+    } catch (error) {
+        console.log(error);
+    }
 }
 function setupGetAvailableRooms() {
     const SearchForRooms = document.querySelector("#get_available_rooms");
@@ -94,8 +117,6 @@ async function GetAvailableRooms() {
     }
 }
 
-
-
 async function PostCour(data, tr) {
     try {
         let response = await axios.post("/sessions/create", data);
@@ -116,7 +137,7 @@ async function PostCour(data, tr) {
             ModulePar.innerText = session.module.module;
             const RoomPar = ResultChiild.querySelector(".room-p");
             RoomPar.innerText = session.room.room;
-            
+
             const DeleteAnchor = ResultChiild.querySelector(".delete-a");
             DeleteAnchor.href = "/sessions/delete/" + session.id;
             ResultChiild.classList.remove("hidden");
@@ -178,18 +199,18 @@ async function clickHandlerTp(event) {
             });
             const session = response.data;
             console.log(session);
-            Array.from(td.children).forEach((child)=>{
+            Array.from(td.children).forEach((child) => {
                 if (child.classList.contains("result-tp")) {
                     const TpTeachers = session.tp_teachers;
                     const TpTeachersDiv = td.querySelector(".tp-teachers");
-                    TpTeachers.forEach((teacher)=>{
-                        const NewAnchor = document.createElement('a');
+                    TpTeachers.forEach((teacher) => {
+                        const NewAnchor = document.createElement("a");
                         NewAnchor.href = "/teachers/" + teacher.id;
                         NewAnchor.innerText = teacher.teacher_name;
-                        NewAnchor.classList.add("btn","btn-sm");
+                        NewAnchor.classList.add("btn", "btn-sm");
                         TpTeachersDiv.appendChild(NewAnchor);
                     });
-                  
+
                     const ModuleP = td.querySelector(".module-p");
                     ModuleP.innerText = session.module.module;
                     const RoomP = td.querySelector(".room-p");
@@ -202,7 +223,7 @@ async function clickHandlerTp(event) {
                     td.removeChild(child);
                 }
             });
-            
+
             const tr = td.parentNode;
             var compButton = tr.querySelector(".parentofform");
             if (compButton) {
@@ -214,8 +235,8 @@ async function clickHandlerTp(event) {
                 // Get the next td in the same column
                 const nextTd = nextRow.querySelector(
                     "td:nth-child(" +
-                    (Array.from(tr.children).indexOf(td) + 1) +
-                    ")"
+                        (Array.from(tr.children).indexOf(td) + 1) +
+                        ")"
                 );
                 if (nextTd) {
                     // Remove the next td element
@@ -227,7 +248,6 @@ async function clickHandlerTp(event) {
                 compButton.classList.add("hidden");
             }
             td.setAttribute("rowspan", "2");
-
         } catch (error) {
             console.log(error);
         }
@@ -278,11 +298,11 @@ async function ClickH(event) {
         let response = await axios.post("/sessions/create", data);
         const session = response.data;
         const td = grandparent.parentNode;
-      
+
         Array.from(td.children).forEach((child) => {
             if (child.classList.contains("result")) {
                 const TeacherAnchor = child.querySelector(".teacher-a");
-                TeacherAnchor.href = "/teachers/"+ session.teacher.id;
+                TeacherAnchor.href = "/teachers/" + session.teacher.id;
                 TeacherAnchor.innerText = session.teacher.teacher_name;
                 const RoomP = child.querySelector(".room-p");
                 RoomP.innerText = session.room.room;
@@ -295,7 +315,7 @@ async function ClickH(event) {
                 td.removeChild(child);
             }
         });
-    } catch (error) { }
+    } catch (error) {}
 }
 // import { createApp, h } from 'vue'
 // import { createInertiaApp } from '@inertiajs/vue3'
