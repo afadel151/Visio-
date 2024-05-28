@@ -124,15 +124,14 @@
 
                         </button>
                     </a>
-                    
                 @endif
                 <div class="drawer  drawer-end" style="z-index: 100;">
                     <input id="my-drawer" type="checkbox" class="drawer-toggle" />
                     <div class="drawer-content tooltip" data-tip="Available Rooms">
-                      
+
                         <label for="my-drawer" class="btn btn-ghost drawer-button">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                                stroke="currentColor" class="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round"
                                     d="M9 17.25v1.007a3 3 0 0 1-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0 1 15 18.257V17.25m6-12V15a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 15V5.25m18 0A2.25 2.25 0 0 0 18.75 3H5.25A2.25 2.25 0 0 0 3 5.25m18 0V12a2.25 2.25 0 0 1-2.25 2.25H5.25A2.25 2.25 0 0 1 3 12V5.25" />
                             </svg>
@@ -172,27 +171,95 @@
                         </ul>
                     </div>
                 </div>
+                <!-- Open the modal using ID.showModal() method -->
+                <button class="btn glass" onclick="openModal(this)">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                    </svg>
+                </button>
+                <dialog id="my_modal_1" class="modal">
+                    <div class="modal-box">
+                        <h3 class="font-bold text-lg">Hello!</h3>
+                        <form class="py-4 flex flex-col gap-6 justify-center items-stretch" id="is_teacher_available_form">
+                            <div class="flex justify-between gap-4 items-center w-full">
+                                <label class="w-20" for="">Date</label>
+                                <input type="date" name="date" class="input input-bordered w-full">
+                            </div>
+                            <div class="flex justify-between gap-4 items-center w-full">
+                                <label class="w-20" for="">Date</label>
+                                <select name="timing_id"class="input input-bordered  w-full">
+                                    @foreach ($timings as $timing)
+                                        <option value="{{ $timing->id }}">{{ $timing->session_start }} ->
+                                            {{ $timing->session_finish }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            @if ($battalion->battalion == 1)
+                                <div class="flex justify-between gap-4 items-center w-full">
+                                    <label class="w-20" for="">Teacher</label>
+                                    <select name="teacher_id" id="" class="input input-bordered  w-full">
+                                        @foreach ($battalion->teachers_PR($week->semester) as $teacher)
+                                            <option value="{{ $teacher->id }}">{{ $teacher->teacher_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            @else
+                                <div class="flex justify-between gap-4 items-center w-full">
+                                    <label class="w-20" for="">Teacher</label>
+                                    <select name="teacher_id" id="" class="input input-bordered  w-full">
+                                        @foreach ($battalion->teachers_MI($week->semester) as $teacher)
+                                            <option value="{{ $teacher->id }}">{{ $teacher->teacher_name }}</option>
+                                        @endforeach
+                                        @foreach ($battalion->teachers_ST($week->semester) as $teacher)
+                                            <option value="{{ $teacher->id }}">{{ $teacher->teacher_name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            @endif
+                                <button type="button" id="submit_is_teacher_available" class="btn btn-outline">
+                                    Sumbit
+                                </button>
+
+                        </form>
+                        <div id="is_teacher_available_result"
+                            class="py-4 flex flex-col gap-6 justify-center items-stretch">
+                            <div class="flex justify-around gap-4 items-center w-full">
+                                <label class="w-20" for="">Result</label>
+                                <p id="is_teacher_available_result" class="text-xl font-bold"></p>
+                            </div>
+                        </div>
+                        <div class="modal-action">
+                            <form method="dialog">
+                                <button class="btn">Close</button>
+                            </form>
+                        </div>
+                    </div>
+                </dialog>
             </div>
+
             <div class="stats stats-vertical lg:stats-horizontal shadow">
                 <div class="stat">
-                  <div class="stat-title">Week Number</div>
-                  <div class="stat-value">{{$week->week_number}}</div>
-                  <div class="stat-desc">{{$week->global_week->start_week_date}} -> {{$week->global_week->end_week_date}}</div>
+                    <div class="stat-title">Week Number</div>
+                    <div class="stat-value">{{ $week->week_number }}</div>
+                    <div class="stat-desc">{{ $week->global_week->start_week_date }} ->
+                        {{ $week->global_week->end_week_date }}</div>
                 </div>
-                
+
                 <div class="stat">
-                  <div class="stat-title">Semester</div>
-                  <div class="stat-value">{{$week->semester}}</div>
-                  <div class="stat-desc">↗︎ 400 (22%)</div>
+                    <div class="stat-title">Semester</div>
+                    <div class="stat-value">{{ $week->semester }}</div>
+                    <div class="stat-desc">↗︎ 400 (22%)</div>
                 </div>
-                
+
                 <div class="stat">
-                  <div class="stat-title">Battalion</div>
-                  <div class="stat-value">{{$week->battalion->battalion}}</div>
-                  <div class="stat-desc">↘︎ 90 (14%)</div>
+                    <div class="stat-title">Battalion</div>
+                    <div class="stat-value">{{ $week->battalion->battalion }}</div>
+                    <div class="stat-desc">↘︎ 90 (14%)</div>
                 </div>
-                
-              </div>
+
+            </div>
             <div class="stats shadow">
 
                 <div class="stat">

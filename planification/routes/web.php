@@ -155,6 +155,12 @@ Route::middleware('auth')->group(function () {
             Route::get('/{id}/weeks',[WeekController::class,'BattalionWeeks'])->name('companies.weeks');
             Route::get('/section/{id}', [CompanyController::class,'view_section'])->name('companies.view_section');
         });
+        Route::prefix('sections')->group(function (){
+            Route::get('/{id}', [CompanyController::class, 'show_section'])->name('sections.show');
+            Route::get('/{id}/progress', [CompanyController::class, 'SectionModulesProgress'])->name('sections.get_modules_progress');
+            // get_modules_progress
+
+        });
         Route::prefix('schoolyears')->group(function () {
             Route::get('/',[SchoolYearController::class,'index'])->name('schoolyears.index');
             Route::post('/store',[SchoolYearController::class,'store'])->name('schoolyears.store');

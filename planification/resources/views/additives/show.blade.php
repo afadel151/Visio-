@@ -72,12 +72,12 @@
                         <div class="flex flex-col justify-center items-center">
                             <p class="text-2xl">Select Date</p>
                             <input type="date" name="session_date" id="rectify-date"
-                                class="w-[300px] focus:border-blue-400 focus:border-2 rounded-xl hover:scale-110 duration-150">
+                                class="input input-bordered">
                         </div>
                         <div class="flex flex-col justify-center items-center">
                             <p class="text-2xl">Select Time</p>
                             <select name="timing_id" id=""
-                                class="w-[300px] focus:border-blue-400 focus:border-2 rounded-xl hover:scale-110 duration-150">
+                                class="input input-bordered">
                                 @foreach ($timings as $timing)
                                     <option value="{{ $timing->id }}">{{ $timing->session_start }} ->
                                         {{ $timing->session_finish }}</option>
@@ -152,12 +152,12 @@
                         <div class="flex flex-col justify-center items-center">
                             <p class="text-2xl">Select Date</p>
                             <input type="date" name="session_date" id="rectify-date"
-                                class="w-[300px] focus:border-blue-400 focus:border-2 rounded-xl hover:scale-110 duration-150">
+                                class="input input-bordered">
                         </div>
                         <div class="flex flex-col justify-center items-center">
                             <p class="text-2xl">Select Time</p>
                             <select name="timing_id" id=""
-                                class="w-[300px] focus:border-blue-400 focus:border-2 rounded-xl hover:scale-110 duration-150">
+                                class="input input-bordered">
                                 @foreach ($timings as $timing)
                                     <option value="{{ $timing->id }}">{{ $timing->session_start }} ->
                                         {{ $timing->session_finish }}</option>
@@ -224,7 +224,7 @@
                         <div class="flex flex-col  justify-center items-center">
                             <p class="text-2xl">Select Sections</p>
                             <select name="sections[]" id="additional-select-sections"
-                                class="select select-multiple border-2 focus:h-52"
+                                class="select select-multiple w-52 text-xl border-2 focus:h-52"
                                 multiple>
                                 @php
                                     $sections = $additive->week->battalion->sections;
@@ -240,7 +240,7 @@
                                 $companies = $additive->week->battalion->companies;
                             @endphp
                             <select name="companies[]" id="additional-select-companies" multiple
-                                class="select select-multiple border-2 focus:h-52">
+                                class="select select-multiple  w-52 text-xl border-2 focus:h-52">
 
                                 @foreach ($companies as $company)
                                     <option value="{{ $company->id }}">Company {{ $company->company }} </option>
@@ -264,7 +264,7 @@
                         </div>
                         <div class="flex flex-col justify-center items-center">
                             <p class="text-2xl">Select Module</p>
-                            <select name="aditional_module_id" id="additional-select-module" class="select select-bordered w-32" >
+                            <select name="aditional_module_id" id="additional-select-module" class="select  select-bordered w-52 text-xl" >
                                 @foreach ($modules as $module)
                                     <option value="{{$module->id}}">{{$module->module}}</option>
                                 @endforeach
@@ -272,7 +272,7 @@
                         </div>
                         <div class="flex flex-col justify-center items-center">
                             <p class="text-2xl">Select Teacher</p>
-                            <select name="additional_teacher_id" id="additional-select-teacher" class="select select-bordered w-32" >
+                            <select name="additional_teacher_id" id="additional-select-teacher" class="select select-bordered w-52 text-xl" >
                                 @foreach ($teachers as $teacher)
                                     <option value="{{$teacher->id}}">{{$teacher->teacher_name}}</option>
                                 @endforeach

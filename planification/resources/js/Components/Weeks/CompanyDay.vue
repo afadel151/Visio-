@@ -4,6 +4,7 @@ import Cours from "./Cours.vue";
 import TdCell from "./TdCell.vue";
 import TpCell from "./TpCell.vue";
 import TdForm from "./TdForm.vue";
+import TpForm from "./TpForm.vue";
 import Button from "../ui/button/Button.vue";
 import {
     Dialog,
@@ -73,7 +74,6 @@ const CanCreateCour = (tim) => {
 </script>
 
 <template>
-    <!-- {{ FilteredSessions.length }} -->
     <table class=" w-full h-full border-2 ">
         <tr v-for="tim in props.timings" class="relative">
             <template
@@ -103,7 +103,9 @@ const CanCreateCour = (tim) => {
                     <template
                         v-else-if="FilteredSessions.filter(s => s.timing_id === tim.id - 1 && s.sessionable_type === 'App\\Models\\Section' && s.sessionable_id === section.id && s.session_type === 'tp').length > 0">
                     </template>
-                    <td v-else class="h-32">
+                    <td v-else class="h-32 relative">
+                        <TpForm   v-if="(tim.id ==  1 || tim.id == 2 || tim.id == 4) && FilteredSessions.filter(session => ((session.sessionable_type === 'App\\Models\\Company' || (session.sessionable_type === 'App\\Models\\Section' && session.sessionable_id == section.id)) && session.timing_id == tim.id + 1)).length == 0" :week_id="props.week_id" :date="props.date"
+                            :timing_id="tim.id" :rooms="props.rooms" :modules="props.modules" :section="section" />
                         <TdForm @create-td="ToggleCanCreateCour" :week_id="props.week_id" :date="props.date"
                             :timing_id="tim.id" :rooms="props.rooms" :modules="props.modules" :section="section" />
                     </td>
@@ -150,4 +152,3 @@ const CanCreateCour = (tim) => {
     </table>
 </template>
 
-<!--  -->

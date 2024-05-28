@@ -15,7 +15,7 @@
         <div class="card mt-10 mb-10 w-[90%]">
             <div class="card-header ">Manage modules</div>
             <div class="card-body">
-                {{-- {!! $dataTable->table() !!} --}}
+           
                 <table class="table table-bordered display" id="modules">
                     <thead>
                         <tr>

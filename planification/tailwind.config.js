@@ -90,4 +90,5 @@ module.exports = {
     },
   },
   plugins: [animate,require('daisyui'),require('preline/plugin')],
+  
 }

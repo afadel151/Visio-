@@ -60,20 +60,21 @@ class WeekController extends Controller
         if ($week->week_type == 'Cours' || $week->week_type == 'Cours Magistreaux') {
             $battalion = Battalion::find($week->battalion_id);
             $companies = Company::with('sections')->where('battalion_id',$battalion->id)->get();
-            $sessions = Session::with('teacher', 'module', 'room','TpTeachers')->where('week_id', $week->id)->get();
+            // $sessions = Session::with('teacher', 'module', 'room','TpTeachers')->where('week_id', $week->id)->get();
+            $sessions = Session::with('teacher', 'module', 'room','TpTeachers','rectification')->where('week_id', $week->id)->get();
             $modules = Module::with('teachers')->where('battalion',$battalion->battalion)->where('semester',$week->semester)->get();
             $timings = Timing::all();
             $rooms = Room::all();
-            return Inertia::render('Weeks/WeekCreate',[
-                'week' => $week,
-                'modules' => $modules,
-                'companies' => $companies,
-               'sessions' => $sessions,
-                'timings' => $timings,
-                'rooms' => $rooms,
-                'battalion' => $battalion,
-            ]);
-            // return view('weeks.create', compact('battalion', 'week', 'timings', 'sessions', 'rooms'));
+            // return Inertia::render('Weeks/WeekCreate',[
+            //     'week' => $week,
+            //     'modules' => $modules,
+            //     'companies' => $companies,
+            //    'sessions' => $sessions,
+            //     'timings' => $timings,
+            //     'rooms' => $rooms,
+            //     'battalion' => $battalion,
+            // ]);
+            return view('weeks.create', compact('battalion', 'week', 'timings', 'sessions', 'rooms'));
         }
         if ($week->week_type == 'Examens') {
             $battalion = Battalion::find($week->battalion_id);
