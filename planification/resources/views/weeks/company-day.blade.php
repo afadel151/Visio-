@@ -282,7 +282,7 @@
                                 @endphp
 
                                 <div
-                                    class="h-[300px] shadow-xl   flex flex-col border-2 bg-opacity-90 backdrop-blur transition-shadow duration-100 [transform:translate3d(0,0,0)] rounded-xl justify-between items-center">
+                                    class="h-[300px] shadow-xl  tp-div flex flex-col border-2 bg-opacity-90 backdrop-blur transition-shadow duration-100 [transform:translate3d(0,0,0)] rounded-xl justify-between items-center">
                                     @if ($tp->rectified == true)
                                         <span class=" badge badge-error">absented</span>
                                     @endif
@@ -321,9 +321,9 @@
                                                 <p class="py-4">Do you rally want to delete this session ?</p>
                                                 <div class="modal-action flex ">
                                                     @if ($tp->absented == 0)
-                                                        <button class="btn btn-warning self-start mark-cour-absence"
-                                                            onclick="MarkAbsence($tp->id)">Mark
-                                                            absence
+                                                        <button class="btn btn-warning self-start mark-tp-absence">
+                                                            Mark absence
+                                                            <div class="section-id hidden">{{ $tp->id }}</div>
                                                         </button>
                                                     @endif
                                                     <a href="{{ route('sessions.delete', ['id' => $tp->id]) }}"

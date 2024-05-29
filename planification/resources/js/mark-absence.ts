@@ -17,11 +17,45 @@ function SetupMarkAbsenceTd() {
         AddAbsence.addEventListener("click", ClickAbsenceTd);
     });
 }
+function SetupMarkAbsenceTp() {
+    const AllMarkTdAbsencesTd = document.querySelectorAll(".mark-tp-absence"); //here
+    AllMarkTdAbsencesTd.forEach((AddAbsence) => {
+        AddAbsence.removeEventListener("click", ClickAbsenceTp);
+        AddAbsence.addEventListener("click", ClickAbsenceTp);
+    });
+}
 function closeModal(button) {
     const modal = button.closest('.modal');
     modal.close();
 }
-
+function ClickAbsenceTp(event) {
+    event.preventDefault();
+    const MarkAbsence = event.currentTarget;
+    const DivSectionId = MarkAbsence.querySelector(".section-id");
+    const SectionId = DivSectionId.innerText.trim();
+    const GrandDiv = findAncestor(MarkAbsence,"tp-div");
+    PostAbsenceTp(SectionId, GrandDiv,MarkAbsence);
+}
+async function PostAbsenceTp(SectionId, GrandDiv,MarkAbsence) {
+    try { 
+        let response = await axios.post("/sessions/mark_absence/" + SectionId);
+        console.log("deleted");
+        const newspan = document.createElement("span");
+        newspan.classList.add("badge","badge-error");
+        newspan.innerText = "absented";
+        var firstChild = GrandDiv.firstChild;
+        closeModal(MarkAbsence);
+        GrandDiv.insertBefore(newspan, firstChild);
+  
+        // const markAbsenceTd = GrandDiv.querySelector(".mark-td-absence");
+        if (MarkAbsence) {
+            MarkAbsence.classList.add("btn-disabled");
+        }
+        closeModal(MarkAbsence);
+    } catch (error) {
+        console.log(error);
+    }
+}
 function ClickAbsenceTd(event) {
     event.preventDefault();
     const MarkAbsence = event.currentTarget;
@@ -93,13 +127,14 @@ async function PostAbsenceCour(CompanyId, Td_div, MarkAbsence) {
 
 document.addEventListener("DOMContentLoaded", function () {
     SetupMarkAbsenceTd();
-    setInterval(SetupMarkAbsenceTd, 20000);
 });
 document.addEventListener("DOMContentLoaded", function () {
     SetupMarkAbsenceCour();
-    setInterval(SetupMarkAbsenceCour, 20000);
+  
 });
-
+document.addEventListener("DOMContentLoaded", function () {
+    SetupMarkAbsenceTp();
+});
 function findAncestor (el, cls) {
     while ((el = el.parentElement) && !el.classList.contains(cls));
     return el;
