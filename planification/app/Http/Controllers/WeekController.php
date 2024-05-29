@@ -61,6 +61,7 @@ class WeekController extends Controller
             $battalion = Battalion::find($week->battalion_id);
             $companies = Company::with('sections')->where('battalion_id',$battalion->id)->get();
             // $sessions = Session::with('teacher', 'module', 'room','TpTeachers')->where('week_id', $week->id)->get();
+            $additives = $week->additives;
             $sessions = Session::with('teacher', 'module', 'room','TpTeachers','rectification')->where('week_id', $week->id)->get();
             $modules = Module::with('teachers')->where('battalion',$battalion->battalion)->where('semester',$week->semester)->get();
             $timings = Timing::all();

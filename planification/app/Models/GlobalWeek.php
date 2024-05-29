@@ -10,6 +10,7 @@ class GlobalWeek extends Model
     use HasFactory;
     protected $table = 'global_weeks';
     protected $fillable = [
+        'global_week_number',
         'start_week_date',
         'end_week_date',
         'schoolyear_id',
@@ -37,14 +38,7 @@ class GlobalWeek extends Model
     {
         return $this->belongsTo(SchoolYear::class, 'schoolyear_id');
     }
-    // public function absences()
-    // {
-    //     return Absence::join('sessions_table', 'absences.absenceable_id', '=', 'sessions_table.id')
-    //         ->join('weeks', 'sessions_table.week_id', '=', 'weeks.id')
-    //         ->join('global_weeks', 'weeks.global_week_id', '=', 'global_weeks.id')
-    //         ->where('global_weeks.id', $this->id)
-    //         ->get();
-    // }
+
     public function absences()
     {
         return Absence::join('sessions_table', 'absences.absenceable_id', '=', 'sessions_table.id')

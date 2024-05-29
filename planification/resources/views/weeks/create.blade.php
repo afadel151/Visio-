@@ -48,7 +48,7 @@
 @endpush
 @section('content')
     <div class="w-[100%]  z-0 ">
-
+        {{-- {{$week->catchups->first()->absence->absenceable  }} --}}
         <script>
             const rooms = @json($rooms);
             const timings = @json($timings);
@@ -370,6 +370,7 @@
                                 'timings' => $timings,
                                 'date' => $date,
                                 'sessions' => $sessions,
+                                'catchups'=> $week->catchups,
                                 'week_id' => $week->id,
                                 'modules' => $modules_PR,
                                 'teachers' => $teachers_PR,
@@ -383,6 +384,7 @@
                                 'timings' => $timings,
                                 'date' => $date,
                                 'sessions' => $sessions,
+                                'catchups'=> $week->catchups,
                                 'week_id' => $week->id,
                                 'modules' => $modules_ST,
                                 'teachers' => $teachers_ST,
@@ -395,6 +397,7 @@
                                 'timings' => $timings,
                                 'sessions' => $sessions,
                                 'date' => $date,
+                                'catchups'=> $week->catchups,
                                 'week_id' => $week->id,
                                 'modules' => $modules_MI,
                                 'teachers' => $teachers_MI,

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\SchoolYear;
+use App\Models\Session;
 use App\Models\Teacher;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -42,8 +43,40 @@ class ModuleController extends Controller
 
         return view('modules.index', ['modules' => $modules, 'schoolyear_id' => $schoolyear_id]);
     }
-    public function create()
+    public function module_absences($id, Request $request)
     {
+        if ($request->ajax()) {
+            $Absences = Session::with('timing','teacher','TpTeachers','room','absence', 'sessionable')->where('module_id', $id)->where('absented', 1)->orderByDesc('session_date')->get();
+            return DataTables::of($Absences)
+            ->addColumn('teacher(s)', function ($row){
+                if ($row->session_type !== 'tp') {
+                    return $row->teacher->teacher_name;
+                }
+                else {
+                    $result = '';
+                    foreach ($row->TpTeachers as $teacher) {
+                        $result = $result . ', '.$teacher->teacher_name;
+                    }
+                    return $result;
+                }
+            })
+            ->addColumn('caughtup', function ($row) {
+                if ($row->caughtup == true) {
+                    return '<div class="h-4 w-8 bg-green-400 rounded-lg">OUI</div>';
+                } else {
+                    return '<div class="h-4 w-8 bg-red-400 rounded-lg">NON</div>';
+                }
+            })
+            ->addColumn('students', function ($row) {
+                if ($row->sessionable_type  === 'App\\Models\\Company') {
+                    return 'Company :' . $row->sessionable->company . $row->sessionable->battalion->battalion ;
+                } else {
+                    return 'Section :'. $row->sessionable->section;
+                }
+            })
+            ->rawColumns(['caughtup'])
+            ->make(true);
+        }
     }
     public function store()
     {
@@ -78,8 +111,8 @@ class ModuleController extends Controller
             ->get();
         $allmodules = Module::all();
         $schoolyears = SchoolYear::all();
-       
-        return view('modules.show', ['teachers' => $teachers,'module' => $module, 'id' => $id]);
+
+        return view('modules.show', ['teachers' => $teachers, 'module' => $module, 'id' => $id]);
 
     }
     public function update()

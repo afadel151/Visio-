@@ -7,6 +7,7 @@
                     'sessions'=>$sessions,
                     'timings' => $timings,
                     'date' => $date,
+                    'catchups' => $catchups,
                     'week_id' => $week_id,
                     'rooms' => $rooms,
                     'teachers' => $teachers,

@@ -28,11 +28,10 @@ function ClickAbsenceTd(event) {
     const DivSectionId = MarkAbsence.querySelector(".section-id");
     const SectionId = DivSectionId.innerText.trim();
     const GrandDiv = MarkAbsence.parentNode.parentNode;
-  
     PostAbsenceTd(SectionId, GrandDiv,MarkAbsence);
 }
 async function PostAbsenceTd(SectionId, GrandDiv,MarkAbsence) {
-    try {
+    try { 
         let response = await axios.post("/sessions/mark_absence/" + SectionId);
         console.log("deleted");
         const newspan = document.createElement("span");
@@ -62,7 +61,7 @@ function SetupMarkAbsenceCour() {
 function ClickAbsenceCour(event) {
     event.preventDefault();
     const MarkAbsence = event.currentTarget;
-    const Td_Div = MarkAbsence.parentNode.parentNode.parentNode.parentNode.parentNode;
+    const Td_Div = findAncestor(MarkAbsence,"cours-div");
     console.log(Td_Div);
     const DivCompanyId = Td_Div.querySelector(".company-id");
     const CompanyId = DivCompanyId.innerText.trim();
@@ -100,3 +99,8 @@ document.addEventListener("DOMContentLoaded", function () {
     SetupMarkAbsenceCour();
     setInterval(SetupMarkAbsenceCour, 20000);
 });
+
+function findAncestor (el, cls) {
+    while ((el = el.parentElement) && !el.classList.contains(cls));
+    return el;
+}

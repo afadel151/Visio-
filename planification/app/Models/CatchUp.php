@@ -15,10 +15,6 @@ class CatchUp extends Model
         return $this->belongsTo(Absence::class,'absence_id');
     }
 
-    public function session()
-    {
-        return $this->hasOneThrough(Session::class,Absence::class,'id','id','3','absenceable_id')->where('absenceable_type','App\\Models\\Session');
-    }
     public function timing()
     {
         return $this->belongsTo(Timing::class,'timing_id');

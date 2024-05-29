@@ -107,7 +107,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/store',[ModuleController::class,'store'])->name('modules.store');
             Route::post('/update',[ModuleController::class,'update'])->name('modules.update');
             Route::delete('/delete',[ModuleController::class,'delete'])->name('modules.delete');
-
+            Route::get('/{id}/absences',[ModuleController::class, 'module_absences'])->name('modules.module_absences');
         });
         Route::prefix('rooms')->group(function () {
             Route::get('/',[RoomController::class,'index'])->name('rooms.index');

@@ -55,7 +55,26 @@
 
                 </table>
             </div>
-            <button id="show-module-add" class="absolute btn -bottom-14 right-0">Add</button>
+        </div>
+        <div class="card mt-20 mb-20 w-[100%]">
+            <div class="card-header text-center text-3xl font-bold">Absences</div>
+            <div class="card-body relative">
+
+                <table class="table display  table-fixed text-center" id="absences">
+                    <thead class="text-center">
+                        <tr>
+                            <th class="text-center">Teacher</th>
+                            <th class="text-center">Session type</th>
+                            <th class="text-center">Students</th>
+                            <th class="text-center">Room</th>
+                            <th class="text-center">Date</th>
+                            <th class="text-center">timing</th>
+                            <th class="text-center">Reason</th>
+                        </tr>
+                    </thead>
+
+                </table>
+            </div>
         </div>
 
 
@@ -145,4 +164,62 @@
 
         });
     </script>
+    <script>
+        $(function() {
+            var ModuleID = {{ $module->id }}
+            var url = "{{ route('modules.module_absences', ':moduleID') }}";
+            url = url.replace(':moduleID', ModuleID);
+            var table = $('#absences').DataTable({
+                destroy: true,
+                processing: true,
+                serverSide: true,
+                searching: true,
+                ajax: url,
+
+                columns: [{
+                        data: 'teacher(s)',
+                        name: 'teacher(s)'
+                    },
+                    {
+                        data: 'session_type',
+                        name: 'session_type'
+                    },
+                    {
+                        data: 'students',
+                        name: 'students'
+                    },
+                    {
+                        data: 'room.room',
+                        name: 'room',
+                        searchable: true,
+                    },
+                    {
+                        data: 'session_date',
+                        name: 'session_date',
+                    },
+                    {
+                        data: 'null',
+                        render: function(data, type, row){
+                            return row.timing.session_start + '->' + row.timing.session_finish;
+                        }
+                    },
+                    {
+                        data: 'absence.reason',
+                        name: 'absence.reason',
+                    }
+                ],
+
+            });
+
+        });
+    </script>
 @endpush
+{{-- 
+<tr>
+    <th class="text-center">Teacher</th>
+    <th class="text-center">Session type</th>
+    <th class="text-center">Room</th>
+    <th class="text-center">Date</th>
+    <th class="text-center">timing</th>
+    <th class="text-center">Reason</th>
+</tr> --}}

@@ -12,10 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tp_teachers', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
             $table->foreignId('session_id')->constrained('sessions_table')->onDelete('cascade');
             $table->foreignId('teacher_id')->constrained('teachers')->onDelete('cascade');
+            $table->boolean('absented')->default(false);
         });
     }
 

@@ -77,6 +77,19 @@
                     </div>
                 </td>
             </tr>
+        @elseif(
+            $catchups->where('catchup_date', $date)->where('timing_id', $timing->id)->contains(function ($catchup) use ($company) {
+                    if ($catchup->absence->absenceable_type === 'App\\Models\\Session') {
+                        $session = $catchup->absence->absenceable;
+                        $SessionCaught = $session;
+                        return $session->sessionable_type === 'App\\Models\\Company' &&
+                            $session->sessionable_id == $company->id;
+                    }
+                    return false;
+                }))
+            <div class="h-full w-full">
+                Rattrapage d'une absence 
+            </div> 
         @else
             <tr class="relative company-tr   h-[160px] w-[100%] border-b">
 
@@ -93,7 +106,7 @@
                     <td colspan="3" class=" z-0 session ">
 
                         <div
-                            class="h-[150px] border-2 z-0 w-[100%] shadow-lg flex card  bg-opacity-90 backdrop-blur transition-shadow duration-100 [transform:translate3d(0,0,0)] 
+                            class="h-[150px] cours-div border-2 z-0 w-[100%] shadow-lg flex card  bg-opacity-90 backdrop-blur transition-shadow duration-100 [transform:translate3d(0,0,0)] 
                              flex-col rounded-xl justify-center items-center">
                             @if ($c->rectified == true && $c->absented == false)
                                 <span class=" badge badge-accent">rectified</span>
@@ -201,7 +214,7 @@
                                                     <div class="flex items-center gap-2 justify-between">
                                                         <label for="">Date:</label>
                                                         <input type="date" name="anticipation_date"
-                                                        class="input input-bordered" placeholder="Select a date">
+                                                            class="input input-bordered" placeholder="Select a date">
                                                     </div>
                                                     <button class="btn btn-outline">Anticipate</button>
                                                 </form>
@@ -432,9 +445,23 @@
                                         @php
                                             $td = true;
                                         @endphp
+                                    @elseif(
+                                        $catchups->where('catchup_date', $date)->where('timing_id', $timing->id)->contains(function ($catchup) use ($section) {
+                                                if ($catchup->absence->absenceable_type === 'App\\Models\\Session') {
+                                                    $session = $catchup->absence->absenceable;
+                                                    return $session->sessionable_type === 'App\\Models\\Section' &&
+                                                        $session->sessionable_id == $section->id;
+                                                }
+                                                return false;
+                                            }))
+                                        <div class="h-full w-full">
+                                            Rattrapage d'une absence 
+                                            Voir Additif 
+                                        </div>
                                     @else
                                         @php
                                             $nextTime = $timing->id + 1;
+
                                         @endphp
                                         @if (
                                             ($timing->id == 1 || $timing->id == 2 || $timing->id == 4) &&
@@ -522,10 +549,10 @@
                                                             <label for="rooms" class="w-[100px]">Teacher</label>
                                                             <select name="room_id" class="select select-bordered">
                                                                 @foreach ($rooms->where('capacity_teaching', '>=', $section->nb_students) as $room)
-<option value="{{ $room->id }}">
+                                                                    <option value="{{ $room->id }}">
                                                                         {{ $room->room }}
                                                                     </option>
-@endforeach
+                                                                @endforeach
                                                             </select>
                                                         </div>
                                                     </div>
@@ -570,10 +597,10 @@
 
                                                 </div>
                                             </div>
-@endif
+                                            @endif
 
-                                        @if ($isRectified)
-<div class="rounded-xl w-[100%] h-[100%] bg-base-200">
+                                            @if ($isRectified)
+                                            <div class="rounded-xl w-[100%] h-[100%] bg-base-200">
                                                 <div
                                                     class="flex w-[100%] h-[100%]  flex-col justify-center  text-center">
                                                     <h2 class="font-bold">Rectification Here!</h2>
@@ -593,8 +620,8 @@
                                                     </p>
                                                 </div>
                                             </div>
-@else
-<div
+                                            @else
+                                            <div
                                                 class="relative sectionparentofform h-[100%] flex justify-center items-center">
 
                                                 <button onclick="ShowTdForm(this)"

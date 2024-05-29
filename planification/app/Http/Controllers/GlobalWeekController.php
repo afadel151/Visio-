@@ -36,12 +36,15 @@ class GlobalWeekController extends Controller
             $newEd = date('Y-m-d', strtotime('+7 days', strtotime($oldEnddate)));
             $GlobalWeek->start_week_date = $NewSd;
             $GlobalWeek->end_week_date = $newEd;
+            $GlobalWeek->global_week_number = $GlobalWeek->global_week_number+1 ;
             $GlobalWeek->update();
         }
+        $Max =  GlobalWeek::where('schoolyear_id', $request->schoolyear_id)->where('start_week_date', '<=', $NewStartDate)->max('global_week_number');
         $g = GlobalWeek::create([
             'start_week_date' => $NewStartDate,
             'end_week_date' => $NewEndDate,
             'schoolyear_id' => $request->schoolyear_id,
+            'global_week_number' => $Max + 1,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
@@ -125,16 +128,20 @@ class GlobalWeekController extends Controller
         $events = new Event;
         $sportevents = new SportEvent;
         if (GlobalWeek::where('schoolyear_id',$request->schoolyear_id)->get()->isNotEmpty()) {
+            $Max = GlobalWeek::where('schoolyear_id',$request->schoolyear_id)->max('global_week_number') + 1;
             $g = GlobalWeek::create([
+                
                 'start_week_date' => $request->start_week_date,
                 'end_week_date' => $request->end_week_date,
                 'schoolyear_id' => $request->schoolyear_id,
+                'global_week_number' => $Max,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ]);
         }
         else {
             $g = GlobalWeek::create([
+                'global_week_number' => 1,
                 'start_week_date' => SchoolYear::find($request->schoolyear_id)->schoolyear_start_date,
                 'end_week_date' => date('Y-m-d', strtotime('+4 days', strtotime(SchoolYear::find($request->schoolyear_id)->schoolyear_start_date))),
                 'schoolyear_id' => $request->schoolyear_id,
@@ -245,6 +252,11 @@ class GlobalWeekController extends Controller
             }            
         }
         GlobalWeek::destroy($id);
+        foreach ($GlobalWeeks as $g) {
+            $oldGWnmber = $g->global_week_number ;
+            $g->global_week_number = $oldGWnmber- 1;
+            $g->update();
+        }
         return redirect()->back();
     }
 }

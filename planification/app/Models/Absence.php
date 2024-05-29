@@ -15,4 +15,6 @@ class Absence extends Model
     {
         return $this->morphTo();
     }
+    
+
 }

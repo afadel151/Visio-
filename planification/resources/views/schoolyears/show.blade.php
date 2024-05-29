@@ -25,8 +25,10 @@
                 <div class="card-body w-[100%] z-0">
                     <table class="z-0 relative display text-center table" id="global_weeks">
                         <thead>
+                            <th class="incluce">N°</th>
                             <th class="exclude">Start</th>
                             <th class="exclude">End</th>
+                            {{-- <th class="incluce">N°</th> --}}
                             <th class="exclude">1er annee</th>
                             <th class="exclude">2em annee</th>
                             <th class="exclude">3em annee</th>
@@ -236,6 +238,11 @@
                     ajax: url,
                     orderBy: 'start_week_date',
                     columns: [{
+                            data: 'global_week_number',
+                            name: 'global_week_number',
+                            searchable: true,
+                            orderable: true,
+                        } ,{
                             data: 'start_week_date',
                             name: 'start_week_date',
                             searchable: true,
@@ -300,7 +307,7 @@
 
                     },
                     columnDefs: [{
-                        targets: [2, 3, 4], // Indices of columns where you want to include the div
+                        targets: [3, 4, 5], // Indices of columns where you want to include the div
                         render: function(data, type, row, meta) {
                             // Add the div element with class bg-green-400 around the data
                             var jsonData = JSON.parse(data);

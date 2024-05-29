@@ -41,6 +41,10 @@ class Week extends Model
     {
         return $this->hasMany(Control::class);
     }
+    public function catchups()
+    {
+        return $this->hasManyThrough(CatchUp::class,Additive::class);
+    }
    
     //belongsto type
 }

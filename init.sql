@@ -15,14 +15,15 @@ INSERT INTO
   global_weeks 
   (
     schoolyear_id,
+    global_week_number,
     created_at,
     updated_at,
     start_week_date,
     end_week_date
   )
 VALUES
-  (1, NOW(), NOW(), '2024-03-10', '2024-03-14'),
-  (1, NOW(), NOW(), '2024-03-17', '2024-03-12');
+  (1,1, NOW(), NOW(), '2024-03-10', '2024-03-14'),
+  (1,2, NOW(), NOW(), '2024-03-17', '2024-03-12');
 
 -- battalions
 INSERT INTO
