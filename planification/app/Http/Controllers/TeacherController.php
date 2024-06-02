@@ -72,9 +72,7 @@ class TeacherController extends Controller
                     $btn = '<a href="/teachers/' . $row->id . '" class="edit btn btn-info btn-sm rounded-lg">View</a>';
                     return '<div class="flex justify-around items-center">' . $btn . '</div>';
                 })
-                ->addColumn('absences', function ($row) {
-                    return $row->SessionsAbsences->count();
-                })
+               
                 ->rawColumns(['action'])
                 ->make(true);
 
@@ -100,9 +98,7 @@ class TeacherController extends Controller
                     </dialog>';
                     return '<div class="flex justify-around items-center">' . $btn . '</div>';
                 })
-                ->addColumn('absences', function ($row) {
-                    return $row->SessionsAbsences->count();
-                })
+              
                 ->rawColumns(['action'])
                 ->make(true);
 

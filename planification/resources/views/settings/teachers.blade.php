@@ -31,7 +31,6 @@
                             <th>Teacher Name</th>
                             <th>Teacher Grade</th>
                             <th>Department </th>
-                            <th>Absences</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -153,11 +152,7 @@
                         searchable: false,
                         orderable: true
                     },
-                    {
-                        data: 'absences',
-                        name: 'absences',
-                        orderable: true,
-                    },
+                   
                     {
                         data: 'action',
                         name: 'action'
