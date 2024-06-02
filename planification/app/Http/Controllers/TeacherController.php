@@ -121,12 +121,23 @@ class TeacherController extends Controller
         $timing_id = $request->input('timing_id');
         $date = $request->input('date');
         \Log::info('date : ' . $date);
-        $InSessionsTdOrCour = Session::whereAll(['absented', 'caughtup'], '=', 1)
-            ->orWhereAll(['absented', 'caughtup', 'anticipated', 'rectified'], '=', 0)
-            ->whereNot('session_type', 'tp')
+        $InSessionsTdOrCour = Session::where('teacher_id', $teacher_id)
             ->where('timing_id', $timing_id)
-            ->where('teacher_id', $teacher_id)
             ->where('session_date', $date)
+            ->where(function($query){
+                $query->where(function ($subQuery){
+                    $subQuery->where('absented',1)
+                            ->where('caughtup',1);
+                } )
+                    ->orWhere(function ($subQuery)
+                    {
+                        $subQuery->where('absented',0)
+                        ->where('rectified',0)
+                        ->where('anticipated',0);
+                    });
+            })
+            ->whereNot('session_type', 'tp')
+
             ->count();
         // $InSessionsTp = Session::where('session_type', 'tp')
         //     ->where('session_date', $date)

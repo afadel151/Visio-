@@ -33,7 +33,7 @@ class AbsenceController extends Controller
 
         $catchup->save();
         \Log::info($catchup);
-        $catchup->load('absence','session','room','timing');
+        $catchup->load('absence','room','timing');
         return response()->json($catchup);
     }
     public function index()

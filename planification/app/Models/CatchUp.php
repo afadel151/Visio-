@@ -11,10 +11,8 @@ class CatchUp extends Model
     use HasFactory;
     public function absence()
     {
-        // return $this->morphOne(Absence::class,'absenceable');
         return $this->belongsTo(Absence::class,'absence_id');
     }
-
     public function timing()
     {
         return $this->belongsTo(Timing::class,'timing_id');

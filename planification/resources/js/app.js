@@ -36,7 +36,7 @@ async function CheckTeahcherAvailability() {
                 teacher_id: fdata.get("teacher_id"),
             },
         });
-        // console.log(response.data);
+        console.log(response.data);
         document.querySelector("#is_teacher_available_result").innerHTML = response.data;
         if (response.data > 0)
             {
