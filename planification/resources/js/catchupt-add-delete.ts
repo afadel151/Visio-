@@ -1,8 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-    // baseURL: "http://127.0.0.1:8000",
-    // timeout: 6000,
+  
     withCredentials: true,
     xsrfCookieName: "XSRF-TOKEN",
     xsrfHeaderName: "X-XSRF-TOKEN",
@@ -12,14 +11,6 @@ const instance = axios.create({
 });
 
 
-// document.getElementById("show-catchup-insert").addEventListener("click", function() 
-// {
-//     var displayDiv = document.getElementById("parent-of-catchup");
-//     var displayValue = (displayDiv.style.display === "block") ? "none" : "block";
-//     this.innerHTML = (displayValue === "block") ? "Hide" : "insert";
-//     displayDiv.style.display = displayValue;
-
-// });
 
 const SelectSession = document.querySelector("#catch-search-absence"); //here
 if (SelectSession) {
@@ -30,28 +21,26 @@ async function ClickAbsenceSelect(event) {
     const SelectDateTimeForm = document.querySelector("#select-absented-session-form");
     if (SelectDateTimeForm && SelectDateTimeForm instanceof HTMLFormElement) {
         const formData = new FormData(SelectDateTimeForm);
-        const session_date = formData.get("session_date");
-        const timing_id = formData.get("timing_id");
-        const week_id = formData.get("week_id");
+        const teacher_id = formData.get("teacher_id");
         const Target = document.querySelector("#insert-catchup");
-        GetDateTimeAbsences(Target, session_date, timing_id, week_id);
+        GetDateTimeAbsences(Target, teacher_id);
     }
 }
 
-async function GetDateTimeAbsences(Target, session_date, timing_id, week_id) {
+async function GetDateTimeAbsences(Target, teacher_id) {
     try {
         let response = await axios.get("http://127.0.0.1:8000/sessions/get_absences", {
             params: {
-                session_date: session_date,
-                timing_id: timing_id,
-                week_id: week_id,
+                teacher_id : teacher_id
             }
         });
+        
         const sessions = response.data;
+        console.log(sessions);
         const NewSelect = document.createElement("select");
         NewSelect.name = "session_id";
         NewSelect.id = "absences-select"
-        NewSelect.classList.add("w-[350px]", "focus:border-blue-400", "mt-8", "focus:border-2", "rounded-xl", "hover:scale-110", "duration-150");
+        NewSelect.classList.add("w-[350px]", "select", "select-bordered");
         const p = document.createElement("p");
         p.innerText = "Absences";
         p.classList.add("w-[100px]", "text-2xl");
@@ -67,7 +56,18 @@ async function GetDateTimeAbsences(Target, session_date, timing_id, week_id) {
                 var students = session.sessionable.company;
                 var Labell = "Company";
             }
-            option.textContent = Labell + ' ' + students + ' - ' + session.teacher.teacher_name + ' - ' + session.module.module + ' - ' + session.room.room;
+            //   option.textContent += '-' 
+            option.textContent = Labell + ' ' + students + ' - '+ session.session_type.toUpperCase() + '-' ; 
+            if (session.session_type === 'tp') {
+                
+                session.tp_teachers.forEach(teacher => {
+                        option.textContent += teacher.teacher_name + '/';
+                });
+            }
+            else{
+                option.textContent += session.teacher.teacher_name ;
+            }
+            option.textContent += '-' + session.module.module + '-' + session.room.room;
             NewSelect.appendChild(option);
         });
         Target.innerHTML = "";
@@ -101,7 +101,7 @@ async function ClickSelectSession(event) {
         const NewSelect = document.createElement("select");
         NewSelect.id = 'catchup-timing-select';
         NewSelect.name = "timing_id";
-        NewSelect.classList.add("w-[350px]", "focus:border-blue-400", "mt-2", "focus:border-2", "rounded-xl", "hover:scale-110", "duration-150");
+        NewSelect.classList.add("w-[350px]", "select", "select-bordered");
         const Timings = JsonTimings;
         Timings.forEach(timing => {
             var NewOption = document.createElement("option");
@@ -113,7 +113,7 @@ async function ClickSelectSession(event) {
         NewDateInput.id = 'catch-up-date-input';
         NewDateInput.type = 'date';
         NewDateInput.name = 'catchup_date';
-        NewDateInput.classList.add("w-[300px]", "focus:border-blue-400", "focus:border-2", "rounded-xl", "hover:scale-110", "duration-150");
+        NewDateInput.classList.add("w-[300px]", "input", "input-bordered");
         const newp = document.createElement("p");
         newp.innerText = "Select Catchup Date and Time";
         newp.classList.add("text-center", "text-2xl", "mt-4");
@@ -167,7 +167,7 @@ async function ClickSelectDateTime(event) {
             const NewSelect = document.createElement("select");
             NewSelect.id = "select-catchup-room";
             NewSelect.name = "room_id";
-            NewSelect.classList.add("w-[350px]", "focus:border-blue-400", "mt-2", "focus:border-2", "rounded-xl", "hover:scale-110", "duration-150");
+            NewSelect.classList.add("w-[350px]","select","select-bordered");
             AvailableRooms.forEach(room => {
                 var NewOption = document.createElement("option");
                 NewOption.value = room.id;

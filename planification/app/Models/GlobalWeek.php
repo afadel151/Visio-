@@ -41,9 +41,12 @@ class GlobalWeek extends Model
 
     public function absences()
     {
-        return Absence::join('sessions_table', 'absences.absenceable_id', '=', 'sessions_table.id')
-            ->join('weeks', 'sessions_table.week_id', '=', 'weeks.id')
+        return Session::join('weeks', 'sessions_table.week_id', '=', 'weeks.id')
             ->where('weeks.global_week_id', $this->id)
+            ->where(function($query){
+                $query->where('absented',1)
+                    ->where('caughtup',0);
+            })
             ->get();
     }
 

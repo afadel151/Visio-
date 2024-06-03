@@ -9,9 +9,9 @@ class CatchUp extends Model
 {
     protected $table = 'caughtupabsences';
     use HasFactory;
-    public function absence()
+    public function session()
     {
-        return $this->belongsTo(Absence::class,'absence_id');
+        return $this->belongsTo(Session::class,'session_id');
     }
     public function timing()
     {

@@ -31,7 +31,9 @@ class Week extends Model
     }
     public function absences()
     {
-        return $this->hasManyThrough(Absence::class,Session::class,'week_id','absenceable_id');
+        return $this->hasMany(Session::class)->where(function($query){
+            $query->where('sessions_table.absented',1);
+        });
     }
     public function additives()
     {

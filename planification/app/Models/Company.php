@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Support\Facades\DB;
 class Company extends Model
 {
@@ -48,11 +49,12 @@ class Company extends Model
     }
     public function additionals()
     {
-        return $this->morphToMany(Additional::class,'additionables');
+        return $this->morphToMany(Additional::class,'additionable');
     }
     public function sessions()
     {
         return $this->morphOne(Session::class,'sessionable');
     }
+   
     
 }

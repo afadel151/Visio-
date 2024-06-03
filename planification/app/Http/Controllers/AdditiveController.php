@@ -17,9 +17,10 @@ class AdditiveController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function total_view($id)
     {
-        //
+        $additive = Additive::with('rectifications','catchups','additionals')->find($id);
+        return view('additives.total_view',['additive' => $additive]);
     }
 
     /**
@@ -59,8 +60,8 @@ class AdditiveController extends Controller
         $battalion = Week::find($week->id)->battalion;
         $timings = Timing::all();
         $rectifications = Rectification::with('session','room','timing')->where('additive_id',$additive->id)->get();
-        $additionals = Additional::with('absence','sections','companies')->where('additive_id',$additive->id)->get();
-        $catchups = CatchUp::with('absence')->where('additive_id',$additive->id)->get();
+        $additionals = Additional::with('sections','companies')->where('additive_id',$additive->id)->get();
+        $catchups = CatchUp::with('session')->where('additive_id',$additive->id)->get();
         $modules = Module::where('battalion',$battalion->battalion)->get();
         $ALLmodules = $modules->pluck('id')->toArray();
         $teachers = Teacher::join('teachers_modules', 'teachers.id', '=', 'teachers_modules.teacher_id')

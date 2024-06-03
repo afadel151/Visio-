@@ -45,10 +45,7 @@ class Session extends Model
             return 'Section ' . $s->section;
         }
     }
-    // public function TpTeachers()
-    // {
-    //     return $this->hasMany(TpTeacher::class);
-    // }
+ 
     public function module()
     {
         return $this->belongsTo(Module::class);
@@ -61,9 +58,9 @@ class Session extends Model
     {
         return $this->morphTo();
     }
-    public function absence()
+    public function catchups()
     {
-        return $this->morphOne(Absence::class, 'absenceable');
+        return $this->hasMany(CatchUp::class);
     }
     public function anticipation()
     {

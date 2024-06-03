@@ -79,13 +79,12 @@
             </tr>
         @elseif(
             $catchups->where('catchup_date', $date)->where('timing_id', $timing->id)->contains(function ($catchup) use ($company) {
-                    if ($catchup->absence->absenceable_type === 'App\\Models\\Session') {
-                        $session = $catchup->absence->absenceable;
+                    
+                        $session = $catchup->session;
                         $SessionCaught = $session;
                         return $session->sessionable_type === 'App\\Models\\Company' &&
                             $session->sessionable_id == $company->id;
-                    }
-                    return false;
+                    
                 }))
             <div class="h-full w-full">
                 Rattrapage d'une absence
@@ -422,12 +421,11 @@
                                         @endphp
                                     @elseif(
                                         $catchups->where('catchup_date', $date)->where('timing_id', $timing->id)->contains(function ($catchup) use ($section) {
-                                                if ($catchup->absence->absenceable_type === 'App\\Models\\Session') {
-                                                    $session = $catchup->absence->absenceable;
+
+                                                    $session = $catchup->session;
                                                     return $session->sessionable_type === 'App\\Models\\Section' &&
                                                         $session->sessionable_id == $section->id;
-                                                }
-                                                return false;
+                                                
                                             }))
                                         <div class="h-full w-full">
                                             Rattrapage d'une absence

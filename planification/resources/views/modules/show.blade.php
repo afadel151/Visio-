@@ -63,13 +63,15 @@
                 <table class="table display  table-fixed text-center" id="absences">
                     <thead class="text-center">
                         <tr>
-                            <th class="text-center">Teacher</th>
+                            
+                            <th class="text-center">schoolyear</th>
+                            <th class="text-center">teacher(s)</th>
                             <th class="text-center">Session type</th>
                             <th class="text-center">Students</th>
                             <th class="text-center">Room</th>
                             <th class="text-center">Date</th>
                             <th class="text-center">timing</th>
-                            <th class="text-center">Reason</th>
+                            <th class="text-center">Caught Up</th>
                         </tr>
                     </thead>
 
@@ -176,7 +178,12 @@
                 searching: true,
                 ajax: url,
 
-                columns: [{
+                columns: [
+                    {
+                        data: 'schoolyear',
+                        name: 'schoolyear'
+                    }, 
+                {
                         data: 'teacher(s)',
                         name: 'teacher(s)'
                     },
@@ -204,8 +211,8 @@
                         }
                     },
                     {
-                        data: 'absence.reason',
-                        name: 'absence.reason',
+                        data:'caughtup',
+                        name: 'caughtup'
                     }
                 ],
 

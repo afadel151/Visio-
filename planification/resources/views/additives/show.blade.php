@@ -1,5 +1,7 @@
 @extends('default')
-
+@push('header')
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+@endpush
 @section('content')
     <div class="hidden" id="additive_id">{{ $additive->id }}</div>
     <div class="h-[100%] w-[100%] flex flex-col justify-start p-6 items-center">
@@ -71,13 +73,11 @@
                     <div class="flex space-x-3 ">
                         <div class="flex flex-col justify-center items-center">
                             <p class="text-2xl">Select Date</p>
-                            <input type="date" name="session_date" id="rectify-date"
-                                class="input input-bordered">
+                            <input type="date" name="session_date" id="rectify-date" class="input input-bordered">
                         </div>
                         <div class="flex flex-col justify-center items-center">
                             <p class="text-2xl">Select Time</p>
-                            <select name="timing_id" id=""
-                                class="input input-bordered">
+                            <select name="timing_id" id="" class="input input-bordered">
                                 @foreach ($timings as $timing)
                                     <option value="{{ $timing->id }}">{{ $timing->session_start }} ->
                                         {{ $timing->session_finish }}</option>
@@ -149,18 +149,12 @@
                 <form action="" id="select-absented-session-form">
                     <input type="hidden" id="week_id" name="week_id" value="{{ $week->id }}">
                     <div class="flex space-x-3 ">
+
                         <div class="flex flex-col justify-center items-center">
-                            <p class="text-2xl">Select Date</p>
-                            <input type="date" name="session_date" id="rectify-date"
-                                class="input input-bordered">
-                        </div>
-                        <div class="flex flex-col justify-center items-center">
-                            <p class="text-2xl">Select Time</p>
-                            <select name="timing_id" id=""
-                                class="input input-bordered">
-                                @foreach ($timings as $timing)
-                                    <option value="{{ $timing->id }}">{{ $timing->session_start }} ->
-                                        {{ $timing->session_finish }}</option>
+                            <p class="text-2xl">Select Teacher</p>
+                            <select name="teacher_id" id="select_teacher_to_catchup" class="input w-52 input-bordered">
+                                @foreach ($teachers as $teacher)
+                                    <option value="{{ $teacher->id }}">{{ $teacher->teacher_name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -201,8 +195,17 @@
                             <td class="px-6 py-4"> {{ $additional->teacher->teacher_name }}</td>
                             <td class="px-6 py-4">{{ $additional->module->module }}</td>
                             <td class="px-6 py-4">{{ $additional->room->room }}</td>
-                            <td class="px-6 py-4">{{ $additional->additionables->where('additionable_type','App\\Models\\Section') }}</td>
-                            <td class="px-6 py-4">{{ $additional->additionables->where('additionable_type','App\\Models\\Company') }}</td>
+                            <td class="px-6 py-4">
+                                
+                               /@foreach ( $additional->sections as $section){{$section->section}}/
+                               @endforeach
+                            
+                            </td>
+                            <td class="px-6 py-4">
+                                /@foreach ( $additional->companies as $company)
+                                   {{$company->company}}/
+                               @endforeach
+                            </td>
                             <td class="px-2 py-4 "><a href="#"
                                     class="delete-rectification font-medium text-red-600 hover:no-underline  dark:text-blue-500 p-4  duration-300  hover:bg-red-50 hover:rounded-xl h-[100%] w-[100%]">Delete</a>
                             </td>
@@ -224,8 +227,7 @@
                         <div class="flex flex-col  justify-center items-center">
                             <p class="text-2xl">Select Sections</p>
                             <select name="sections[]" id="additional-select-sections"
-                                class="select select-multiple w-52 text-xl border-2 focus:h-52"
-                                multiple>
+                                class="select select-multiple w-52 text-xl border-2 focus:h-52" multiple>
                                 @php
                                     $sections = $additive->week->battalion->sections;
                                 @endphp
@@ -250,31 +252,33 @@
                     </div>
                     <div class="flex flex-col justify-center items-center">
                         <p class="text-2xl">Select Date</p>
-                        <input type="date" name="session_date" id="additional-date"
-                            class="input ">
+                        <input type="date" name="session_date" id="additional-date" class="input ">
                     </div>
                     <div class="flex justify-around w-[100%] items-center ">
                         <div class="flex flex-col justify-center items-center">
                             <p class="text-2xl">Select Type</p>
-                            <select name="additional_type" id="additional-select-type" class="select select-bordered w-32" >
-                                
+                            <select name="additional_type" id="additional-select-type"
+                                class="select select-bordered w-32">
+
                                 <option value="cour">Cour</option>
                                 <option value="td">Td</option>
                             </select>
                         </div>
                         <div class="flex flex-col justify-center items-center">
                             <p class="text-2xl">Select Module</p>
-                            <select name="aditional_module_id" id="additional-select-module" class="select  select-bordered w-52 text-xl" >
+                            <select name="aditional_module_id" id="additional-select-module"
+                                class="select  select-bordered w-52 text-xl">
                                 @foreach ($modules as $module)
-                                    <option value="{{$module->id}}">{{$module->module}}</option>
+                                    <option value="{{ $module->id }}">{{ $module->module }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="flex flex-col justify-center items-center">
                             <p class="text-2xl">Select Teacher</p>
-                            <select name="additional_teacher_id" id="additional-select-teacher" class="select select-bordered w-52 text-xl" >
+                            <select name="additional_teacher_id" id="additional-select-teacher"
+                                class="select select-bordered w-52 text-xl">
                                 @foreach ($teachers as $teacher)
-                                    <option value="{{$teacher->id}}">{{$teacher->teacher_name}}</option>
+                                    <option value="{{ $teacher->id }}">{{ $teacher->teacher_name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -289,14 +293,20 @@
         </div>
 
     </div>
-   
+
     <script>
         const JsonTimings = @json($timings);
     </script>
 @endsection
 @push('scripts')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    {{-- select_teacher_to_catchup --}}
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
     <script>
+        $(document).ready(function() {
+            $('#select_teacher_to_catchup').select2();
+        });
         $(document).ready(function() {
             $('#show-catchup-insert').click(function() {
                 $('#parent-of-catchup').slideToggle();

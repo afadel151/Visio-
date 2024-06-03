@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\GlobalWeek;
 use App\Models\SchoolYear;
 use App\Models\Session;
 use App\Models\Teacher;
+use App\Models\Week;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -13,6 +15,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use App\Models\Module;
 use App\Models\Config;
+use Psy\Command\WhereamiCommand;
 use Yajra\DataTables\DataTables;
 
 class ModuleController extends Controller
@@ -45,8 +48,13 @@ class ModuleController extends Controller
     }
     public function module_absences($id, Request $request)
     {
-        if ($request->ajax()) {
-            $Absences = Session::with('timing','teacher','TpTeachers','room','absence', 'sessionable')->where('module_id', $id)->where('absented', 1)->orderByDesc('session_date')->get();
+        if ($request->ajax()) { 
+            $Absences = Session::with('timing','teacher','TpTeachers','room', 'sessionable')->where(
+                function ($query) use ($id){
+                    $query->where('module_id',$id)
+                            ->where('absented',1);
+                }
+            )->orderByDesc('session_date')->get();
             return DataTables::of($Absences)
             ->addColumn('teacher(s)', function ($row){
                 if ($row->session_type !== 'tp') {
@@ -59,6 +67,13 @@ class ModuleController extends Controller
                     }
                     return $result;
                 }
+            })
+            ->addColumn('schoolyear',function($row){
+                $week = Week::find($row->week_id);
+                $GlobalWeek= GlobalWeek::find($week->global_week_id);
+                $Schoolyear = SchoolYear::find($GlobalWeek->schoolyear_id);
+                return $Schoolyear->schoolyear;
+
             })
             ->addColumn('caughtup', function ($row) {
                 if ($row->caughtup == true) {

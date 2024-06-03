@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-    // baseURL: "http://127.0.0.1:8000",
+    baseURL: "http://127.0.0.1:8000",
     // timeout: 6000,
     withCredentials: true,
     xsrfCookieName: "XSRF-TOKEN",
@@ -55,7 +55,6 @@ async function ClickAddAdditional(event) {
             }
 
         }
-        // Now you have the selected sections in the selectedSections array
         console.log(selectedSections);
         console.log(selectedCompanies);
 
@@ -85,11 +84,14 @@ async function SelectAdditionalTimings(Target, session_date, selectedSections, s
             NewOption.innerText = timing.session_start + " -> " + timing.session_finish;
             NewSelect.appendChild(NewOption);
         })
+        Target.innerHTML = '';
         const p = document.createElement("p");
         p.innerText = "Timings";
         p.classList.add("text-center", "text-2xl", "mt-4");
         Target.appendChild(p);
+
         Target.appendChild(NewSelect);
+
         const Button = document.createElement("button");
         Button.id = "additional-select-timing";
         Button.classList.add("btn");
@@ -123,12 +125,12 @@ async function ClickSearchRooms(event) {
                         session_date: date,
                         timing_id: Timing_id,
                     }
-                });                
+                });
                 const AvailableRooms = response.data;
                 const NewSelect = document.createElement("select");
                 NewSelect.id = "select-additional-room";
                 NewSelect.name = "room_id";
-                NewSelect.classList.add("select","select-bordered");
+                NewSelect.classList.add("select", "select-bordered");
                 AvailableRooms.forEach(room => {
                     var NewOption = document.createElement("option");
                     NewOption.value = room.id;
@@ -160,11 +162,83 @@ async function ClickSearchRooms(event) {
                     Button.classList.add("btn");
                     Button.innerText = "Insert Additional";
                     Target.appendChild(Button);
+                    SetupInsertButton();
                 }
             } catch (error) {
-                
+                console.log(error);
+
             }
 
         }
     }
 }
+
+function SetupInsertButton() {
+    const InserButton = document.querySelector("#additional-room-select-button");
+    if (InserButton) {
+        InserButton.removeEventListener("click", ClickInsert);
+        InserButton.addEventListener("click", ClickInsert);
+    }
+}
+async function ClickInsert(event) {
+    const additionalForm = document.querySelector("#select-additional-props");
+    const formdata = new FormData(additionalForm as HTMLFormElement);
+    const teacher_id = formdata.get("additional_teacher_id");
+    const module_id = formdata.get("aditional_module_id");
+    const additional_type = formdata.get("additional_type");
+    const additiveidDiv = document.querySelector("#additive_id");
+    const additive_id = (additiveidDiv as HTMLDivElement).innerText.trim();
+
+    const SelectedRoom = document.querySelector("#select-additional-room")
+    const room_id = (SelectedRoom as HTMLSelectElement).value;
+
+    const SelectedTiming = document.querySelector("#timing-select")
+    const timing_id = (SelectedTiming as HTMLSelectElement).value;
+    const DateInput = document.querySelector("#additional-date");
+    const additional_date = (DateInput as HTMLInputElement).value;
+    const selectSections = document.getElementById("additional-select-sections");
+    const selectCompanies = document.getElementById("additional-select-companies");
+    const selectedSections = new Array();
+    const selectedCompanies = new Array();
+
+    let options = (selectSections as HTMLSelectElement).options;
+
+    for (let i = 0; i < options.length; i++) {
+        if (options[i].selected && options[i] instanceof HTMLOptionElement) {
+            selectedSections.push(options[i].value);
+        }
+    }
+    options = (selectCompanies as HTMLSelectElement).options;
+
+    for (let i = 0; i < options.length; i++) {
+        if (options[i].selected && options[i] instanceof HTMLOptionElement) {
+            selectedCompanies.push(options[i].value);
+        }
+    }
+    try {
+        let response = await instance.post("/additionals/create", {
+            teacher_id: teacher_id,
+            module_id: module_id,
+            room_id: room_id,
+            additive_id : additive_id,
+            timing_id : timing_id,
+            additional_date : additional_date,
+            additional_type : additional_type,
+            sections: selectedSections,
+            companies: selectedCompanies,
+        })
+        console.log(response.data);
+    } catch (error) {
+        console.log(error);
+    }
+
+
+
+
+}
+
+
+
+
+
+ 

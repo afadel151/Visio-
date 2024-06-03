@@ -185,6 +185,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/store',[AdditiveController::class,'store'])->name('additives.store');
             Route::post('/update',[AdditiveController::class,'update'])->name('additives.update');
             Route::get('/{id}',[AdditiveController::class,'show'])->name('additives.show');
+            Route::get('/{id}/total_view',[AdditiveController::class,'total_view'])->name('additives.total_view');
         });
         Route::prefix('absences')->group(function () {
             Route::get('/',[AbsenceController::class,'index'])->name('absences.index');
@@ -195,6 +196,7 @@ Route::middleware('auth')->group(function () {
         });
         Route::prefix('additionals')->group(function () {
             Route::get('/get_available_timings',[AdditionalController::class,'get_available_timings']);
+            Route::post('/create',[AdditionalController::class,'create']);
         });
         Route::prefix('exams')->group(function () {
             Route::get('/{id}',[ExamController::class,'show'])->name('exams.show');

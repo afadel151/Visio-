@@ -29,11 +29,10 @@ class Section extends Model
     }
     public function additionals()
     {
-        return $this->morphToMany(Additional::class,'additionables');
+        return $this->morphToMany(Additional::class,'additionable');
     }
     public function battalion()
     {
         return $this->hasOneThrough(Battalion::class,Company::class);
     }
-    //hasmany sessions
 }

@@ -27,10 +27,7 @@ class Teacher extends Model
         return $this->belongsToMany(Module::class,'teachers_modules')->withPivot(['cours', 'td', 'tp']);
     }
    
-    public function nb_absences()//Sure
-    {
-        return $this->hasManyThrough(Absence::class,Session::class)->count();
-    }
+   
     public function department()//true
     {
         return $this->belongsTo(Department::class);
