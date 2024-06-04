@@ -114,8 +114,7 @@
                 <tbody id="rectifications-tbody">
                     @foreach ($catchups as $catchup)
                         @php
-                            $absence = $catchup->absence;
-                            $session = $absence->absenceable;
+                            $session = $catchup->session;
                         @endphp
                         @if ($session)
                             <tr class="odd:bg-white h-[60px] border-b ">

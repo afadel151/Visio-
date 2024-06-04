@@ -22,8 +22,9 @@ use Barryvdh\DomPDF\Facade\Pdf;
 class WeekController extends Controller
 {
 
-    public function index()
+    public function excel($id)
     {
+        
     }
     public function controls($id)
     {

@@ -11,15 +11,8 @@
     <div class="h-full w-full p-10">
         <table class="table text-center table-zebra border-2 rounded-xl">
             <thead >
-                <tr class="table-row">
-                    <th>Type</th>
-                    <th>Date</th>
-                    <th>Time</th>
-                    <th>Module</th>
-                    <th>Teacher</th>
-                    <th>Room</th>
-                    <th>Classes</th>
-                </tr>
+                $cell = $table->addCell(20);
+        $cell->addText('Type');
             </thead>
             <tbody>
                 @foreach ($additive->rectifications as $rectification)

@@ -186,6 +186,7 @@ Route::middleware('auth')->group(function () {
             Route::post('/update',[AdditiveController::class,'update'])->name('additives.update');
             Route::get('/{id}',[AdditiveController::class,'show'])->name('additives.show');
             Route::get('/{id}/total_view',[AdditiveController::class,'total_view'])->name('additives.total_view');
+            Route::get('/{id}/word',[AdditiveController::class,'word'])->name('additives.word');
         });
         Route::prefix('absences')->group(function () {
             Route::get('/',[AbsenceController::class,'index'])->name('absences.index');

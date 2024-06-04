@@ -166,9 +166,7 @@ async function ClickSearchRooms(event) {
                 }
             } catch (error) {
                 console.log(error);
-
             }
-
         }
     }
 }
@@ -188,10 +186,8 @@ async function ClickInsert(event) {
     const additional_type = formdata.get("additional_type");
     const additiveidDiv = document.querySelector("#additive_id");
     const additive_id = (additiveidDiv as HTMLDivElement).innerText.trim();
-
     const SelectedRoom = document.querySelector("#select-additional-room")
     const room_id = (SelectedRoom as HTMLSelectElement).value;
-
     const SelectedTiming = document.querySelector("#timing-select")
     const timing_id = (SelectedTiming as HTMLSelectElement).value;
     const DateInput = document.querySelector("#additional-date");
@@ -200,7 +196,6 @@ async function ClickInsert(event) {
     const selectCompanies = document.getElementById("additional-select-companies");
     const selectedSections = new Array();
     const selectedCompanies = new Array();
-
     let options = (selectSections as HTMLSelectElement).options;
 
     for (let i = 0; i < options.length; i++) {
@@ -231,10 +226,6 @@ async function ClickInsert(event) {
     } catch (error) {
         console.log(error);
     }
-
-
-
-
 }
 
 
