@@ -122,6 +122,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/{id}',[WeekController::class,'show'])->name('weeks.show');
             Route::get('/{id}/controls',[WeekController::class,'controls'])->name('weeks.controls');
             Route::get('/{id}/pdf',[WeekController::class,'export_pdf'])->name('weeks.export_pdf');
+            Route::get('/{id}/excel',[WeekController::class,'excel'])->name('weeks.excel');
             Route::get('/{id}/additives',[WeekController::class,'additives'])->name('weeks.additives');
             Route::post('/{id}/additives_add',[WeekController::class,'additives_add'])->name('weeks.additives_add');
         });

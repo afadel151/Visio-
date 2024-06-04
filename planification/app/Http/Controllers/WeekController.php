@@ -15,16 +15,29 @@ use App\Models\Session;
 use App\Models\Timing;
 use App\Models\Battalion;
 use App\Models\Room;
-use Inertia\Inertia;
 use Yajra\DataTables\DataTables;
 use Barryvdh\DomPDF\Facade\Pdf;
-
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 class WeekController extends Controller
 {
 
     public function excel($id)
     {
+        $spreadsheet = new Spreadsheet();
+        $activeWorksheet = $spreadsheet->getActiveSheet();
+        $activeWorksheet->setCellValue('A1', 'Hello World !');
+
         
+        $file = 'HelloWorld.xlsx';
+        header("Content-Description: File Transfer");
+        header('Content-Disposition: attachment; filename="' . $file . '"');
+        header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+        header('Content-Transfer-Encoding: binary');
+        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+        header('Expires: 0');
+        $xmlWriter = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+        $xmlWriter->save("php://output");
+
     }
     public function controls($id)
     {
