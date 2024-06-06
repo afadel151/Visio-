@@ -82,10 +82,10 @@ class SessionController extends Controller
         $teachers_Ids = $request->query('teachers');
         foreach ($teachers_Ids as $teacherId) {
 
-            $tp_teacher = new TpTeacher;
-            $tp_teacher->session_id = $session->id;
-            $tp_teacher->teacher_id = $teacherId;
-            $tp_teacher->save();
+            DB::table('tp_teachers')->insert([
+                'teacher_id' => $teacherId,
+               'session_id' => $session->id,
+            ]);
         }
         $session->load('module', 'room', 'TpTeachers');
 

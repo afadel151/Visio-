@@ -21,22 +21,49 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 class WeekController extends Controller
 {
 
-    public function excel($id)
+    public function excel(Request $request)
     {
-        $spreadsheet = new Spreadsheet();
-        $activeWorksheet = $spreadsheet->getActiveSheet();
-        $activeWorksheet->setCellValue('A1', 'Hello World !');
+        // // $spreadsheet = new Spreadsheet();
+        // // $activeWorksheet = $spreadsheet->getActiveSheet();
+        // // $activeWorksheet->setCellValue('A1', 'Hello World !');
+        //         $htmlString = $request->input('html_text');
 
+        // $reader = new \PhpOffice\PhpSpreadsheet\Reader\Html();
+        // $spreadsheet = $reader->loadFromString($htmlString);
         
+        // $file = 'HelloWorld.xlsx';
+        // header("Content-Description: File Transfer");
+        // header('Content-Disposition: attachment; filename="' . $file . '"');
+        // header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+        // header('Content-Transfer-Encoding: binary');
+        // header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+        // header('Expires: 0');
+        // $xmlWriter = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+        // $xmlWriter->save("php://output");
+        $htmlString = '<table>
+                  <tr>
+                      <td>Hello World</td>
+                  </tr>
+                  <tr>
+                      <td>Hello<br />World</td>
+                  </tr>
+                  <tr>
+                      <td>Hello<br>World</td>
+                  </tr>
+              </table>';
+
+        $reader = new \PhpOffice\PhpSpreadsheet\Reader\Html();
+        $spreadsheet = $reader->loadFromString($htmlString);
         $file = 'HelloWorld.xlsx';
-        header("Content-Description: File Transfer");
-        header('Content-Disposition: attachment; filename="' . $file . '"');
-        header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
-        header('Content-Transfer-Encoding: binary');
-        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-        header('Expires: 0');
-        $xmlWriter = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
-        $xmlWriter->save("php://output");
+                header("Content-Description: File Transfer");
+                header('Content-Disposition: attachment; filename="' . $file . '"');
+                header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+                header('Content-Transfer-Encoding: binary');
+                header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+                header('Expires: 0');
+                $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+                $writer->save("php://output");
+        return response()->json('Dome');
 
     }
     public function controls($id)
@@ -103,6 +130,7 @@ class WeekController extends Controller
             ]);
         }
     }
+    
     public function BattalionWeeks($id, Request $request)
     {
         if ($request->ajax()) {

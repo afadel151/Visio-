@@ -23,7 +23,6 @@ use App\Models\GlobalWeek;
 use App\Models\Timing;
 use Illuminate\Console\Application;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -34,14 +33,7 @@ use Inertia\Inertia;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-// Route::get('/', function () {
-//     return Inertia::render('Welcome', [
-//         'canLogin' => Route::has('login'),
-//         'canRegister' => Route::has('register'),
-//         'laravelVersion' => \Illuminate\Foundation\Application::VERSION,
-//         'phpVersion' => PHP_VERSION,
-//     ]);
-// });
+
 
 // Route::middleware([
 //     'auth:sanctum',
@@ -122,7 +114,7 @@ Route::middleware('auth')->group(function () {
             Route::get('/{id}',[WeekController::class,'show'])->name('weeks.show');
             Route::get('/{id}/controls',[WeekController::class,'controls'])->name('weeks.controls');
             Route::get('/{id}/pdf',[WeekController::class,'export_pdf'])->name('weeks.export_pdf');
-            Route::get('/{id}/excel',[WeekController::class,'excel'])->name('weeks.excel');
+            Route::post('/{id}/excel',[WeekController::class,'excel'])->name('weeks.excel');
             Route::get('/{id}/additives',[WeekController::class,'additives'])->name('weeks.additives');
             Route::post('/{id}/additives_add',[WeekController::class,'additives_add'])->name('weeks.additives_add');
         });

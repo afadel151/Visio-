@@ -62,10 +62,12 @@ class CompanyController extends Controller
                     $NbCours = Session::where('module_id', $row->id)
                         ->where('sessionable_type', 'App\\Models\\Company')
                         ->where('sessionable_id', $company->id)
-                        ->where('absented', 0)
-                        ->orWhere(function ($query) {
-                            $query->where('absented', 1)
-                                ->where('caughtup', 1);
+                        ->where(function($query){
+                            $query->where('absented',0)
+                                    ->orWhere(function($subQuery){
+                                        $subQuery->where('absented',1)
+                                                ->where('caughtup',1);
+                                    });
                         })
                         ->count();
                         return '<span class="flex justify-around items-center">'.$NbCours.'<progress class="progress w-56" value="' . $NbCours . '" max="' . $row->nb_cours . '"></progress></span>';
@@ -76,10 +78,12 @@ class CompanyController extends Controller
                         ->where('sessionable_type', 'App\\Models\\Section')
                         ->where('sessionable_id', $section->id)
                         ->where('session_type', 'td')
-                        ->where('absented', 0)
-                        ->orWhere(function ($query) {
-                            $query->where('absented', 1)
-                                ->where('caughtup', 1);
+                        ->where(function($query){
+                            $query->where('absented',0)
+                                    ->orWhere(function($subQuery){
+                                        $subQuery->where('absented',1)
+                                                ->where('caughtup',1);
+                                    });
                         })
                         ->count();
                         return '<span class="flex justify-around items-center">'.$NbTds.'<progress class="progress w-56" value="' . $NbTds . '" max="' . $row->nb_tds . '"></progress></span>';
@@ -90,10 +94,12 @@ class CompanyController extends Controller
                         ->where('sessionable_type', 'App\\Models\\Section')
                         ->where('sessionable_id', $section->id)
                         ->where('session_type', 'tp')
-                        ->where('absented', 0)
-                        ->orWhere(function ($query) {
-                            $query->where('absented', 1)
-                                ->where('caughtup', 1);
+                        ->where(function($query){
+                            $query->where('absented',0)
+                                    ->orWhere(function($subQuery){
+                                        $subQuery->where('absented',1)
+                                                ->where('caughtup',1);
+                                    });
                         })
                         ->count();
                         return '<span class="flex justify-around items-center">'.$NbTps.'<progress class="progress w-56" value="' . $NbTps . '" max="' . $row->nb_tps . '"></progress></span>';
