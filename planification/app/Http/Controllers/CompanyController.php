@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Company;
 use App\Models\Module;
 use App\Models\Room;
+use App\Models\SchoolyearModule;
 use App\Models\Section;
 use App\Models\Session;
 use Illuminate\Http\Request;
@@ -47,8 +48,7 @@ class CompanyController extends Controller
     {
         $section = Section::find($id);
         $company = $section->company;
-        $modules = $company->modules;
-        return view('sections.show', ['section' => $section, 'modules' => $modules]);
+        return view('sections.show', ['section' => $section]);
 
     }
     public function SectionModulesProgress($id, Request $request)
@@ -56,10 +56,10 @@ class CompanyController extends Controller
         if ($request->ajax()) {
             $section = Section::find($id);
             $company = Company::find($section->company_id);
-            $modules = Module::where('module_sector', $company->sector)->where('battalion', $company->battalion->id)->get();
+            $modules = SchoolyearModule::with('module')->where('module_sector', $company->sector)->where('battalion_id', $company->battalion->id)->get();
             return DataTables::of($modules)
                 ->addColumn('cours_dones', function ($row) use ($company) {
-                    $NbCours = Session::where('module_id', $row->id)
+                    $NbCours = Session::where('module_id', $row->module_id)
                         ->where('sessionable_type', 'App\\Models\\Company')
                         ->where('sessionable_id', $company->id)
                         ->where(function($query){
@@ -74,7 +74,7 @@ class CompanyController extends Controller
                     // 
                 })
                 ->addColumn('tds_dones', function ($row) use ($section) {
-                    $NbTds = Session::where('module_id', $row->id)
+                    $NbTds = Session::where('module_id', $row->module_id)
                         ->where('sessionable_type', 'App\\Models\\Section')
                         ->where('sessionable_id', $section->id)
                         ->where('session_type', 'td')
@@ -90,7 +90,7 @@ class CompanyController extends Controller
                 })
                 ->addColumn('tps_dones', function ($row) use ($section) {
 
-                    $NbTps = Session::where('module_id', $row->id)
+                    $NbTps = Session::where('module_id', $row->module_id)
                         ->where('sessionable_type', 'App\\Models\\Section')
                         ->where('sessionable_id', $section->id)
                         ->where('session_type', 'tp')

@@ -240,7 +240,11 @@ class TeacherController extends Controller
     {
         if ($request->ajax()) {
             $teacher = Teacher::find($id);
-            $modules = Module::join('teachers_modules', 'modules.id', '=', 'teachers_modules.module_id')->where('teacher_id', $teacher->id)->join('departments', 'modules.department_id', '=', 'departments.id')
+            $modules = Module::join('teachers_modules', 'modules.id', '=', 'teachers_modules.module_id')
+                ->where('teacher_id', $teacher->id)
+                ->join('departments', 'modules.department_id', '=', 'departments.id')
+                ->join('schoolyear_modules','modules.id','=','schoolyear_modules.module_id')
+                ->join('battalions','schoolyear_modules.battalion_id', '=','battalions.id')
                 ->get();
 
             return Datatables::of($modules)

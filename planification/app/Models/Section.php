@@ -15,6 +15,10 @@ class Section extends Model
     {
         return $this->morphOne(Session::class,'sessionable');
     }
+    public function occasion()
+    {
+        return $this->morphOne(Occasion::class,'occasionable');
+    }
     public function company()
     {
         return $this->belongsTo(Company::class);

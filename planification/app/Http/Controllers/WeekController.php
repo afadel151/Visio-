@@ -7,6 +7,7 @@ use App\Models\Company;
 use App\Models\Exam;
 use App\Models\ExamRoomGroup;
 use App\Models\Module;
+use App\Models\SchoolyearModule;
 use App\Models\Teacher;
 use App\Models\TeacherModule;
 use Illuminate\Http\Request;
@@ -17,7 +18,6 @@ use App\Models\Battalion;
 use App\Models\Room;
 use Yajra\DataTables\DataTables;
 use Barryvdh\DomPDF\Facade\Pdf;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
 class WeekController extends Controller
 {
 
@@ -71,8 +71,13 @@ class WeekController extends Controller
         $controls = Week::find($id)->controls;
         $week = Week::find($id);
         $timings = Timing::all();
-        $modules = Module::where('battalion', $week->battalion->battalion)->get();
-        $modulesIds = $modules->pluck('id')->toArray();
+        // $modules = Module::where('battalion', $week->battalion->battalion)->get();
+        $modulesIds = SchoolyearModule::where('schoolyear_id',$week->global_week->schoolyear_id)
+                                        ->where('battalion_id',$week->battalion_id)
+                                        ->where('semester',$week->semester)
+                                        ->pluck('module_id')
+                                        ->toArray();
+        $modules  = Module::whereIn('id',$modulesIds)->get();
         $teachersIds = TeacherModule::whereIn('module_id', $modulesIds)->pluck('teacher_id')->toArray();
         $teachers = Teacher::whereIn('id', $teachersIds)->get();
         return view('weeks.controls', compact('controls', 'week', 'timings', 'modules', 'teachers'));
@@ -103,7 +108,7 @@ class WeekController extends Controller
             $companies = Company::with('sections')->where('battalion_id',$battalion->id)->get();
             $additives = $week->additives;
             $sessions = Session::with('teacher', 'module', 'room','TpTeachers','rectification')->where('week_id', $week->id)->get();
-            $modules = Module::with('teachers')->where('battalion',$battalion->battalion)->where('semester',$week->semester)->get();
+            // $modules = Module::with('teachers')->where('battalion',$battalion->battalion)->where('semester',$week->semester)->get();
             $timings = Timing::all();
             $rooms = Room::all();
             return view('weeks.create', compact('battalion', 'week', 'timings', 'sessions', 'rooms'));

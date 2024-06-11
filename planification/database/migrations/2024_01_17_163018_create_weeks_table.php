@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('week_type');
             $table->boolean('sport_exam');
             $table->boolean('cc');
+            $table->boolean('cc-sh')->default(false);
+            $table->boolean('has_sunday')->default(false);
             $table->timestamps();
         });
        

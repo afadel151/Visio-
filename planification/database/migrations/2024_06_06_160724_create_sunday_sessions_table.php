@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sessions_table', function (Blueprint $table) {
-            $table->id();//ID
-        
+        Schema::create('sunday_sessions', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('timing_id')->constrained('timings')->onDelete('CASCADE');//TIMING    
             $table->foreignId('week_id')->constrained('weeks')->onDelete('CASCADE');//WEEK  
             $table->date('session_date');//DATE 
@@ -27,9 +26,6 @@ return new class extends Migration
             $table->boolean('anticipated')->default(false);//Anticipated
             $table->boolean('caughtup')->default(false);//caughtup
             $table->boolean('rectified')->default(false);//rectified
-            $table->boolean('in_holiday')->default(false);
-            $table->boolean('in_occaion')->default(false);
-            $table->boolean('holiday/occasion_planned')->default(false);
             $table->timestamps();
         });
     }
@@ -39,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sessions_table');
+        Schema::dropIfExists('sunday_sessions');
     }
 };

@@ -15,13 +15,13 @@
             }
         }
     @endphp
-    <div class="grid grid-cols-12 grid-rows-5 gap-10 w-[100%] h-[100%] p-10 pt-12">
+    <div class="grid grid-cols-12 grid-rows-5 gap-10 w-[100%] h-screen p-10 pt-12">
         <div class="col-span-3 row-span-2 ">
             <div class="card card-compact w-[100%] h-[100%] bg-base-100 shadow-xl">
                 <figure>
-                    <p class="text-6xl font-bold bg-base-200 rounded-lg p-4">First year</p>
+                    <p class="text-4xl font-bold bg-base-200 rounded-lg p-4">First year</p>
                 </figure>
-                <div class="stats mt-6">
+                <div class="stats overflow-hidden mt-2">
 
                     <div class="stat place-items-center">
                         <div class="stat-title">Sessions</div>
@@ -39,10 +39,10 @@
                             up</div>
                     </div>
                 </div>
-                <div class="card-body flex flex-col justify-around items-center">
-                    <h2 class="card-title text-4xl font-bold bg-base-200 rounded-lg p-4">{{ $week_1->week_type }}
+                <div class="card-body flex flex-col justify-around p-4 items-center">
+                    <h2 class="card-title text-3xl font-bold ">{{ $week_1->week_type }}
                         @if ($week_1->week_type == 'Cours')
-                            {{ $week_1->week_number }}
+                            ({{ $week_1->week_number }})
                         @endif
                     </h2>
                     <h2 class="text-xl">Semester : {{ $week_1->semester }}</h2>
@@ -105,19 +105,17 @@
                 </div>
             </div>
         </div>
-        <div class="col-span-3 row-span-2 col-start-4">
+        <div class="col-span-3 row-span-2  col-start-4">
             <div class="card card-compact w-[100%] h-[100%] bg-base-100 shadow-xl">
                 <figure>
-                    <p class="text-6xl font-bold bg-base-200 rounded-lg p-4">Second year</p>
+                    <p class="text-4xl font-bold bg-base-200 rounded-lg p-4">Second year</p>
                 </figure>
-                <div class="stats mt-6">
+                <div class="stats overflow-hidden mt-2">
 
                     <div class="stat place-items-center">
                         <div class="stat-title">Sessions</div>
                         <div class="stat-value">{{ $week_2->sessions->count() }}</div>
                         <div class="stat-desc">
-
-
                         </div>
                     </div>
 
@@ -128,10 +126,10 @@
                             up</div>
                     </div>
                 </div>
-                <div class="card-body flex flex-col justify-around items-center">
-                    <h2 class="card-title text-4xl font-bold  bg-base-200 rounded-lg p-4">{{ $week_2->week_type }}
+                <div class="flex flex-col justify-around p-4 items-center">
+                    <h2 class=" text-3xl font-bold    ">{{ $week_2->week_type }}
                         @if ($week_2->week_type == 'Cours')
-                            {{ $week_2->week_number }}
+                            ({{ $week_2->week_number }})
                         @endif
                     </h2>
                     <h2 class="text-xl">Semester : {{ $week_2->semester }}</h2>
@@ -197,16 +195,14 @@
         <div class="col-span-3 row-span-2 col-start-7">
             <div class="card card-compact w-[100%] h-[100%] bg-base-100 shadow-xl">
                 <figure>
-                    <p class="text-6xl font-bold bg-base-200 rounded-lg p-4">Third year</p>
+                    <p class="text-4xl font-bold bg-base-200 rounded-lg p-4">Third year</p>
                 </figure>
-                <div class="stats mt-6">
+                <div class="stats mt-2 overflow-hidden">
 
                     <div class="stat place-items-center">
                         <div class="stat-title">Sessions</div>
                         <div class="stat-value">{{ $week_3->sessions->count() }}</div>
                         <div class="stat-desc">
-
-
                         </div>
                     </div>
 
@@ -217,10 +213,10 @@
                             up</div>
                     </div>
                 </div>
-                <div class="card-body flex flex-col justify-around items-center">
-                    <h2 class="card-title text-4xl font-bold bg-base-200 rounded-lg p-4">{{ $week_3->week_type }}
+                <div class="card-body flex flex-col justify-around items-center p-4">
+                    <h2 class="card-title text-3xl font-bold">{{ $week_3->week_type }}
                         @if ($week_3->week_type == 'Cours')
-                            {{ $week_3->week_number }}
+                           ({{ $week_3->week_number }})
                         @endif
                     </h2>
                     <h2 class="text-xl">Semester : {{ $week_3->semester }}</h2>
@@ -283,12 +279,10 @@
                 </div>
             </div>
         </div>
-        <div class="col-span-6 row-span-3 col-start-1 row-start-3 card  bg-base-100 shadow-xl">
-            <div class="w-[100%] flex justify-center items-center border-b-2 h-20 bg-base-200 rounded-t-xl">
-                <p class="text-3xl font-bold ">Absences of this year</p>
-            </div>
-            <div id="barChart" class="card-body">
-            </div>
+        <div class="col-span-6 row-span-3 col-start-1 row-start-3 p-4   bg-base-100 shadow-xl" id="barChart">
+            
+            {{-- <div  >
+            </div> --}}
         </div>
         <div class="col-span-3  row-span-3 col-start-10 row-start-1">
             <ul class="max-w-[100%] flex flex-col">
@@ -317,7 +311,37 @@
                     </div>
                 </li>
             </ul>
-            <div id="chart"></div>
+            <div class="flex flex-col h-full justify-stretch items-stretch py-8 ">
+                <div class="w-full h-[50%] ">
+                    <div class="w-full border-2 rounded-2xl h-full">
+                        @if ($holiday != null)
+                            <div class="h-[50%] flex  flex-col  justify-center items-center">
+                                <p class="text-2xl">This Week's Holiday</p>
+                                <p class="text-3xl font-bold mt-2">{{ $holiday->holiday_name }} in
+                                    {{ $holiday->holiday_date }}</p>
+                            </div>
+                        @else
+                            <div class="h-[50%] flex justify-center items-center">
+                                <p class="text-2xl text-gray-500">No Holidaay in This Week</p>
+                            </div>
+                        @endif
+                        <hr>
+                        @if (true)
+                            <div class="h-[50%] flex justify-center items-center ">
+                                <p class="text-2xl text-gray-500">No Occasions in This Week</p>
+                            </div>
+                        @else
+                            <div class="h-[50%] flex justify-center items-center ">
+                                <p class="text-2xl text-gray-500">No Occasions in This Week</p>
+                            </div>
+                        @endif
+
+
+                    </div>
+
+                </div>
+
+            </div>
         </div>
         <div class="col-span-3 row-span-2 col-start-7 row-start-3">
             <div class="h-[100%] w-[100%] ">
@@ -369,7 +393,6 @@
             var options = {
                 chart: {
                     type: 'area',
-
                 },
                 series: [{
                         name: 'Absences',
@@ -448,7 +471,7 @@
                     type: "radialBar"
                 },
 
-                series: [67],
+                series: [@json($global_weeks)],
 
                 plotOptions: {
                     radialBar: {

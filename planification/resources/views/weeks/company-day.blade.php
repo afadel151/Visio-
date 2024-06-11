@@ -498,7 +498,7 @@
                                                             <select name="module_id" id="module"
                                                                 class="select select-bordered">
                                                                 {{-- DISPLAY MODULES  --}}
-                                                                @foreach ($modules->where('nb_tps', '>', 0) as $module)
+                                                                @foreach ($modules->where('pivot.nb_tps', '>', 0) as $module)
                                                                     <option value="{{ $module->id }}">
                                                                         {{ $module->module }}
                                                                     </option>
@@ -570,10 +570,10 @@
 
                                                 </div>
                                             </div>
-@endif
+                                            @endif
 
-                                            @if ($isRectified)
-<div class="rounded-xl w-[100%] h-[100%] bg-base-200">
+                                                                                        @if ($isRectified)
+                                            <div class="rounded-xl w-[100%] h-[100%] bg-base-200">
                                                 <div
                                                     class="flex w-[100%] h-[100%]  flex-col justify-center  text-center">
                                                     <h2 class="font-bold">Rectification Here!</h2>
@@ -657,7 +657,7 @@
                                                                 <select name="module_id" id="module"
                                                                     class="select select-bordered">
                                                                     {{-- DISPLAY MODULES  --}}
-                                                                    @foreach ($modules->where('nb_tds', '>', 0) as $module)
+                                                                    @foreach ($modules->where('pivot.nb_tds', '>', 0) as $module)
                                                                     <option value="{{ $module->id }}">
                                                                         {{ $module->module }}
                                                                     </option>
@@ -669,11 +669,12 @@
                                                             <select name="teacher_id" class="select select-bordered">
                                                                 @foreach ($teachers as $teacher)
                                                                     @if ($teacher->td == true)
-                                                                        <option value="{{ $teacher->id }}">
+                                                                        <option value="{{ $teacher->teacher_id }}">
                                                                             {{ $teacher->teacher_name }}
                                                                         </option>
                                                                     @endif
                                                                 @endforeach
+                                                                
                                                             </select>
                                                         </div>
                                                         <div class="flex justify-center items-center w-[100%]">
@@ -781,7 +782,7 @@
                                         <div class="flex justify-center items-center ">
                                             <label for="room" class="w-[100px]">Module</label>
                                             <select name="module_id" id="room" class="select select-bordered">
-                                                @foreach ($modules->where('nb_cours', '>', 0) as $module)
+                                                @foreach ($modules->where('pivot.nb_cours', '>', 0) as $module)
                                                     <option value="{{ $module->id }}">{{ $module->module }}
                                                     </option>
                                                 @endforeach

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const instance = axios.create({
-  
+
     withCredentials: true,
     xsrfCookieName: "XSRF-TOKEN",
     xsrfHeaderName: "X-XSRF-TOKEN",
@@ -21,6 +21,7 @@ async function ClickAbsenceSelect(event) {
     const SelectDateTimeForm = document.querySelector("#select-absented-session-form");
     if (SelectDateTimeForm && SelectDateTimeForm instanceof HTMLFormElement) {
         const formData = new FormData(SelectDateTimeForm);
+
         const teacher_id = formData.get("teacher_id");
         const Target = document.querySelector("#insert-catchup");
         GetDateTimeAbsences(Target, teacher_id);
@@ -31,10 +32,10 @@ async function GetDateTimeAbsences(Target, teacher_id) {
     try {
         let response = await axios.get("http://127.0.0.1:8000/sessions/get_absences", {
             params: {
-                teacher_id : teacher_id
+                teacher_id: teacher_id
             }
         });
-        
+
         const sessions = response.data;
         console.log(sessions);
         const NewSelect = document.createElement("select");
@@ -57,15 +58,15 @@ async function GetDateTimeAbsences(Target, teacher_id) {
                 var Labell = "Company";
             }
             //   option.textContent += '-' 
-            option.textContent = Labell + ' ' + students + ' - '+ session.session_type.toUpperCase() + '-' ; 
+            option.textContent = Labell + ' ' + students + ' - ' + session.session_type.toUpperCase() + '-';
             if (session.session_type === 'tp') {
-                
+
                 session.tp_teachers.forEach(teacher => {
-                        option.textContent += teacher.teacher_name + '/';
+                    option.textContent += teacher.teacher_name + '/';
                 });
             }
-            else{
-                option.textContent += session.teacher.teacher_name ;
+            else {
+                option.textContent += session.teacher.teacher_name;
             }
             option.textContent += '-' + session.module.module + '-' + session.room.room;
             NewSelect.appendChild(option);
@@ -167,7 +168,7 @@ async function ClickSelectDateTime(event) {
             const NewSelect = document.createElement("select");
             NewSelect.id = "select-catchup-room";
             NewSelect.name = "room_id";
-            NewSelect.classList.add("w-[350px]","select","select-bordered");
+            NewSelect.classList.add("w-[350px]", "select", "select-bordered");
             AvailableRooms.forEach(room => {
                 var NewOption = document.createElement("option");
                 NewOption.value = room.id;

@@ -21,28 +21,11 @@
                                 <th>No</th>
                                 <th>School year</th>
                                 <th>Start Date</th>
+                                <th>Time per session</th>
                                 <th>Number of weeks</th>
                                 <th>Action </th>
                             </tr>
                         </thead>
-                        <tbody>
-                            @foreach ($schoolyears as $schoolyear)
-                                <tr>
-                                    <td>{{ $schoolyear->id }}</td>
-                                    <td>{{ $schoolyear->schoolyear }}</td>
-                                    <td>{{ $schoolyear->schoolyear_start_date }}</td>
-                                    <td>{{ $schoolyear->global_weeks }}</td>
-                                    <td>
-                                        <a href="{{ route('schoolyears.show', ['id' => $schoolyear->id]) }}"
-                                            class="edit btn btn-info btn-sm rounded-l">View</a>
-                                        <a href="javascript:void(0)" class="edit btn btn-primary btn-sm rounded-lg">Edit</a>
-                                        <a href="javascript:void(0)"
-                                            class="edit btn btn-danger btn-sm rounded-lg">Delete</a>
-
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
                     </table>
                 </div>
             </div>
@@ -103,6 +86,10 @@
                     {
                         data: 'schoolyear_start_date',
                         name: 'schoolyear_start_date'
+                    },
+                    {
+                        data: 'time_per_session',
+                        name: 'time_per_session',
                     },
                     {
                         data: 'global_weeks',

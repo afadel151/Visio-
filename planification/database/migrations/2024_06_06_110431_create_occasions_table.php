@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('global_weeks', function (Blueprint $table) {
+        Schema::create('occasions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('global_week_number');
-            $table->foreignId('schoolyear_id')->constrained('schoolyears')->onDelete('CASCADE');
+            $table->string('occasion');
+            $table->date('occasion_date');
             $table->timestamps();
-            $table->date('start_week_date');
-            $table->date('end_week_date');
         });
     }
 
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('global_weeks');
+        Schema::dropIfExists('occasions');
     }
 };

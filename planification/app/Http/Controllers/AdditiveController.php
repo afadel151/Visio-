@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Additional;
 use App\Models\Additive;
 use App\Models\CatchUp;
-use App\Models\Module;
 use App\Models\Rectification;
+use App\Models\SchoolyearModule;
+use App\Models\Session;
 use App\Models\Teacher;
 use App\Models\Timing;
 use App\Models\Week;
@@ -214,12 +215,26 @@ class AdditiveController extends Controller
         $rectifications = Rectification::with('session', 'room', 'timing')->where('additive_id', $additive->id)->get();
         $additionals = Additional::with('sections', 'companies')->where('additive_id', $additive->id)->get();
         $catchups = CatchUp::with('session')->where('additive_id', $additive->id)->get();
-        $modules = Module::where('battalion', $battalion->battalion)->get();
-        $ALLmodules = $modules->pluck('id')->toArray();
+        // $modules = Module::where('battalion', $battalion->battalion)->get();
+        $modules = SchoolyearModule::with('module')->where('battalion_id',$battalion->id)->get();
+        $ALLmodules = $modules->pluck('module_id')->toArray();
         $teachers = Teacher::join('teachers_modules', 'teachers.id', '=', 'teachers_modules.teacher_id')
             ->where('teachers_modules.schoolyear_id', $battalion->schoolyear_id)
             ->whereIn('teachers_modules.module_id', $ALLmodules)
             ->get();
+        $companiesIds = $battalion->companies->pluck('id')->toArray();
+        $sectionsIds = $battalion->sections->pluck('id')->toArray();
+        $holidaySessions = Session::with('timing','module','teacher','room')->where(function ($query) use ($companiesIds){
+                                        $query->where('sessionable_type','App\\Models\\Company')
+                                                ->whereIn('sessionable_id',$companiesIds)
+                                                ->where('in_holiday',true);
+                                        })
+                                        ->orWhere(function ($query) use ($sectionsIds){
+                                            $query->where('sessionable_type','App\\Models\\Section')
+                                                    ->whereIn('sessionable_id',$sectionsIds)
+                                                    ->where('in_holiday',true);
+                                        })->get();
+
         return view('additives.show', [
             'week' => $week,
             'battalion' => $battalion,
@@ -230,6 +245,7 @@ class AdditiveController extends Controller
             'catchups' => $catchups,
             'modules' => $modules,
             'teachers' => $teachers,
+            'holiday_sessions'=> $holidaySessions
         ]);
     }
 

@@ -20,8 +20,8 @@
                         <tr>
                             <th>No</th>
                             <th>Module</th>
-                            <th>battalion</th>
-                            <th>Sector</th>
+                             <th>battalion</th>
+                             <th>Sector</th>
                             <th>semester </th>
                             <th>departement </th>
                             <th>Vol.Horaire</th>
@@ -31,25 +31,8 @@
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        @foreach ($modules as $module)
-                            <tr>
-                                <td>{{ $module->id }}</td>
-                                <td>{{ $module->module }}</td>
-                                <td>{{ $module->battalion }}</td>
-                                <td>{{ $module->module_sector }}</td>
-                                <td>{{ $module->semester }}</td>
-                                <td>{{ $module->department->department }}</td>
-                                <td>
-                                    <a href="{{ route('modules.show', ['id' => $module->id]) }}"
-                                        class="edit btn btn-info btn-sm rounded-l">View</a>
-                                    <a href="javascript:void(0)" class="edit btn btn-primary btn-sm rounded-lg">Edit</a>
-                                    <a href="javascript:void(0)" class="edit btn btn-danger btn-sm rounded-lg">Delete</a>
-
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
+                   
+                    
                 </table>
             </div>
         </div>
@@ -67,18 +50,19 @@
                     processing: true,
                     serverSide: true,
                     ajax: "{{ route('modules.index') }}",
-                    columns: [{
-                            data: 'id',
-                            name: 'id'
+                    columns: [
+                        {
+                            data: 'module.id',
+                            name: 'module.id'
                         },
                         {
-                            data: 'module',
-                            name: 'module',
+                            data: 'module.module',
+                            name: 'module.module',
                             searchable: true
                         },
                         {
-                            data: 'battalion',
-                            name: 'battalion'
+                            data: 'battalion.battalion',
+                            name: 'battalion.battalion'
                         },
                         {
                             data: 'module_sector',
@@ -90,8 +74,8 @@
                         },
                         //   {data: 'teacher_grade', name: 'teacher_grade', orderable: true, searchable: true},
                         {
-                            data: 'department.department',
-                            name: 'department_id',
+                            data: 'department',
+                            name: 'department',
                             searchable: false,
                             orderable: true
                         },

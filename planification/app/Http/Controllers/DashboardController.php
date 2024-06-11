@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Config;
+use App\Models\Holiday;
 use App\Models\SchoolYear;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\GlobalWeek;
-use App\Models\Config;
-use PHPUnit\Framework\Constraint\IsEmpty;
+
 
 class DashboardController extends Controller
 {
@@ -18,13 +18,14 @@ class DashboardController extends Controller
     {
         $today = date('Y-m-d');
         // $global_week = GlobalWeek::where('start_week_date','<=',$today)->where('end_week_date','>=',$today)->first();
-        $global_week = GlobalWeek::find(1);
-        $schoolyear_id = SchoolYear::find(1)->id;
+        $global_week = GlobalWeek::find(Config::find(1)->current_global_week_id);
+        $holiday = Holiday::whereDate('holiday_date','<=',date('Y-m-d', strtotime('+7 days', strtotime($global_week->start_week_date))))->whereDate('holiday_date','>=',$global_week->start_week_date)->first();
+        $schoolyear_id = SchoolYear::find(Config::find(1)->current_schoolyear_id)->id;
         if ($global_week) {
             $nextgw = GlobalWeek::where('start_week_date', '<=', date('Y-m-d', strtotime('+7 days', strtotime($today))))->where('end_week_date', '>=', date('Y-m-d', strtotime('+7 days', strtotime($today))))->first();
 
                 $nextgw = "last week of the year";
-                $weeks = GlobalWeek::where('schoolyear_id', 1)->get();
+                $weeks = GlobalWeek::where('schoolyear_id', Config::find(1)->current_schoolyear_id)->get();
                 $GWS = $weeks->pluck('start_week_date')->toArray();
                 $GWE = $weeks->pluck('end_week_date')->toArray();
                 $globalweeks = [];
@@ -69,6 +70,8 @@ class DashboardController extends Controller
                     'data' => $aditives,
                     'aditionals' => $aditionals,
                 ];
+                $global_weeks = SchoolYear::find($global_week->schoolyear_id)->global_weeks->count();
+                $global_weeks = $global_week->global_week_number / $global_weeks * 100;
                 return view(
                     'dashboard0',
                     [
@@ -79,6 +82,8 @@ class DashboardController extends Controller
                         'data2' => $data2,
                         'additionals' => $Tt,
                         'additives' => $tab,
+                        'holiday'=>$holiday,
+                        'global_weeks'=> $global_weeks
                     ]
                 );
             

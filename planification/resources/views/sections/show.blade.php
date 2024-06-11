@@ -57,8 +57,8 @@
                     serverSide: true,
                     ajax: url2,
                     columns: [{
-                            data: 'module',
-                            name: 'module'
+                            data: 'module.module',
+                            name: 'module.module'
                         },
                         {
                             data: null,

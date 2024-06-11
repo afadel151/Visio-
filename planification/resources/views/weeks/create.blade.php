@@ -305,11 +305,11 @@
                     <td class="sticky top-0 " style="z-index: 60;">
                         @php
                             $companies_PR = $battalion->companies;
-                            $modules_PR = $battalion->modules_PR(1);
-                            $teachers = $battalion->teachers_PR(1);
-                            $teachers_PR = collect($teachers)->map(function ($teacher) {
-                                return (object) $teacher;
-                            });
+                            $modules_PR = $battalion->modules_PR->where('semester',$week->semester);
+                            $teachers_PR = $battalion->teachers_PR($week->semester);
+                            // $teachers_PR = collect($teachers)->map(function ($teacher) {
+                            //     return (object) $teacher;
+                            // });
                             $domaine = 'PR';
                         @endphp
                         @include('weeks.domaine', [
@@ -321,8 +321,8 @@
                     <td class="sticky top-0 " style="z-index: 60;">
                         @php
                             $companies_ST = $battalion->companies_ST;
-                            $modules_ST = $battalion->modules_ST(1);
-                            $teachers_ST = $battalion->teachers_ST(1);
+                            $modules_ST = $battalion->modules_ST->where('pivot.semester',$week->semester);
+                            $teachers_ST = $battalion->teachers_ST($week->semester);
                             $teachers_ST = collect($teachers_ST)->map(function ($teacher) {
                                 return (object) $teacher;
                             });
@@ -341,15 +341,13 @@
                     <td class="sticky top-0 z-10  " style="z-index: 60;">
                         @php
                             $companies_MI = $battalion->companies_MI;
-                            $modules_MI = $battalion->modules_MI(1);
-                            $teachers_MI = $battalion->teachers_MI(1);
-
+                            $modules_MI = $battalion->modules_MI->where('pivot.semester',$week->semester);
+                            $teachers_MI = $battalion->teachers_MI($week->semester);
+                            $teachers_MI = collect($teachers_MI)->map(function ($teacher) {
+                                return (object) $teacher;
+                            });
                             $domaine = 'MI';
                         @endphp
-                        <script>
-                            const teachers_MI = @json($teachers_MI);
-                            const modules_MI = @json($modules_MI);
-                        </script>
                         @include('weeks.domaine', ['companies' => $companies_MI, 'domaine' => $domaine])
                     </td>
                 @endif
@@ -359,7 +357,7 @@
                 $date = date('Y-m-d', strtotime('-1 days', strtotime($week->global_week->start_week_date)));
             @endphp
 
-
+554
             @for ($i = 0; $i < 5; $i++)
                 <tr class="h-[800px]">
                     @php

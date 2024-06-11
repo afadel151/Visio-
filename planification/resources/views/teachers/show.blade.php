@@ -69,7 +69,6 @@
                             <th class="text-center">No</th>
                             <th class="text-center">Module</th>
                             <th class="text-center">Battalion</th>
-                            <th class="text-center">Schoolyear</th>
                             <th class="text-center">Sector</th>
                             <th class="text-center">Semester</th>
                             <th class="text-center">Department </th>
@@ -77,36 +76,7 @@
                             <th class="text-center">Action </th>
                         </tr>
                     </thead>
-                    <tbody>
-                        @foreach ($modules as $module)
-                            <tr>
-                                <td>{{ $module->module_id }}</td>
-                                <td>{{ $module->module }}</td>
-                                <td>{{ $module->battalion }}</td>
-                                <td>{{ $module->schoolyear }}</td>
-
-                                <td>{{ $module->module_sector }}</td>
-
-                                <td>{{ $module->semester }}</td>
-                                <td>{{ $module->department }}</td>
-                                <td class="">
-                                    @if ($module->cours == true)
-                                        <div class=" bg-green-400 rounded-full text-center">Cours</div>
-                                    @endif
-                                    @if ($module->td == true)
-                                        <div class=" bg-red-400 rounded-full text-center">Td</div>
-                                    @endif
-                                    @if ($module->tp)
-                                        <div class=" bg-yellow-200 rounded-full text-center">Tp</div>
-                                    @endif
-                                </td>
-                                <td>
-                                    <a href="javascript:void(0)" class="edit btn btn-info btn-sm rounded-lg">View</a>
-                                    <a href="javascript:void(0)" class="edit btn btn-primary btn-sm rounded-lg">Edit</a>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
+                    
                 </table>
             </div>
             <button id="show-module-add" class="absolute btn -bottom-14 right-0">Add</button>
@@ -213,10 +183,7 @@
                                 data: 'battalion',
                                 name: 'battalion',
                             },
-                            {
-                                data: 'schoolyear',
-                                name: 'schoolyear',
-                            },
+                            
                             {
                                 data: 'module_sector',
                                 name: 'module_sector',

@@ -1,6 +1,7 @@
 @extends('default')
 @push('header')
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.3/themes/base/jquery-ui.css">
 @endpush
 @section('content')
     <div class="hidden" id="additive_id">{{ $additive->id }}</div>
@@ -195,15 +196,16 @@
                             <td class="px-6 py-4">{{ $additional->module->module }}</td>
                             <td class="px-6 py-4">{{ $additional->room->room }}</td>
                             <td class="px-6 py-4">
-                                
-                               /@foreach ( $additional->sections as $section){{$section->section}}/
-                               @endforeach
-                            
+
+                                /@foreach ($additional->sections as $section)
+                                    {{ $section->section }}/
+                                @endforeach
+
                             </td>
                             <td class="px-6 py-4">
-                                /@foreach ( $additional->companies as $company)
-                                   {{$company->company}}/
-                               @endforeach
+                                /@foreach ($additional->companies as $company)
+                                    {{ $company->company }}/
+                                @endforeach
                             </td>
                             <td class="px-2 py-4 "><a href="#"
                                     class="delete-rectification font-medium text-red-600 hover:no-underline  dark:text-blue-500 p-4  duration-300  hover:bg-red-50 hover:rounded-xl h-[100%] w-[100%]">Delete</a>
@@ -215,10 +217,22 @@
             <button id="show-additional-insert"
                 class="absolute -bottom-4 right-3 bg-indigo-500 rounded-xl w-40 h-12 text-slate-50 text-xl hover:bg-slate-200 hover:text-gray-900 hover:border-2 hover:border-slate-900 hover:scale-110 duration-300">insert</button>
         </div>
+
+
         <div id="parent-of-additonal"
             class="p-4 border-[3px]  w-[50%] bg-slate-50 rounded-xl flex flex-col justify-center items-center"
             style="display: none;">
-
+            <ul class="w-full flex justify-around">
+                <li class="w-full">
+                    <a class="text-center font-bold font-sans rounded-lg  w-full" href="#get-date-time">Normal</a>
+                </li>
+                <li class="w-full">
+                    <a class="text-center font-bold font-sans rounded-lg  w-full" href="#insert-from-holidays">Holidays</a>
+                </li>
+                <li class="w-full">
+                    <a class="text-center font-bold font-sans rounded-lg  w-full" href="#insert-from-occasions">Occasions</a>
+                </li>
+            </ul>
             <div class="flex flex-col  w-full justify-center items-center space-y-6" id="get-date-time">
                 <form action="" id="select-additional-props" class="w-full space-y-6">
                     <input type="hidden" id="week_id" name="week_id" value="{{ $week->id }}">
@@ -254,21 +268,13 @@
                         <input type="date" name="session_date" id="additional-date" class="input ">
                     </div>
                     <div class="flex justify-around w-[100%] items-center ">
-                        <div class="flex flex-col justify-center items-center">
-                            <p class="text-2xl">Select Type</p>
-                            <select name="additional_type" id="additional-select-type"
-                                class="select select-bordered w-32">
-
-                                <option value="cour">Cour</option>
-                                <option value="td">Td</option>
-                            </select>
-                        </div>
+                        
                         <div class="flex flex-col justify-center items-center">
                             <p class="text-2xl">Select Module</p>
                             <select name="aditional_module_id" id="additional-select-module"
                                 class="select  select-bordered w-52 text-xl">
                                 @foreach ($modules as $module)
-                                    <option value="{{ $module->id }}">{{ $module->module }}</option>
+                                    <option value="{{ $module->module_id }}">{{ $module->module->module }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -286,6 +292,20 @@
                 <button id="additional-search-room"
                     class="bg-indigo-500 rounded-xl place-self-end w-40 h-12 text-slate-50 text-xl hover:bg-slate-200 hover:text-gray-900 hover:border-2 hover:border-slate-900 hover:scale-110 duration-300">Search</button>
             </div>
+            <div id="insert-from-holidays">
+                <div class="flex flex-col justify-center items-center">
+                    <p class="text-2xl">Select Teacher</p>
+                    <select name="aditional_module_id" id="additional-select-module"
+                        class="select  select-bordered w-52 text-xl">
+                        @foreach ($holiday_sessions as $session)
+                            <option value="{{ $session->id }}">{{ $session->module->module }}-{{$session->session_date}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <div id="insert-from-occasions">
+                InSert From Occasion
+            </div>
             <div id="insert-additional"
                 class="w-[400px]  focus:border-blue-400 flex  flex-col justify-center items-center space-y-4 focus:border-2 rounded-xl ">
             </div>
@@ -299,9 +319,14 @@
 @endsection
 @push('scripts')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    {{-- select_teacher_to_catchup --}}
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.3/jquery-ui.js"></script>
+    <script>
+        $(function() {
+            $("#parent-of-additonal").tabs();
+        });
+    </script>
     <script>
         $(document).ready(function() {
             $('#select_teacher_to_catchup').select2();

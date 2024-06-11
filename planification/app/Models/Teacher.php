@@ -28,7 +28,7 @@ class Teacher extends Model
     }
    
    
-    public function department()//true
+    public function department()
     {
         return $this->belongsTo(Department::class);
     }

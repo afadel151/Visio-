@@ -4,13 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\DB;
 
 class Battalion extends Model
 {
     use HasFactory;
-    // protected $primaryKey = 'battalion_id';
-
     //hasmany companies
     public function schoolyear()
     {
@@ -32,62 +33,72 @@ class Battalion extends Model
     {
         return $this->hasMany(Company::class)->where('sector', 'PR')->orderBy('company');
     }
-    public function modules_ST($semester)
+    public function modules_ST()
     {
-        return Module::where('module_sector', 'ST')->where('battalion', $this->battalion)->where('semester', $semester)->get();
+        return $this->belongsToMany(Module::class, 'schoolyear_modules')->withPivot(['semester', 'module_sector', 'nb_cours', 'nb_tds', 'nb_tps'])->where('module_sector', 'ST');
     }
-    public function modules_MI($semester)
+    public function modules_MI()
     {
-        return Module::where('module_sector', 'MI')->where('battalion', $this->battalion)->where('semester', $semester)->get();
+        return $this->belongsToMany(Module::class, 'schoolyear_modules')->withPivot(['semester', 'module_sector', 'nb_cours', 'nb_tds', 'nb_tps'])->where('module_sector', 'MI');
     }
     public function modules()
     {
-        return Module::where('battalion', $this->battalion)->get();
+     
+        return $this->belongsToMany(Module::class, 'schoolyear_modules')->withPivot(['semester', 'module_sector', 'nb_cours', 'nb_tds', 'nb_tps']);
     }
-    public function modules_PR($semester)
+    public function modules_PR(): BelongsToMany
     {
-        return Module::where('module_sector', 'PR')->where('semester', $semester)->get();
+        return $this->belongsToMany(Module::class, 'schoolyear_modules')->withPivot(['semester', 'module_sector', 'nb_cours', 'nb_tds', 'nb_tps'])->where('module_sector', 'PR');
     }
     public function teachers_ST($semester)
     {
-        $modules = $this->modules_ST($semester)->pluck('id')->toArray();
-        $teachers = Teacher::join('teachers_modules', 'teachers.id', '=', 'teachers_modules.teacher_id')
-            ->whereIn('teachers_modules.module_id', $modules)
-            ->where('teachers_modules.schoolyear_id', '=', $this->schoolyear_id)
+        $modules = $this->modules_ST()->where('semester', $semester)->pluck('modules.id')->toArray();
+        $joinResults = Module::whereIn('modules.id', $modules)
+            ->join('teachers_modules', 'modules.id', '=', 'teachers_modules.module_id')
+            ->where('teachers_modules.schoolyear_id', $this->original['schoolyear_id'])
+            ->join('teachers','teachers_modules.teacher_id','=','teachers.id')
             ->get();
-
-        return $teachers;
+        return $joinResults;
 
     }
-    public function teachers_PR($semester)
+    public function teachers_PR(int $semester)
     {
-        $modules = $this->modules_PR($semester)->pluck('id')->toArray();
-
-        $teachers = Teacher::join('teachers_modules', 'teachers.id', '=', 'teachers_modules.teacher_id')
-            ->whereIn('teachers_modules.module_id', $modules)
-            ->where('teachers_modules.schoolyear_id', '=', $this->schoolyear_id)
+        $modules = $this->modules_PR()->where('semester', $semester)->pluck('modules.id')->toArray();
+        $joinResults = Module::whereIn('modules.id', $modules)
+            ->join('teachers_modules', 'modules.id', '=', 'teachers_modules.module_id')
+            ->where('teachers_modules.schoolyear_id', $this->original['schoolyear_id'])
+            ->join('teachers','teachers_modules.teacher_id','=','teachers.id')
             ->get();
-
-        return $teachers;
+        return $joinResults;
     }
+   
     public function teachers_MI($semester)
     {
-        $modules = $this->modules_MI($semester)->pluck('id')->toArray();
-
-        $teachers = Teacher::join('teachers_modules', 'teachers.id', '=', 'teachers_modules.teacher_id')
-            ->whereIn('teachers_modules.module_id', $modules)
-            ->where('teachers_modules.schoolyear_id', '=', $this->schoolyear_id)
+        
+        $modules = $this->modules_MI()->where('semester', $semester)->pluck('modules.id')->toArray();
+        $joinResults = Module::whereIn('modules.id', $modules)
+            ->join('teachers_modules', 'modules.id', '=', 'teachers_modules.module_id')
+            ->where('teachers_modules.schoolyear_id', $this->original['schoolyear_id'])
+            ->join('teachers','teachers_modules.teacher_id','=','teachers.id')
             ->get();
+        return $joinResults;
 
-        return $teachers;
-    }
-    public function weeks($schoolyear_id)
+        }
+    public function weeks($schoolyear_id): HasMany
     {
         return $this->hasMany(Week::class)->where('schoolyear_id', $schoolyear_id);
     }
-    public function sections()
+    public function sections(): HasManyThrough
     {
         return $this->hasManyThrough(Section::class, Company::class)->orderBy('section');
     }
+    public function schoolyear_modules(): HasMany
+    {
+        return $this->hasMany(SchoolyearModule::class, 'battalion_id');
+    }
+    // public function modules() : HasManyThrough
+    // {
+    //     return $this->hasManyThrough(Module::class,SchoolyearModule::class);
+    // }
 
 }

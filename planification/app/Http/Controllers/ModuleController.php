@@ -2,20 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileUpdateRequest;
+
 use App\Models\GlobalWeek;
 use App\Models\SchoolYear;
+use App\Models\SchoolyearModule;
 use App\Models\Session;
 use App\Models\Teacher;
 use App\Models\Week;
-use Illuminate\Http\RedirectResponse;
+
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\View\View;
+
 use App\Models\Module;
 use App\Models\Config;
-use Psy\Command\WhereamiCommand;
 use Yajra\DataTables\DataTables;
 
 class ModuleController extends Controller
@@ -25,15 +23,15 @@ class ModuleController extends Controller
 
 
         if ($request->ajax()) {
-            $modules = Module::select('*')->with('department');
-
+            $modules = SchoolyearModule::with('module','battalion')->where('schoolyear_id',Config::find(1)->current_schoolyear_id)->get();
             return Datatables::of($modules)
                 ->addIndexColumn()
+                ->addColumn('department', function ($row) {
+                    return $row->department->department;
+                })
                 ->addColumn('action', function ($row) {
 
                     $btn = '<a href="/modules/' . $row->id . '" class="edit btn btn-info btn-sm rounded-lg">View</a>';
-                    // $btn = $btn . '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm rounded-lg">Edit</a>';
-                    // $btn = $btn . '<a href="javascript:void(0)" class="edit btn btn-danger btn-sm rounded-lg">Delete</a>';
     
                     return '<div class="flex justify-around items-center">' . $btn . '</div>';
                 })
@@ -100,7 +98,9 @@ class ModuleController extends Controller
     {
         if ($request->ajax()) {
             $module = Module::find($id);
-            $teachers = Module::join('teachers_modules', 'modules.id', '=', 'teachers_modules.module_id')->where('module_id', $module->id)->join('departments', 'modules.department_id', '=', 'departments.id')
+            $teachers = Module::join('teachers_modules', 'modules.id', '=', 'teachers_modules.module_id')->where('modules.id', $module->id)->join('departments', 'modules.department_id', '=', 'departments.id')
+                ->join('schoolyear_modules', 'modules.id', '=', 'schoolyear_modules.module_id')
+                ->join('battalions','schoolyear_modules.battalion_id','=','battalions.id')
                 ->get();
 
             return Datatables::of($teachers)

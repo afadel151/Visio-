@@ -22,6 +22,9 @@ return new class extends Migration
             $table->foreignId('teacher_id')->constrained('teachers','id')->onDelete('CASCADE');
             $table->string('session_type');//deleted?
             $table->boolean('absented')->default(false);
+            $table->boolean('of_holiday_session')->default(false);
+            $table->boolean('of_occasion_session')->default(false);
+            $table->unsignedBigInteger('holiday/occasion_session_id')->nullable();
             $table->timestamps();
         });
     }

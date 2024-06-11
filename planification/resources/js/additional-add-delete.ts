@@ -183,7 +183,6 @@ async function ClickInsert(event) {
     const formdata = new FormData(additionalForm as HTMLFormElement);
     const teacher_id = formdata.get("additional_teacher_id");
     const module_id = formdata.get("aditional_module_id");
-    const additional_type = formdata.get("additional_type");
     const additiveidDiv = document.querySelector("#additive_id");
     const additive_id = (additiveidDiv as HTMLDivElement).innerText.trim();
     const SelectedRoom = document.querySelector("#select-additional-room")
@@ -218,7 +217,6 @@ async function ClickInsert(event) {
             additive_id : additive_id,
             timing_id : timing_id,
             additional_date : additional_date,
-            additional_type : additional_type,
             sections: selectedSections,
             companies: selectedCompanies,
         })

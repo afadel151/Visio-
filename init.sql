@@ -6,12 +6,7 @@ INSERT INTO
 VALUES
   ('2023/2024',1.33, '2023-09-15',NOW(),NOW()),
   ('2024/2025',1.33, '2024-01-01',NOW(),NOW());
-
-INSERT INTO 
-  configs (schoolyear_id,created_at,updated_at)
-VALUES 
-  (1,NOW(),NOW());
-INSERT INTO
+  INSERT INTO
   global_weeks 
   (
     schoolyear_id,
@@ -24,6 +19,12 @@ INSERT INTO
 VALUES
   (1,1, NOW(), NOW(), '2024-03-10', '2024-03-14'),
   (1,2, NOW(), NOW(), '2024-03-17', '2024-03-12');
+
+INSERT INTO 
+  configs (current_schoolyear_id,current_global_week_id,created_at,updated_at)
+VALUES 
+  (1,1,NOW(),NOW());
+
 
 -- battalions
 INSERT INTO
@@ -106,7 +107,7 @@ VALUES
   ),
   (
     2,
-    1,
+    2,
     1,
     '1',
     'Cours',

@@ -19,6 +19,24 @@
                     </table>
                 </div>
             </div>
+            <div class="card mt-4 rounded-2xl  z-0  mb-20  w-[50%]">
+                <div class="card-header z-0 text-2xl ">Modules</div>
+                <div class="card-body w-[100%] z-0">
+                    <table class="z-0  w-[100%]  display" id="modules">
+                        <thead>
+                            <th>Battalion</th>
+                            <th>Module</th>
+                            <th>Sector</th>
+                            <th>Semester</th>
+                            <th>Vol-Hor</th>
+                            <th>Cours</th>
+                            <th>Tds</th>
+                            <th>Tps</th>
+                            <th>Action</th>
+                        </thead>
+                    </table>
+                </div>
+            </div>
             <div class="card mt-4  rounded-2xl  z-0  mb-20  w-[100%]">
 
                 <div class="card-header z-0 text-2xl ">Manage School year Calendar</div>
@@ -209,6 +227,57 @@
                             searchable: true,
                         },
 
+                        {
+                            data: 'action',
+                            name: 'action'
+                        }
+                    ],
+                });
+            });
+        </script>
+        <script>
+            $(function() {
+                var url = "{{ route('schoolyears.schoolyear_modules', $schoolyear->id) }}";
+                var table1 = $('#modules').DataTable({
+                    processing: true,
+                    serverSide: true,
+
+                    ajax: url,
+                    columns: [
+                        {
+                            data: 'battalion.battalion',
+                            name: 'battalion.battalion',
+                            searchable: true,
+                        },
+                        {
+                            data: 'module.module',
+                            name: 'module.module',
+                            searchable: true,
+                        },
+                        {
+                            data: 'module_sector',
+                            name: 'module_sector',
+                        },
+                        {
+                            data: 'semester',
+                            name: 'semester',
+                        },  
+                        {
+                            data: null,
+                            render: function(data,type,row) { return (data["nb_cours"] + data["nb_tds"] + data["nb_tps"])},
+                        },
+                        {
+                            data: 'nb_cours',
+                            name: 'nb_cours'
+                        },
+                        {
+                            data: 'nb_tds',
+                            name: 'nb_tds'
+                        },
+                        {
+                            data: 'nb_tps',
+                            name: 'nb_tps'
+                        },
                         {
                             data: 'action',
                             name: 'action'

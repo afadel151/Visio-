@@ -4,13 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\Battalion;
 use App\Models\Config;
-use App\Models\GlobalWeek;
+use App\Models\SchoolyearModule;
 use Illuminate\Http\Request;
-use Ramsey\Uuid\Type\Integer;
 use Yajra\DataTables\DataTables;
 use App\Models\SchoolYear;
 use App\Models\Week;
-use Ramsey\Uuid\Type;
 
 class SchoolYearController extends Controller
 {
@@ -18,65 +16,7 @@ class SchoolYearController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
-    {
-        if ($request->ajax()) {
-            $schoolyears = SchoolYear::all();
-
-            return Datatables::of($schoolyears)
-                ->addIndexColumn()
-                ->addColumn('global_weeks', function ($schoolyear) {
-                    return $schoolyear->global_weeks->count();
-                })
-                ->addColumn('action', function ($row) {
-
-                    $btn = '<a href="/schoolyears/' . $row->id . '" class="edit btn btn-info btn-sm rounded-lg">View</a>';
-    
-                    return '<div class="flex justify-around items-center">' . $btn . '</div>';
-                })
-                ->rawColumns(['action'])
-                ->make(true);
-
-        }
-        ;
-        $schoolyears = SchoolYear::all();
-        return view('schoolyears.index', ['schoolyears' => $schoolyears]);
-    }
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        $schoolyear = new SchoolYear;
-        $b1 = new Battalion;
-        $b1->battalion = 1;
-
-        $b2 = new Battalion;
-        $b2->battalion = 2;
-
-        $b3 = new Battalion;
-        $b3->battalion = 3;
-
-        $schoolyear->schoolyear = $request->input('schoolyear');
-        $schoolyear->schoolyear_start_date = $request->input('schoolyear_start_date');
-        $schoolyear->time_per_session = 1.33;
-        $schoolyear->save();
-
-        $b1->schoolyear_id = $schoolyear->id;
-        $b2->schoolyear_id = $schoolyear->id;
-        $b3->schoolyear_id = $schoolyear->id;
-
-        $b1->save();
-        $b2->save();
-        $b3->save();
-        return redirect()->back();
-    }
-
-    /**
-     * Display the specified resource.
-     */
-
-    public function showw($id, Request $request)
+    public function show($id, Request $request)
     {
 
         if ($request->ajax()) {
@@ -304,9 +244,8 @@ class SchoolYearController extends Controller
                 })
                 ->make(true);
 
-        }
-        ;
-        $schoolyear = SchoolYear::where('id', $id)->first();
+        };
+        $schoolyear = SchoolYear::find($id);
         if ($schoolyear) {
             $global_weeks = $schoolyear->global_weeks;
             if ($global_weeks) {
@@ -320,14 +259,101 @@ class SchoolYearController extends Controller
         }
 
     }
+    public function show_current()
+    {
+        $schoolyear = SchoolYear::find(Config::find(1)->current_schoolyear_id);
+        if ($schoolyear) {
+            $global_weeks = $schoolyear->global_weeks;
+            if ($global_weeks) {
+                $maxStartDate = $global_weeks->max('start_week_date');
+            } else {
+                $maxStartDate = date('Y-m-d', strtotime('-7 days', strtotime($schoolyear->start_date)));
+            }
+            return view('schoolyears.show', ['schoolyear' => $schoolyear, 'global_weeks' => $global_weeks, 'maxstartdate' => $maxStartDate, 'schoolyear_id' => $schoolyear->id]);
+        } else {
+            return 'there is no schoolyear for now';
+        }
+    }
+    public function index(Request $request)
+    {
+        if ($request->ajax()) {
+            $schoolyears = SchoolYear::all();
+
+            return Datatables::of($schoolyears)
+                ->addIndexColumn()
+                ->addColumn('global_weeks', function ($schoolyear) {
+                    return $schoolyear->global_weeks->count();
+                })
+                ->addColumn('action', function ($row) {
+
+                    $btn = '<a href="/schoolyears/' . $row->id . '" class="edit btn btn-info btn-sm rounded-lg">View</a>';
+    
+                    return '<div class="flex justify-around items-center">' . $btn . '</div>';
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+
+        };
+        $schoolyears = SchoolYear::all();
+        return view('schoolyears.index', ['schoolyears' => $schoolyears]);
+    }
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function modules($id,Request $request )
+    {
+        if ($request->ajax()) {
+            $modules = SchoolyearModule::with('module','battalion')->where('schoolyear_id',$id)->get();
+
+            return Datatables::of($modules)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+
+                    $btn = '<a href="/modules/' . $row->module_id . '" class="edit btn btn-info btn-sm rounded-lg">View</a>';
+    
+                    return '<div class="flex justify-around items-center">' . $btn . '</div>';
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        };
+    }
+    public function store(Request $request)
+    {
+        $schoolyear = new SchoolYear;
+        $b1 = new Battalion;
+        $b1->battalion = 1;
+
+        $b2 = new Battalion;
+        $b2->battalion = 2;
+
+        $b3 = new Battalion;
+        $b3->battalion = 3;
+
+        $schoolyear->schoolyear = $request->input('schoolyear');
+        $schoolyear->schoolyear_start_date = $request->input('schoolyear_start_date');
+        $schoolyear->time_per_session = 1.33;
+        $schoolyear->save();
+
+        $b1->schoolyear_id = $schoolyear->id;
+        $b2->schoolyear_id = $schoolyear->id;
+        $b3->schoolyear_id = $schoolyear->id;
+
+        $b1->save();
+        $b2->save();
+        $b3->save();
+        return redirect()->back();
+    }
+
+    /**
+     * Display the specified resource.
+     */
+
+    
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+    
 
     /**
      * Remove the specified resource from storage.
@@ -336,18 +362,5 @@ class SchoolYearController extends Controller
     {
         //
     }
-    public function currentSY()
-    {
-        $today = date('Y-m-d');
-        // R == new Request
-        $global_week = GlobalWeek::where('start_week_date', '<=', $today)->where('end_week_date', '>=', $today)->first();
-        if ($global_week) {
-            $schoolyear_id = (int) $global_week->schoolyear_id;
-            dd($schoolyear_id);
-            // return $this->show((int)$schoolyear_id,new Request);
-        } else {
-            return 'there is no global week this time';
-        }
-
-    }
+ 
 }
