@@ -12,7 +12,7 @@
 @endpush
 
 @section('content')
-    <div class="container  flex justify-center items-center flex-col w-[100%] relative  mt-20">
+    <div class="  flex justify-center items-center flex-col w-[100%] relative  mt-20">
         <a href="{{ route('teachers.index') }}">
             <button
                 class="absolute top-5 left-5 bg-slate-500 text-gray-100 border-slate-500 border-2 hover:text-gray-950 rounded-3xl text-xl hover:bg-slate-50 h-20 w-40">
@@ -35,31 +35,29 @@
             <p class="text-4xl font-weight-bold  "> grade : <span class="text-blue-500">
                     {{ $teacher->teacher_grade }}</span></p>
         </div>
-        <div class="w-[50%]">
+        <div class="w-full flex flex-col mt-4 justify-center items-center">
             <form id="teacherClassesForm" onsubmit="fetchClasses(event)"
-                class="flex flex-col  justify-center items-center space-y-5 h-72 ">
+                class="flex gap-6  justify-center w-fit  items-center  border-2 p-6 rounded-lg h-72 ">
                 @csrf
-                <div class="flex flex-col justify-center items-center">
-                    <p class="text-xl font-bold">Min date</p>
-                    <input type="date" class="rounded-lg hover:scale-110 duration-200 focus:border-blue-400"
-                        name="min_date">
+                <div class="flex gap-4 justify-center items-center">
+                    <p class="text-xl text-start font-bold">Min date :</p>
+                    <input type="date" class="input input-primary input-lg" name="min_date">
                 </div>
-                <div class="flex flex-col justify-center items-center">
-                    <p class="text-xl font-bold">Max date</p>
-                    <input type="date" class="rounded-lg hover:scale-110 duration-200 focus:border-blue-400"
-                        name="max_date">
+                <div class="flex gap-4  justify-center items-center">
+                    <p class="text-xl font-bold">Max date:</p>
+                    <input type="date" class="input input-primary input-lg" name="max_date">
                 </div>
-                <input type="submit" value="Submit"
-                    class="w-20 h-10 bg-indigo-500 hover:border-2 hover:border-slate-800 rounded-lg hover:scale-[1.2] duration-300 hover:bg-slate-200 hover:text-slate-950">
+                <input type="submit" value="Submit" class="btn  btn-primary ">
             </form>
-            <div id="result"
-                class=" hover:scale-110 duration-300 w-full">
+            <div id="result" class=" w-full px-4 mt-5">
+                <p class="text-center text-5xl font-bold">The Teacher's Record : <span class="text-3xl font-normal">Enter
+                        dates below</span> </p>
             </div>
 
         </div>
         {{-- {{ $teacher }} --}}
         {{-- {{ $teacher }} --}}
-        <div class="card mt-20 mb-20 w-[100%]">
+        <div class="card mt-20 mb-20 w-[70%]">
             <div class="card-header text-center text-3xl font-bold">Modules</div>
             <div class="card-body relative">
                 {{-- {!! $dataTable->table() !!} --}}
@@ -76,7 +74,7 @@
                             <th class="text-center">Action </th>
                         </tr>
                     </thead>
-                    
+
                 </table>
             </div>
             <button id="show-module-add" class="absolute btn -bottom-14 right-0">Add</button>
@@ -129,7 +127,7 @@
             </div>
 
         </div>
-        <div class="card mt-10 mb-20 w-[100%]">
+        <div class="card mt-10 mb-20 w-[70%]">
             <div class="card-header text-center text-3xl font-bold">Absences</div>
             <div class="card-body">
                 {{-- {!! $dataTable->table() !!} --}}
@@ -183,7 +181,7 @@
                                 data: 'battalion',
                                 name: 'battalion',
                             },
-                            
+
                             {
                                 data: 'module_sector',
                                 name: 'module_sector',
@@ -309,31 +307,83 @@
                         .then(function(response) {
                             const classes = response.data;
                             document.getElementById('result').innerHTML = `
-                            <div class="flex  justify-center items-stretch w-full">
-                                <div class="card flex flex-col justify-center items-center w-full">
-                                    <p class="text-2xl font-bold">Cours</p>
-                                    <p class="text-xl">Dones : ${classes.CoursDones}</p>
-                                    <p class="text-xl">Abented : ${classes.CoursAbsented}</p>
-                                    <p class="text-xl">Caught up :  ${classes.CoursCaughtUp}</p>
-                                </div>
-                                <div class="card flex flex-col justify-center items-center w-full">
-                                    <p class="text-2xl font-bold">Tds</p>
-                                    <p class="text-xl">Dones : ${classes.TdsDones} </p>
-                                    <p class="text-xl">Abented :  ${classes.TdsAbsented}</p>
-                                    <p class="text-xl">Caught up :  ${classes.TdsCaughtUp}</p>
-                                </div>
-                                <div class="card flex flex-col justify-center items-center w-full">
-                                    <p class="text-2xl font-bold">Tps</p>
-                                    <p class="text-xl">Dones :  ${classes.TpsDones}</p>
-                                    <p class="text-xl">Abented :  ${classes.TpsAbsented}</p>
-                                    <p class="text-xl">Caught up : ${classes.TpsCaughtUp} </p>
-                                </div>
-                                <div class="card flex flex-col justify-center items-center w-full">
-                                    <p class="text-2xl font-bold">Additionals</p>
-                                    <p class="text-xl">Dones : ${classes.AdditionalsDones} </p>
-                                    <p class="text-xl">Abented : ${classes.AdditionalsAbsented} </p>
-                                </div>
-                            </div>
+                                <table class="table table-zebra table-bordered border-2 w-[80%] ml-[10%]">
+    <thead>
+        <th class="text-2xl font-bold">
+            TYPE
+        </th>
+        <th class="text-2xl font-bold">Dones</th>
+        <th class="text-2xl font-bold">Absented</th>
+        <th class="text-2xl font-bold">Caught Up</th>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="text-xl font-bold">
+                Cours
+            </td>
+            <td class="text-xl font-bold">15</td>
+            <td class="text-xl font-bold">2</td>
+            <td class="text-xl font-bold">1</td>
+        </tr>
+        <tr>
+            <td class="text-xl font-bold">
+                TD
+            </td>
+            <td class="text-xl font-bold">28</td>
+            <td class="text-xl font-bold">1</td>
+            <td class="text-xl font-bold">0</td>
+        </tr>
+        <tr>
+            <td class="text-xl font-bold">
+                TP
+            </td>
+            <td class="text-xl font-bold">3</td>
+            <td class="text-xl font-bold">0</td>
+            <td class="text-xl font-bold">0</td>
+        </tr>
+        <tr>
+            <td class="text-xl font-bold">
+                Supplementaire
+            </td>
+            <td class="text-xl font-bold">4</td>
+            <td class="text-xl font-bold">0</td>
+            <td class="text-xl font-bold">0</td>
+        </tr>
+     
+        <tr>
+            <td class="text-xl font-bold">
+                Surv Examen
+            </td>
+            <td class="text-xl font-bold">4</td>
+            <td class="text-xl font-bold">1</td>
+            <td class="text-xl font-bold"></td>
+        </tr>
+        <tr>
+            <td class="text-xl font-bold">
+                Surv Controls
+            </td>
+            <td class="text-xl font-bold">9</td>
+            <td class="text-xl font-bold">0</td>
+            <td class="text-xl font-bold"></td>
+        </tr>
+        <tr>
+            <td class="text-xl font-bold">
+                Cour Magistreaux
+            </td>
+            <td class="text-xl font-bold">4</td>
+            <td class="text-xl font-bold">0</td>
+            <td class="text-xl font-bold">0</td>
+        </tr>
+        <tr>
+            <td class="text-xl font-bold">
+                Tutorat
+            </td>
+            <td class="text-xl font-bold">10</td>
+            <td class="text-xl font-bold">1</td>
+            <td class="text-xl font-bold">0</td>
+        </tr>
+    </tbody>
+</table>
                                 `;
                             console.log(response);
                         })
@@ -344,3 +394,124 @@
                 }
             </script>
         @endpush
+        {{-- <table class="table table-zebra ">
+            <thead>
+                <th>
+                    TYPE
+                </th>
+                <th>Dones</th>
+                <th>Absented</th>
+                <th>Caught Up</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        Cours
+                    </td>
+                    <td>15</td>
+                    <td>2</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>
+                        TD
+                    </td>
+                    <td>28</td>
+                    <td>1</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>
+                        TP
+                    </td>
+                    <td>3</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>
+                        Supplementaire
+                    </td>
+                    <td>4</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>
+                        Supplementaire
+                    </td>
+                    <td>4</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>
+                        Surv Examen
+                    </td>
+                    <td>4</td>
+                    <td>1</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>
+                        Surv Controls
+                    </td>
+                    <td>9</td>
+                    <td>0</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>
+                        Cour Magistreaux
+                    </td>
+                    <td>4</td>
+                    <td>0</td>
+                    <td>0</td>
+                </tr>
+                <tr>
+                    <td>
+                        Tutorat
+                    </td>
+                    <td>10</td>
+                    <td>1</td>
+                    <td>0</td>
+                </tr>
+            </tbody>
+        </table> --}}
+
+        {{-- <p class="text-center text-5xl font-bold">The Teacher's Record : </p>
+                            <div class="flex border-2 mt-5  justify-center items-start w-full">
+                                <div class=" flex border-r-2 flex-col justify-center items-start w-full">
+                                    <p class="text-2xl font-bold w-full   bg-gray-300">Cours</p>
+                                    <p class="text-xl">Dones : 16</p>
+                                    <p class="text-xl">Abented : 1</p>
+                                    <p class="text-xl">Caught up :  0</p>
+                                </div>
+                                <div class=" flex border-r-2 flex-col justify-center items-start w-full">
+                                    <p class="text-2xl font-bold w-full  bg-gray-300">Tds</p>
+                                    <p class="text-xl">Dones : 23</p>
+                                    <p class="text-xl">Absented :  2</p>
+                                    <p class="text-xl">Caught up :  1</p>
+                                </div>
+                                <div class=" flex border-r-2 flex-col justify-center items-start w-full">
+                                    <p class="text-2xl font-bold w-full  bg-gray-300 ">Tps</p>
+                                    <p class="text-xl">Dones :  0</p>
+                                    <p class="text-xl">Absented :  0</p>
+                                    <p class="text-xl">Caught up : 0</p>
+                                </div>
+                                <div class=" flex border-r-2 flex-col justify-center items-start w-full">
+                                    <p class="text-2xl font-bold w-full  bg-gray-300">Additionals</p>
+                                    <p class="text-xl">Dones :6 </p>
+                                    <p class="text-xl">Absented : 0 </p>
+                                </div>
+                                <div class=" flex border-r-2 flex-col justify-center items-start w-full">
+                                    <p class="text-2xl font-bold w-full  bg-gray-300">Exam Monitoring</p>
+                                    <p class="text-xl">Dones : 4</p>
+                                    <p class="text-xl">Absented :  0</p>
+                                </div>
+                                 <div class=" flex border-r-2 flex-col justify-center items-start w-full">
+                                    <p class="text-2xl font-bold w-full  bg-gray-300">Control Monitoring</p>
+                                    <p class="text-xl">Dones : 8</p>
+                                    <p class="text-xl">Absented :  0</p>
+                                </div>
+                            </div> --}}

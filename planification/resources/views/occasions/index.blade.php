@@ -22,8 +22,8 @@
                             <th>No</th>
                             <th>Date</th>
                             <th>Occasion</th>
-                            {{-- <th>Time</th>
-                            <th>For</th> --}}
+                            <th>Students</th>
+                            <th>Time</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -40,7 +40,7 @@
                             <form class="flex flex-col gap-3 justify-center items-stretch" id="holiday-form">
                                 <div class="flex items-center justify-between  w-full">
                                     <label class="font-bold w-36">Students :</label>
-                                   <select name="cars[]" id="cars" multiple class="select  w-full select-bordered"  style="width: 100%" multiselect-search="true">
+                                   <select name="students[]" id="students" multiple class="select  w-full select-bordered"  style="width: 100%" multiselect-search="true">
                                     @foreach ($battalions as $battalion)
                                         <option value="B_{{$battalion->id}}">Battalion : {{$battalion->battalion}}</option>
                                         @foreach ($battalion->companies as $company)
@@ -56,11 +56,11 @@
                                     <label class="font-bold w-36">
                                         Occasion :
                                     </label>
-                                    <input class="input w-full input-bordered" type="text" name="occasion_name">
+                                    <input id="occasion_name" class="input w-full input-bordered" type="text" name="occasion_name">
                                 </div>
                                 <div class="flex items-center justify-between  w-full">
                                     <label class="font-bold w-36">Date :</label>
-                                    <input class="input w-full input-bordered" type="date" name="occasion_date">
+                                    <input id="occasion_date" class="input w-full input-bordered"  type="date" name="occasion_date">
                                 </div>
                                
                                 <div class="flex items-center justify-between  w-full">
@@ -111,10 +111,18 @@
                             searchable: true
                         },
                         {
-                            data: 'occasion_name',
-                            name: 'occasion_name',
+                            data: 'occasion',
+                            name: 'occasion',
                             searchable: true
                         },
+                        {
+                            data: 'occasionable',
+                            name: 'occasionable' 
+                        },
+                            {
+                                data: 'timings',
+                                name: 'timings' 
+                            },
                         {
                             data: 'action',
                             name: 'action'

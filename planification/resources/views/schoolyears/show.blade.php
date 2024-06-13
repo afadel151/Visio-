@@ -51,6 +51,7 @@
                             <th class="exclude">2em annee</th>
                             <th class="exclude">3em annee</th>
                             <th class="exclude">Events</th>
+                            <th class="exclude">Occasions</th>
                             <th class="exclude">Sport events</th>
                             <th class="exclude">Action</th>
                         </thead>
@@ -335,6 +336,10 @@
                         {
                             data: 'events',
                             name: 'events',
+                        },
+                        {
+                            data: 'occasions',
+                            name: 'occasions'
                         },
                         {
                             data: 'sport_events',

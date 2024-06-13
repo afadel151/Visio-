@@ -11,8 +11,14 @@ class Occasion extends Model
 {
     use HasFactory;
     protected $fillable = [
-      ''
+      'occasion',
+      'occasion_date',
+      'timing_id'
     ];
+    public function battalions() : MorphToMany
+    {
+        return $this->morphedByMany(Battalion::class, 'occasionable');
+    }
     public function companies(): MorphToMany
     {
         return $this->morphedByMany(Company::class, 'occasionable');
@@ -21,10 +27,7 @@ class Occasion extends Model
     {
         return $this->morphedByMany(Section::class, 'occasionable');
     }
-    public function battalions() : MorphToMany
-    {
-        return $this->morphedByMany(Battalion::class, 'occasionable');
-    }
+    
     public function timings() : BelongsToMany
     {
         return $this->belongsToMany(Timing::class,'occasion_timings');

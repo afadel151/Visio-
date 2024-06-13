@@ -1,3 +1,13 @@
+import axios from "axios";
+const instance = axios.create({
+  baseURL: "http://127.0.0.1:8000",
+  withCredentials: true,
+  xsrfCookieName: "XSRF-TOKEN",
+  xsrfHeaderName: "X-XSRF-TOKEN",
+  headers: {
+      Accept: "application/json",
+  },
+});
 var style = document.createElement('style');
 style.setAttribute("id","multiselect_dropdown_styles");
 style.innerHTML = `
@@ -227,9 +237,26 @@ window.addEventListener('load',()=>{
 });
 
 
-// document.querySelector('#show').addEventListener('click', function() {
-//   var selectElement = document.querySelector('#cars');
-//   var selectedValues = Array.from(selectElement.selectedOptions).map(option => option.value);
-//   console.log(selectedValues);
-// });
+document.querySelector('#occasion-add').addEventListener('click', async function() {
+  var selectStudents = document.querySelector('#students');
+  var selectedStudents = Array.from(selectStudents.selectedOptions).map(option => option.value);
+  const NameInput = document.querySelector('#occasion_name');
+  const Name = NameInput.value;
+  const DateInput = document.querySelector('#occasion_date');
+  const Date = DateInput.value;
+  var selectTimings = document.querySelector('#timings');
+  var selectedTimings = Array.from(selectTimings.selectedOptions).map(option => option.value);
+  try {
+    let response = instance.post('/occasions/store',{
+      occasion_date : Date,
+      occasion_name : Name,
+      students : selectedStudents,
+      timings : selectedTimings
+    });
+    console.log(response.data);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 

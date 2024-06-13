@@ -45,7 +45,7 @@
 
             <!-- Title -->
             <div class="mt-10 text-center "  >
-                <h1  class="block  font-bold text-gray-800 text-9xl   ">
+                <h1  class="block  font-bold text-gray-800 text-9xl">
                     Let's Plan 
                     <span 
                         class="bg-clip-text bg-gradient-to-tl from-blue-600 to-violet-600 text-transparent">Together</span>

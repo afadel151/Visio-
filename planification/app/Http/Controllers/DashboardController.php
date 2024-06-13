@@ -22,7 +22,7 @@ class DashboardController extends Controller
         $holiday = Holiday::whereDate('holiday_date','<=',date('Y-m-d', strtotime('+7 days', strtotime($global_week->start_week_date))))->whereDate('holiday_date','>=',$global_week->start_week_date)->first();
         $schoolyear_id = SchoolYear::find(Config::find(1)->current_schoolyear_id)->id;
         if ($global_week) {
-            $nextgw = GlobalWeek::where('start_week_date', '<=', date('Y-m-d', strtotime('+7 days', strtotime($today))))->where('end_week_date', '>=', date('Y-m-d', strtotime('+7 days', strtotime($today))))->first();
+                $nextgw = GlobalWeek::where('start_week_date', '<=', date('Y-m-d', strtotime('+7 days', strtotime($today))))->where('end_week_date', '>=', date('Y-m-d', strtotime('+7 days', strtotime($today))))->first();
 
                 $nextgw = "last week of the year";
                 $weeks = GlobalWeek::where('schoolyear_id', Config::find(1)->current_schoolyear_id)->get();

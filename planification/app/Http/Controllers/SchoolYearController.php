@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Battalion;
 use App\Models\Config;
+use App\Models\Holiday;
+use App\Models\Occasion;
 use App\Models\SchoolyearModule;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -49,15 +51,30 @@ class SchoolYearController extends Controller
                     return $week ? $week : 'Empty';
                 })
                 ->addColumn('events', function ($global_week) {
-                    $events = '';
-                    foreach ($global_week->events as $event) {
-                        $events = $events . $event->event;
+                    $holidays = Holiday::whereDate('holiday_date','<=',date('Y-m-d', strtotime('+7 days', strtotime($global_week->start_week_date))))->whereDate('holiday_date','>=',$global_week->start_week_date)->get();
+                    if (isset($holidays)) {
+                       $result = '';
+                       foreach ($holidays as $holiday) {
+                            $result = $result . $holiday->holiday_name;
+                       }
+                       return $result;
                     }
-                    if ($events) {
-                        return $events;
-                    } else {
-                        $event = "No events available";
-                        return $event;
+                    else {
+                        return 'No Event';
+                    }
+
+                })
+                ->addColumn('occasions', function ($global_week) {
+                    $holidays = Occasion::whereDate('occasion_date','<=',date('Y-m-d', strtotime('+7 days', strtotime($global_week->start_week_date))))->whereDate('occasion_date','>=',$global_week->start_week_date)->get();
+                    if (isset($holidays)) {
+                       $result = '';
+                       foreach ($holidays as $holiday) {
+                            $result = $result . $holiday->occasion;
+                       }
+                       return $result;
+                    }
+                    else {
+                        return 'No Occasion';
                     }
 
                 })

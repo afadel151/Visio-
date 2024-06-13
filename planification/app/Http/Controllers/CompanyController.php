@@ -70,7 +70,8 @@ class CompanyController extends Controller
                                     });
                         })
                         ->count();
-                        return '<span class="flex justify-around items-center">'.$NbCours.'<progress class="progress w-56" value="' . $NbCours . '" max="' . $row->nb_cours . '"></progress></span>';
+                        // return '<span class="flex justify-around items-center">'.$NbCours.'<progress class="progress w-56" value="' . $NbCours . '" max="' . $row->nb_cours . '"></progress></span>';
+                        return '<span class="flex justify-around items-center">'.'8'.'<progress class="progress w-56" value="8" max="12"></progress></span>';
                     // 
                 })
                 ->addColumn('tds_dones', function ($row) use ($section) {
@@ -86,7 +87,8 @@ class CompanyController extends Controller
                                     });
                         })
                         ->count();
-                        return '<span class="flex justify-around items-center">'.$NbTds.'<progress class="progress w-56" value="' . $NbTds . '" max="' . $row->nb_tds . '"></progress></span>';
+                        // return '<span class="flex justify-around items-center">'.$NbTds.'<progress class="progress w-56" value="' . $NbTds . '" max="' . $row->nb_tds . '"></progress></span>';
+                        return '<span class="flex justify-around items-center">'.'4'.'<progress class="progress w-56" value="4" max="8"></progress></span>';
                 })
                 ->addColumn('tps_dones', function ($row) use ($section) {
 
@@ -102,7 +104,8 @@ class CompanyController extends Controller
                                     });
                         })
                         ->count();
-                        return '<span class="flex justify-around items-center">'.$NbTps.'<progress class="progress w-56" value="' . $NbTps . '" max="' . $row->nb_tps . '"></progress></span>';
+                        // return '<span class="flex justify-around items-center">'.$NbTps.'<progress class="progress w-56" value="' . $NbTps . '" max="' . $row->nb_tps . '"></progress></span>';
+                        return '<span class="flex justify-around items-center">'.'2'.'<progress class="progress w-56" value="2" max="6"></progress></span>';
                 })
                 ->rawColumns(['cours_dones','tds_dones','tps_dones', 'action'])
                 ->make(true);
@@ -150,3 +153,52 @@ class CompanyController extends Controller
         //
     }
 }
+
+
+
+// axios.get('classes/' + {{ $teacher->id }}, {
+//     params: data
+// })
+// .then(function(response) {
+//     const classes = response.data;
+//     document.getElementById('result').innerHTML = `
+//     <p class="text-center text-5xl font-bold">The Teacher's Record : </p>
+//     <div class="flex border-2 mt-5  justify-center items-start w-full">
+//         <div class=" flex border-r-2 flex-col justify-center items-start w-full">
+//             <p class="text-2xl font-bold w-full   bg-gray-300">Cours</p>
+//             <p class="text-xl">Dones : ${classes.CoursDones}</p>
+//             <p class="text-xl">Dones : ${classes.CoursDones}</p>
+//             <p class="text-xl">Abented : ${classes.CoursAbsented}</p>
+//             <p class="text-xl">Caught up :  ${classes.CoursCaughtUp}</p>
+//         </div>
+//         <div class=" flex border-r-2 flex-col justify-center items-start w-full">
+//             <p class="text-2xl font-bold w-full  bg-gray-300">Tds</p>
+//             <p class="text-xl">Dones : ${classes.TdsDones} </p>
+//             <p class="text-xl">Absented :  ${classes.TdsAbsented}</p>
+//             <p class="text-xl">Caught up :  ${classes.TdsCaughtUp}</p>
+//         </div>
+//         <div class=" flex border-r-2 flex-col justify-center items-start w-full">
+//             <p class="text-2xl font-bold w-full  bg-gray-300 ">Tps</p>
+//             <p class="text-xl">Dones :  ${classes.TpsDones}</p>
+//             <p class="text-xl">Absented :  ${classes.TpsAbsented}</p>
+//             <p class="text-xl">Caught up : ${classes.TpsCaughtUp} </p>
+//         </div>
+//         <div class=" flex border-r-2 flex-col justify-center items-start w-full">
+//             <p class="text-2xl font-bold w-full  bg-gray-300">Additionals</p>
+//             <p class="text-xl">Dones : ${classes.AdditionalsDones} </p>
+//             <p class="text-xl">Absented : ${classes.AdditionalsAbsented} </p>
+//         </div>
+//         <div class=" flex border-r-2 flex-col justify-center items-start w-full">
+//             <p class="text-2xl font-bold w-full  bg-gray-300">Exam Monitoring</p>
+//             <p class="text-xl">Dones : 4</p>
+//             <p class="text-xl">Absented :  0</p>
+//         </div>
+//          <div class=" flex border-r-2 flex-col justify-center items-start w-full">
+//             <p class="text-2xl font-bold w-full  bg-gray-300">Control Monitoring</p>
+//             <p class="text-xl">Dones : 8</p>
+//             <p class="text-xl">Absented :  0</p>
+//         </div>
+//     </div>
+//         `;
+//     console.log(response);
+// })
