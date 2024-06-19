@@ -5,7 +5,8 @@ INSERT INTO
   schoolyears (schoolyear,time_per_session, schoolyear_start_date,created_at,updated_at)
 VALUES
   ('2023/2024',1.33, '2023-09-15',NOW(),NOW()),
-  ('2024/2025',1.33, '2024-01-01',NOW(),NOW());
+  ('2024/2025',1.33, '2024-01-01',NOW(),NOW()),
+  ('2025/2026',1.33, '2025-09-01',NOW(),NOW());
   INSERT INTO
   global_weeks 
   (
