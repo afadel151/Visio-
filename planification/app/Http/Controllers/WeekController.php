@@ -3,6 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Additive;
+use App\Models\Company;
+use App\Models\Exam;
+use App\Models\ExamRoomGroup;
+use App\Models\Module;
+use App\Models\SchoolyearModule;
+use App\Models\Teacher;
+use App\Models\TeacherModule;
 use Illuminate\Http\Request;
 use App\Models\Week;
 use App\Models\Session;
@@ -10,32 +17,125 @@ use App\Models\Timing;
 use App\Models\Battalion;
 use App\Models\Room;
 use Yajra\DataTables\DataTables;
-
-
+use Barryvdh\DomPDF\Facade\Pdf;
 class WeekController extends Controller
 {
 
-    public function index()
+    public function excel(Request $request)
     {
-    }
-    public function create()
-    {
+        // // $spreadsheet = new Spreadsheet();
+        // // $activeWorksheet = $spreadsheet->getActiveSheet();
+        // // $activeWorksheet->setCellValue('A1', 'Hello World !');
+        //         $htmlString = $request->input('html_text');
+
+        // $reader = new \PhpOffice\PhpSpreadsheet\Reader\Html();
+        // $spreadsheet = $reader->loadFromString($htmlString);
+        
+        // $file = 'HelloWorld.xlsx';
+        // header("Content-Description: File Transfer");
+        // header('Content-Disposition: attachment; filename="' . $file . '"');
+        // header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+        // header('Content-Transfer-Encoding: binary');
+        // header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+        // header('Expires: 0');
+        // $xmlWriter = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+        // $xmlWriter->save("php://output");
+        $htmlString = '<table>
+                  <tr>
+                      <td>Hello World</td>
+                  </tr>
+                  <tr>
+                      <td>Hello<br />World</td>
+                  </tr>
+                  <tr>
+                      <td>Hello<br>World</td>
+                  </tr>
+              </table>';
+
+        $reader = new \PhpOffice\PhpSpreadsheet\Reader\Html();
+        $spreadsheet = $reader->loadFromString($htmlString);
+        $file = 'HelloWorld.xlsx';
+                header("Content-Description: File Transfer");
+                header('Content-Disposition: attachment; filename="' . $file . '"');
+                header('Content-Type: application/vnd.openxmlformats-officedocument.wordprocessingml.document');
+                header('Content-Transfer-Encoding: binary');
+                header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+                header('Expires: 0');
+                $writer = \PhpOffice\PhpSpreadsheet\IOFactory::createWriter($spreadsheet, 'Xlsx');
+                $writer->save("php://output");
+        return response()->json('Dome');
 
     }
-    public function store()
+    public function controls($id)
     {
+        $controls = Week::find($id)->controls;
+        $week = Week::find($id);
+        $timings = Timing::all();
+        // $modules = Module::where('battalion', $week->battalion->battalion)->get();
+        $modulesIds = SchoolyearModule::where('schoolyear_id',$week->global_week->schoolyear_id)
+                                        ->where('battalion_id',$week->battalion_id)
+                                        ->where('semester',$week->semester)
+                                        ->pluck('module_id')
+                                        ->toArray();
+        $modules  = Module::whereIn('id',$modulesIds)->get();
+        $teachersIds = TeacherModule::whereIn('module_id', $modulesIds)->pluck('teacher_id')->toArray();
+        $teachers = Teacher::whereIn('id', $teachersIds)->get();
+        return view('weeks.controls', compact('controls', 'week', 'timings', 'modules', 'teachers'));
+    }
+    public function export_pdf($id)
+    {
+        $week = Week::find($id);
+        $battalion_id = $week->battalion_id;
+        $battalion = Battalion::find($battalion_id);
+        $sessions = Session::with('teacher', 'module', 'room', 'rectification')->where('week_id', $week->id)->get();
+        $timings = Timing::all();
+        $rooms = Room::all();
+        $pdf = Pdf::loadView('weeks.create', [
+            'battalion' => $battalion,
+            'week' => $week,
+            'timings' => $timings,
+            'sessions' => $sessions,
+            'rooms' => $rooms
+        ]);
+        return $pdf->download('invoice.pdf');
     }
     public function show($id)
     {
 
-        $week = Week::find($id);
-        $battalion_id = $week->battalion_id;
-        $battalion = Battalion::find($battalion_id);
-        $sessions = Session::with('teacher', 'module', 'room')->where('week_id', $week->id)->get();
-        $timings = Timing::all();
-        $rooms = Room::all();
-        return view('weeks.create', compact('battalion', 'week', 'timings', 'sessions', 'rooms'));
+        $week = Week::with('global_week')->find($id);
+        if ($week->week_type == 'Cours' || $week->week_type == 'Cours Magistreaux') {
+            $battalion = Battalion::find($week->battalion_id);
+            $companies = Company::with('sections')->where('battalion_id',$battalion->id)->get();
+            $additives = $week->additives;
+            $sessions = Session::with('teacher', 'module', 'room','TpTeachers','rectification')->where('week_id', $week->id)->get();
+            // $modules = Module::with('teachers')->where('battalion',$battalion->battalion)->where('semester',$week->semester)->get();
+            $timings = Timing::all();
+            $rooms = Room::all();
+            return view('weeks.create', compact('battalion', 'week', 'timings', 'sessions', 'rooms'));
+        }
+        if ($week->week_type == 'Examens') {
+            $battalion = Battalion::find($week->battalion_id);
+            $modules = Module::where('battalion', $battalion->battalion)->get();
+            $exams = Exam::where('week_id', $week->id)
+                ->get();
+            $exams_dates = Exam::where('week_id', $week->id)
+                ->groupBy('exam_date')
+                ->orderBy('exam_date', 'asc')
+                ->get('exam_date');
+
+            $OccupiedRooms = ExamRoomGroup::where('week_id', $week->id)->pluck('room_id')->toArray();
+            $AvailableRooms = Room::whereNotIn('id', $OccupiedRooms)->get();
+            return view('exams.show', [
+                'battalion' => $battalion,
+                'week' => $week,
+                'modules' => $modules,
+                'exams' => $exams,
+                'exams_dates' => $exams_dates,
+                'rooms' => $AvailableRooms,
+            ]);
+        }
     }
+    
     public function BattalionWeeks($id, Request $request)
     {
         if ($request->ajax()) {
@@ -52,10 +152,7 @@ class WeekController extends Controller
                         return $enddate;
                     })
                     ->addColumn('action', function ($row) {
-                        $btn = '<a href="/weeks/' . $row->id . '" class="edit btn btn-info btn-sm rounded-lg">View</a>';
-                        // $btn = $btn . '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm rounded-lg">Edit</a>';
-                        // $btn = $btn . '<a href="javascript:void(0)" class="edit btn btn-danger btn-sm rounded-lg">Delete</a>';
-    
+                        $btn = '<a href="/weeks/' . $row->id . '" class="edit btn btn-info btn-sm rounded-lg">View</a>';    
                         return '<div class="flex justify-around items-center">' . $btn . '</div>';
                     })
                     ->make(true);
@@ -77,7 +174,7 @@ class WeekController extends Controller
                     })
                     ->addColumn('action', function ($row) {
                         $btn = '<a href="/additives/' . $row->id . '" class="edit btn btn-info btn-sm rounded-lg">View</a>';
-                        $btn = $btn . '<a href="/additives/delete/'.$row->id.'" class="edit btn btn-danger btn-sm rounded-lg">delete</a>';
+                        $btn = $btn . '<a href="/additives/delete/' . $row->id . '" class="edit btn btn-danger btn-sm rounded-lg">delete</a>';
                         // $btn = $btn . '<a href="javascript:void(0)" class="edit btn btn-danger btn-sm rounded-lg">Delete</a>';
     
                         return '<div class="flex justify-around items-center">' . $btn . '</div>';
@@ -90,7 +187,7 @@ class WeekController extends Controller
         }
         $week = Week::find($id);
         $additives = $week->additives;
-        return view('weeks.additives',['additives' => $additives, 'week'=> $week] );
+        return view('weeks.additives', ['additives' => $additives, 'week' => $week]);
     }
 
     public function update()
@@ -100,7 +197,8 @@ class WeekController extends Controller
     {
     }
 
-    public function additives_add($id){
+    public function additives_add($id)
+    {
         $week = Week::find($id);
         $additivesNb = $week->additives->count();
         $additive = new Additive;

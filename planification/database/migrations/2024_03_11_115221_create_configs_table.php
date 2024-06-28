@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('configs', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->unsignedBigInteger('schoolyear_id');
+            $table->foreignId('current_schoolyear_id')->constrained('schoolyears')->cascadeOnDelete();
+            $table->foreignId('current_global_week_id')->constrained('global_weeks')->cascadeOnDelete();
         });
     }
 

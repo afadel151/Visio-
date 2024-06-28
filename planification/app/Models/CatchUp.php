@@ -9,11 +9,19 @@ class CatchUp extends Model
 {
     protected $table = 'caughtupabsences';
     use HasFactory;
-    public function absence()
+    public function session()
     {
-        return $this->morphOne(Absence::class,'absenceable');
+        return $this->belongsTo(Session::class,'session_id');
     }
-    
+    public function timing()
+    {
+        return $this->belongsTo(Timing::class,'timing_id');
+    }
+    public function room()
+    {
+        return $this->belongsTo(Room::class,'room_id');
+    }
+
 }
 // $InSessions = Session::where('session_date', $date)->where('timing_id', $timing_id)->pluck('room_id');
         // $InAdditionals = Additional::where('additional_date', $date)->where('timing_id', $timing_id)->pluck('room_id')->toArray();

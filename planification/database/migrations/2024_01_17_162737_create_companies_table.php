@@ -15,19 +15,11 @@ return new class extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
             $table->integer('company');
-
-            //batallion id
-            $table->unsignedBigInteger('battalion_id');
-            //filiere id
             $table->string('sector');
-            //default amphitetre
-            $table->unsignedBigInteger('default_room_id');            
-
-            // foreign keys
-            $table->foreign('battalion_id')->references('id')->on('battalions')->onDelete('CASCADE');
-            $table->foreign('default_room_id')->references('id')->on('rooms');
+            $table->foreignId('battalion_id')->constrained('battalions')->cascadeOnDelete();
+            $table->foreignId('default_room_id')->constrained('rooms')->cascadeOnDelete();
+            $table->unsignedInteger('nb_students')->default(65);
             $table->timestamps();
-            
         });
     }
 

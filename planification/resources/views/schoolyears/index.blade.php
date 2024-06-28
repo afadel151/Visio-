@@ -23,6 +23,7 @@
                                 <th>School year</th>
                                 <th>Start Date</th>
                                 <th>Number of weeks</th>
+                                <th>Absences</th>
                                 <th>Action </th>
                             </tr>
                         </thead>

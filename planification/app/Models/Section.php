@@ -15,6 +15,10 @@ class Section extends Model
     {
         return $this->morphOne(Session::class,'sessionable');
     }
+    public function occasion()
+    {
+        return $this->morphOne(Occasion::class,'occasionable');
+    }
     public function company()
     {
         return $this->belongsTo(Company::class);
@@ -29,11 +33,10 @@ class Section extends Model
     }
     public function additionals()
     {
-        return $this->morphToMany(Additional::class,'additionables');
+        return $this->morphToMany(Additional::class,'additionable');
     }
     public function battalion()
     {
         return $this->hasOneThrough(Battalion::class,Company::class);
     }
-    //hasmany sessions
 }

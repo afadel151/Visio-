@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Config;
+use App\Models\Holiday;
 use App\Models\SchoolYear;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\GlobalWeek;
-use App\Models\Config;
-use PHPUnit\Framework\Constraint\IsEmpty;
+
 
 class DashboardController extends Controller
 {
@@ -18,40 +18,72 @@ class DashboardController extends Controller
     {
         $today = date('Y-m-d');
         // $global_week = GlobalWeek::where('start_week_date','<=',$today)->where('end_week_date','>=',$today)->first();
-        $global_week = GlobalWeek::find(1);
-        $schoolyear_id = SchoolYear::find(1)->id;
+        $global_week = GlobalWeek::find(Config::find(1)->current_global_week_id);
+        $holiday = Holiday::whereDate('holiday_date','<=',date('Y-m-d', strtotime('+7 days', strtotime($global_week->start_week_date))))->whereDate('holiday_date','>=',$global_week->start_week_date)->first();
+        $schoolyear_id = SchoolYear::find(Config::find(1)->current_schoolyear_id)->id;
         if ($global_week) {
-            $nextgw = GlobalWeek::where('start_week_date', '<=', date('Y-m-d', strtotime('+7 days', strtotime($today))))->where('end_week_date', '>=', date('Y-m-d', strtotime('+7 days', strtotime($today))))->first();
+                $nextgw = GlobalWeek::where('start_week_date', '<=', date('Y-m-d', strtotime('+7 days', strtotime($today))))->where('end_week_date', '>=', date('Y-m-d', strtotime('+7 days', strtotime($today))))->first();
 
                 $nextgw = "last week of the year";
-                $weeks = GlobalWeek::where('schoolyear_id', 1)->get();
+                $weeks = GlobalWeek::where('schoolyear_id', Config::find(1)->current_schoolyear_id)->get();
                 $GWS = $weeks->pluck('start_week_date')->toArray();
                 $GWE = $weeks->pluck('end_week_date')->toArray();
                 $globalweeks = [];
                 $length = count($GWE);
 
                 for ($i = 0; $i < $length; $i++) {
+                    
                     $date = $GWS[$i] . '->' . $GWE[$i];
                     array_push($globalweeks, $date);
                 }
+                $aditives = [];
                 $absences = [];
+                $rectifications = [];
+                $aditionals = [];
+                $Ab = 0;
+                $tab = 0;
+                $Tt=0;
                 foreach ($weeks as $week) {
-                    $nb = $week->absences()->count() ;
+                    $nb = $week->absences()->count();
+                    $Rb = $week->absences()->where('caughtup',1)->count();
+                    $additives = $week->additives();
+                    $Additionals = 0;
+                    foreach ($additives as $add){
+                        $Additionals += $add->additionals()->count();
+                        $Tt += $Additionals;
+                    }
+                    $Ab = $additives->count();
+                    $tab += $Ab;
                     array_push($absences, $nb);
+                    array_push($aditives, $Ab);
+                    array_push($rectifications, $Rb);
+                    array_push($aditionals,$Additionals);
                 }
                 $data = [
                     'labels' => $globalweeks,
                     'data' => $absences,
+                    'Rectifications'=>$rectifications,
                 ];
+                
+                $data2 = [
+                    'labels' => $globalweeks,
+                    'data' => $aditives,
+                    'aditionals' => $aditionals,
+                ];
+                $global_weeks = SchoolYear::find($global_week->schoolyear_id)->global_weeks->count();
+                $global_weeks = $global_week->global_week_number / $global_weeks * 100;
                 return view(
-                    'dashboarding',
+                    'dashboard0',
                     [
                         'global_week' => $global_week,
                         'schoolyear_id' => $schoolyear_id,
                         'next_week' => $nextgw,
                         'data' => $data,
-                        'globalweeks' => $globalweeks,
-                        'absences' => $absences,
+                        'data2' => $data2,
+                        'additionals' => $Tt,
+                        'additives' => $tab,
+                        'holiday'=>$holiday,
+                        'global_weeks'=> $global_weeks
                     ]
                 );
             

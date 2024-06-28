@@ -21,18 +21,46 @@ class Session extends Model
         'sessionable_type',
         'sessionable_id',
     ];
+    public $timestamps = true;
+
+    public function rectification()
+    {
+        return $this->hasOne(Rectification::class);
+    }
+    public function rectificationRoom()
+    {
+        return $this->rectification()->belongsTo(Room::class, 'room_id');
+    }
+    public function rectificationTime()
+    {
+        return $this->rectification()->belongsTo(Timing::class, 'timing_id');
+    }
+    public function class()
+    {
+        if ($this->sessionable_type == 'App\\Models\\Company') {
+            $c = Company::find($this->sessionable_id);
+            return 'Company ' . $c->battalion->battalion . $c->company;
+        } elseif ($this->sessionable_type == 'App\\Models\\Section') {
+            $s = Section::find($this->sessionable_id);
+            return 'Section ' . $s->section;
+        }
+    }
+ 
     public function module()
     {
         return $this->belongsTo(Module::class);
     }
-
+    public function TpTeachers()
+    {
+        return $this->belongsToMany(Teacher::class,'tp_teachers');
+    }
     public function sessionable()
     {
         return $this->morphTo();
     }
-    public function absence()
+    public function catchups()
     {
-        return $this->morphOne(Absence::class, 'absenceable');
+        return $this->hasMany(CatchUp::class);
     }
     public function anticipation()
     {
@@ -47,10 +75,10 @@ class Session extends Model
     {
         return $this->belongsTo(Teacher::class, 'teacher_id');
     }
-    public function absences()
-    {
-        return $this->hasMany(Absence::class, 'absenceable_id')->where('absenceable_type', 'App\Models\Session');
-    }
+    // public function absences()
+    // {
+    //     return $this->hasMany(Absence::class, 'absenceable_id')->where('absenceable_type', 'App\Models\Session');
+    // }
     //belongsto type
     public function timing()
     {

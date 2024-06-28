@@ -18,4 +18,17 @@ class SchoolYear extends Model
     {
         return $this->hasMany(GlobalWeek::class,'schoolyear_id');
     }
+
+    public function battalions()
+    {
+        return $this->hasMany(Battalion::class,'schoolyear_id');
+    }
+    public function schoolyear_modules()
+    {
+        return $this->hasMany(SchoolyearModule::class,'schoolyear_id');
+    }
+    public function modules()
+    {
+        return $this->hasManyThrough(Module::class,SchoolyearModule::class);
+    }
 }

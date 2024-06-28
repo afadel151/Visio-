@@ -31,11 +31,21 @@ class Week extends Model
     }
     public function absences()
     {
-        return $this->hasManyThrough(Absence::class,Session::class,'week_id','absenceable_id');
+        return $this->hasMany(Session::class)->where(function($query){
+            $query->where('sessions_table.absented',1);
+        });
     }
     public function additives()
     {
         return $this->hasMany(Additive::class);
+    }
+    public function controls()
+    {
+        return $this->hasMany(Control::class);
+    }
+    public function catchups()
+    {
+        return $this->hasManyThrough(CatchUp::class,Additive::class);
     }
    
     //belongsto type

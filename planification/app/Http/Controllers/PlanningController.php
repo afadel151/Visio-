@@ -25,11 +25,5 @@ class PlanningController extends Controller
         $schoolyear_id = Config::find(1)->schoolyear_id;
         return view('plannings.3em.create', compact('battalion', 'week','timings','sessions','schoolyear_id'));
     }
-    // public function create($battalion_id,$week_id)
-    // {
-    //     $battalion = Battalion::find($battalion_id);
-    //     $companies = $battalion->companies;
-    //     $sections = $battalion->sections;
-    //     return $sections->ToArray();
-    // }
+
 }

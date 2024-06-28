@@ -1,6 +1,5 @@
 @extends('default')
 @push('header')
-    @livewireStyles
     <link rel="stylesheet" href="//cdn.datatables.net/2.0.1/css/dataTables.dataTables.min.css">
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
@@ -12,41 +11,28 @@
         <div>
             <p class="text-7xl font-weight-bold" style="font-weight: 700">All modules </p>
         </div>
-        <div class="card mt-20 mb-20">
+        <div class="card mt-10 mb-10 w-[90%]">
             <div class="card-header ">Manage modules</div>
             <div class="card-body">
-                {{-- {!! $dataTable->table() !!} --}}
+           
                 <table class="table table-bordered display" id="modules">
                     <thead>
                         <tr>
                             <th>No</th>
                             <th>Module</th>
-                            <th>battalion</th>
-                            <th>Sector</th>
+                             <th>battalion</th>
+                             <th>Sector</th>
                             <th>semester </th>
                             <th>departement </th>
+                            <th>Vol.Horaire</th>
+                            <th>Cours</th>
+                            <th>Tds</th>
+                            <th>Tps</th>
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        @foreach ($modules as $module)
-                            <tr>
-                                <td>{{ $module->id }}</td>
-                                <td>{{ $module->module }}</td>
-                                <td>{{ $module->battalion }}</td>
-                                <td>{{ $module->module_sector }}</td>
-                                <td>{{ $module->semester }}</td>
-                                <td>{{ $module->department->department }}</td>
-                                <td>
-                                    <a href="{{ route('modules.show', ['id' => $module->id]) }}"
-                                        class="edit btn btn-info btn-sm rounded-l">View</a>
-                                    <a href="javascript:void(0)" class="edit btn btn-primary btn-sm rounded-lg">Edit</a>
-                                    <a href="javascript:void(0)" class="edit btn btn-danger btn-sm rounded-lg">Delete</a>
-
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
+                   
+                    
                 </table>
             </div>
         </div>
@@ -64,18 +50,19 @@
                     processing: true,
                     serverSide: true,
                     ajax: "{{ route('modules.index') }}",
-                    columns: [{
-                            data: 'id',
-                            name: 'id'
+                    columns: [
+                        {
+                            data: 'module.id',
+                            name: 'module.id'
                         },
                         {
-                            data: 'module',
-                            name: 'module',
+                            data: 'module.module',
+                            name: 'module.module',
                             searchable: true
                         },
                         {
-                            data: 'battalion',
-                            name: 'battalion'
+                            data: 'battalion.battalion',
+                            name: 'battalion.battalion'
                         },
                         {
                             data: 'module_sector',
@@ -87,10 +74,26 @@
                         },
                         //   {data: 'teacher_grade', name: 'teacher_grade', orderable: true, searchable: true},
                         {
-                            data: 'department.department',
-                            name: 'department_id',
+                            data: 'department',
+                            name: 'department',
                             searchable: false,
                             orderable: true
+                        },
+                        {
+                            data:null,
+                            render: function(data,type,row) { return (data["nb_cours"] + data["nb_tds"] + data["nb_tps"])}
+                        },
+                        {
+                            data:'nb_cours',
+                            name:'nb_cours'
+                        },
+                        {
+                            data:'nb_tds',
+                            name:'nb_tds'
+                        },
+                        {
+                            data:'nb_tps',
+                            name:'nb_tps'
                         },
                         {
                             data: 'action',

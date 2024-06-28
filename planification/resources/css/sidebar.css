@@ -10,7 +10,6 @@
     display: flex;
     gap: 20px;
     flex-direction: column;
-    background-color: #fff;
     padding: 24px;
     transition: all 0.3s;
     /* overflow: scroll; */

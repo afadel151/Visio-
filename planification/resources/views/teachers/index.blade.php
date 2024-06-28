@@ -24,15 +24,13 @@
 @push('header')
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/2.0.2/css/dataTables.bootstrap5.css" rel="stylesheet">
-    
-    
 @endpush
 @section('content')
     <div class="container flex justify-center items-center flex-col w-[100%]  mt-20">
         <div>
             <p class="text-7xl font-weight-bold  " style="font-weight: 700">All Teachers </p>
         </div>
-        <div class="card p-4 mt-20 w-[80%] mb-20">
+        <div class="card p-4 mt-20 w-[90%] mb-20">
             <div class="card-header text-3xl text-center ">Manage Teachers</div>
             <div class="card-body w-[100%]">
                 {{-- {!! $dataTab->table() !!} --}}
@@ -70,8 +68,16 @@
     @push('scripts')
         <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
         <script src="https://cdn.datatables.net/2.0.2/js/dataTables.js"></script>
         <script src="https://cdn.datatables.net/2.0.2/js/dataTables.bootstrap5.js"></script>
+        <script src="https://cdn.datatables.net/buttons/3.0.1/js/dataTables.buttons.js"></script>
+        <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.dataTables.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.html5.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/3.0.1/js/buttons.print.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
         @vite('resources/js/app.js')
         <script>
             $(function() {
@@ -99,15 +105,62 @@
                             searchable: false,
                             orderable: true
                         },
+                        
                         {
                             data: 'action',
                             name: 'action'
                         }
 
                     ],
-                    drawCallback: function(settings) {
-                            $('#teachers tbody tr td').addClass('hover:bg-slate-100 hover:scale-105  duration-500');
+                    buttons: [{
+                            extend: 'copy',
+                            exportOptions: {
+                                columns: ':not(.exclude)' // Exclude columns with the 'exclude' class from export
+                            }
+                        },
+                        {
+                            extend: 'excel',
+                            exportOptions: {
+                                columns: ':not(.exclude)' // Exclude columns with the 'exclude' class from export
+                            }
+                        },
+                        {
+                            extend: 'pdf',
+                            exportOptions: {
+                                columns: ':not(.exclude)' // Exclude columns with the 'exclude' class from export
+                            },
+                            customize: function(doc) {
+                                // Remove buttons from PDF export
+                                $(doc.document.body).find('button').remove();
+                            }
                         }
+                    ],
+                    layout: {
+                        top2Start: {
+                            buttons: [{
+                                extend: 'copyHtml5',
+                                text: '<i class="fa fa-files-o bg-base-200 btn">Copy</i>',
+                                titleAttr: 'Copy'
+                            }, {
+                                extend: 'csvHtml5',
+                                text: '<i class="fa fa-file-excel-o btn">CSV</i>',
+                                titleAttr: 'CSV'
+                            }, {
+                                extend: 'excelHtml5',
+                                text: '<i class="fa fa-file-excel-o btn">Excel</i>',
+                                titleAttr: 'Excel'
+                            }, {
+                                extend: 'pdfHtml5',
+                                text: '<i class="fa fa-file-pdf-o bg-base-200 btn">Pdf</i>',
+                                titleAttr: 'PDF'
+                            }, {
+                                extend: 'print',
+                                text: '<i class="fa fa-file-excel-o btn">Print</i>',
+                                titleAttr: 'Print'
+                            }]
+                        }
+                    },
+                    
                 });
 
                 table.on('click', 'tbody tr', function() {
@@ -118,5 +171,4 @@
 
             });
         </script>
-         
     @endpush

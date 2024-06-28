@@ -1,11 +1,12 @@
 /.phpunit.cache
+/bootstrap/ssr
 /node_modules
 /public/build
 /public/hot
 /public/storage
 /storage/*.key
 /vendor
-
+.env
 .env.backup
 .env.production
 .phpunit.result.cache
@@ -17,3 +18,4 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+../teachers.sql
