@@ -48,7 +48,6 @@
 @endpush
 @section('content')
     <div class="w-[100%]  z-0 ">
-        {{-- {{$week->catchups->first()->absence->absenceable  }} --}}
         <script>
             const rooms = @json($rooms);
             const timings = @json($timings);
@@ -307,9 +306,7 @@
                             $companies_PR = $battalion->companies;
                             $modules_PR = $battalion->modules_PR->where('semester',$week->semester);
                             $teachers_PR = $battalion->teachers_PR($week->semester);
-                            // $teachers_PR = collect($teachers)->map(function ($teacher) {
-                            //     return (object) $teacher;
-                            // });
+                           
                             $domaine = 'PR';
                         @endphp
                         @include('weeks.domaine', [

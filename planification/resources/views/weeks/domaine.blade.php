@@ -1,5 +1,4 @@
-<table class="w-[100%] table font-bold text-xl  bg-base-300 bg-opacity-50 backdrop-blur transition-shadow duration-100 [transform:translate3d(5,0,0)] 
-shadow-sm" style="z-index:60">
+<table class="w-[100%]  font-bold text-xl bg-base-200" style="z-index:60">
     <tr>
         @if ($domaine == 'ST')
             <td class="text-center  " colspan="{{ $companies->where('sector','ST')->count() }}">Domaine Scientifique</td>

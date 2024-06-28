@@ -1,5 +1,4 @@
-<table class="w-[100%]  table h-[800px] bg-base-300 bg-opacity-90 backdrop-blur transition-shadow duration-100 [transform:translate3d(0,0,0)] 
-shadow-sm">
+<table class="w-[100%]   h-[800px]  bg-base-200">
     <tr class="">
         @php
             $timestamp = strtotime($date);

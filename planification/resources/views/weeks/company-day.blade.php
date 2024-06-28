@@ -46,7 +46,7 @@
         @if ($isRectifiedCour == true || $HasControl == true)
             <tr class=" h-[160px] w-[100%] ">
                 <td colspan="3">
-                    <div class="card w-[100%] h-[100%] bg-base-200">
+                    <div class="card w-[100%] h-[100%] ">
                         <div class="card-body items-center text-center">
                             @if ($isRectifiedCour == true)
                                 <h2 class="card-title">Rectification Here!</h2>
@@ -90,7 +90,7 @@
                 Rattrapage d'une absence
             </div>
         @else
-            <tr class="relative company-tr   h-[160px] w-[100%] border-b">
+            <tr class="relative company-tr   h-[160px] w-[100%] ">
 
                 @if ($sessions->where('sessionable_type', 'App\\Models\\Company')->where('session_date', $date)->where('timing_id', $timing->id)->where('sessionable_id', $company->id)->isNotEmpty())
                     @php
@@ -105,7 +105,7 @@
                     <td colspan="3" class=" z-0 session ">
 
                         <div
-                            class="h-[150px] cours-div border-2 z-0 w-[100%] shadow-lg flex card  bg-opacity-90 backdrop-blur transition-shadow duration-100 [transform:translate3d(0,0,0)] 
+                            class="h-[150px] cours-div  z-0 w-[100%]  flex card   
                              flex-col rounded-xl justify-center items-center">
                             @if ($c->rectified == true && $c->absented == false)
                                 <span class=" badge badge-accent">rectified</span>
@@ -215,7 +215,7 @@
                         @endif
 
                         @if ($sessions->where('sessionable_type', 'App\\Models\\Section')->where('session_date', $date)->where('timing_id', $timing->id)->where('sessionable_id', $section->id)->where('session_type', 'tp')->isNotEmpty())
-                            <td rowspan="2" class="text-center  section-td session hover:z-20 ease-out    ">
+                            <td rowspan="2" class="text-center  section-td session hover:z-20    ">
                                 @php
                                     $tp = true;
                                     $tp = $sessions
@@ -228,7 +228,7 @@
                                 @endphp
 
                                 <div
-                                    class="h-[300px] shadow-xl  tp-div flex flex-col border-2 bg-opacity-90 backdrop-blur transition-shadow duration-100 [transform:translate3d(0,0,0)] rounded-xl justify-between items-center">
+                                    class="h-[300px]   tp-div flex flex-col   justify-between items-center">
                                     @if ($tp->rectified == true)
                                         <span class=" badge badge-error">absented</span>
                                     @endif
@@ -266,7 +266,7 @@
                                                     <input type="radio" name="my_tabs_2" role="tab" class="tab"
                                                         aria-label="Delete" />
                                                     <div role="tabpanel"
-                                                        class="tab-content bg-base-100  items-center border-base-300 rounded-box p-6">
+                                                        class="tab-content bg-base-100  items-center rounded-box p-6">
                                                         Delete
                                                     
                                                         <a href="{{ route('sessions.delete', ['id' => $tp->id]) }}"
@@ -276,7 +276,7 @@
                                                         <input type="radio" name="my_tabs_2" role="tab"
                                                             class="tab" aria-label="Absence" checked />
                                                         <div role="tabpanel"
-                                                            class="tab-content  bg-base-100 border-base-300 rounded-box p-6">
+                                                            class="tab-content    rounded-box p-6">
                                                             Mark Session Absence
                                                             <button class="btn btn-warning self-start mark-tp-absence">
                                                                 Mark absence
@@ -291,7 +291,7 @@
                                                     <input type="radio" name="my_tabs_2" role="tab"
                                                         class="tab" aria-label="Teacher's absence" />
                                                     <div role="tabpanel"
-                                                        class="tab-content  bg-base-100 border-base-300 rounded-box p-6">
+                                                        class="tab-content   rounded-box p-6">
                                                         Mark absence for a Teacher
                                                         @foreach ($tpteachers as $teacher)
                                                                 <p class="text-xl mt-1"> {{$teacher->teacher_name}} <button class="btn ml-1 btn-square btn-destructive">Add</button></p>
@@ -392,7 +392,6 @@
                                                             <path stroke-linecap="round" stroke-linejoin="round"
                                                                 d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
                                                         </svg>
-
                                                     </button>
                                                     <dialog class="modal z-60">
                                                         <div class="modal-box">
@@ -454,7 +453,7 @@
 
                                             </button>
                                             <form
-                                                class="hidden section-form  tp-insert-form absolute    rounded-[20px] shadow-lg text-xl w-[300px] flex flex-col justify-around items-center bg-slate-50"
+                                                class="hidden section-form bg-base-200 tp-insert-form absolute w-[300px] flex flex-col justify-around items-center "
                                                 style="top: 50px; left: 50px;z-index: 50;">
                                                 <button onclick="HideTpForm(this)" type="button"
                                                     class="absolute top-4 right-4 tp-cancel-button   hover:scale-125 duration-200  h-6 w-6 rounded-full">
@@ -531,11 +530,11 @@
                                                     </div>
                                                 </div>
                                                 <input value="submit"
-                                                    class="h-10 btn   w-20 rounded-lg submit-tp  bg-slate-300 hover:bg-slate-50 hover:text-slate-800 hover:scale-110 duration-200 hover:border-slate-300 hover:cursor-pointer hover:border-2">
+                                                    class="h-10 btn   w-20 rounded-lg submit-tp    ">
 
                                             </form>
                                             <div
-                                                class="h-[300px] shadow-xl hidden result-tp   flex flex-col border-2 bg-opacity-90 backdrop-blur transition-shadow duration-100 [transform:translate3d(0,0,0)] rounded-xl justify-between items-center">
+                                                class="h-[300px]  hidden result-tp   flex flex-col justify-between items-center">
 
                                                 <div
                                                     class="flex flex-col tp-teachers space-y-2 justify-around items-center w-[100%]">
@@ -573,7 +572,7 @@
                                             @endif
 
                                                                                         @if ($isRectified)
-                                            <div class="rounded-xl w-[100%] h-[100%] bg-base-200">
+                                            <div class="= w-[100%] h-[100%] ">
                                                 <div
                                                     class="flex w-[100%] h-[100%]  flex-col justify-center  text-center">
                                                     <h2 class="font-bold">Rectification Here!</h2>
@@ -609,7 +608,7 @@
                                                 </button>
 
                                                 <form @submit.prevent="submit"
-                                                    class="section-form   hidden  absolute bg-base-200 card shadow-xl py-4   flex flex-col justify-around items-center"
+                                                    class="section-form  bg-base-200  hidden  absolute py-4   flex flex-col justify-around items-center"
                                                     style="top: 50px; left: 50px;z-index: 50;">
                                                     @csrf
                                                     <a onclick="HideTdForm(this)"
@@ -697,7 +696,7 @@
 
                                             </div>
                                             <div
-                                                class="h-[150px] result hidden shadow-lg  flex flex-col border-2 bg-opacity-90 backdrop-blur transition-shadow duration-100 [transform:translate3d(0,0,0)] rounded-xl justify-center items-center">
+                                                class="h-[150px] result hidden   flex flex-col    rounded-xl justify-center items-center">
 
                                                 <a class="btn btn-sm teacher-a">
                                                 </a>
@@ -755,7 +754,7 @@
                             </button>
 
                             <form @submit.prevent="submit"
-                                class="hidden  flex flex-col space-y-3 justify-center items-center bg-base-200 card shadow-xl py-4 company-form absolute"
+                                class="hidden  flex flex-col space-y-3 justify-center items-center  bg-base-200 py-4 company-form absolute"
                                 style="top: 10px; left: 10px;z-index: 50;" method="POST">
                                 <a class="absolute top-4 right-4  btn btn-circle btn-sm btn-ghost"
                                     onclick="HideCourForm(this)">
@@ -816,8 +815,8 @@
                         </td>
                         <td class="result hidden" colspan="3">
                             <div
-                                class="h-[150px] border-2 z-0 w-[100%] shadow-lg flex card  bg-opacity-90 backdrop-blur transition-shadow duration-100 [transform:translate3d(0,0,0)] 
-                             flex-col rounded-xl justify-center items-center">
+                                class="h-[150px]  z-0 w-[100%]  flex 
+                             flex-col  justify-center items-center">
                                 <a href="" class="btn teacher-a">
                                 </a>
 
